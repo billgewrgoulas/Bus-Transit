@@ -1,0 +1,109 @@
+:host{
+    min-width: 30vw;
+    box-sizing: border-box;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background-color: #4949ab;
+    font-family: Roboto, "Helvetica Neue", sans-serif;
+    padding-left: 40px;
+    padding-right: 40px;
+}
+
+.slider-wrapper{
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    padding-top: 20px;
+    padding-bottom: 20px;
+}
+
+.tab-options{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    gap: 5px;   
+    z-index: 2;
+    color: #9496c9;
+}
+
+.header-options-wrapper{
+    display: flex;
+    flex-direction: row;
+    gap: 1vw;
+    position: relative;
+}
+
+.header-option{
+    cursor: pointer;
+}
+
+.underline{
+    width: 30px;
+    border-bottom: 2px solid #7168bc;
+    position: absolute;
+    top: 22px;
+    transition-duration: .3s;
+}
+
+.option-one{
+    left: .19vw;
+}
+
+.option-two{
+    left: 4.5vw;
+}
+
+.option-three{
+    left: 10.5vw;
+}
+
+.option-active{
+    color: #e4eafb;
+}
+
+.app-logo{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    color: #e4eafb;
+}
+
+.app-logo>h1{
+    margin-left: 5px;
+    margin-top: 17px;
+    font-weight: 700;
+}
+
+.separetor{
+    border-bottom: 1px solid #6d67ba;
+    width: 100%;
+}
+
+.description{
+    width: 100%;
+    text-align: left;
+    margin-top: 30px;
+    color: #f0f1fd;
+}
+
+.input-fields{
+    color: rgb(89, 89, 89);
+    width: 100%;
+    margin-top: 3vh;
+}
+
+.options-wrapper{
+    display: flex;
+    flex-direction: column;
+    width: 90%;
+}
+
+.bus-big{
+    font-size: 30px;
+}
+

@@ -1,0 +1,111 @@
+
+:host{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+    margin-top: 30px;
+}
+
+::-webkit-scrollbar {
+    width: 8px;
+}
+  
+::-webkit-scrollbar-track {
+    box-shadow: inset 0 0 5px grey; 
+    border-radius: 10px;
+}
+   
+::-webkit-scrollbar-thumb {
+    background: #6d67ba; 
+    border-radius: 10px;
+}
+  
+::-webkit-scrollbar-thumb:hover {
+    background: #635daf; 
+}
+
+.timeline-wrapper{
+    position: relative;
+    height: 100%;
+}
+
+.options-wrapper{
+    display: flex;
+    flex-direction: column;
+}
+
+.stations-list{
+    width: 100%;
+    margin-left: 17px;
+    color: rgb(89, 89, 89);
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    height: calc(100vh - 450px);
+    overflow: auto;
+}
+
+.station-line{
+    list-style: none;
+}
+
+.station-details{
+    display: flex;
+    flex-direction: column;
+    margin-top: -5px;
+    padding-left: 25px;
+    padding-bottom: 25px;
+}
+
+.station-item{
+    border-left: 2px solid #6d67ba;
+    display: flex;
+    flex-direction: row;
+    align-items: flex-start;
+}
+
+li>i{
+    margin-left: -7.7px;
+    font-size: 13px;
+    color: #f16d3f;
+}
+
+.outer-container{
+    margin-left: -11px !important;
+}
+
+.last-station{
+    border: none;
+}
+
+.last-station>div{
+    padding-bottom: 0px;
+}
+
+.station-name{
+    color: #e4eafb;
+    
+}
+
+.arrive-time{
+    color: #9496c9;
+}
+
+.fa-map-marker{
+    margin-left: -5.5px !important;
+    font-size: 15px !important;
+}
+
+.name-wrapper{
+    width: 100%;
+    text-align: left;
+}
+
+.stations-header{
+    color: #e4eafb;
+}
+
+ul{
+    padding-top: 10px;
+}
