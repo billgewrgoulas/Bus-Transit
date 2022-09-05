@@ -1,0 +1,17 @@
+
+<div class="logo-section">
+    <div class="logo-content">
+        <i class="fas fa-bus bus-big"></i>
+        <span class="logo-text">GoBus</span>
+    </div>
+</div>
+
+<div class="option-list">
+    <ng-container *ngFor="let option of options">
+        <app-option
+            [icon]="option.icon"
+            [text]="option.text"
+            [desc]="option.desc">
+        </app-option>
+    </ng-container>
+</div>

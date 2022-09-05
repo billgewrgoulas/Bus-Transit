@@ -1,8 +1,12 @@
 
+export interface IArrivalInfo{
+    route_code: string;
+    veh_code: string;
+    btime2: string;
+}
+
 export interface IArrival{
-    routeCode: string;
-    busId: string;
-    arrivalTime: string;
+    arrivalInfo: IArrivalInfo[];
     stationCode: string;
 }
 

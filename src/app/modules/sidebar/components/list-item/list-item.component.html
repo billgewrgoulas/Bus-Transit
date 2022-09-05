@@ -1,0 +1,9 @@
+
+<i class="fas" 
+[class.fa-circle]="!isLast" 
+[class.fa-map-marker]="isLast">
+</i>
+<div class="station-details">
+<span class="station-name">{{station.description}}({{station.heading}})</span>
+<span *ngIf="false" class="arrive-time">Next arrival in: {{station.stationCode}}</span>
+</div>

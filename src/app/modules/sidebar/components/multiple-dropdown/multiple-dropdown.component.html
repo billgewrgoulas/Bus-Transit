@@ -1,0 +1,22 @@
+
+<h1>{{title}}</h1>
+
+<div class="list">
+    <ng-container *ngFor="let data of data$ | async">
+        <div class="option-wrapper">
+            <div class="text-section" (click)="select(data)">
+                <div class="name">
+                    <span>{{data.line_descr}}</span>
+                </div>
+                <div class="details">
+                    <span>{{data.line_code}}</span>
+                </div>
+            </div>
+            <div class="save-btn">
+                <i class="far fa-bookmark"></i>
+            </div>
+        </div>
+    </ng-container>
+</div>
+
+

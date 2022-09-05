@@ -1,10 +1,11 @@
 import { Component, OnInit, OnDestroy} from '@angular/core';
 import { MapService } from 'src/app/services/map.service';
-import { filter, Subscription } from 'rxjs';
+import { filter, Subscription, tap } from 'rxjs';
 import { Store } from '@ngrx/store';
-import { AppState, routeDetails } from 'src/app/state/reducers/api-reducer';
+import { AppState} from 'src/app/state/reducers/api-reducer';
 import { IRoute } from 'src/app/state/entities/dataInterfaces';
 import * as L from "leaflet";
+import { routeDetails } from 'src/app/state/selectors/appState.selectors';
 
 @Component({
   selector: 'map-area',
@@ -23,7 +24,8 @@ export class MapAreaComponent implements OnInit, OnDestroy {
     this.mapService.mapInit();
 
     this.currentLine$ = this.store.select(routeDetails).pipe(
-      filter(routeDetails => routeDetails !== undefined)
+      tap(() => this.mapService.clearMap()),
+      filter(details => details != undefined)
     ).subscribe(route => this.displayInfo(route!));
 
   }

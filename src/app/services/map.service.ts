@@ -29,19 +29,24 @@ export class MapService {
   }
 
   public carvePath(points: number[][]){
-    this.map.removeLayer(this.polyline);
     this.polyline = L.polyline(<LatLngExpression[]>points, {color: 'blue'}).addTo(this.map);
     this.map.fitBounds(this.polyline.getBounds());
   }
 
   public displayMarkers(stations: IStation[]){
-    this.markers.forEach(marker => this.map.removeLayer(marker));
     stations.forEach((station: IStation) => {
       const marker = L.marker(<LatLngExpression>station.latLong, {icon: this.icon});
       marker.bindPopup(station.description + '(' + station.stationCode + ')');
       marker.addTo(this.map);
       this.markers.push(marker);
     });
+  }
+
+  public clearMap(){
+    this.map.removeLayer(this.polyline);
+    this.markers.forEach(marker => this.map.removeLayer(marker));
+    this.map.setView(this.center, 13);
+    this.markers = [];
   }
 
 

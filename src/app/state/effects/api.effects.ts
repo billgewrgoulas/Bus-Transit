@@ -4,8 +4,9 @@ import { Actions, createEffect, ofType } from "@ngrx/effects";
 import { concatMap, exhaustMap, filter, map, mergeMap, of, switchMap, take, withLatestFrom } from "rxjs";
 import { DataService } from "src/app/services/data.service";
 import * as api_actions from '../actions/api-calls.actions';
-import { ILine, IRoute } from "../entities/dataInterfaces";
-import { AppState, routeDetails } from "../reducers/api-reducer";
+import { IArrival, ILine, IRoute } from "../entities/dataInterfaces";
+import { AppState } from "../reducers/api-reducer";
+import { routeDetails, selectAllLines } from "../selectors/appState.selectors";
 
 @Injectable()
 export class ApiEffects{
@@ -15,6 +16,8 @@ export class ApiEffects{
     loadRoutes$ = createEffect(()=>
         this.actions$.pipe(
             ofType(api_actions.requests.getRoutes),
+            withLatestFrom(this.store.select(selectAllLines)),
+            filter(([action, lines]) => lines.length == 0),
             exhaustMap(()=>this.dataService.getAllLines('webGetLinesWithMLInfo').pipe(
                 map((res: ILine[])=>api_actions.requests.getRoutesSuccess({data: res}))
             )  
@@ -42,4 +45,13 @@ export class ApiEffects{
             )
         )
     ));
+
+    loadStationArrivals$ = createEffect(()=>
+        this.actions$.pipe(
+            ofType(api_actions.requests.getStationsArrivals),
+            switchMap((action)=> this.dataService.getStationArrivals(action.stopCode)),
+            map((res: IArrival)=> api_actions.requests.getStationsArrivalsSuccess({data: res}))
+        )
+                
+    );
 }

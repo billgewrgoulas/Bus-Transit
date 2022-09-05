@@ -10,14 +10,14 @@
       <ul class="station-line">
 
         <ng-container *ngFor="let station of currentRouteStations$ | async let last = last">
-          <li class="station-item" [class.last-station]="last">
+          <li class="station-item" (click)="fetchStationInfo(station)" [class.last-station]="last">
             <i class="fas" 
               [class.fa-circle]="!last" 
               [class.fa-map-marker]="last">
             </i>
             <div class="station-details">
-              <span class="station-name">{{station.description}}</span>
-              <span class="arrive-time">Next arrival in: {{station.stationCode}}</span>
+              <span class="station-name">{{station.description}}({{station.heading}})</span>
+              <span *ngIf="false" class="arrive-time">Next arrival in: {{station.stationCode}}</span>
             </div>
           </li>
         </ng-container>
