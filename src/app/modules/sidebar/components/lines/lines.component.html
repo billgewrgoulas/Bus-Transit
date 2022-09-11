@@ -22,7 +22,6 @@
     </div>
 </div>
 
-
 <multiple-dropdown *ngIf="!selected"
     [data$]="lines$"
     [title]="'Search Lines'"
@@ -30,4 +29,5 @@
     (selectedValue)="changeValue($event)">
 </multiple-dropdown>
 
-<station-list-component *ngIf="selected"></station-list-component>
+<router-outlet></router-outlet>
+

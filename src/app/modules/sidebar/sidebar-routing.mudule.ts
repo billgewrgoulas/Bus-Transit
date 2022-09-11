@@ -1,7 +1,6 @@
 
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { LinesComponent } from './components/lines/lines.component';
 import { SidebarOptionsComponent } from './components/sidebar-options/sidebar-options.component';
 
 const routes: Routes = [

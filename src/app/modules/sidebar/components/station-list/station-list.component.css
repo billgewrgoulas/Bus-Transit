@@ -50,10 +50,10 @@
     border-radius: 5px;
 }
 
-li>i{
+i{
     margin-left: -7.7px;
     font-size: 13px;
-    color: #3e3aef;
+    color: #232631;
 }
 
 .outer-container{
@@ -89,7 +89,7 @@ li>i{
 }
 
 .stations-header{
-    color: #e4eafb;
+    color: #373a50;
 }
 
 ul{

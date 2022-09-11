@@ -1,37 +1,12 @@
 
 
-:host{
+.item-wrapper{
+    border-left: 2px solid #6c757d2b;
     display: flex;
-    flex-direction: column;
-    align-items: center;
-    width: 100%;
-    margin-top: 30px;
-    padding: 0 20px 10px 20px;
-}
-
-.timeline-wrapper{
-    position: relative;
-    height: 100%;
-}
-
-.options-wrapper{
-    display: flex;
-    flex-direction: column;
-}
-
-.stations-list{
-    width: 100%;
-    margin-left: 17px;
-    color: rgb(89, 89, 89);
-    display: flex;
-    flex-direction: column;
+    flex-direction: row;
     align-items: flex-start;
-    height: calc(100vh - 300px);
-    overflow: auto;
-}
-
-.station-line{
-    list-style: none;
+    cursor: pointer;
+    border-radius: 5px;
 }
 
 .station-details{
@@ -42,31 +17,10 @@
     padding-bottom: 15px;
 }
 
-.station-item{
-    border-left: 2px solid #6c757d2b;
-    display: flex;
-    flex-direction: row;
-    align-items: flex-start;
-    cursor: pointer;
-    border-radius: 5px;
-}
-
-li>i{
+.icon{
     margin-left: -7.7px;
     font-size: 13px;
-    color: #3e3aef;
-}
-
-.outer-container{
-    margin-left: -11px !important;
-}
-
-.last-station{
-    border: none;
-}
-
-.last-station>div{
-    padding-bottom: 0px;
+    color: #323541;
 }
 
 .station-name{
@@ -83,16 +37,7 @@ li>i{
     font-size: 15px !important;
 }
 
-.name-wrapper{
-    width: 100%;
-    text-align: left;
-    margin-left: 40px;
+.last-station{
+    border: none;
 }
 
-.stations-header{
-    color: #e4eafb;
-}
-
-ul{
-    padding-top: 10px;
-}

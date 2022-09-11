@@ -18,12 +18,19 @@ export interface IStation{
     latLong: number[];
 }
 
+export interface IBus{
+    busNo: string;
+    date: string;
+    latLong: number[];
+}
+
 export interface IRoute{
     routeCode: string;
     routeDesc: string;
     routeDescEng: string;
     stations: IStation[];
     latLong: number[][];
+    buses: IBus[];
 }
 
 export interface ILine{

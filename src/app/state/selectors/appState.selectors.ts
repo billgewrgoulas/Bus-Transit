@@ -1,6 +1,7 @@
 import { createFeatureSelector, createSelector } from "@ngrx/store";
+import { arrivalStateAdapter } from "../entities/arival.entity";
 import { ILine } from "../entities/dataInterfaces";
-import { lineStateAdapter } from "../entities/line.entity";
+import { LineState, lineStateAdapter } from "../entities/line.entity";
 import { AppState } from "../reducers/api-reducer";
 
 /* Line Feature Selectors */
@@ -8,8 +9,11 @@ const {selectEntities, selectAll} = lineStateAdapter.getSelectors();
 
 export const getAppState = createFeatureSelector<AppState>('api');
 export const getLineState = createSelector(getAppState, (state: AppState)=> state.lines);
+export const getArrivalState = createSelector(getAppState, (state: AppState) => state.arrivals);
+
 export const selectAllLines = createSelector(getLineState, selectAll);
 export const selectLineEntities = createSelector(getLineState, selectEntities);
+export const selectArrivalEntities = createSelector(getArrivalState, arrivalStateAdapter.getSelectors().selectEntities);
 
 /* - Select the current line - */
 export const currentRoute = createSelector(
@@ -28,6 +32,15 @@ export const routeDetails = createSelector(
 export const routeStations = createSelector(
     routeDetails,
     (route)=> route?.stations
+);
+
+/* Select the stop arrivals for a specific route*/
+export const stopSchedule = (stationCode: string) => 
+    createSelector(selectArrivalEntities, currentRoute, (arrivalEntites, line)=>
+        arrivalEntites[stationCode]?.arrivalInfo.filter((arrival)=>
+            parseInt(arrival.route_code) == line?.routeCodes[0]
+        )
+            
 );
 
 /* - Select top 20 lines that match the filter - */

@@ -21,7 +21,7 @@ export class MapService {
   }
 
   public mapInit(){
-    this.map.setView(this.center, 13);
+    this.map.setView(this.center, 5);
     L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
       maxZoom: 19,
       attribution: '© OpenStreetMap'
@@ -29,13 +29,13 @@ export class MapService {
   }
 
   public carvePath(points: number[][]){
-    this.polyline = L.polyline(<LatLngExpression[]>points, {color: 'blue'}).addTo(this.map);
+    this.polyline = L.polyline(<LatLngExpression[]>points, {color: '#232631'}).addTo(this.map);
     this.map.fitBounds(this.polyline.getBounds());
   }
 
   public displayMarkers(stations: IStation[]){
     stations.forEach((station: IStation) => {
-      const marker = L.marker(<LatLngExpression>station.latLong, {icon: this.icon});
+      const marker = L.marker(<LatLngExpression>station.latLong, {icon: this.icon, interactive: true});
       marker.bindPopup(station.description + '(' + station.stationCode + ')');
       marker.addTo(this.map);
       this.markers.push(marker);
@@ -47,6 +47,10 @@ export class MapService {
     this.markers.forEach(marker => this.map.removeLayer(marker));
     this.map.setView(this.center, 13);
     this.markers = [];
+  }
+
+  public focusOnStop(point: number[]){
+    this.map.flyTo(<LatLngExpression>point, 15);
   }
 
 

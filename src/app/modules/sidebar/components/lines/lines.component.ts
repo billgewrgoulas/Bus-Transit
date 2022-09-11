@@ -33,19 +33,21 @@ export class LinesComponent implements OnInit {
   public changeValue(line: ILine){
     this.value = line.line_descr;
     this.store.dispatch(actions.requests.selectLine({code: line.line_code}));
-    this.lines$ = this.store.select(filterDropdown(this.value));
     this.store.dispatch(actions.requests.getLineRoutes({code: line.line_code}));
     this.selected = true;
+    this.router.navigateByUrl('(sidebar:lines/' + line.line_code + ')');
   }
 
   public clear(){
     this.value = '';
     this.selected = false;
     this.store.dispatch(actions.requests.selectLine({code: ''}));
+    this.router.navigateByUrl('(sidebar:lines)');
     this.filter();
   }
 
   public navigate(){
+    this.clear();
     this.router.navigate(['']);
   }
 

@@ -18,7 +18,7 @@ export class ApiEffects{
             ofType(api_actions.requests.getRoutes),
             withLatestFrom(this.store.select(selectAllLines)),
             filter(([action, lines]) => lines.length == 0),
-            exhaustMap(()=>this.dataService.getAllLines('webGetLinesWithMLInfo').pipe(
+            exhaustMap(()=>this.dataService.getAllLines('lines').pipe(
                 map((res: ILine[])=>api_actions.requests.getRoutesSuccess({data: res}))
             )  
         )     

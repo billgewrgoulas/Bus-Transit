@@ -1,9 +1,19 @@
 
-<i class="fas" 
-[class.fa-circle]="!isLast" 
-[class.fa-map-marker]="isLast">
-</i>
-<div class="station-details">
-<span class="station-name">{{station.description}}({{station.heading}})</span>
-<span *ngIf="false" class="arrive-time">Next arrival in: {{station.stationCode}}</span>
+<div class="item-wrapper" [class.last-station]="isLast" (click)="fetchSchedule()">
+    <i class="fas icon" 
+        [class.fa-circle]="!isLast" 
+        [class.fa-map-marker]="isLast">
+    </i>
+    <div class="station-details">
+        <span class="station-name">{{station.description}}({{station.heading}})</span>
+        <ng-container *ngIf="(arrivals$ | async) as arrivals">
+            <ng-container *ngIf="arrivals.length>0 else noIncoming">
+                <span *ngFor="let arrival of arrivals" class="arrive-time">Bus arrives in {{arrival.btime2}} minutes</span>
+            </ng-container>
+        </ng-container>
+    </div>
 </div>
+
+<ng-template #noIncoming >
+    <span class="arrive-time">No incoming arrivals</span>
+</ng-template>

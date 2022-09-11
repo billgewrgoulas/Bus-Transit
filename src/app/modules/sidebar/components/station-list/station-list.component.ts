@@ -21,10 +21,5 @@ export class StationListComponent implements OnInit {
   ngOnInit(): void {
     this.currentRouteStations$ = this.store.select(routeStations);
   }
-
-  public fetchStationInfo(station: IStation){
-    this.store.dispatch(actions.requests.getStationsArrivals({stopCode: station.stationCode}));
-  }
-
   
 }
