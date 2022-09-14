@@ -19,9 +19,11 @@ export interface IStation{
 }
 
 export interface IBus{
-    busNo: string;
-    date: string;
-    latLong: number[];
+    VEH_NO: string;
+    CS_DATE: string;
+    CS_LAT: string;
+    CS_LNG: string;
+    ROUTE_CODE: string;
 }
 
 export interface IRoute{

@@ -3,7 +3,8 @@ import { ILine } from "./dataInterfaces";
 
 
 export interface LineState extends EntityState<ILine>{
-    activeLineId: string
+    activeLineId: string, 
+    activeStops: string[]
 };
 
 export const lineStateAdapter: EntityAdapter<ILine> = createEntityAdapter<ILine>({
@@ -12,4 +13,5 @@ export const lineStateAdapter: EntityAdapter<ILine> = createEntityAdapter<ILine>
 
 export const inititialLineState: LineState = lineStateAdapter.getInitialState({
     activeLineId: '',
+    activeStops: []
 });

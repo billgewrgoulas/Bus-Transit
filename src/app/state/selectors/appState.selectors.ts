@@ -1,5 +1,5 @@
 import { createFeatureSelector, createSelector } from "@ngrx/store";
-import { arrivalStateAdapter } from "../entities/arival.entity";
+import { ArrivalState, arrivalStateAdapter } from "../entities/arival.entity";
 import { ILine } from "../entities/dataInterfaces";
 import { LineState, lineStateAdapter } from "../entities/line.entity";
 import { AppState } from "../reducers/api-reducer";
@@ -39,8 +39,13 @@ export const stopSchedule = (stationCode: string) =>
     createSelector(selectArrivalEntities, currentRoute, (arrivalEntites, line)=>
         arrivalEntites[stationCode]?.arrivalInfo.filter((arrival)=>
             parseInt(arrival.route_code) == line?.routeCodes[0]
-        )
-            
+        )    
+);
+
+/* Select the active stops */
+export const selectedStops = createSelector(
+    getArrivalState, routeStations, 
+    (arrivalState: ArrivalState) => arrivalState.ids
 );
 
 /* - Select top 20 lines that match the filter - */

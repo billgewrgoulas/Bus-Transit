@@ -2,6 +2,7 @@ import { Component, Input, OnInit } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { filter, Observable, take, takeLast} from 'rxjs';
 import { MapService } from 'src/app/services/map.service';
+import { SocketIOService } from 'src/app/services/socket-io.service';
 import { IArrival, IArrivalInfo, IStation } from 'src/app/state/entities/dataInterfaces';
 import { AppState } from 'src/app/state/reducers/api-reducer';
 import { stopSchedule } from 'src/app/state/selectors/appState.selectors';
@@ -19,7 +20,7 @@ export class ListItemComponent implements OnInit {
 
   public arrivals$!: Observable<IArrivalInfo[] | undefined>;
 
-  constructor(private store: Store<AppState>, private mapService: MapService) { }
+  constructor(private store: Store<AppState>) { }
 
   ngOnInit(): void {
     this.arrivals$ = this.store.select(stopSchedule(this.station.stationCode));

@@ -4,6 +4,7 @@ import { Actions, createEffect, ofType } from "@ngrx/effects";
 import { concatMap, exhaustMap, filter, map, mergeMap, of, switchMap, take, withLatestFrom } from "rxjs";
 import { DataService } from "src/app/services/data.service";
 import * as api_actions from '../actions/api-calls.actions';
+import * as socket from '../actions/socketIO.actions';
 import { IArrival, ILine, IRoute } from "../entities/dataInterfaces";
 import { AppState } from "../reducers/api-reducer";
 import { routeDetails, selectAllLines } from "../selectors/appState.selectors";
@@ -29,12 +30,11 @@ export class ApiEffects{
             ofType(api_actions.requests.getLineRoutes),
             withLatestFrom(this.store.select(routeDetails)),
             filter(([action, details]) => !details),
-            switchMap(([action, details]) => this.dataService.getRouteDetails(action.code).pipe(
-                switchMap((res: any) => [
-                    api_actions.requests.getLineRoutesSuccess({details: res}),
-                    api_actions.requests.getRouteDetails({routeCode: res[0]})
-                ])
-            ))
+            switchMap(([action, details]) => this.dataService.getRouteDetails(action.code)),
+            switchMap((res: any) => [
+                api_actions.requests.getLineRoutesSuccess({details: res}),
+                api_actions.requests.getRouteDetails({routeCode: res[0]}),
+            ])
     ));
 
     loadRoutePath$ = createEffect(()=>

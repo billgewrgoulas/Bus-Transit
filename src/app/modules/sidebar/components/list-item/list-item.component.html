@@ -1,8 +1,8 @@
 
 <div class="item-wrapper" [class.last-station]="isLast" (click)="fetchSchedule()">
     <i class="fas icon" 
-        [class.fa-circle]="!isLast" 
-        [class.fa-map-marker]="isLast">
+        [class.fa-dot-circle]="!isLast" 
+        [class.fa-map-marker-alt]="isLast">
     </i>
     <div class="station-details">
         <span class="station-name">{{station.description}}({{station.heading}})</span>

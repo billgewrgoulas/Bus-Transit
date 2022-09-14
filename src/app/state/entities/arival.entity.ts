@@ -2,14 +2,10 @@ import { EntityState, EntityAdapter, createEntityAdapter } from "@ngrx/entity";
 import { IArrival} from "./dataInterfaces";
 
 
-export interface ArrivalState extends EntityState<IArrival>{
-    activatedStations: string[]
-};
+export interface ArrivalState extends EntityState<IArrival>{};
 
 export const arrivalStateAdapter: EntityAdapter<IArrival> = createEntityAdapter<IArrival>({
     selectId: (arrival: IArrival)=> arrival.stationCode
 });
 
-export const initialArrivalState: ArrivalState = arrivalStateAdapter.getInitialState({
-    activatedStations: [],
-});
+export const initialArrivalState: ArrivalState = arrivalStateAdapter.getInitialState({});

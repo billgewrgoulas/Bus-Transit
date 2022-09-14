@@ -19,6 +19,8 @@ import { MapService } from './services/map.service';
 import { MapModule } from './modules/map/map.module';
 import { RouterModule } from '@angular/router';
 import { StoreRouterConnectingModule, routerReducer} from '@ngrx/router-store';
+import { SocketIOService } from './services/socket-io.service';
+import { SocketEffects } from './state/effects/socket.effects';
 
 @NgModule({
   declarations: [
@@ -36,12 +38,12 @@ import { StoreRouterConnectingModule, routerReducer} from '@ngrx/router-store';
     MapModule,
     HttpClientModule,
     StoreModule.forRoot({api: lineStateReducer, router: routerReducer}),
-    EffectsModule.forRoot([ApiEffects]),
+    EffectsModule.forRoot([ApiEffects, SocketEffects]),
     StoreDevtoolsModule.instrument({ maxAge: 25, logOnly: environment.production }),
     StoreRouterConnectingModule.forRoot()
 
   ],
-  providers: [HttpClient, MapService],
+  providers: [HttpClient, MapService, SocketIOService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
