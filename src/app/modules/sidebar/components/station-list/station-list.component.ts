@@ -3,7 +3,6 @@ import { Store } from '@ngrx/store';
 import { IStation } from 'src/app/state/entities/dataInterfaces';
 import { Observable } from 'rxjs';
 import { AppState } from 'src/app/state/reducers/api-reducer';
-import { routeStations } from 'src/app/state/selectors/appState.selectors';
 import * as actions from '../../../../state/actions/api-calls.actions';
 
 
@@ -19,7 +18,7 @@ export class StationListComponent implements OnInit {
   public currentRouteStations$!: Observable<IStation[] | undefined>;
 
   ngOnInit(): void {
-    this.currentRouteStations$ = this.store.select(routeStations);
+    //this.currentRouteStations$ = this.store.select(routeStations);
   }
   
 }

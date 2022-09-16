@@ -1,5 +1,8 @@
 import { createAction, props } from "@ngrx/store";
-import { IArrival, ILine, IRoute } from "../entities/dataInterfaces";
+import { IArrival } from "../entities/arival.entity";
+import { ILine } from "../entities/line.entity";
+import { IRoute } from "../entities/route.entity";
+
 
 export module requests{
 
@@ -9,13 +12,13 @@ export module requests{
     export const getRoutesError = createAction('[API] Routes Loaded Failed');
 
     /* Fetch the routes of a line based on the lineCode */
-    export const getLineRoutes = createAction('[API] GET Details', props<{code: string}>());
-    export const getLineRoutesSuccess = createAction('[API] Routes Details Success', props<{details: number[]}>());
+    export const getLineRoutes = createAction('[API] GET Details', props<{lineCode: string}>());
+    export const getLineRoutesSuccess = createAction('[API] Routes Details Success', props<{data: IRoute[], lineCode: string}>());
     export const getLineRoutesError = createAction('[API] Details Loaded Failed');
 
     /* Fetch route geopoints with stops */
     export const getRouteDetails = createAction('[API] Get Route Details', props<{routeCode: string}>());
-    export const getRouteDetailsuccess = createAction('[API] Loaded Success', props<{details: IRoute}>());
+    export const getRouteDetailsuccess = createAction('[API] Loaded Success', props<{data: any, code: string}>());
     export const getRouteDetailsError = createAction('[API] Details load error');
 
      /* Fetch arrivals of a specific stop */

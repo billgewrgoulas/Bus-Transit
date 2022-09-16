@@ -29,9 +29,9 @@ export class DataService {
     }), catchError((err)=>throwError(()=>new Error(err))))
   }
 
-  public getRouteDetails(code: string): Observable<any>{
-    return this.http.get(this.url + 'routeDetails/' + code, this.options).pipe(map((res: any)=>{
-      return res.map((e: any)=>e.RouteCode);
+  public getLineRoutes(lineCode: string): Observable<any>{
+    return this.http.get(this.url + 'routeDetails/' + lineCode, this.options).pipe(map((res: any)=>{
+      return res;
     }), catchError((err)=>throwError(()=>new Error(err))))
   }
 

@@ -5,7 +5,6 @@ import { MapService } from 'src/app/services/map.service';
 import { SocketIOService } from 'src/app/services/socket-io.service';
 import { IArrival, IArrivalInfo, IStation } from 'src/app/state/entities/dataInterfaces';
 import { AppState } from 'src/app/state/reducers/api-reducer';
-import { stopSchedule } from 'src/app/state/selectors/appState.selectors';
 import * as actions from '../../../../state/actions/api-calls.actions';
 
 @Component({
@@ -23,11 +22,11 @@ export class ListItemComponent implements OnInit {
   constructor(private store: Store<AppState>) { }
 
   ngOnInit(): void {
-    this.arrivals$ = this.store.select(stopSchedule(this.station.stationCode));
+    //this.arrivals$ = this.store.select(stopSchedule(this.station.stationCode));
   }
 
   public fetchSchedule(){
-    this.store.dispatch(actions.requests.getStationsArrivals({stopCode: this.station.stationCode}));
+    //this.store.dispatch(actions.requests.getStationsArrivals({stopCode: this.station.stationCode}));
   }
 
 }

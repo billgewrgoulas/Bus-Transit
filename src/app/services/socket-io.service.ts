@@ -4,7 +4,6 @@ import { io, Socket } from 'socket.io-client';
 import { IArrival, IBus } from '../state/entities/dataInterfaces';
 import { AppState } from '../state/reducers/api-reducer';
 import * as actions from '../state/actions/api-calls.actions'
-import { selectedStops } from '../state/selectors/appState.selectors';
 import { filter, Subscription, tap } from 'rxjs';
 
 @Injectable({
@@ -27,7 +26,7 @@ export class SocketIOService {
 
     this.socket.on('update-arrivals', (data: IArrival[])=>{
       data.forEach((arrival) => {
-        this.store.dispatch(actions.requests.getStationsArrivalsSuccess({data: arrival}))
+        //this.store.dispatch(actions.requests.getStationsArrivalsSuccess({data: arrival}))
       });
     });
 
@@ -38,12 +37,12 @@ export class SocketIOService {
   }
 
   public updateAll(){
-    this.subscription = this.store.select(selectedStops).pipe(
-      filter(stopCodes => stopCodes.length > 0),
-    ).subscribe(stopCodes => {
-      this.socket.emit('update-arrivals', {stopCodes: stopCodes});
-      this.subscription.unsubscribe();
-    });
+    // this.subscription = this.store.select(selectedStops).pipe(
+    //   filter(stopCodes => stopCodes.length > 0),
+    // ).subscribe(stopCodes => {
+    //   this.socket.emit('update-arrivals', {stopCodes: stopCodes});
+    //   this.subscription.unsubscribe();
+    // });
   }
 
   public getBusUpdates(routeCode: string){
