@@ -1,10 +1,13 @@
 import { Injectable } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { io, Socket } from 'socket.io-client';
-import { IArrival, IBus } from '../state/entities/dataInterfaces';
 import { AppState } from '../state/reducers/api-reducer';
 import * as actions from '../state/actions/api-calls.actions'
-import { filter, Subscription, tap } from 'rxjs';
+import * as socket from '../state/actions/socketIO.actions';
+import { filter, Subscription, take, tap } from 'rxjs';
+import { routeStopCodes } from '../state/selectors/appState.selectors';
+import { IArrival } from '../state/entities/arival.entity';
+import { IBus, IRouteVeh } from '../state/entities/bus.entity';
 
 @Injectable({
   providedIn: 'root'
@@ -12,7 +15,6 @@ import { filter, Subscription, tap } from 'rxjs';
 export class SocketIOService {
 
   private socket: Socket;
-  private subscription!: Subscription;
 
   constructor(private store: Store<AppState>) { 
     this.socket = io('http://localhost:3000');
@@ -26,26 +28,26 @@ export class SocketIOService {
 
     this.socket.on('update-arrivals', (data: IArrival[])=>{
       data.forEach((arrival) => {
-        //this.store.dispatch(actions.requests.getStationsArrivalsSuccess({data: arrival}))
+        this.store.dispatch(actions.requests.getStationsArrivalsSuccess({data: arrival}));
       });
     });
 
-    this.socket.on('bus-updates-fetched', (data: any)=>{
-      console.log(data);
+    this.socket.on('bus-updates-fetched', (data: IRouteVeh)=>{
+      this.store.dispatch(socket.SocketActions.busLocationsUpdates({data: data}));
     });
 
   }
 
   public updateAll(){
-    // this.subscription = this.store.select(selectedStops).pipe(
-    //   filter(stopCodes => stopCodes.length > 0),
-    // ).subscribe(stopCodes => {
-    //   this.socket.emit('update-arrivals', {stopCodes: stopCodes});
-    //   this.subscription.unsubscribe();
-    // });
+    this.store.select(routeStopCodes).pipe(
+      filter(stopCodes => stopCodes.length > 0),
+      take(1)
+    ).subscribe(stopCodes => {
+      this.socket.emit('update-arrivals', {stopCodes: stopCodes});
+    });
   }
 
-  public getBusUpdates(routeCode: string){
+  public getBusUpdates(routeCode?: string){
     this.socket.emit('start-bus-updates', {routeCode: routeCode});
   }
 

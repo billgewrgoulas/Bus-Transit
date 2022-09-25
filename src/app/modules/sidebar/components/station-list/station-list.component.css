@@ -4,8 +4,7 @@
     flex-direction: column;
     align-items: center;
     width: 100%;
-    margin-top: 30px;
-    padding: 0 20px 10px 20px;
+    margin-top: 10px;
 }
 
 .timeline-wrapper{
@@ -20,12 +19,11 @@
 
 .stations-list{
     width: 100%;
-    margin-left: 17px;
     color: rgb(89, 89, 89);
     display: flex;
     flex-direction: column;
     align-items: flex-start;
-    height: calc(100vh - 300px);
+    height: calc(100vh - 265px);
     overflow: auto;
 }
 

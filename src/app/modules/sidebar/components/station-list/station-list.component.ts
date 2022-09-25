@@ -1,9 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { Store } from '@ngrx/store';
-import { IStation } from 'src/app/state/entities/dataInterfaces';
 import { Observable } from 'rxjs';
 import { AppState } from 'src/app/state/reducers/api-reducer';
 import * as actions from '../../../../state/actions/api-calls.actions';
+import { getRouteStations } from 'src/app/state/selectors/appState.selectors';
+import { IStation } from 'src/app/state/entities/station.entity';
 
 
 @Component({
@@ -15,10 +16,10 @@ export class StationListComponent implements OnInit {
 
   constructor(private store: Store<AppState>) { }
 
-  public currentRouteStations$!: Observable<IStation[] | undefined>;
+  public currentRouteStations$!: Observable<IStation[]>;
 
   ngOnInit(): void {
-    //this.currentRouteStations$ = this.store.select(routeStations);
+    this.currentRouteStations$ = this.store.select(getRouteStations);
   }
   
 }

@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { catchError, map, mergeMap, Observable, throwError } from 'rxjs';
-import { IArrival, IArrivalInfo, ILine, IRoute } from '../state/entities/dataInterfaces';
+import { IArrival, IArrivalDetails } from '../state/entities/arival.entity';
 
 @Injectable({
   providedIn: 'root'
@@ -23,7 +23,7 @@ export class DataService {
     }), catchError((err)=>throwError(()=>new Error(err))))
   }
 
-  public getRouteDetailsAndStops(uri: string): Observable<IRoute>{
+  public getRouteDetailsAndStops(uri: string): Observable<any>{
     return this.http.get(this.url+ 'path/' + uri, this.options).pipe(map((res: any)=>{
       return res;
     }), catchError((err)=>throwError(()=>new Error(err))))
@@ -36,8 +36,9 @@ export class DataService {
   }
 
   public getStationArrivals(stationCode: string): Observable<IArrival>{
-    return this.http.get<IArrivalInfo[]>(this.url + 'arrivals/' + stationCode, this.options).pipe(map((res: any)=>{
-      return {stationCode: stationCode, arrivalInfo: res};
+    return this.http.get<IArrivalDetails[]>(this.url + 'arrivals/' + stationCode, this.options).pipe(
+      map((res)=> res ? res : []), map((res: any)=>{
+        return {stop_code: stationCode, arrivalDetails: res};
     }), catchError((err)=>throwError(()=>new Error(err))))
   }
 

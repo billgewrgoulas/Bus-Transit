@@ -3,8 +3,11 @@ import { MapService } from 'src/app/services/map.service';
 import { filter, Subscription, tap } from 'rxjs';
 import { Store } from '@ngrx/store';
 import { AppState} from 'src/app/state/reducers/api-reducer';
-import { IRoute } from 'src/app/state/entities/dataInterfaces';
 import * as L from "leaflet";
+import { currentRoute, getRouteVeh, getRoutePathAndStops, getActiveStation } from 'src/app/state/selectors/appState.selectors';
+import { IMapData } from 'src/app/state/entities/map.data.entity';
+import { IBus } from 'src/app/state/entities/bus.entity';
+import { IStation } from 'src/app/state/entities/station.entity';
 
 @Component({
   selector: 'map-area',
@@ -13,7 +16,9 @@ import * as L from "leaflet";
 })
 export class MapAreaComponent implements OnInit, OnDestroy {
 
-  private currentLine$!: Subscription;
+  private currentRoute$!: Subscription;
+  private buses$!: Subscription;
+  private station$!: Subscription;
 
   constructor(private store: Store<AppState>, private mapService: MapService) { }
 
@@ -22,20 +27,38 @@ export class MapAreaComponent implements OnInit, OnDestroy {
     this.mapService.setMap = L.map('map');
     this.mapService.mapInit();
 
-    // this.currentLine$ = this.store.select(routeDetails).pipe(
-    //   tap(() => this.mapService.clearMap()),
-    //   filter(details => details != undefined)
-    // ).subscribe(route => this.displayInfo(route!));
+    this.currentRoute$ = this.store.select(getRoutePathAndStops).pipe(
+      tap(() => this.mapService.clearMap()),
+      filter(data => !!data.path),
+    ).subscribe(route => this.displayInfo(route!));
+
+    this.buses$ = this.store.select(getRouteVeh).pipe(
+      filter(buses => !!buses)
+    ).subscribe(buses => this.updateBusLoacations(buses));
+
+    this.station$ = this.store.select(getActiveStation).pipe(
+      filter(stop => !!stop),
+    ).subscribe(stop => this.flyTo(stop));
 
   }
 
-  public displayInfo(route: IRoute){
-    this.mapService.carvePath(route.latLong);
+  public displayInfo(route: IMapData){
+    this.mapService.carvePath(route.path);
     this.mapService.displayMarkers(route.stations);
   }
 
+  public updateBusLoacations(buses?: IBus[]){
+    this.mapService.displayBusLocations(buses!);
+  }
+
+  public flyTo(stop?: IStation){
+    this.mapService.focusOnStop(stop!);
+  }
+
   ngOnDestroy(): void {
-    this.currentLine$.unsubscribe();
+    this.currentRoute$.unsubscribe();
+    this.buses$.unsubscribe();
+    this.station$.unsubscribe();
   }
 
 

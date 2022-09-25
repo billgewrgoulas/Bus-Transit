@@ -1,5 +1,5 @@
 import { createAction, props } from "@ngrx/store";
-import { IArrival } from "../entities/arival.entity";
+import { IArrival, IArrivalDetails } from "../entities/arival.entity";
 import { ILine } from "../entities/line.entity";
 import { IRoute } from "../entities/route.entity";
 
@@ -26,8 +26,10 @@ export module requests{
      export const getStationsArrivalsSuccess = createAction('[API] GET Arrivals Success', props<{data: IArrival}>());
      export const getStationsArrivalsError = createAction('[Api] GET Arrivals error');
 
-    /* Line selected */
+    /* Line, station and route changed */
     export const selectLine = createAction('Select Line', props<{code: string}>());
+    export const selectRoute = createAction('Select Route', props<{routeCode: string}>());
+    export const selectStation = createAction('Select Station', props<{stopCode: string}>());
 
 
 }

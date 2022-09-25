@@ -4,13 +4,13 @@ export interface IStation{
     StopCode: string;
     StopDescr: string;
     StopHeading: string;
-    StopLat: string;
-    StopLng: string;
+    StopLat: number;
+    StopLng: number;
     RouteStopOrder: string;
 }
 
 export interface StationState extends EntityState<IStation>{
-    activeStationId: string
+    activeStationId: string,
 };
 
 export const stationStateAdapter: EntityAdapter<IStation> = createEntityAdapter<IStation>({

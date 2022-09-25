@@ -11,14 +11,15 @@ export class OptionComponent implements OnInit {
   @Input() public icon: string = '';
   @Input() public text: string = '';
   @Input() public desc: string = '';
+  @Input() public link: string[] = ['lines'];
 
   constructor(private router: Router) { }
 
   ngOnInit(): void {
   }
 
-  public navigate(option: string){
-    this.router.navigate([{ outlets: { sidebar: ['lines'] } }]);
+  public navigate(){
+    this.router.navigate([{ outlets: { sidebar: this.link }}]);
   }
 
 }

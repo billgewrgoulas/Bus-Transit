@@ -1,4 +1,5 @@
 
+import { Params } from '@angular/router';
 import { getSelectors, RouterReducerState } from '@ngrx/router-store';
 import { createFeatureSelector, createSelector } from '@ngrx/store';
 
@@ -15,14 +16,19 @@ export const {
     selectTitle, // Select the title if available
 } = getSelectors();
 
-export const selectCurrent = createSelector(
-    selectRouter,
-    (s1)=> s1.state
+
+
+
+export const getParams = createSelector(
+    selectRouteParams, (params: Params) => params
 );
 
-export const getState = createSelector(
-    selectCurrent, 
-    selectCurrentRoute
+export const getNavigationRoute = createSelector(
+    selectCurrentRoute, (route) => route
+);
+
+export const getUrl = createSelector(
+    selectUrl, (url: string) => url
 );
 
 

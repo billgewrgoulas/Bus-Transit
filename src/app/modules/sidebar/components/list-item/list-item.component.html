@@ -5,7 +5,7 @@
         [class.fa-map-marker-alt]="isLast">
     </i>
     <div class="station-details">
-        <span class="station-name">{{station.description}}({{station.heading}})</span>
+        <span class="station-name">{{station.StopDescr}}({{station.StopHeading}})</span>
         <ng-container *ngIf="(arrivals$ | async) as arrivals">
             <ng-container *ngIf="arrivals.length>0 else noIncoming">
                 <span *ngFor="let arrival of arrivals" class="arrive-time">Bus arrives in {{arrival.btime2}} minutes</span>

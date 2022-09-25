@@ -8,10 +8,15 @@ export interface IBus{
     ROUTE_CODE: string;
 }
 
-export interface BusState extends EntityState<IBus>{};
+export interface IRouteVeh{
+    buses: IBus[];
+    ROUTE_CODE: string;
+}
 
-export const busStateAdapter: EntityAdapter<IBus> = createEntityAdapter<IBus>({
-    selectId: (bus: IBus) => bus.VEH_NO
+export interface IRouteVehState extends EntityState<IRouteVeh>{};
+
+export const vehStateAdapter: EntityAdapter<IRouteVeh> = createEntityAdapter<IRouteVeh>({
+    selectId: (bus: IRouteVeh) => bus.ROUTE_CODE
 });
 
-export const inititialBusState: BusState = busStateAdapter.getInitialState({});
+export const inititialIRouteVehState: IRouteVehState = vehStateAdapter.getInitialState({});

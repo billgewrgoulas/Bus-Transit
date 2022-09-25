@@ -1,4 +1,5 @@
 import { createAction, props } from "@ngrx/store";
+import { IRouteVeh } from "../entities/bus.entity";
 
 export module SocketActions{
 
@@ -6,7 +7,8 @@ export module SocketActions{
     export const updateArrivals = createAction('[IO] update arrivals');
     export const stopUpdates = createAction('[IO] Stop arrival updates');
 
-    /* Start route busses location updates */
-    export const updateBusLocations = createAction('[IO] Bus Location Updates', props<{routeCode: string}>());
+    /* Start route bus location updates */
+    export const updateBusLocations = createAction('[IO] Bus Location Updates');
+    export const busLocationsUpdates = createAction('[IO] Bus Locations Updated', props<{data: IRouteVeh}>());
     export const stopBusLocationUpdates = createAction('[IO] Bus Location Cancel');
 }
