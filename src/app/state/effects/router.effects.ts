@@ -22,7 +22,8 @@ export class RouterEffects{
     fetchLines$ = createEffect(()=>
         this.actions$.pipe(
             ofType(ROUTER_NAVIGATED),
-            switchMap((event) => [api_actions.requests.getRoutes()]))
+            map((event) => api_actions.requests.getRoutes())
+        )
     );
 
     fetchLineData$ = createEffect(()=>
@@ -34,7 +35,11 @@ export class RouterEffects{
             switchMap((lineCode) => [
                 api_actions.requests.selectLine({code: lineCode}),
                 api_actions.requests.getLineRoutes({lineCode: lineCode}),
-                //actions.SocketActions.updateArrivals(),
+                api_actions.requests.selectRoute({routeCode: ''}),
+                api_actions.requests.selectBus({busCode: ''}),
+                api_actions.requests.selectStation({stopCode: ''}),
+                api_actions.requests.stopUpdates(),
+                api_actions.requests.stopBusLocationUpdates()
             ]), 
         ),
     );
@@ -48,10 +53,11 @@ export class RouterEffects{
             switchMap((routeCode) => [
                 api_actions.requests.getRouteDetails({routeCode: routeCode}),
                 api_actions.requests.selectRoute({routeCode: routeCode}),
-                //actions.SocketActions.updateBusLocations()
+                api_actions.requests.updateArrivals(),
+                api_actions.requests.updateBusLocations({routeCode: routeCode})
             ])
         ),
-    )
+    );
 
     clearLine$ = createEffect(() => 
         this.actions$.pipe(
@@ -61,8 +67,10 @@ export class RouterEffects{
             switchMap(() => [
                 api_actions.requests.selectLine({code: ''}),
                 api_actions.requests.selectRoute({routeCode: ''}),
-                //actions.SocketActions.stopBusLocationUpdates()
-                //actions.SocketActions.stopUpdates()
+                api_actions.requests.selectBus({busCode: ''}),
+                api_actions.requests.selectStation({stopCode: ''}),
+                api_actions.requests.stopUpdates(),
+                api_actions.requests.stopBusLocationUpdates()
             ])
         )
     );

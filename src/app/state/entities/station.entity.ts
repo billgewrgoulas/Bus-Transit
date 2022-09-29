@@ -4,8 +4,8 @@ export interface IStation{
     StopCode: string;
     StopDescr: string;
     StopHeading: string;
-    StopLat: number;
-    StopLng: number;
+    StopLat: string;
+    StopLng: string;
     RouteStopOrder: string;
 }
 

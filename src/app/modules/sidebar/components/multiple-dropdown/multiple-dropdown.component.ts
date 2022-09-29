@@ -15,14 +15,13 @@ export class MultipleDropdownComponent implements OnInit{
   @Input() public title: string = '';
   @Input() public value: string = '';
   @Input() public data$!: Observable<ILine[]>;
-  @Output() selectedValue = new EventEmitter<ILine>();
+  @Output() selectedValue: EventEmitter<ILine> = new EventEmitter<ILine>();
 
-  constructor(private store: Store<AppState>) { }
+  constructor() { }
 
   ngOnInit(): void {}
 
   public select(line: ILine){
-    console.log(line);
     this.selectedValue.emit(line);
   }
 

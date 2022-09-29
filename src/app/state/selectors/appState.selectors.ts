@@ -1,8 +1,8 @@
 import { Dictionary } from "@ngrx/entity";
 import { createFeatureSelector, createSelector } from "@ngrx/store";
 import { stat } from "fs";
-import { ArrivalState, arrivalStateAdapter } from "../entities/arival.entity";
-import { IBus } from "../entities/bus.entity";
+import { ArrivalState, arrivalStateAdapter, IArrival, IArrivalDetails } from "../entities/arival.entity";
+import { IBus, IRouteVeh, IRouteVehState } from "../entities/bus.entity";
 import { ILine, LineState, lineStateAdapter } from "../entities/line.entity";
 import { IMapData } from "../entities/map.data.entity";
 import { IRoute, RouteState } from "../entities/route.entity";
@@ -62,11 +62,11 @@ export const getRouteStations = createSelector(
 export const getRoutePathAndStops = createSelector(
     currentRoute, getRouteStations, 
     (route: any, stops: any): IMapData => {
-        return {path: route!?.path, stations: stops}
+        return {path: route!?.path, stations: stops};
     }
 );
 
-/* Select the stop arrivals for a specific route*/
+/* Select the stop arrivals for a specific route and station */
 export const stopSchedule = (stationCode: string) => 
     createSelector(selectArrivalEntities, currentRoute, (arrivals, route)=>
         arrivals[stationCode]?.arrivalDetails.filter(
@@ -74,9 +74,21 @@ export const stopSchedule = (stationCode: string) =>
         )
 );
 
-/* Select the active route stops */
-export const routeStopCodes = createSelector(
-    currentRoute, (route) => route!.stopCodes
+/* Select the stop arrivals for a specific route and station */
+export const currentStopSchedule = createSelector(
+    selectArrivalEntities, currentRoute, getStationState, (arrivals, route, state)=>{
+        if(state.activeStationId !== ''){
+            return arrivals[state.activeStationId]?.arrivalDetails.filter(
+                arrival => arrival.route_code === route?.RouteCode
+            )[0];
+        }
+        else return undefined
+    }
+);
+
+/*Select the clicked station for the map details */
+export const getActiveStation = createSelector(
+    getStationState, (state: StationState) => state.entities[state.activeStationId]
 );
 
 /* Select the active route vehicles */
@@ -91,11 +103,20 @@ export const filterDropdown = (value: string)=>
         lines.filter((line: ILine) => includes(line.line_descr, value)).slice(0, 20)
 );
 
-export const getActiveStation = createSelector(
-    getStationState, (state: StationState) => state.entities[state.activeStationId]
+/* Select the active route stops */
+export const routeStopCodes = createSelector(
+    currentRoute, (route) => getStopCodes(route)
 );
 
+export const getActiveBus = createSelector(
+    getVehState, (veh: IRouteVehState) => veh.selectedBus
+);
 
+/* Select a route bus */
+export const getSelectedBus = createSelector(
+    currentRoute, selectVehEntities, getActiveBus,
+    (route, buses, busCode) => filterActiveBus(route!, buses, busCode)
+);
 
 
 
@@ -107,7 +128,7 @@ export const getActiveStation = createSelector(
 const includes = (lineDesc: string, value: string): boolean=>{
     return lineDesc.trim()
         .toLowerCase()
-        .includes(value.trim().toLowerCase())
+        .includes(value.trim().toLowerCase());
 }
 
 const getStops = (stopCodes: string[], stopEntities: Dictionary<any>) => {
@@ -120,4 +141,14 @@ const getRoutes = (routeCodes: string[], routeEntities: Dictionary<any>) => {
     const routes: IRoute[] = [];
     if(routeCodes) routeCodes.forEach(code => routes.push(routeEntities[code]));
     return routes;
+}
+
+const getStopCodes = (route?: IRoute): string[] =>{
+    if(route) return route.stopCodes;
+    return [];
+}
+
+const filterActiveBus = (route: IRoute, buses: Dictionary<IRouteVeh>, busCode: string) =>{
+    if(buses && route) return buses[route.RouteCode]?.buses.filter((bus: IBus) => bus.VEH_NO === busCode);
+    return [];
 }

@@ -26,25 +26,10 @@ export class SocketIOService {
       console.log(data.msg);
     });
 
-    this.socket.on('update-arrivals', (data: IArrival[])=>{
-      data.forEach((arrival) => {
-        this.store.dispatch(actions.requests.getStationsArrivalsSuccess({data: arrival}));
-      });
-    });
-
     this.socket.on('bus-updates-fetched', (data: IRouteVeh)=>{
       this.store.dispatch(socket.SocketActions.busLocationsUpdates({data: data}));
     });
 
-  }
-
-  public updateAll(){
-    this.store.select(routeStopCodes).pipe(
-      filter(stopCodes => stopCodes.length > 0),
-      take(1)
-    ).subscribe(stopCodes => {
-      this.socket.emit('update-arrivals', {stopCodes: stopCodes});
-    });
   }
 
   public getBusUpdates(routeCode?: string){

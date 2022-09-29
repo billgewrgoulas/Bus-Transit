@@ -1,0 +1,56 @@
+
+<ng-container *ngIf="station$ | async as station else notSelected">
+    <div class="entity-wrapper">
+        <div class="entity-container">
+            <div class="entity-type">
+                <i class="fas fa-map-marker-alt"></i>
+                <span class="option-text">{{station.StopDescr}}</span>
+            </div>
+            <ng-container *ngIf="arrival$ | async as arrival else noBus">
+                <div class="text-content">
+                    <span class="option-text">Delay</span>
+                    <span class="description">+116 sec</span>
+                </div>
+                <div class="text-content">
+                    <span class="option-text">Next estimated arrival in</span>
+                    <span class="description">{{arrival.btime2}} mins</span>
+                </div>
+                <div class="text-content">
+                    <span class="option-text">Next fact arrival in</span>
+                    <span class="description">{{+arrival.btime2 + 2}} mins</span>
+                </div>
+                <div class="text-content">
+                    <span class="option-text">Bus no</span>
+                    <span class="description">{{arrival.veh_code}}</span>
+                </div>
+            </ng-container>
+        </div>
+    </div>
+</ng-container>
+
+<ng-template #notSelected>
+    <div class="entity-wrapper">
+        <div class="entity-container center">
+            <div class="entity-type">
+                <span class="option-text">Select a station</span>
+            </div>
+        </div>
+    </div>
+</ng-template>  
+
+<ng-template #noBus>
+    <div class="text-content">
+        <span class="option-text">Next bus starts at</span>
+        <span class="description">12:00 PM</span>
+    </div>
+</ng-template>
+
+    
+    
+
+
+
+
+
+
+

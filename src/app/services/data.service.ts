@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { catchError, map, mergeMap, Observable, throwError } from 'rxjs';
 import { IArrival, IArrivalDetails } from '../state/entities/arival.entity';
+import { IRouteVeh } from '../state/entities/bus.entity';
 
 @Injectable({
   providedIn: 'root'
@@ -15,6 +16,18 @@ export class DataService {
     const headers = new HttpHeaders();
     headers.append('Content-Type', 'application/json');
     this.options = { headers: headers, withCredentials: false };
+  }
+
+  public getArrivalUpdates(stopCodes: string[]): Observable<any>{
+    return this.http.post(this.url + 'update-arrivals', stopCodes, this.options).pipe(map((res: any)=>{
+      return res;
+    }), catchError((err)=>throwError(()=>new Error(err))))
+  }
+
+  public getBusLocations(routeCode: string): Observable<IRouteVeh>{
+    return this.http.get(this.url + 'bus-locations/' + routeCode, this.options).pipe(map((res: any)=>{
+      return res;
+    }), catchError((err)=>throwError(()=>new Error(err))))
   }
 
   public getAllLines(uri: string): Observable<any>{

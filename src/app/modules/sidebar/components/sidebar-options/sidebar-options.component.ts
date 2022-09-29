@@ -9,9 +9,9 @@ export class SidebarOptionsComponent implements OnInit {
 
   public options: any[] = [
     {text: 'Lines', icon: 'route', desc: 'Display line information'},
-    {text: 'Best Route', icon: 'swap_vert', desc: 'Get the best line'},
+    {text: 'Best Route', icon: 'swap_vert', desc: 'Estimate the best route or bus'},
     {text: 'Closest stops', icon: 'where_to_vote', desc: 'Find closest stops and lines'},
-    {text: 'Saved stops', icon: 'file_present', desc: 'Saved lines, stops...'},
+    {text: 'Saved information', icon: 'file_present', desc: 'Saved lines, stops...'},
     {text: 'Recently searched', icon: 'folder_special', desc: 'Recent searches'}
   ]
 

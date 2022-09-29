@@ -15,14 +15,12 @@ import { ApiEffects } from './state/effects/api.effects';
 import { lineStateReducer } from './state/reducers/api-reducer';
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 import { environment } from '../environments/environment';
-import { MapService } from './services/map.service';
 import { MapModule } from './modules/map/map.module';
 import { RouterModule } from '@angular/router';
 import { StoreRouterConnectingModule, routerReducer} from '@ngrx/router-store';
 import { SocketIOService } from './services/socket-io.service';
 import { SocketEffects } from './state/effects/socket.effects';
 import { RouterEffects } from './state/effects/router.effects';
-
 @NgModule({
   declarations: [
     AppComponent,
@@ -44,7 +42,7 @@ import { RouterEffects } from './state/effects/router.effects';
     StoreRouterConnectingModule.forRoot()
 
   ],
-  providers: [HttpClient, MapService, SocketIOService],
+  providers: [HttpClient, SocketIOService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

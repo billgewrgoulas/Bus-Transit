@@ -1,23 +1,44 @@
 
-<div class="entity-container">
-    <div class="entity-type">
-        <i class="fas fa-bus"></i>
-        <span>Bus 101</span>
-    </div>
-    <div class="text-content">
-        <span class="option-text">Delay</span>
-        <span class="description">-116 sec</span>
-    </div>
-    <div class="text-content">
-        <span class="option-text">Next stop</span>
-        <span class="description">Ομονοια</span>
-    </div>
-    <div class="text-content">
-        <span class="option-text">Next stop scheduled arrival</span>
-        <span class="description">10:40 PM</span>
-    </div>
-    <div class="text-content">
-        <span class="option-text">Next stop fact arrival</span>
-        <span class="description">10:42</span>
-    </div>
-</div>
+<ng-container *ngIf="module === 'bus'">
+    <ng-container *ngIf="buses$ else noIncoming">
+        <div class="entity-wrapper" *ngFor="let bus of buses$ | async" (click)="focus(bus.VEH_NO)">
+            <div class="entity-container">
+                <div class="entity-type">
+                    <i class="fas fa-bus"></i>
+                    <span class="option-text">Bus code: {{bus.VEH_NO}}</span>
+                </div>
+                <div class="text-content">
+                    <span class="option-text">Delay</span>
+                    <span class="description">-116 sec</span>
+                </div>
+                <div class="text-content">
+                    <span class="option-text">Next stop</span>
+                    <span class="description">Ομονοια</span>
+                </div>
+                <div class="text-content">
+                    <span class="option-text">Next stop scheduled arrival</span>
+                    <span class="description">10:40 PM</span>
+                </div>
+                <div class="text-content">
+                    <span class="option-text">Next stop fact arrival</span>
+                    <span class="description">10:42</span>
+                </div>
+            </div>
+        </div>
+    </ng-container>
+
+    <ng-template #noIncoming >
+        <div class="entity-wrapper">
+            <div class="entity-container center">
+                <div class="entity-type">
+                    <span class="option-text">No buses available right now</span>
+                </div>
+            </div>
+        </div>
+    </ng-template>
+    
+</ng-container>
+
+
+
+

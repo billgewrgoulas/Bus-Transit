@@ -1,5 +1,6 @@
 
 import { createReducer, on, State} from "@ngrx/store";
+import { builtinModules } from "module";
 import * as actions from "../actions/api-calls.actions";
 import * as socket from "../actions/socketIO.actions";
 import { ArrivalState, arrivalStateAdapter, initialArrivalState } from "../entities/arival.entity";
@@ -43,10 +44,13 @@ export const lineStateReducer = createReducer(
         return {...state, stations:{...state.stations, activeStationId: action.stopCode}};
     }),
     on(actions.requests.getStationsArrivalsSuccess, (state: AppState, action): AppState =>{
-        return {...state, arrivals: arrivalStateAdapter.setOne(action.data, state.arrivals)};
+        return {...state, arrivals: arrivalStateAdapter.setMany(action.data, state.arrivals)};
     }),
     on(socket.SocketActions.busLocationsUpdates, (state: AppState, action): AppState =>{
         return {...state, vehicles: vehStateAdapter.setOne(action.data, state.vehicles)};
+    }),
+    on(actions.requests.selectBus, (state: AppState, action): AppState => {
+        return {...state, vehicles: {...state.vehicles, selectedBus: action.busCode}};
     }),
     on(actions.requests.getLineRoutesSuccess, (state: AppState, action): AppState=>{
         return {...state, routes: routeStateAdapter.addMany(action.data, state.routes), 
@@ -56,8 +60,8 @@ export const lineStateReducer = createReducer(
     on(actions.requests.getRouteDetailsuccess, (state: AppState, action): AppState=>{
         return {...state, 
                 stations: stationStateAdapter.addMany(action.data.stops, state.stations), 
-                routes: routeStateAdapter.updateOne({id: action.code, changes: 
-                {path: action.data.path, stopCodes: getCodes(action.data.stops)}}, state.routes), 
+                routes: routeStateAdapter.updateOne({id: action.code, changes: {
+                path: action.data.path, stopCodes: getCodes(action.data.stops)}}, state.routes), 
         };
     }),
 );

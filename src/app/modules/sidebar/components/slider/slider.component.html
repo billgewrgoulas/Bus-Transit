@@ -1,9 +1,12 @@
 
-<mat-tab-group mat-stretch-tabs animationDuration="300ms">
+<mat-tab-group mat-stretch-tabs animationDuration="300ms" [(selectedIndex)]="selectedTab">
     <mat-tab label="Stops">
         <station-list-component></station-list-component>
     </mat-tab>
     <mat-tab label="Bus details">
-        <entity-list [module]="'bus'"></entity-list>
+        <bus-entity></bus-entity>
+    </mat-tab>
+    <mat-tab label="Station">
+        <station-entity></station-entity>
     </mat-tab>
 </mat-tab-group>

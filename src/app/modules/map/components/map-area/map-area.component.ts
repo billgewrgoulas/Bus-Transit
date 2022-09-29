@@ -4,7 +4,7 @@ import { filter, Subscription, tap } from 'rxjs';
 import { Store } from '@ngrx/store';
 import { AppState} from 'src/app/state/reducers/api-reducer';
 import * as L from "leaflet";
-import { currentRoute, getRouteVeh, getRoutePathAndStops, getActiveStation } from 'src/app/state/selectors/appState.selectors';
+import { currentRoute, getRouteVeh, getRoutePathAndStops, getActiveStation, getActiveBus, getSelectedBus } from 'src/app/state/selectors/appState.selectors';
 import { IMapData } from 'src/app/state/entities/map.data.entity';
 import { IBus } from 'src/app/state/entities/bus.entity';
 import { IStation } from 'src/app/state/entities/station.entity';
@@ -16,9 +16,7 @@ import { IStation } from 'src/app/state/entities/station.entity';
 })
 export class MapAreaComponent implements OnInit, OnDestroy {
 
-  private currentRoute$!: Subscription;
-  private buses$!: Subscription;
-  private station$!: Subscription;
+  private subscribers: Subscription[] = [];
 
   constructor(private store: Store<AppState>, private mapService: MapService) { }
 
@@ -27,18 +25,22 @@ export class MapAreaComponent implements OnInit, OnDestroy {
     this.mapService.setMap = L.map('map');
     this.mapService.mapInit();
 
-    this.currentRoute$ = this.store.select(getRoutePathAndStops).pipe(
+    this.subscribers.push(this.store.select(getRoutePathAndStops).pipe(
       tap(() => this.mapService.clearMap()),
       filter(data => !!data.path),
-    ).subscribe(route => this.displayInfo(route!));
+    ).subscribe(route => this.displayInfo(route!)));
 
-    this.buses$ = this.store.select(getRouteVeh).pipe(
+    this.subscribers.push(this.store.select(getRouteVeh).pipe(
       filter(buses => !!buses)
-    ).subscribe(buses => this.updateBusLoacations(buses));
+    ).subscribe(buses => this.updateBusLoacations(buses)));
 
-    this.station$ = this.store.select(getActiveStation).pipe(
+    this.subscribers.push(this.store.select(getActiveStation).pipe(
       filter(stop => !!stop),
-    ).subscribe(stop => this.flyTo(stop));
+    ).subscribe(stop => this.flyTo([stop?.StopLat!, stop?.StopLng!])));
+
+    this.subscribers.push(this.store.select(getSelectedBus).pipe(
+      filter(bus => !!bus && !!bus[0])
+    ).subscribe(bus => this.flyTo([bus![0].CS_LAT, bus![0].CS_LNG])));
 
   }
 
@@ -51,14 +53,12 @@ export class MapAreaComponent implements OnInit, OnDestroy {
     this.mapService.displayBusLocations(buses!);
   }
 
-  public flyTo(stop?: IStation){
-    this.mapService.focusOnStop(stop!);
+  public flyTo(point: string[]){
+    this.mapService.focusOnPoint(point);
   }
 
   ngOnDestroy(): void {
-    this.currentRoute$.unsubscribe();
-    this.buses$.unsubscribe();
-    this.station$.unsubscribe();
+    this.subscribers.forEach(subscriber => subscriber.unsubscribe());
   }
 
 

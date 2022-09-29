@@ -6,6 +6,7 @@ import { SidebarOptionsComponent } from './components/sidebar-options/sidebar-op
 import { RouterModule } from '@angular/router';
 import { SidebarRoutingModule } from './sidebar-routing.mudule';
 import { SharedModule } from '../shared-module/shared-module.module';
+import { DataShareService } from 'src/app/services/data-share.service';
 
 @NgModule({
   declarations: [
@@ -19,6 +20,7 @@ import { SharedModule } from '../shared-module/shared-module.module';
     SidebarRoutingModule,
     SharedModule
   ],
-  exports: [SideNavComponent]
+  exports: [SideNavComponent],
+  providers: [DataShareService]
 })
 export class SidebarModule { }

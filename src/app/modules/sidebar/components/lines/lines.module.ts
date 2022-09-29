@@ -30,7 +30,7 @@ import {MatTabsModule} from '@angular/material/tabs';
     SharedModule,
     MatTabsModule
   ],
-  providers: [MapService],
+  providers: [],
   bootstrap: [AppComponent]
 })
 export class LinesModule { }

@@ -29,5 +29,5 @@
     (selectedValue)="changeValue($event)">
 </multiple-dropdown>
 
-<router-outlet></router-outlet>
+<router-outlet (activate)="outletActive($event)"></router-outlet>
 

@@ -32,7 +32,6 @@ export class LinesComponent implements OnInit {
 
   public changeValue(line: ILine){
     this.value = line.line_descr;
-    this.selected = true;
     this.router.navigate([{ outlets: { sidebar: [ 'lines', line.line_code ] }}]);
   }
 
@@ -45,6 +44,10 @@ export class LinesComponent implements OnInit {
   public navigate(){
     this.selected = false;
     this.store.dispatch(navigation.nav_actions.arrowNavigation());
+  }
+
+  public outletActive(e$: Object){
+    this.selected = true;
   }
 
 }
