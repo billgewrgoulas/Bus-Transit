@@ -13,11 +13,13 @@ const routes: Routes = [
     children: [
       {
         path: ':lineCode',
-        component: RouteListComponent,
+        component: SliderComponent,
+        data: {type: 'lineSlider'}
       },
       {
         path: ':lineCode/route/:routeCode', 
-        component: SliderComponent 
+        component: SliderComponent,
+        data: {type: 'routeSlider'}
       }]
   }
     

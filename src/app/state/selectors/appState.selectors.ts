@@ -5,6 +5,7 @@ import { ArrivalState, arrivalStateAdapter, IArrival, IArrivalDetails } from "..
 import { IBus, IRouteVeh, IRouteVehState } from "../entities/bus.entity";
 import { ILine, LineState, lineStateAdapter } from "../entities/line.entity";
 import { IMapData } from "../entities/map.data.entity";
+import { IMlInfo } from "../entities/mLine.entity";
 import { IRoute, RouteState } from "../entities/route.entity";
 import { IStation, StationState } from "../entities/station.entity";
 import { AppState } from "../reducers/api-reducer";
@@ -18,17 +19,18 @@ export const getRouteState = createSelector(getAppState, (state: AppState) => st
 export const getStationState = createSelector(getAppState, (state: AppState) => state.stations);
 export const getArrivalState = createSelector(getAppState, (state: AppState) => state.arrivals);
 export const getVehState = createSelector(getAppState, (state: AppState) => state.vehicles);
+export const getMlState = createSelector(getAppState, (state: AppState) => state.mLines);
 
 export const selectAllLines = createSelector(getLineState, selectAll);
 export const selectLineEntities = createSelector(getLineState, selectEntities);
 export const selectStationEntities = createSelector(getStationState, (stationState) => stationState.entities);
 export const selectArrivalEntities = createSelector(getArrivalState, (arrivals) => arrivals.entities);
 export const selectVehEntities = createSelector(getVehState, (state) => state.entities);
+export const selectMlEntities = createSelector(getMlState, (state) => state.entities);
 
 /* - Select the current line - */
 export const currentLine = createSelector(
-    getLineState,
-    selectLineEntities,
+    getLineState, selectLineEntities,
     (state, entities)=> entities[state.activeLineId]
 );
 
@@ -66,6 +68,22 @@ export const getRoutePathAndStops = createSelector(
     }
 );
 
+/* Select schedule days */
+export const scheduleDays = createSelector(
+    currentLine, selectMlEntities, (line, ml) => {
+        const schedules: IMlInfo[] = [];
+        if(line && line.sdc_codes){
+            line.sdc_codes.forEach((code) =>{
+                const masterline = ml[code];
+                if(masterline){
+                    schedules.push(masterline);
+                }
+            });
+        }
+        return schedules;
+    }
+);
+
 /* Select the stop arrivals for a specific route and station */
 export const stopSchedule = (stationCode: string) => 
     createSelector(selectArrivalEntities, currentRoute, (arrivals, route)=>
@@ -74,9 +92,10 @@ export const stopSchedule = (stationCode: string) =>
         )
 );
 
-/* Select the stop arrivals for a specific route and station */
+/* Select the stop arrivals for the current route and station */
 export const currentStopSchedule = createSelector(
-    selectArrivalEntities, currentRoute, getStationState, (arrivals, route, state)=>{
+    selectArrivalEntities, currentRoute, getStationState, 
+    (arrivals, route, state)=>{
         if(state.activeStationId !== ''){
             return arrivals[state.activeStationId]?.arrivalDetails.filter(
                 arrival => arrival.route_code === route?.RouteCode

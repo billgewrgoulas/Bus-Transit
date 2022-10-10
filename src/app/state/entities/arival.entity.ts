@@ -15,7 +15,7 @@ export interface IArrival{
 export interface ArrivalState extends EntityState<IArrival>{};
 
 export const arrivalStateAdapter: EntityAdapter<IArrival> = createEntityAdapter<IArrival>({
-    selectId: (arrival: IArrival)=> arrival.stop_code
+    selectId: (arrival: IArrival) => arrival.stop_code
 });
 
 export const initialArrivalState: ArrivalState = arrivalStateAdapter.getInitialState({});

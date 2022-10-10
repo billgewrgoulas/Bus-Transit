@@ -13,7 +13,7 @@ export module requests{
 
     /* Fetch the routes of a line based on the lineCode */
     export const getLineRoutes = createAction('[API] GET Details', props<{lineCode: string}>());
-    export const getLineRoutesSuccess = createAction('[API] Routes Details Success', props<{data: IRoute[], lineCode: string}>());
+    export const getLineRoutesSuccess = createAction('[API] Routes Details Success', props<{data: any}>());
     export const getLineRoutesError = createAction('[API] Details Loaded Failed');
 
     /* Fetch route geopoints with stops */

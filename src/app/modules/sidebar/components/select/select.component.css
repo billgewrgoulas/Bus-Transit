@@ -1,0 +1,23 @@
+
+::ng-host{
+    width: 100%;
+}
+
+.select>select{
+    background: rgb(227,227,236);
+    background: linear-gradient(90deg, rgba(227,227,236,1) 0%, rgba(255,255,255,1) 100%);
+    box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
+    color: #373a50 !important;
+    font-size: 14px !important;
+    width: 100%;
+    padding: 10px 10px 10px 10px;
+    cursor: pointer;
+    border: none;
+    outline: none;
+}
+
+select>option{
+    background: rgb(227,227,236);
+    background: linear-gradient(90deg, rgba(227,227,236,1) 0%, rgba(255,255,255,1) 100%) !important;
+    box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
+}

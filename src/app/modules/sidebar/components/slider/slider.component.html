@@ -1,12 +1,32 @@
 
-<mat-tab-group mat-stretch-tabs animationDuration="300ms" [(selectedIndex)]="selectedTab">
-    <mat-tab label="Stops">
-        <station-list-component></station-list-component>
-    </mat-tab>
-    <mat-tab label="Bus details">
-        <bus-entity></bus-entity>
-    </mat-tab>
-    <mat-tab label="Station">
-        <station-entity></station-entity>
-    </mat-tab>
-</mat-tab-group>
+<ng-container *ngIf="module$ | async as module">
+
+    <ng-container *ngIf="module.type === 'routeSlider'">
+        <mat-tab-group mat-stretch-tabs animationDuration="300ms" [(selectedIndex)]="selectedTab">
+            <mat-tab label="Stops">
+                <station-list-component></station-list-component>
+            </mat-tab>
+            <mat-tab label="Bus details">
+                <bus-entity></bus-entity>
+            </mat-tab>
+            <mat-tab label="Station">
+                <station-entity></station-entity>
+            </mat-tab>
+        </mat-tab-group>
+    </ng-container>
+
+    <ng-container *ngIf="module.type === 'lineSlider'">
+        <mat-tab-group mat-stretch-tabs animationDuration="300ms" [(selectedIndex)]="selectedTab">
+            <mat-tab label="Routes">
+                <route-list></route-list>
+            </mat-tab>
+            <mat-tab label="Schedule">
+                <schedule-component></schedule-component>
+            </mat-tab>
+        </mat-tab-group>
+    </ng-container>
+
+</ng-container>
+
+
+

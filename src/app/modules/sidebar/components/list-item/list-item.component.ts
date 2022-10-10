@@ -17,7 +17,6 @@ import * as actions from '../../../../state/actions/api-calls.actions';
 export class ListItemComponent implements OnInit {
 
   @Input() public station!: IStation;
-  @Input() public arrivals: IArrivalDetails[] | undefined;
   @Input() public isLast: boolean = false;
 
   public arrivals$!: Observable<IArrivalDetails[] | undefined>;

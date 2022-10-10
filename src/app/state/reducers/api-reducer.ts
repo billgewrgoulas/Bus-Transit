@@ -6,6 +6,7 @@ import * as socket from "../actions/socketIO.actions";
 import { ArrivalState, arrivalStateAdapter, initialArrivalState } from "../entities/arival.entity";
 import { inititialIRouteVehState, IRouteVeh, IRouteVehState, vehStateAdapter } from "../entities/bus.entity";
 import { inititialLineState, LineState, lineStateAdapter } from "../entities/line.entity";
+import { IMLineState, inititialMLineState, mLStateAdapter } from "../entities/mLine.entity";
 import { inititialRouteState, RouteState, routeStateAdapter } from "../entities/route.entity";
 import { inititialStationState, StationState, stationStateAdapter } from "../entities/station.entity";
 
@@ -15,6 +16,7 @@ export interface AppState{
     arrivals: ArrivalState;
     routes: RouteState;
     vehicles: IRouteVehState;
+    mLines: IMLineState
 };
 
 export const initialAppState: AppState = {
@@ -23,6 +25,7 @@ export const initialAppState: AppState = {
     stations: inititialStationState,
     routes: inititialRouteState,
     vehicles: inititialIRouteVehState,
+    mLines: inititialMLineState
 };
 
 /* API Reducer */
@@ -53,13 +56,14 @@ export const lineStateReducer = createReducer(
         return {...state, vehicles: {...state.vehicles, selectedBus: action.busCode}};
     }),
     on(actions.requests.getLineRoutesSuccess, (state: AppState, action): AppState=>{
-        return {...state, routes: routeStateAdapter.addMany(action.data, state.routes), 
-                    lines: lineStateAdapter.updateOne({id: action.lineCode, changes: {
-                    routeCodes: getRouteCodes(action.data)}}, state.lines)};
+        return {...state, routes: routeStateAdapter.addMany(action.data.routes, state.routes), 
+                mLines: mLStateAdapter.addMany(action.data.mlInfo, state.mLines),
+                lines: lineStateAdapter.updateOne({id: action.data.lineCode, changes: {
+                routeCodes: getRouteCodes(action.data.routes),
+                sdc_codes: getSdcs(action.data.mlInfo)}}, state.lines)};
     }),
     on(actions.requests.getRouteDetailsuccess, (state: AppState, action): AppState=>{
-        return {...state, 
-                stations: stationStateAdapter.addMany(action.data.stops, state.stations), 
+        return {...state, stations: stationStateAdapter.addMany(action.data.stops, state.stations), 
                 routes: routeStateAdapter.updateOne({id: action.code, changes: {
                 path: action.data.path, stopCodes: getCodes(action.data.stops)}}, state.routes), 
         };
@@ -70,12 +74,18 @@ export const lineStateReducer = createReducer(
 /* Some Helpers */
 const getCodes = (stops: any[]) => {
     const codes: string[] = [];
-    stops.forEach(stop=>codes.push(stop.StopCode));
+    stops.forEach(stop => codes.push(stop.StopCode));
     return codes;
 }
 
 const getRouteCodes = (routes: any[]) => {
     const codes: string[] = [];
-    routes.forEach(route=>codes.push(route.RouteCode));
+    routes.forEach(route => codes.push(route.RouteCode));
+    return codes;
+}
+
+const getSdcs = (ml: any[]) => {
+    const codes: string[] = [];
+    ml.forEach(m => codes.push(m.sdc_code));
     return codes;
 }

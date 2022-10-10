@@ -21,6 +21,7 @@ import { StoreRouterConnectingModule, routerReducer} from '@ngrx/router-store';
 import { SocketIOService } from './services/socket-io.service';
 import { SocketEffects } from './state/effects/socket.effects';
 import { RouterEffects } from './state/effects/router.effects';
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -40,7 +41,6 @@ import { RouterEffects } from './state/effects/router.effects';
     EffectsModule.forRoot([ApiEffects, SocketEffects, RouterEffects]),
     StoreDevtoolsModule.instrument({ maxAge: 25, logOnly: environment.production }),
     StoreRouterConnectingModule.forRoot()
-
   ],
   providers: [HttpClient, SocketIOService],
   bootstrap: [AppComponent]

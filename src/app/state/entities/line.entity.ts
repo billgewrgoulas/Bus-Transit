@@ -7,6 +7,7 @@ export interface ILine{
     line_decr: string;
     line_descr: string;
     routeCodes: string[];
+    sdc_codes: string[];
 }
 
 export interface LineState extends EntityState<ILine>{

@@ -1,0 +1,9 @@
+
+:host{
+    display: flex;
+    flex-direction: column;
+    width: 99%;
+    margin-top: 20px;
+}
+
+

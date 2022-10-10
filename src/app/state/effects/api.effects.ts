@@ -8,7 +8,6 @@ import { AppState } from "../reducers/api-reducer";
 import { routeStopCodes, selectAllLines, selectLine, selectRoute } from "../selectors/appState.selectors";
 import { ILine } from "../entities/line.entity";
 import { IArrival } from "../entities/arival.entity";
-import { create } from "domain";
 import { IRouteVeh } from "../entities/bus.entity";
 
 @Injectable()
@@ -21,11 +20,10 @@ export class ApiEffects{
             ofType(api_actions.requests.getRoutes),
             withLatestFrom(this.store.select(selectAllLines)),
             filter(([action, lines]) => lines.length == 0),
-            exhaustMap(()=>this.dataService.getAllLines('lines').pipe(
-                map((res: ILine[]) => api_actions.requests.getRoutesSuccess({data: res}))
-            )  
+            exhaustMap(()=>this.dataService.getAllLines('lines')),
+            map((res: ILine[]) => api_actions.requests.getRoutesSuccess({data: res}))
         )     
-    ));
+    );
 
     loadLineRoutes$ = createEffect(()=>
         this.actions$.pipe(
@@ -33,10 +31,9 @@ export class ApiEffects{
             concatLatestFrom((action) => this.store.select(selectLine(action.lineCode))),
             filter(([action, line]) => !line?.routeCodes),
             switchMap(([action, line]) => this.dataService.getLineRoutes(action.lineCode)),
-            switchMap((data) => [
-                api_actions.requests.getLineRoutesSuccess({data: data, lineCode: data[0]['LineCode']}),
-            ]),
-    ));
+            map((res) => api_actions.requests.getLineRoutesSuccess({data: res})),
+        )
+    );
 
     loadRoutePath$ = createEffect(()=>
         this.actions$.pipe(
@@ -44,9 +41,7 @@ export class ApiEffects{
             concatLatestFrom((action) => this.store.select(selectRoute(action.routeCode))),
             filter(([action, route]) => !route?.stopCodes),
             switchMap(([action, route]) => this.dataService.getRouteDetailsAndStops(action.routeCode)),
-            switchMap((response) => [
-                api_actions.requests.getRouteDetailsuccess({data: response, code: response.routeCode})
-            ])
+            map((response) => api_actions.requests.getRouteDetailsuccess({data: response, code: response.routeCode}))
         )
     );
 
@@ -59,6 +54,7 @@ export class ApiEffects{
                 switchMap(() => this.dataService.getArrivalUpdates(stopCodes)), 
                 takeUntil(this.actions$.pipe(ofType(api_actions.requests.stopUpdates)))
             )),
+            filter((res: IArrival[]) => !!res),
             map((res: IArrival[])=> api_actions.requests.getStationsArrivalsSuccess({data: res}))
         )
     );

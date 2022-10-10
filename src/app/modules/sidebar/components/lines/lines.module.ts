@@ -11,7 +11,10 @@ import { ListItemComponent } from "../list-item/list-item.component";
 import { RouteListComponent } from "../route-list/route-list.component";
 import { SharedModule } from "src/app/modules/shared-module/shared-module.module";
 import { SliderComponent } from "../slider/slider.component";
-import {MatTabsModule} from '@angular/material/tabs';
+import { MatTabsModule } from '@angular/material/tabs';
+import { ScheduleComponent } from "../schedule/schedule.component";
+import { MatSelectModule } from '@angular/material/select';
+import { SelectComponent } from "../select/select.component";
 
 
 @NgModule({
@@ -21,14 +24,17 @@ import {MatTabsModule} from '@angular/material/tabs';
     StationListComponent,
     ListItemComponent,
     RouteListComponent,
-    SliderComponent
+    SliderComponent,
+    ScheduleComponent,
+    SelectComponent
   ],
   imports: [
     CommonModule,
     LinesRoutingModule,
     FormsModule,
     SharedModule,
-    MatTabsModule
+    MatTabsModule,
+    MatSelectModule
   ],
   providers: [],
   bootstrap: [AppComponent]

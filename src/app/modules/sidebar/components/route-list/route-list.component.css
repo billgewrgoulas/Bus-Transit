@@ -1,38 +1,13 @@
+
 :host{
     height: 100%;
     width: 100%;
     padding: 40px 30px 0 30px;
 }
 
-.logo-section{
-    display: flex;
-    flex-direction: row;
-    justify-content: flex-start;
-    align-items: center;
-    height: 17vh;
-    width: 100%;
-    font-size: 30px;
-}
-
-.logo-content{
-    color: #373a50;
-    font-weight: 600;
-}
-
 .option-list{
     display: flex;
     flex-direction: column;
-    width: 100%;
+    width: 99%;
     max-height: calc(100vh - 300px);
-}
-
-i{
-    margin-right: 13px;
-}
-
-h1{
-    margin-bottom: 25px;
-    color: #2b3b4c;
-    font-family: "Lexend Deca",sans-serif;
-    font-weight: 600;
 }

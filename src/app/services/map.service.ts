@@ -68,7 +68,7 @@ export class MapService {
 
   public focusOnPoint(point: string[]){
     const coords = <LatLngExpression>[+point[0], +point[1]];
-    this.map.flyTo(<LatLngExpression>coords, 18);
+    this.map.flyTo(coords, 18);
   }
 
 }
