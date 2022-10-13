@@ -5,10 +5,11 @@ import { exhaustMap, filter, map, mapTo, of, Subject, switchMap, takeUntil, tap,
 import { DataService } from "src/app/services/data.service";
 import * as api_actions from '../actions/api-calls.actions';
 import { AppState } from "../reducers/api-reducer";
-import { routeStopCodes, selectAllLines, selectLine, selectRoute } from "../selectors/appState.selectors";
+import { currentLine, routeStopCodes, schedDetails, selectAllLines, selectLine, selectRoute } from "../selectors/appState.selectors";
 import { ILine } from "../entities/line.entity";
 import { IArrival } from "../entities/arival.entity";
 import { IRouteVeh } from "../entities/bus.entity";
+import { ISchedule } from "../entities/schedule.entity";
 
 @Injectable()
 export class ApiEffects{
@@ -42,6 +43,16 @@ export class ApiEffects{
             filter(([action, route]) => !route?.stopCodes),
             switchMap(([action, route]) => this.dataService.getRouteDetailsAndStops(action.routeCode)),
             map((response) => api_actions.requests.getRouteDetailsuccess({data: response, code: response.routeCode}))
+        )
+    );
+
+    loadScheduleTimes$ = createEffect(() =>
+        this.actions$.pipe(
+            ofType(api_actions.requests.getSchedule),
+            concatLatestFrom((action) => this.store.select(schedDetails(action.sdc_code))),
+            filter(([action, details]) => !!details),
+            switchMap(([action, details]) => this.dataService.getSchedule(details!.lineCode, details!.ml, details?.sdc)),
+            map((res: ISchedule) => api_actions.requests.getSchedSuccess({data: res}))
         )
     );
 

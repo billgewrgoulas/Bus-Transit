@@ -9,7 +9,7 @@
             <mat-tab label="Bus details">
                 <bus-entity></bus-entity>
             </mat-tab>
-            <mat-tab label="Station">
+            <mat-tab label="Stop">
                 <station-entity></station-entity>
             </mat-tab>
         </mat-tab-group>
@@ -17,11 +17,11 @@
 
     <ng-container *ngIf="module.type === 'lineSlider'">
         <mat-tab-group mat-stretch-tabs animationDuration="300ms" [(selectedIndex)]="selectedTab">
-            <mat-tab label="Routes">
-                <route-list></route-list>
-            </mat-tab>
             <mat-tab label="Schedule">
                 <schedule-component></schedule-component>
+            </mat-tab>
+            <mat-tab label="Routes">
+                <route-list></route-list>
             </mat-tab>
         </mat-tab-group>
     </ng-container>

@@ -69,6 +69,7 @@ export class RouterEffects{
                 api_actions.requests.selectRoute({routeCode: ''}),
                 api_actions.requests.selectBus({busCode: ''}),
                 api_actions.requests.selectStation({stopCode: ''}),
+                api_actions.requests.setCurrentSched({id: ''}),
                 api_actions.requests.stopUpdates(),
                 api_actions.requests.stopBusLocationUpdates()
             ])

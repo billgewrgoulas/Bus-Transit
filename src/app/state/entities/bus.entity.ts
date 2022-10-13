@@ -6,6 +6,7 @@ export interface IBus{
     CS_LAT: string;
     CS_LNG: string;
     ROUTE_CODE: string;
+    PASSENGERS: string;
 }
 
 export interface IRouteVeh{

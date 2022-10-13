@@ -1,6 +1,21 @@
 
-<ng-container *ngIf="masterLines$ | async as masterLines">
-    <select-component [data]="masterLines"></select-component>
-</ng-container>
+<select-component 
+    [module]="'schedule'"
+    [placeholder]="'Select a schedule'">
+</select-component>
 
+<div class="list-wrapper">
+    <ng-container *ngIf="schedule$ | async as schedule">
 
+        <time-list-component
+            [header]="'Start'"
+            [data]="schedule.start_times">
+        </time-list-component>
+
+        <time-list-component
+            [header]="'End'"
+            [data]="schedule.end_times">
+        </time-list-component>
+
+    </ng-container>
+</div>

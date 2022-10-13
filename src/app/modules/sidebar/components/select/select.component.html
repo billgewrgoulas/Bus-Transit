@@ -2,8 +2,8 @@
 <div class="select">
     <select ngModel (ngModelChange)="select($event)">
       <option value="" disabled selected>{{placeholder}}</option>
-      <ng-container *ngFor="let item of data; let i = index">
-        <option [ngValue]="i">{{item.sdc_descr}}</option>
+      <ng-container *ngFor="let item of data$ | async; let i = index">
+        <option [ngValue]="item.sdc_code">{{item.sdc_descr_eng}}</option>
       </ng-container>
     </select>
 </div>

@@ -3,25 +3,27 @@
     <div class="entity-wrapper">
         <div class="entity-container">
             <div class="entity-type">
-                <i class="fas fa-map-marker-alt"></i>
-                <span class="option-text">{{station.StopDescr}}</span>
+                <div class="stop-description">
+                    <i class="fas fa-map-marker-alt"></i>
+                    <span class="option-text">{{station.StopDescr}}({{station.StopCode}})</span>
+                </div>
+                <div class="icons">
+                    <span class="material-symbols-outlined" 
+                        (click)="bookStop(station)"
+                        [class.booked]="station.Booked"
+                        [class.unbooked]="!station.Booked">
+                        stairs
+                    </span>
+                </div>
             </div>
             <ng-container *ngIf="arrival$ | async as arrival else noBus">
                 <div class="text-content">
-                    <span class="option-text">Delay</span>
-                    <span class="description">+116 sec</span>
+                    <i class="far fa-hourglass icon"></i>
+                    <span class="description"><span class="bold">{{arrival.btime2}}</span> Minutes</span>
                 </div>
                 <div class="text-content">
-                    <span class="option-text">Next estimated arrival in</span>
-                    <span class="description">{{arrival.btime2}} mins</span>
-                </div>
-                <div class="text-content">
-                    <span class="option-text">Next fact arrival in</span>
-                    <span class="description">{{+arrival.btime2 + 2}} mins</span>
-                </div>
-                <div class="text-content">
-                    <span class="option-text">Bus no</span>
-                    <span class="description">{{arrival.veh_code}}</span>
+                    <i class="fas fa-bus icon"></i>
+                    <span class="description"><span class="bold">{{arrival.veh_code}}</span></span>
                 </div>
             </ng-container>
         </div>
@@ -30,27 +32,18 @@
 
 <ng-template #notSelected>
     <div class="entity-wrapper">
-        <div class="entity-container center">
-            <div class="entity-type">
-                <span class="option-text">Select a station</span>
+        <div class="entity-container">
+            <div class="text-content-no-incoming" (click)="swapTab()">
+                <span class="option-text">No station selected</span>
+                <span class="description">Click to select</span>
             </div>
         </div>
     </div>
 </ng-template>  
 
 <ng-template #noBus>
-    <div class="text-content">
-        <span class="option-text">Next bus starts at</span>
-        <span class="description">12:00 PM</span>
+    <div class="text-content-no-incoming" (click)="navigate()">
+        <span class="option-text">No incoming bus</span>
+        <span class="description">Click to see schedule</span>
     </div>
 </ng-template>
-
-    
-    
-
-
-
-
-
-
-

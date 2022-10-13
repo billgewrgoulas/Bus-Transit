@@ -4,7 +4,8 @@ import { Observable, takeLast } from 'rxjs';
 import { IBus } from 'src/app/state/entities/bus.entity';
 import { AppState } from 'src/app/state/reducers/api-reducer';
 import * as actions from '../../../../state/actions/api-calls.actions';
-import { getRouteVeh } from 'src/app/state/selectors/appState.selectors';
+import { getBusStatus, getRouteVeh } from 'src/app/state/selectors/appState.selectors';
+import * as navigation from'../../../../state/actions/navigation.actions';
 
 @Component({
   selector: 'bus-entity',
@@ -13,16 +14,20 @@ import { getRouteVeh } from 'src/app/state/selectors/appState.selectors';
 })
 export class BusEntityComponent implements OnInit {
 
-  public buses$: Observable<IBus[] | undefined> | undefined;
+  public buses$: Observable<any[] | undefined> | undefined;
 
   constructor(private store: Store<AppState>) { }
 
   ngOnInit(): void {
-    this.buses$ = this.store.select(getRouteVeh);
+    this.buses$ = this.store.select(getBusStatus);
   }
 
   public selectBus(busCode: string){
     this.store.dispatch(actions.requests.selectBus({busCode: busCode}));
+  }
+
+  public navigate(){
+    this.store.dispatch(navigation.nav_actions.arrowNavigation());
   }
 
 }

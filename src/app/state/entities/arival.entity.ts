@@ -2,7 +2,6 @@ import { EntityState, EntityAdapter, createEntityAdapter } from "@ngrx/entity";
 
 export interface IArrivalDetails{
     route_code: string;
-    stop_code: string;
     veh_code: string;
     btime2: string;
 }

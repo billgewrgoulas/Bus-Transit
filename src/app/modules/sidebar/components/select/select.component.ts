@@ -1,5 +1,10 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnInit, Output, EventEmitter } from '@angular/core';
+import { Store } from '@ngrx/store';
+import * as actions from '../../../../state/actions/api-calls.actions';
+import { Observable } from 'rxjs';
 import { IMlInfo } from 'src/app/state/entities/mLine.entity';
+import { AppState } from 'src/app/state/reducers/api-reducer';
+import { scheduleDays } from 'src/app/state/selectors/appState.selectors';
 
 @Component({
   selector: 'select-component',
@@ -8,14 +13,27 @@ import { IMlInfo } from 'src/app/state/entities/mLine.entity';
 })
 export class SelectComponent implements OnInit {
 
-  @Input() public data: IMlInfo[] = [];
-  @Input() public placeholder: string = 'Select a schedule';
+  public data$!: Observable<IMlInfo[] | any[]>;
 
-  constructor() { }
+  @Input() public placeholder: string = '';
+  @Input() public module: string = '';
 
-  ngOnInit(): void {}
+  constructor(private store: Store<AppState>) { }
 
-  public select(i: number){
+  ngOnInit(): void {
+
+    if(this.module === 'schedule'){
+      this.data$ = this.store.select(scheduleDays);
+    }
+
+  }
+
+  public select(sdc_code: string){
+
+    if(this.module === 'schedule'){
+      this.store.dispatch(actions.requests.getSchedule({sdc_code: sdc_code}));
+      this.store.dispatch(actions.requests.setCurrentSched({id: sdc_code}));
+    }
     
   }
 

@@ -8,6 +8,7 @@ import { inititialIRouteVehState, IRouteVeh, IRouteVehState, vehStateAdapter } f
 import { inititialLineState, LineState, lineStateAdapter } from "../entities/line.entity";
 import { IMLineState, inititialMLineState, mLStateAdapter } from "../entities/mLine.entity";
 import { inititialRouteState, RouteState, routeStateAdapter } from "../entities/route.entity";
+import { initialSchedulelState, ISchedule, ScheduleState, scheduleStateAdapter } from "../entities/schedule.entity";
 import { inititialStationState, StationState, stationStateAdapter } from "../entities/station.entity";
 
 export interface AppState{
@@ -16,7 +17,8 @@ export interface AppState{
     arrivals: ArrivalState;
     routes: RouteState;
     vehicles: IRouteVehState;
-    mLines: IMLineState
+    mLines: IMLineState;
+    schedules: ScheduleState;
 };
 
 export const initialAppState: AppState = {
@@ -25,7 +27,8 @@ export const initialAppState: AppState = {
     stations: inititialStationState,
     routes: inititialRouteState,
     vehicles: inititialIRouteVehState,
-    mLines: inititialMLineState
+    mLines: inititialMLineState,
+    schedules: initialSchedulelState
 };
 
 /* API Reducer */
@@ -54,6 +57,12 @@ export const lineStateReducer = createReducer(
     }),
     on(actions.requests.selectBus, (state: AppState, action): AppState => {
         return {...state, vehicles: {...state.vehicles, selectedBus: action.busCode}};
+    }),
+    on(actions.requests.getSchedSuccess, (state: AppState, action): AppState => {
+        return {...state, schedules: scheduleStateAdapter.addOne(action.data, state.schedules)};
+    }),
+    on(actions.requests.setCurrentSched, (state: AppState, action): AppState => {
+        return {...state, schedules: {...state.schedules, selectedSched: `${state.lines.activeLineId}-${action.id}`}};
     }),
     on(actions.requests.getLineRoutesSuccess, (state: AppState, action): AppState=>{
         return {...state, routes: routeStateAdapter.addMany(action.data.routes, state.routes), 

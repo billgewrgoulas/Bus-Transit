@@ -7,11 +7,11 @@ export interface IRoute{
     RouteDescrEng: string;
     path: number[][];
     stopCodes: string[];
+    bookedStops: number;
 }
 
 export interface RouteState extends EntityState<IRoute>{
     activeRoute: string;
-    activeStops: string[];
 };
 
 export const routeStateAdapter: EntityAdapter<IRoute> = createEntityAdapter<IRoute>({
@@ -20,5 +20,4 @@ export const routeStateAdapter: EntityAdapter<IRoute> = createEntityAdapter<IRou
 
 export const inititialRouteState: RouteState = routeStateAdapter.getInitialState({
     activeRoute: '',
-    activeStops: []
 });

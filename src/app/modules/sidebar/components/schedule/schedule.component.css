@@ -3,7 +3,13 @@
     display: flex;
     flex-direction: column;
     width: 99%;
-    margin-top: 20px;
+    margin-top: 3px;
+}
+
+.list-wrapper{
+    max-height: calc(100vh - 300px);
+    display: flex;
+    flex-direction: row;
 }
 
 

@@ -1,0 +1,30 @@
+
+:host{
+    flex: 1 1 0px;
+    margin-top: 3px;
+}
+
+.header-wrapper{
+    padding: 6px 3px 6px 3px;
+    text-align: center;
+}
+
+.title{
+    color: #373a50;
+    font-size: 14px;
+    font-weight: 600;
+}
+
+.time-list{
+    margin-top: 8px;
+    text-align: center;
+    margin-left: 0px !important;
+    max-height: 87%;
+    min-height: 30%;
+    overflow: auto;
+}
+
+.time{
+    color: #373a50;
+    margin-bottom: 3px;
+}

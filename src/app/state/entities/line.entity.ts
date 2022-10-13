@@ -2,6 +2,7 @@ import { EntityState, EntityAdapter, createEntityAdapter } from "@ngrx/entity";
 
 export interface ILine{
     sdc_code: string;
+    ml_code: string;
     line_code: string;
     line_id: string;
     line_decr: string;

@@ -15,6 +15,7 @@ import { MatTabsModule } from '@angular/material/tabs';
 import { ScheduleComponent } from "../schedule/schedule.component";
 import { MatSelectModule } from '@angular/material/select';
 import { SelectComponent } from "../select/select.component";
+import { TimeListComponent } from "../time-list/time-list.component";
 
 
 @NgModule({
@@ -26,7 +27,8 @@ import { SelectComponent } from "../select/select.component";
     RouteListComponent,
     SliderComponent,
     ScheduleComponent,
-    SelectComponent
+    SelectComponent,
+    TimeListComponent
   ],
   imports: [
     CommonModule,
