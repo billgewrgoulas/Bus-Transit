@@ -7,7 +7,7 @@ import * as L from "leaflet";
 import { currentRoute, getRouteVeh, getRoutePathAndStops, getActiveStation, getActiveBus, getSelectedBus } from 'src/app/state/selectors/appState.selectors';
 import { IMapData } from 'src/app/state/entities/map.data.entity';
 import { IBus } from 'src/app/state/entities/bus.entity';
-import { IStation } from 'src/app/state/entities/station.entity';
+import { IStation } from 'src/app/state/entities/stop.entity';
 
 @Component({
   selector: 'map-area',

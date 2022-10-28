@@ -1,14 +1,12 @@
 import { EntityState, EntityAdapter, createEntityAdapter } from "@ngrx/entity";
 
 export interface ILine{
-    sdc_code: string;
-    ml_code: string;
-    line_code: string;
-    line_id: string;
-    line_decr: string;
-    line_descr: string;
+    id: number;
+    name: string;
+    routesNumber: string;
+    desc: string;
+    desc_eng: string;
     routeCodes: string[];
-    sdc_codes: string[];
 }
 
 export interface LineState extends EntityState<ILine>{
@@ -16,7 +14,7 @@ export interface LineState extends EntityState<ILine>{
 };
 
 export const lineStateAdapter: EntityAdapter<ILine> = createEntityAdapter<ILine>({
-    selectId: (line: ILine)=> line.line_code
+    selectId: (line: ILine)=> line.id
 });
 
 export const inititialLineState: LineState = lineStateAdapter.getInitialState({

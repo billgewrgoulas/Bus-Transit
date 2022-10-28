@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { LatLngExpression } from 'leaflet';
 import * as L from 'leaflet';
-import { IStation } from '../state/entities/station.entity';
+import { IStation } from '../state/entities/stop.entity';
 import { IBus } from '../state/entities/bus.entity';
 
 @Injectable({

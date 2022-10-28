@@ -7,7 +7,7 @@ import { ILine, LineState, lineStateAdapter } from "../entities/line.entity";
 import { IMapData } from "../entities/map.data.entity";
 import { IMlInfo } from "../entities/mLine.entity";
 import { IRoute, RouteState } from "../entities/route.entity";
-import { IStation, StationState } from "../entities/station.entity";
+import { IStation, StationState } from "../entities/stop.entity";
 import { AppState } from "../reducers/api-reducer";
 
 /* Line Feature Selectors */
@@ -42,7 +42,7 @@ export const selectCurrentLineRoutes = createSelector(
 );
 
 /* Select line by lineCode */
-export const selectLine = (lineCode: string) =>
+export const selectLine = (lineCode: number) =>
     createSelector(getLineState, (lineState: LineState) => lineState.entities[lineCode]);
 
 /* Select route by routeCode */

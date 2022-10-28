@@ -2,7 +2,7 @@ import { Component, Input, OnInit } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
 import { IBus } from 'src/app/state/entities/bus.entity';
-import { IStation } from 'src/app/state/entities/station.entity';
+import { IStation } from 'src/app/state/entities/stop.entity';
 import { AppState } from 'src/app/state/reducers/api-reducer';
 import { getActiveStation, getRouteVeh } from 'src/app/state/selectors/appState.selectors';
 import * as actions from '../../../../state/actions/api-calls.actions';

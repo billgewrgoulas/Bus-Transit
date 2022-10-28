@@ -3,7 +3,7 @@ import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
 import { AppState } from 'src/app/state/reducers/api-reducer';
 import { getRouteStations } from 'src/app/state/selectors/appState.selectors';
-import { IStation } from 'src/app/state/entities/station.entity';
+import { IStation } from 'src/app/state/entities/stop.entity';
 
 @Component({
   selector: 'station-list-component',

@@ -9,7 +9,7 @@ import { inititialLineState, LineState, lineStateAdapter } from "../entities/lin
 import { IMLineState, inititialMLineState, mLStateAdapter } from "../entities/mLine.entity";
 import { inititialRouteState, RouteState, routeStateAdapter } from "../entities/route.entity";
 import { initialSchedulelState, ISchedule, ScheduleState, scheduleStateAdapter } from "../entities/schedule.entity";
-import { inititialStationState, StationState, stationStateAdapter } from "../entities/station.entity";
+import { inititialStationState, StationState, stationStateAdapter } from "../entities/stop.entity";
 
 export interface AppState{
     stations: StationState;

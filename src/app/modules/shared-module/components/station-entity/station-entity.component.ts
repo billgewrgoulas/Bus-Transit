@@ -3,7 +3,7 @@ import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
 import { DataShareService } from 'src/app/services/data-share.service';
 import { IArrivalDetails } from 'src/app/state/entities/arival.entity';
-import { IStation } from 'src/app/state/entities/station.entity';
+import { IStation } from 'src/app/state/entities/stop.entity';
 import { AppState } from 'src/app/state/reducers/api-reducer';
 import { currentStopSchedule, getActiveStation } from 'src/app/state/selectors/appState.selectors';
 import * as navigation from'../../../../state/actions/navigation.actions';

@@ -22,7 +22,7 @@ export class RouterEffects{
     fetchLines$ = createEffect(()=>
         this.actions$.pipe(
             ofType(ROUTER_NAVIGATED),
-            map((event) => api_actions.requests.getRoutes())
+            map((event) => api_actions.getLines())
         )
     );
 
