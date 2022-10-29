@@ -1,12 +1,12 @@
 import { EntityState, EntityAdapter, createEntityAdapter } from "@ngrx/entity";
 
 export interface ILine{
-    id: number;
+    id: string;
     name: string;
     routesNumber: string;
     desc: string;
     desc_eng: string;
-    routeCodes: string[];
+    routeCodes: string;
 }
 
 export interface LineState extends EntityState<ILine>{

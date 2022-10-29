@@ -1,7 +1,7 @@
 
 <ng-container *ngIf="module === 'bus'">
     <ng-container *ngIf="buses$ else noIncoming">
-        <div class="entity-wrapper" *ngFor="let bus of buses$ | async" (click)="focus(bus.VEH_NO)">
+        <div class="entity-wrapper" *ngFor="let bus of buses$ | async">
             <div class="entity-container">
                 <div class="entity-type">
                     <i class="fas fa-bus"></i>
@@ -25,7 +25,7 @@
                 </div>
             </div>
         </div>
-    </ng-container>
+    </ng-container> 
 
     <ng-template #noIncoming >
         <div class="entity-wrapper">

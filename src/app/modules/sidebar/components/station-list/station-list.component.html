@@ -3,10 +3,10 @@
     <div class="outer-container">
       <ul class="station-line">
 
-        <ng-container *ngFor="let station of currentRouteStations$ | async let last = last">
+        <ng-container *ngFor="let stop of currentRouteStops$ | async let last = last">
           <li>
             <list-item 
-              [station]="station"
+              [stop]="stop"
               [isLast]="last">
             </list-item>
           </li>

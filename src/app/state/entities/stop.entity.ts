@@ -1,7 +1,7 @@
 import { EntityState, EntityAdapter, createEntityAdapter } from "@ngrx/entity";
 
 export interface IStop{
-    id: number;
+    id: string;
     code: string;
     latitude: string;
     longitude: string;
@@ -10,7 +10,7 @@ export interface IStop{
 }
 
 export interface StopState extends EntityState<IStop>{
-    activeStationCode: string,
+    activeStopCode: string,
 };
 
 export const stopStateAdapter: EntityAdapter<IStop> = createEntityAdapter<IStop>({
@@ -18,5 +18,5 @@ export const stopStateAdapter: EntityAdapter<IStop> = createEntityAdapter<IStop>
 });
 
 export const inititialStopState: StopState = stopStateAdapter.getInitialState({
-    activeStationCode: '',
+    activeStopCode: '',
 });

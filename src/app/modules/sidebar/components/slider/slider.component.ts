@@ -1,7 +1,9 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, OnChanges, OnDestroy, OnInit, SimpleChanges } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Observable, Subscription } from 'rxjs';
 import { DataShareService } from 'src/app/services/data-share.service';
+import { IArrival } from 'src/app/state/entities/live.data';
+import { SliderStore } from './slider.store';
 
 @Component({
   selector: 'app-slider',

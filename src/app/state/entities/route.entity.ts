@@ -4,23 +4,24 @@ import { IStop } from "./stop.entity";
 export interface IRouteInfo{
     stops: IStop[];
     points: IPoint[];
+    code: string;
 }
 
 export interface IPoint{
-    id: number;
+    id: string;
     longitude: string;
     latitude: string;
     routeCode: string;
 }
 
 export interface IRoute{
-    id: number;
+    id: string;
     code: string;
-    lineId: number;
-    direction: number;
+    lineId: string;
+    direction: string;
     desc_eng: string;
     desc: string;
-    stopCodes: string[];
+    stopCodes: string;
     points: IPoint[];
 }
 

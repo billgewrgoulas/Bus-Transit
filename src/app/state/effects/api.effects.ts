@@ -5,8 +5,9 @@ import { exhaustMap, filter, map, mapTo, of, Subject, switchMap, takeUntil, tap,
 import { DataService } from "src/app/services/data.service";
 import * as api_actions from '../actions/api-calls.actions';
 import { AppState } from "../reducers/api-reducer";
-import { currentLine, routeStopCodes, schedDetails, selectAllLines, selectLine, selectRoute } from "../selectors/appState.selectors";
+import { getAllLines, getRouteStops, selectAll, selectAllLines, selectCurrentLineRoutes, selectLine, selectRoute } from "../selectors/appState.selectors";
 import { ILine } from "../entities/line.entity";
+import { IRoute, IRouteInfo } from "../entities/route.entity";
 
 @Injectable()
 export class ApiEffects{
@@ -16,30 +17,30 @@ export class ApiEffects{
     loadLines$ = createEffect(()=>
         this.actions$.pipe(
             ofType(api_actions.getLines),
-            withLatestFrom(this.store.select(selectAllLines)),
+            withLatestFrom(this.store.select(getAllLines)),
             filter(([action, lines]) => lines.length == 0),
             exhaustMap(() => this.dataService.getAllLines()),
-            map((res: ILine[]) => api_actions.getLinesSuccess({data: res}))
+            map((response: ILine[]) => api_actions.getLinesSuccess({lines: response}))
         )     
     );
 
     loadLineRoutes$ = createEffect(()=>
         this.actions$.pipe(
             ofType(api_actions.getLineRoutes),
-            concatLatestFrom((action) => this.store.select(selectLine(action.id))),
-            filter(([action, line]) => !line?.routeCodes),
+            concatLatestFrom((action) => this.store.select(selectCurrentLineRoutes)),
+            filter(([action, routes]) => routes.length == 0),
             switchMap(([action, line]) => this.dataService.getLineRoutes(action.id)),
-            map((res) => api_actions.getLineRoutesSuccess({routes: res})),
+            map((response: IRoute[]) => api_actions.getLineRoutesSuccess({routes: response})),
         )
     );
 
     loadRouteInfo$ = createEffect(()=>
         this.actions$.pipe(
             ofType(api_actions.getRouteDetails),
-            concatLatestFrom((action) => this.store.select(selectRoute(action.code))),
-            filter(([action, route]) => !route?.stopCodes),
+            concatLatestFrom((action) => this.store.select(getRouteStops)),
+            filter(([action, stops]) => stops.length == 0),
             switchMap(([action, route]) => this.dataService.getRouteDetails(action.code)),
-            map((response) => api_actions.getRouteDetailsuccess({routeInfo: response}))
+            map((response: IRouteInfo) => api_actions.getRouteDetailsuccess({routeInfo: response}))
         )
     );
 

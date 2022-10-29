@@ -15,19 +15,6 @@ export class SocketEffects{
 
     constructor(private io: SocketIOService, private actions$: Actions, private store: Store<AppState>){}
 
-    updateBusLocations$ = createEffect(()=>
-        this.actions$.pipe(ofType(actions.SocketActions.updateBusLocations),
-        withLatestFrom(this.store.select(currentRoute)),
-        filter(([action, route]) => !!route?.RouteCode),
-        map(([action, route]) => route?.RouteCode),
-        tap((routeCode)=> this.io.getBusUpdates(routeCode))),
-        {dispatch: false}
-    );
-
-    cancelBusLocations$ = createEffect(()=>
-        this.actions$.pipe(ofType(actions.SocketActions.stopBusLocationUpdates),
-        tap(()=> this.io.cancelBusUpdates())),
-        {dispatch: false}
-    );
+   
 
 }

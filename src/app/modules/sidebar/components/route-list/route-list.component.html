@@ -3,9 +3,9 @@
     <ng-container *ngFor="let route of routes$ | async">
         <app-option
             [icon]="'route'"
-            [text]="route.RouteDescr"
+            [text]="route.desc"
             [desc]="''"
-            [link]="['lines', route.LineCode, 'route', route.RouteCode]">
+            [link]="['lines', route.lineId, 'route', route.code]">
         </app-option>
     </ng-container>
 </div>

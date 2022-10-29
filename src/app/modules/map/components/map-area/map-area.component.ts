@@ -4,10 +4,8 @@ import { filter, Subscription, tap } from 'rxjs';
 import { Store } from '@ngrx/store';
 import { AppState} from 'src/app/state/reducers/api-reducer';
 import * as L from "leaflet";
-import { currentRoute, getRouteVeh, getRoutePathAndStops, getActiveStation, getActiveBus, getSelectedBus } from 'src/app/state/selectors/appState.selectors';
+import { getActiveStop, getRoutePathAndStops } from 'src/app/state/selectors/appState.selectors';
 import { IMapData } from 'src/app/state/entities/map.data.entity';
-import { IBus } from 'src/app/state/entities/bus.entity';
-import { IStation } from 'src/app/state/entities/stop.entity';
 
 @Component({
   selector: 'map-area',
@@ -27,30 +25,18 @@ export class MapAreaComponent implements OnInit, OnDestroy {
 
     this.subscribers.push(this.store.select(getRoutePathAndStops).pipe(
       tap(() => this.mapService.clearMap()),
-      filter(data => !!data.path),
+      filter(data => !!data.points),
     ).subscribe(route => this.displayInfo(route!)));
 
-    this.subscribers.push(this.store.select(getRouteVeh).pipe(
-      filter(buses => !!buses)
-    ).subscribe(buses => this.updateBusLoacations(buses)));
-
-    this.subscribers.push(this.store.select(getActiveStation).pipe(
+    this.subscribers.push(this.store.select(getActiveStop).pipe(
       filter(stop => !!stop),
-    ).subscribe(stop => this.flyTo([stop?.StopLat!, stop?.StopLng!])));
-
-    this.subscribers.push(this.store.select(getSelectedBus).pipe(
-      filter(bus => !!bus && !!bus[0])
-    ).subscribe(bus => this.flyTo([bus![0].CS_LAT, bus![0].CS_LNG])));
+    ).subscribe(stop => this.flyTo([stop?.latitude!, stop?.longitude!])));
 
   }
 
   public displayInfo(route: IMapData){
-    this.mapService.carvePath(route.path);
-    this.mapService.displayMarkers(route.stations);
-  }
-
-  public updateBusLoacations(buses?: IBus[]){
-    this.mapService.displayBusLocations(buses!);
+    this.mapService.carvePath(route.points);
+    this.mapService.displayMarkers(route.stops);
   }
 
   public flyTo(point: string[]){

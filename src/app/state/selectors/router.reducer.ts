@@ -17,8 +17,6 @@ export const {
 } = getSelectors();
 
 
-
-
 export const getParams = createSelector(
     selectRouteParams, (params: Params) => params
 );

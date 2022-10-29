@@ -1,13 +1,9 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { Store } from '@ngrx/store';
-import { Observable} from 'rxjs';
 import { DataShareService } from 'src/app/services/data-share.service';
-import { IArrivalDetails } from 'src/app/state/entities/arival.entity';
-import { IArrivalInfo } from 'src/app/state/entities/dataInterfaces';
-import { IStation } from 'src/app/state/entities/stop.entity';
+import { IStop } from 'src/app/state/entities/stop.entity';
 import { AppState } from 'src/app/state/reducers/api-reducer';
-import { stopSchedule } from 'src/app/state/selectors/appState.selectors';
-import * as actions from '../../../../state/actions/api-calls.actions';
+import * as select_actions from '../../../../state/actions/select.actions';
 
 @Component({
   selector: 'list-item',
@@ -16,20 +12,17 @@ import * as actions from '../../../../state/actions/api-calls.actions';
 })
 export class ListItemComponent implements OnInit {
 
-  @Input() public station!: IStation;
+  @Input() public stop!: IStop;
   @Input() public isLast: boolean = false;
-
-  public arrivals$!: Observable<IArrivalDetails[] | undefined>;
 
   constructor(private store: Store<AppState>, private dataShare: DataShareService) { }
 
   ngOnInit(): void {
-    this.arrivals$ = this.store.select(stopSchedule(this.station.StopCode));
+
   }
 
   public selectStop(){
-    this.store.dispatch(actions.requests.selectStation({stopCode: this.station.StopCode}));
-    this.store.dispatch(actions.requests.selectBus({busCode: ''}));
+    this.store.dispatch(select_actions.selectStop({code: this.stop.code}));
     this.dataShare.slide(2);
   }
 

@@ -3,14 +3,13 @@ import { ILine } from "../entities/line.entity";
 import { IRoute, IRouteInfo } from "../entities/route.entity";
 
 
-
 /* Fetch all lines based on station name, bus... */
 export const getLines = createAction('[API] GET Lines');
-export const getLinesSuccess = createAction('[API] Lines loaded success', props<{data: ILine[]}>());
+export const getLinesSuccess = createAction('[API] Lines loaded success', props<{lines: ILine[]}>());
 export const getLinesError = createAction('[API] Lines error');
 
 /* Fetch the routes of a line based on the lineCode */
-export const getLineRoutes = createAction('[API] GET Details', props<{id: number}>());
+export const getLineRoutes = createAction('[API] GET Details', props<{id: string}>());
 export const getLineRoutesSuccess = createAction('[API] Routes Details Success', props<{routes: IRoute[]}>());
 export const getLineRoutesError = createAction('[API] Details Loaded Failed');
 

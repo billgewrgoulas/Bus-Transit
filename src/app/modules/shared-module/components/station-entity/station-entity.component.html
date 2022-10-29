@@ -1,30 +1,29 @@
 
-<ng-container *ngIf="station$ | async as station else notSelected">
+<ng-container *ngIf="stop$ | async as stop else notSelected">
     <div class="entity-wrapper">
         <div class="entity-container">
             <div class="entity-type">
                 <div class="stop-description">
                     <i class="fas fa-map-marker-alt"></i>
-                    <span class="option-text">{{station.StopDescr}}({{station.StopCode}})</span>
+                    <span class="option-text">{{stop.desc}}({{stop.code}})</span>
                 </div>
                 <div class="icons">
-                    <span class="material-symbols-outlined" 
-                        (click)="bookStop(station)"
-                        [class.booked]="station.Booked"
-                        [class.unbooked]="!station.Booked">
+                    <span class="material-symbols-outlined" (click)="bookStop(stop)">
                         stairs
                     </span>
                 </div>
             </div>
-            <ng-container *ngIf="arrival$ | async as arrival else noBus">
-                <div class="text-content">
-                    <i class="far fa-hourglass icon"></i>
-                    <span class="description"><span class="bold">{{arrival.btime2}}</span> Minutes</span>
-                </div>
-                <div class="text-content">
-                    <i class="fas fa-bus icon"></i>
-                    <span class="description"><span class="bold">{{arrival.veh_code}}</span></span>
-                </div>
+            <ng-container *ngIf="arrivals$ | async as arrivals">
+                <ng-container *ngIf="arrivals.length > 0 else noBus">
+                    <div class="text-content">
+                        <i class="far fa-hourglass icon"></i>
+                        <span class="description"><span class="bold">{{arrivals[0].arrivalMins}}</span> Minutes</span>
+                    </div>
+                    <div class="text-content">
+                        <i class="fas fa-bus icon"></i>
+                        <span class="description"><span class="bold">{{arrivals[0].vehicleCode}}</span></span>
+                    </div>
+                </ng-container>
             </ng-container>
         </div>
     </div>

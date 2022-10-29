@@ -1,12 +1,10 @@
 import { Component, OnInit } from '@angular/core';
-import * as actions from '../../../../state/actions/api-calls.actions';
 import * as navigation from'../../../../state/actions/navigation.actions';
-import * as sockets from '../../../../state/actions/socketIO.actions';
-import { NavigationEnd, NavigationError, NavigationStart, Router } from '@angular/router';
+import { Router } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { AppState } from 'src/app/state/reducers/api-reducer';
-import { filter, Observable } from 'rxjs';
-import { filterDropdown } from 'src/app/state/selectors/appState.selectors';
+import { Observable } from 'rxjs';
+import { getAllLines } from 'src/app/state/selectors/appState.selectors';
 import { ILine } from 'src/app/state/entities/line.entity';
 
 @Component({
@@ -23,16 +21,12 @@ export class LinesComponent implements OnInit {
   constructor(private router: Router, private store: Store<AppState>) { }
 
   ngOnInit(): void {
-    this.lines$ = this.store.select(filterDropdown(this.value));
-  }
-
-  public filter(){
-    this.lines$ = this.store.select(filterDropdown(this.value));
+    this.lines$ = this.store.select(getAllLines);
   }
 
   public changeValue(line: ILine){
-    this.value = line.line_descr;
-    this.router.navigate([{ outlets: { sidebar: [ 'lines', line.line_code ] }}]);
+    this.value = line.desc;
+    this.router.navigate([{ outlets: { sidebar: [ 'lines', line.id ] }}]);
   }
 
   public clear(){

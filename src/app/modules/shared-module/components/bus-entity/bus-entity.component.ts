@@ -1,10 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { Observable, takeLast } from 'rxjs';
-import { IBus } from 'src/app/state/entities/bus.entity';
 import { AppState } from 'src/app/state/reducers/api-reducer';
 import * as actions from '../../../../state/actions/api-calls.actions';
-import { getBusStatus, getRouteVeh } from 'src/app/state/selectors/appState.selectors';
 import * as navigation from'../../../../state/actions/navigation.actions';
 
 @Component({
@@ -19,11 +17,11 @@ export class BusEntityComponent implements OnInit {
   constructor(private store: Store<AppState>) { }
 
   ngOnInit(): void {
-    this.buses$ = this.store.select(getBusStatus);
+    //this.buses$ = this.store.select(getBusStatus);
   }
 
   public selectBus(busCode: string){
-    this.store.dispatch(actions.requests.selectBus({busCode: busCode}));
+    //this.store.dispatch(actions.requests.selectBus({busCode: busCode}));
   }
 
   public navigate(){
