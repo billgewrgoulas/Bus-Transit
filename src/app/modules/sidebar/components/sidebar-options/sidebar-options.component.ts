@@ -8,12 +8,12 @@ import { Component, Input, OnInit } from '@angular/core';
 export class SidebarOptionsComponent implements OnInit {
 
   public options: any[] = [
-    {text: 'Lines', icon: 'route', desc: 'Display line information'},
-    {text: 'Best Route', icon: 'swap_vert', desc: 'Estimate the best route or bus'},
+    {text: 'Lines', icon: 'route', desc: 'Display line information', link: ['lines']},
+    {text: 'Find routes', icon: 'swap_vert', desc: 'Estimate the best route or bus', link: ['routes']},
     {text: 'Closest stops', icon: 'where_to_vote', desc: 'Find closest stops and lines'},
     {text: 'Saved information', icon: 'file_present', desc: 'Saved lines, stops...'},
     {text: 'Recently searched', icon: 'folder_special', desc: 'Recent searches'}
-  ]
+  ];
 
   constructor() { }
 

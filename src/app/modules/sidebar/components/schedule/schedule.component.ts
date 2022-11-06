@@ -11,8 +11,6 @@ import { AppState } from 'src/app/state/reducers/api-reducer';
 })
 export class ScheduleComponent implements OnInit {
 
-
-
   constructor(private store: Store<AppState>) { }
 
   ngOnInit(): void {

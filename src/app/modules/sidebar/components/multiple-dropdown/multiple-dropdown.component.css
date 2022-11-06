@@ -1,21 +1,22 @@
 
 :host{
     width: 100%;
-    padding: 30px 20px 20px 35px;
+    padding: 20px 20px 20px 20px;
 }
 
 h1{
-    margin-bottom: 25px;
+    margin-bottom: 15px;
     color: #2b3b4c;
     font-family: "Lexend Deca",sans-serif;
     font-weight: 600;
+    font-size: 21px;
 }
 
 .list{
     display: flex;
     flex-direction: column;
     gap: 25px;
-    max-height: calc(100vh - 300px);
+    max-height: calc(100vh - 230px);
     overflow: auto;
     padding-right: 10px;
 }

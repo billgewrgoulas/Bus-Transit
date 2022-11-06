@@ -6,9 +6,6 @@ export interface IArrival{
     vehicleCode: string;
     routeName: string;
     lineCode: string;
-    stopCode: string;
-}
-
-export interface IBus{
-    
+    latitude: string;
+    longitude: string;
 }

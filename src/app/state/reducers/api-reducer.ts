@@ -4,24 +4,31 @@ import { inititialRouteState, RouteState, routeStateAdapter } from "../entities/
 import { inititialStopState, StopState, stopStateAdapter } from "../entities/stop.entity";
 import * as select_actions from '../actions/select.actions';
 import * as api_actions from '../actions/api-calls.actions';
+import { inititialSchdeduleState, IScheduleDetails, ScheduleState, scheduleStateAdapter } from "../entities/schedule.entity";
+
 
 export interface AppState{
     stops: StopState;
     lines: LineState;
     routes: RouteState;
+    schedule: ScheduleState
 };
 
 export const initialAppState: AppState = {
     lines: inititialLineState,
     stops: inititialStopState,
     routes: inititialRouteState,
+    schedule: inititialSchdeduleState
 };
 
 /* API Reducer */
-export const lineStateReducer = createReducer(
+export const appStateReducer = createReducer(
     initialAppState,
     on(api_actions.getLineRoutes, api_actions.getLines, (state: AppState, action): AppState=>{
         return {...state};
+    }),
+    on(select_actions.emptyRoutes, (state: AppState, action): AppState => {
+        return {...initialAppState, lines: state.lines};
     }),
     on(api_actions.getLinesSuccess, (state: AppState, action): AppState=>{
         return {...state, lines: lineStateAdapter.addMany(action.lines, state.lines)};
@@ -37,6 +44,12 @@ export const lineStateReducer = createReducer(
     }),
     on(api_actions.getLineRoutesSuccess, (state: AppState, action): AppState=>{
         return {...state, routes: routeStateAdapter.addMany(action.routes, state.routes)}
+    }),
+    on(api_actions.getSchedulesSuccess, (state: AppState, action): AppState => {
+        return {...state, schedule: scheduleStateAdapter.addOne(action.schedules, state.schedule)};
+    }),
+    on(api_actions.getStopsSuccess, (state: AppState, action): AppState => {
+        return {...state, stops: stopStateAdapter.addMany(action.stops, state.stops)};
     }),
     on(api_actions.getRouteDetailsuccess, (state: AppState, action): AppState=>{
         return {...state, stops: stopStateAdapter.addMany(action.routeInfo.stops, state.stops), 

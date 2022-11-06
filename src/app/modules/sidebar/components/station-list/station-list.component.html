@@ -1,5 +1,11 @@
 
-<div class="stations-list">
+<select-component *ngIf="currentRoute$ | async as route"
+  [payload]="route"
+  [placeholder]="'Select a day'"
+  [module]="'schedule'">
+</select-component>
+
+<div class="stations-list" #stationList (scroll)="onScroll($event)">
     <div class="outer-container">
       <ul class="station-line">
 

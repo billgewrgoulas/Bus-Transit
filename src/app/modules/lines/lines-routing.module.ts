@@ -1,10 +1,10 @@
 
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { MultipleDropdownComponent } from '../multiple-dropdown/multiple-dropdown.component';
-import { RouteListComponent } from '../route-list/route-list.component';
-import { SliderComponent } from '../slider/slider.component';
-import { StationListComponent } from '../station-list/station-list.component';
+import { MultipleDropdownComponent } from '../sidebar/components/multiple-dropdown/multiple-dropdown.component';
+import { RouteListComponent } from '../sidebar/components/route-list/route-list.component';
+import { SliderComponent } from '../sidebar/components/slider/slider.component';
+import { StationListComponent } from '../sidebar/components/station-list/station-list.component';
 import { LinesComponent } from './lines.component';
 
 const routes: Routes = [
@@ -13,7 +13,7 @@ const routes: Routes = [
     children: [
       {
         path: ':lineCode',
-        component: SliderComponent,
+        component: RouteListComponent,
         data: {type: 'lineSlider'}
       },
       {

@@ -5,7 +5,8 @@ import { SidebarOptionsComponent } from './components/sidebar-options/sidebar-op
 
 const routes: Routes = [
   {path: '', component: SidebarOptionsComponent, outlet: 'sidebar'},
-  {path: 'lines', loadChildren: () => import('./components/lines/lines.module').then(m => m.LinesModule), outlet: 'sidebar'}
+  {path: 'lines', loadChildren: () => import('../lines/lines.module').then(m => m.LinesModule), outlet: 'sidebar'},
+  {path: 'routes', loadChildren: () => import('../routes/routes.module').then(m => m.RoutesModule), outlet: 'sidebar'}
 ];
 
 @NgModule({

@@ -24,6 +24,15 @@ export class RouterEffects{
         )
     );
 
+    fetchStops$ = createEffect(() =>
+        this.actions$.pipe(
+            ofType(ROUTER_NAVIGATED),
+            withLatestFrom(this.store.select(getUrl)),
+            filter(([action, url]) => url === '/(sidebar:routes)'),
+            map(() => api_actions.getStops())
+        )
+    );
+
     fetchLineData$ = createEffect(()=>
         this.actions$.pipe(
             ofType(ROUTER_NAVIGATED),
@@ -61,13 +70,14 @@ export class RouterEffects{
                 select_actions.selectLine({id: ''}),
                 select_actions.selectRoute({code: ''}),
                 select_actions.selectStop({code: ''}),
+                select_actions.emptyRoutes()
             ])
         )
     );
 
     previousView$ = createEffect(()=>
         this.actions$.pipe(
-            ofType(navigation.nav_actions.arrowNavigation),
+            ofType(navigation.arrowNavigation),
             withLatestFrom(this.store.select(getUrl), this.store.select(currentLine)),
             tap(([action, url, line]) =>{
 
@@ -75,6 +85,8 @@ export class RouterEffects{
                     this.router.navigate([{ outlets: { sidebar: [ 'lines', line?.id] }}]);
                 }else if(url.includes('/(sidebar:lines/')){
                     this.router.navigate([{ outlets: { sidebar: [ 'lines'] }}]);
+                }else if(url === '/(sidebar:routes)'){
+                    this.router.navigate(['']);
                 }else{
                     this.router.navigate(['']);
                 }

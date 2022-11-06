@@ -4,6 +4,8 @@ import { catchError, map, Observable, throwError } from 'rxjs';
 import { ILine } from '../state/entities/line.entity';
 import { IRoute, IRouteInfo } from '../state/entities/route.entity';
 import { IArrival } from '../state/entities/live.data';
+import { IScheduleDetails } from '../state/entities/schedule.entity';
+import { IStop } from '../state/entities/stop.entity';
 
 @Injectable({
   providedIn: 'root'
@@ -26,6 +28,12 @@ export class DataService {
       catchError((err) => throwError(()=>new Error(err))));
   }
 
+  public getAllStops(): Observable<IStop[]>{
+    return this.http.get(this.url + 'stops', this.options).pipe(
+      map((res: any) => <IStop[]>res),
+      catchError((err) => throwError(()=>new Error(err))));
+  }
+
   public getLineRoutes(id: string): Observable<IRoute[]>{
     return this.http.get(this.url + 'lineRoutes/' + id, this.options).pipe(
       map((res: any) => <IRoute[]>res),
@@ -39,8 +47,14 @@ export class DataService {
       catchError((err) => throwError(()=>new Error(err))))
   }
 
-  public getStopArrivals(code: string): Observable<IArrival[]>{
-    return this.http.get(this.liveUri + 'stops/' + code, this.options).pipe(
+  public getRouteSchedules(code: string): Observable<IScheduleDetails>{
+    return this.http.get(this.url + 'routeSchedules/' + code, this.options).pipe(
+      map((res: any) => <IScheduleDetails>res), 
+      catchError((err) => throwError(()=>new Error(err))))
+  }
+
+  public getLiveUpdates(code: string, slug: string): Observable<IArrival[]>{
+    return this.http.get(this.liveUri + slug + code, this.options).pipe(
       map((res: any) => <IArrival[]>res), 
       catchError((err) => throwError(()=>new Error(err))))
   }

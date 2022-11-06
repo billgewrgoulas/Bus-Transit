@@ -6,13 +6,13 @@
     </i>
     <div class="station-details">
         <span class="station-name">{{stop.desc}}({{stop.code}})</span>
-        <ng-container *ngIf="true">
-            <ng-container *ngIf="false else noIncoming">
-                <span class="arrive-time">Arrival in 
-                    <!-- <ng-container *ngFor="let arrival of arrivals let last=last">
-                        <span *ngIf="!last">{{arrival.btime2}}', </span>
-                        <span *ngIf="last">{{arrival.btime2}}'</span>
-                    </ng-container> -->
+        <ng-container *ngIf="schedules$ | async as schedules else noIncoming">
+            <ng-container *ngIf="schedules.length > 0 else noIncoming">
+                <span class="arrive-time">Arrivals: 
+                    <ng-container *ngFor="let schedule of schedules let last=last">
+                        <span *ngIf="!last">{{schedule.tripTime}}', </span>
+                        <span *ngIf="last">{{schedule.tripTime}}'</span>
+                    </ng-container>
                 </span>
             </ng-container>
         </ng-container>
@@ -20,5 +20,5 @@
 </div>
 
 <ng-template #noIncoming >
-    <span class="arrive-time">No incoming arrivals</span>
+    <span class="arrive-time">No arrivals for this day</span>
 </ng-template>

@@ -9,21 +9,20 @@
         </span>
     </div>
     <div class="right-wrapper">
-        <input 
-            [(ngModel)]="value" 
+        <input [(ngModel)]="value" 
+            (keyup)="onKeyUp()"
             name="myInput" 
             type="text" 
             placeholder="search lines..." 
             class="text"
-            autocomplete="off"
-        >
+            autocomplete="off">
         <i *ngIf="value!=''" (click)="clear()" class="fas fa-times"></i>
     </div>
 </div>
 
 <multiple-dropdown *ngIf="!selected"
     [data$]="lines$"
-    [title]="'Search Lines'"
+    [title]="'Lines'"
     [value]="value"
     (selectedValue)="changeValue($event)">
 </multiple-dropdown>

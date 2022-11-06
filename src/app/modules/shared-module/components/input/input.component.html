@@ -1,0 +1,38 @@
+
+<div class="input-section">
+    <div class="left-wrapper">
+        <div class="border"></div>
+        <span class="arrow material-symbols-outlined" (click)="navigate()">
+            keyboard_backspace
+        </span>
+        <span class="start material-symbols-outlined">
+            trip_origin
+        </span>
+        <span class="end material-symbols-outlined">
+            location_on
+        </span>
+    </div>
+    <div class="right-wrapper">
+        <div class="swap-icon"(click)="swap()">
+            <span class="swap material-symbols-outlined">
+                swap_vert
+            </span>
+        </div>
+        <div class="input-list">
+            <input [(ngModel)]="start" 
+                name="myInput" 
+                type="text" 
+                placeholder="search lines..." 
+                class="text"
+                autocomplete="off">
+        </div>
+        <div class="input-list">
+            <input [(ngModel)]="end"
+                name="myInput" 
+                type="text" 
+                placeholder="search lines..." 
+                class="text dest"
+                autocomplete="off">
+        </div>
+    </div>
+</div>

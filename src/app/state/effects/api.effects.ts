@@ -5,9 +5,11 @@ import { exhaustMap, filter, map, mapTo, of, Subject, switchMap, takeUntil, tap,
 import { DataService } from "src/app/services/data.service";
 import * as api_actions from '../actions/api-calls.actions';
 import { AppState } from "../reducers/api-reducer";
-import { getAllLines, getRouteStops, selectAll, selectAllLines, selectCurrentLineRoutes, selectLine, selectRoute } from "../selectors/appState.selectors";
+import { getActiveRouteSchedules, getAllLines, getRouteStops, selectAll, selectAllLines, selectCurrentLineRoutes, selectLine, selectRoute, selectRoutePoints } from "../selectors/appState.selectors";
 import { ILine } from "../entities/line.entity";
 import { IRoute, IRouteInfo } from "../entities/route.entity";
+import { IScheduleDetails } from "../entities/schedule.entity";
+import { IStop } from "../entities/stop.entity";
 
 @Injectable()
 export class ApiEffects{
@@ -24,6 +26,15 @@ export class ApiEffects{
         )     
     );
 
+    loadStops$ = createEffect(()=>
+        this.actions$.pipe(
+            ofType(api_actions.getStops),
+            withLatestFrom(this.store.select(getAllLines)),
+            exhaustMap(() => this.dataService.getAllStops()),
+            map((response: IStop[]) => api_actions.getStopsSuccess({stops: response}))
+        )     
+    );
+
     loadLineRoutes$ = createEffect(()=>
         this.actions$.pipe(
             ofType(api_actions.getLineRoutes),
@@ -37,37 +48,21 @@ export class ApiEffects{
     loadRouteInfo$ = createEffect(()=>
         this.actions$.pipe(
             ofType(api_actions.getRouteDetails),
-            concatLatestFrom((action) => this.store.select(getRouteStops)),
-            filter(([action, stops]) => stops.length == 0),
-            switchMap(([action, route]) => this.dataService.getRouteDetails(action.code)),
+            concatLatestFrom((action) => this.store.select(selectRoutePoints(action.code))),
+            filter(([action, points]) => !points || points.length === 0),
+            switchMap(([action, points]) => this.dataService.getRouteDetails(action.code)),
             map((response: IRouteInfo) => api_actions.getRouteDetailsuccess({routeInfo: response}))
         )
     );
 
-    // getArrivalUpdates$ = createEffect(()=>
-    //     this.actions$.pipe(
-    //         ofType(api_actions.requests.getRouteDetailsuccess, api_actions.requests.updateArrivals),
-    //         withLatestFrom(this.store.select(routeStopCodes)),
-    //         filter(([action, stopCodes]) => !!stopCodes),
-    //         switchMap(([action, stopCodes])=> timer(0, 20000).pipe(
-    //             switchMap(() => this.dataService.getArrivalUpdates(stopCodes)), 
-    //             takeUntil(this.actions$.pipe(ofType(api_actions.requests.stopUpdates)))
-    //         )),
-    //         filter((res: IArrival[]) => !!res),
-    //         map((res: IArrival[])=> api_actions.requests.getStationsArrivalsSuccess({data: res}))
-    //     )
-    // );
-
-    // getBusLocations$ = createEffect(() => 
-    //     this.actions$.pipe(
-    //         ofType(api_actions.requests.updateBusLocations),
-    //         switchMap((action) => timer(0, 10000).pipe(
-    //             switchMap(() => this.dataService.getBusLocations(action.routeCode)),
-    //             takeUntil(this.actions$.pipe(ofType(api_actions.requests.stopBusLocationUpdates)))
-    //         )),
-    //         filter((res: IRouteVeh) => !!res),
-    //         map((res: IRouteVeh) => api_actions.requests.busLocationsFetched({data: res}))
-    //     )
-    // );
+    loadRouteSchedules$ = createEffect(() => 
+        this.actions$.pipe(
+            ofType(api_actions.getSchedules),
+            withLatestFrom(this.store.select(getActiveRouteSchedules)),
+            filter(([action, schedules]) => !schedules),
+            switchMap(([action]) => this.dataService.getRouteSchedules(action.code)),
+            map((response: IScheduleDetails) => api_actions.getSchedulesSuccess({schedules: response}))
+        )
+    );
 
 }

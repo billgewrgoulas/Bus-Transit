@@ -3,6 +3,8 @@ import { LatLngExpression } from 'leaflet';
 import * as L from 'leaflet';
 import { IStop } from '../state/entities/stop.entity';
 import { IPoint } from '../state/entities/route.entity';
+import { IArrival } from '../state/entities/live.data';
+import test from 'node:test';
 
 @Injectable({
   providedIn: 'root'
@@ -15,7 +17,7 @@ export class MapService {
   private polyline: any = L.polyline([]);
   private readonly center: LatLngExpression = [39.667341104708946, 20.854922400637918];
   private icon: L.Icon = L.icon({iconUrl: '../../assets/bus-stop.png', iconSize: [35, 35]});
-  private busIcon: L.Icon = L.icon({iconUrl: '../../assets/bus-icon.png', iconSize: [25, 25]});
+  private busIcon: L.Icon = L.icon({iconUrl: '../../assets/bus-icon.png', iconSize: [45, 45]});
 
   constructor() {}
 
@@ -48,16 +50,16 @@ export class MapService {
     });
   }
 
-  // public displayBusLocations(buses: IBus[]){
-  //   this.buses.forEach(bus => this.map.removeLayer(bus));
-  //   buses.forEach((bus: IBus) => {
-  //     const coords = <LatLngExpression>[+bus.CS_LAT, +bus.CS_LNG];
-  //     const marker = L.marker(coords, {icon: this.busIcon, interactive: true});
-  //     marker.bindPopup(`<b>${bus.VEH_NO}</b>`);
-  //     marker.addTo(this.map);
-  //     this.buses.push(marker);
-  //   });
-  // }
+  public displayBusLocations(buses: IArrival[]){
+    this.buses.forEach(bus => this.map.removeLayer(bus));
+    buses.forEach((bus: IArrival) => {
+      const coords = <LatLngExpression>[+bus.latitude, +bus.longitude];
+      const marker = L.marker(coords, {icon: this.busIcon, interactive: true});
+      marker.bindPopup(`<b>${bus.vehicleCode}</b>`);
+      marker.addTo(this.map);
+      this.buses.push(marker);
+    });
+  }
 
   public clearMap(){
     this.map.removeLayer(this.polyline);

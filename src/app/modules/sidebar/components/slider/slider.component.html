@@ -3,8 +3,8 @@
 
     <ng-container *ngIf="module.type === 'routeSlider'">
         <mat-tab-group mat-stretch-tabs animationDuration="300ms" [(selectedIndex)]="selectedTab">
-            <mat-tab label="Stops">
-                <station-list-component></station-list-component>
+            <mat-tab label="Schedules">
+                <station-list-component [onSwap]="selectedTab"></station-list-component>
             </mat-tab>
             <mat-tab label="Bus details">
                 <bus-entity></bus-entity>
@@ -16,10 +16,7 @@
     </ng-container>
 
     <ng-container *ngIf="module.type === 'lineSlider'">
-        <mat-tab-group mat-stretch-tabs animationDuration="300ms" [(selectedIndex)]="selectedTab">
-            <mat-tab label="Schedule">
-                <schedule-component></schedule-component>
-            </mat-tab>
+        <mat-tab-group animationDuration="300ms" [(selectedIndex)]="selectedTab">
             <mat-tab label="Routes">
                 <route-list></route-list>
             </mat-tab>

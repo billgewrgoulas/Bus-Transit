@@ -22,17 +22,31 @@
     flex-direction: column;
     align-items: flex-end;
     gap: 30px;
-    padding: 30px 0 45px 30px;
+    padding: 15px 0 35px 20px;
     background: rgb(221,220,229);
     background: linear-gradient(90deg, rgba(221,220,229,1) 0%, rgba(254,254,254,1) 100%);
+    position: relative;
+}
+
+.start{
+    color: #3e3aef;
+    font-weight: 900;
+    font-size: 20px;
+}
+
+.end{
+    color: #db1de3;
+    font-weight: 900;
+    font-size: 20px;
 }
 
 .right-wrapper{
-    padding-bottom: 30px;
+    padding-bottom: 18px;
     width: inherit;
     display: flex;
-    flex-direction: row;
-    gap: 10px;
+    flex-direction: column;
+    gap: 8px;
+    position: relative;
 }
 
 .right-wrapper>i{
@@ -51,7 +65,7 @@ input{
     border: none;
     border-bottom: 3px solid #f7f8fe;
     background: transparent;
-    width: 85%;
+    width: 90%;
     font-size: 16px;
     padding-bottom: 16px;
     color: #2b3b4c;
@@ -70,6 +84,36 @@ input{
     font-weight: 700;
 }
 
+.input-list{
+    display: flex;
+    flex-direction: row;
+}
 
+.border{
+    position: absolute;
+    border-right: 1px solid #f7f8fe !important;
+    height: 20px;
+    top: 103px;
+    left: 43px;
+}
 
+.swap-icon{
+    position: absolute;
+    bottom: 45px;
+    right: 25px;
+    box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
+    border-radius: 50%;
+    cursor: pointer;
+}
 
+.swap{
+    font-size: 30px !important;
+    color: white;
+    background-color: #3e3aef;
+    border-radius: 50%;
+    padding: 5px;
+}
+
+.dest{
+    border: none !important;
+}

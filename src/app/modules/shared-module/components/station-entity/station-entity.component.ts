@@ -34,20 +34,5 @@ export class StationEntityComponent implements OnInit {
   public swapTab(){
     this.dataShare.slide(0);
   }
-
-  public navigate(){
-    this.store.dispatch(navigation.nav_actions.arrowNavigation());
-  }
-
-  public bookStop(stop: IStop){
-
-    // if(stop.Booked){
-    //   //this.store.dispatch(actions.requests.bookStop());
-    // }else{
-    //   //this.store.dispatch(actions.requests.unbookStop());
-    // }
-
-
-  }
-
+  
 }

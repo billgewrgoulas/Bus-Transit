@@ -11,7 +11,7 @@ export class OptionComponent implements OnInit {
   @Input() public icon: string = '';
   @Input() public text: string = '';
   @Input() public desc: string = '';
-  @Input() public link: string[] = ['lines'];
+  @Input() public link: string[] = [];
 
   constructor(private router: Router) { }
 

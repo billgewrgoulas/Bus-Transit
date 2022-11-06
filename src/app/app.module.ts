@@ -12,7 +12,7 @@ import { SidebarModule } from './modules/sidebar/sidebar.module';
 import { EffectsModule } from '@ngrx/effects';
 import { HttpClient } from '@angular/common/http';
 import { ApiEffects } from './state/effects/api.effects';
-import { lineStateReducer } from './state/reducers/api-reducer';
+import { appStateReducer } from './state/reducers/api-reducer';
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 import { environment } from '../environments/environment';
 import { MapModule } from './modules/map/map.module';
@@ -37,7 +37,7 @@ import { RouterEffects } from './state/effects/router.effects';
     SidebarModule,
     MapModule,
     HttpClientModule,
-    StoreModule.forRoot({api: lineStateReducer, router: routerReducer}),
+    StoreModule.forRoot({api: appStateReducer, router: routerReducer}),
     EffectsModule.forRoot([ApiEffects, SocketEffects, RouterEffects]),
     StoreDevtoolsModule.instrument({ maxAge: 25, logOnly: environment.production }),
     StoreRouterConnectingModule.forRoot()
