@@ -34,5 +34,9 @@ export class StationEntityComponent implements OnInit {
   public swapTab(){
     this.dataShare.slide(0);
   }
+
+  public flyToStop(point: IStop){
+    this.dataShare.fly([point.latitude, point.longitude]);
+  }
   
 }

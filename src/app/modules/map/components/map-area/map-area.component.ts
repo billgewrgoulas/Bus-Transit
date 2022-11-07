@@ -37,12 +37,13 @@ export class MapAreaComponent implements OnInit, OnDestroy {
     ).subscribe(stop => this.flyTo([stop?.latitude!, stop?.longitude!])));
 
     this.subscribers.push(this.dataShare.busObserver.pipe(
-      filter((buses) => buses.length > 0)
+      filter(buses => buses.length > 0)
     ).subscribe(buses => this.displayBusLocations(buses)));
 
     this.subscribers.push(this.dataShare.pointObserver.pipe(
+      tap(p=>console.log(p)),
       filter(point => !!point)
-    ).subscribe(point => this.flyTo([point.latitude, point.longitude])));
+    ).subscribe(point => this.flyTo(point)));
 
   }
 

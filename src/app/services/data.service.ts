@@ -59,4 +59,10 @@ export class DataService {
       catchError((err) => throwError(()=>new Error(err))))
   }
 
+  public getFilteredStops(code: string): Observable<IStop[]>{
+    return this.http.get(this.url + 'filterStops/' + code, this.options).pipe(
+      map((res: any) => <IStop[]>res),
+      catchError((err) => throwError(()=>new Error(err))))
+  }
+
 }

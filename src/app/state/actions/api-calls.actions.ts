@@ -14,6 +14,11 @@ export const getStops = createAction('[API] GET Stops');
 export const getStopsSuccess = createAction('[API] Stops loaded success', props<{stops: IStop[]}>());
 export const getStopsError = createAction('[API] Stops error');
 
+/*Get all the stops of the routes that pass through a stop */
+export const getFilteredStops = createAction('[API] Filter Stops', props<{stopCode: string}>());
+export const getFilteredStopsSuccess = createAction('[API] Stops filtered success', props<{stops: IStop[]}>());
+export const getFilteredStopsError = createAction('[API] Filter error');
+
 /* Fetch the routes of a line based on the lineCode */
 export const getLineRoutes = createAction('[API] GET Details', props<{id: string}>());
 export const getLineRoutesSuccess = createAction('[API] Routes Details Success', props<{routes: IRoute[]}>());

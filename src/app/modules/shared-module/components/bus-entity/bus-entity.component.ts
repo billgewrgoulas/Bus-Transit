@@ -37,7 +37,7 @@ export class BusEntityComponent implements OnInit, OnDestroy {
   }
 
   public selectBus(bus: IArrival){
-    this.dataShare.fly(bus);
+    this.dataShare.fly([bus.latitude, bus.longitude]);
   }
 
   public navigate(){

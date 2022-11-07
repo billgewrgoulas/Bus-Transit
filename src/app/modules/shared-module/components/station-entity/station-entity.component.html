@@ -1,6 +1,6 @@
 
 <ng-container *ngIf="stop$ | async as stop else notSelected">
-    <div class="entity-wrapper">
+    <div class="entity-wrapper" (click)="flyToStop(stop)">
         <div class="entity-container">
             <div class="entity-type">
                 <div class="stop-description">

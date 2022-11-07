@@ -12,7 +12,8 @@
             [icon]="option.icon"
             [text]="option.text"
             [desc]="option.desc"
-            [link]="option.link">
+            [data]="option.link"
+            (onSelect)="onSelect($event)">
         </app-option>
     </ng-container>
 </div>

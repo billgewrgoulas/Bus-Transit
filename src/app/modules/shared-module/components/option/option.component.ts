@@ -1,5 +1,7 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { outputAst } from '@angular/compiler';
+import { Component, Input, OnInit, Output, EventEmitter } from '@angular/core';
 import { Router } from '@angular/router';
+
 
 @Component({
   selector: 'app-option',
@@ -8,18 +10,19 @@ import { Router } from '@angular/router';
 })
 export class OptionComponent implements OnInit {
 
+  @Output() public onSelect = new EventEmitter<string[]>();
+
   @Input() public icon: string = '';
   @Input() public text: string = '';
   @Input() public desc: string = '';
-  @Input() public link: string[] = [];
+  @Input() public data: string[] = [];
 
-  constructor(private router: Router) { }
+  constructor() { }
 
-  ngOnInit(): void {
-  }
+  ngOnInit(): void {}
 
-  public navigate(){
-    this.router.navigate([{ outlets: { sidebar: this.link }}]);
+  public onClick(){
+    this.onSelect.emit(this.data);
   }
 
 }

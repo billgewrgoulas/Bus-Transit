@@ -1,4 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'sidebar-options',
@@ -15,9 +16,12 @@ export class SidebarOptionsComponent implements OnInit {
     {text: 'Recently searched', icon: 'folder_special', desc: 'Recent searches'}
   ];
 
-  constructor() { }
+  constructor(private router: Router) { }
 
-  ngOnInit(): void {
+  ngOnInit(): void {}
+
+  public onSelect(data: string[]){
+    this.router.navigate([{ outlets: { sidebar: data }}]);
   }
 
 }

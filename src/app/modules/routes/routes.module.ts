@@ -2,9 +2,9 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RoutesRoutingModule } from './routes-routing.module';
 import { FormsModule } from '@angular/forms';
-import { InputComponent } from '../shared-module/components/input/input.component';
-
-
+import { InputComponent } from './components/input/input.component';
+import { DataShareService } from 'src/app/services/data-share.service';
+import { SharedModule } from '../shared-module/shared-module.module';
 
 
 @NgModule({
@@ -12,7 +12,9 @@ import { InputComponent } from '../shared-module/components/input/input.componen
   imports: [
     CommonModule,
     RoutesRoutingModule,
-    FormsModule
-  ]
+    FormsModule,
+    SharedModule
+  ],
+  providers: [DataShareService]
 })
 export class RoutesModule { }

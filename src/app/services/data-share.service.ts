@@ -34,11 +34,11 @@ export class DataShareService {
   }
 
   /* fly to point */
-  private readonly point = new Subject<IArrival>; 
+  private readonly point = new Subject<string[]>; 
   public readonly pointObserver = this.point.asObservable();
 
-  public fly(bus: IArrival){
-    this.point.next(bus);
+  public fly(point: string[]){
+    this.point.next(point);
   }
 
 }

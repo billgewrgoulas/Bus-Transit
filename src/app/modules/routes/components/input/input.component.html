@@ -19,20 +19,35 @@
             </span>
         </div>
         <div class="input-list">
-            <input [(ngModel)]="start" 
+            <input [(ngModel)]="startValue" (keyup)="startKeyUp()" (click)="startKeyUp()"
                 name="myInput" 
                 type="text" 
-                placeholder="search lines..." 
+                placeholder="select start" 
                 class="text"
                 autocomplete="off">
         </div>
         <div class="input-list">
-            <input [(ngModel)]="end"
+            <input [(ngModel)]="endValue" (keyup)="destKeyUp()" (click)="destKeyUp()"
                 name="myInput" 
                 type="text" 
-                placeholder="search lines..." 
+                placeholder="search destination" 
                 class="text dest"
                 autocomplete="off">
         </div>
     </div>
 </div>
+
+<div class="stop-list-wrapper">
+    <h1>Stops</h1>
+    <div class="option-list">
+        <ng-container *ngFor="let stop of stops$ | async">
+            <app-option (onSelect)="onClick($event)"
+                [icon]="'location_on'"
+                [text]="stop.desc"
+                [desc]="stop.code"
+                [data]="[stop.code, stop.desc, stop.latitude, stop.longitude]">
+            </app-option>
+        </ng-container>
+    </div>
+</div>
+

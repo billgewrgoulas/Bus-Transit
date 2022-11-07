@@ -126,3 +126,13 @@ export const filterLines = (value: string) => {
         ).slice(0, 20);
     });
 }
+
+/* Filter lines */
+export const filterStops = (value: string) => {
+    return createSelector(getAllStops, (stops) => {
+        return stops.filter(stop => 
+            stop.desc.includes(value.trim()) ||
+            stop.code.includes(value.trim())
+        ).slice(0, 20);
+    });
+}

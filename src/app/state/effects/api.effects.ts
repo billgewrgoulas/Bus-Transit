@@ -65,4 +65,12 @@ export class ApiEffects{
         )
     );
 
+    loadFilteredStops$ = createEffect(() => 
+        this.actions$.pipe(
+            ofType(api_actions.getFilteredStops),
+            switchMap((action) => this.dataService.getFilteredStops(action.stopCode)),
+            map((response: IStop[]) => api_actions.getFilteredStopsSuccess({stops: response}))
+        )
+    );
+
 }
