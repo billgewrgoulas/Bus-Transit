@@ -121,8 +121,8 @@ export const getRoutePathAndStops = createSelector(
 export const filterLines = (value: string) => {
     return createSelector(getAllLines, (lines) => {
         return lines.filter(line => 
-            line.desc.includes(value.trim()) ||
-            line.name.includes(value.trim())
+            line.desc.toLowerCase().includes(value.trim().toLowerCase()) ||
+            line.name.toLowerCase().includes(value.trim().toLowerCase())
         ).slice(0, 20);
     });
 }
@@ -131,8 +131,8 @@ export const filterLines = (value: string) => {
 export const filterStops = (value: string) => {
     return createSelector(getAllStops, (stops) => {
         return stops.filter(stop => 
-            stop.desc.includes(value.trim()) ||
-            stop.code.includes(value.trim())
+            stop.desc.toLowerCase().includes(value.trim().toLowerCase()) ||
+            stop.code.includes(value.trim().toLowerCase())
         ).slice(0, 20);
     });
 }

@@ -40,6 +40,10 @@
     font-size: 20px;
 }
 
+.purple{
+    color: #db1de3 !important;
+}
+
 .right-wrapper{
     padding-bottom: 18px;
     width: inherit;
@@ -49,7 +53,7 @@
     position: relative;
 }
 
-.right-wrapper>i{
+.fa-times{
     margin-top: 5px;
     cursor: pointer;
 }
@@ -87,6 +91,7 @@ input{
 .input-list{
     display: flex;
     flex-direction: row;
+    gap: 5px;
 }
 
 .border{
@@ -99,7 +104,7 @@ input{
 
 .swap-icon{
     position: absolute;
-    bottom: 48px;
+    bottom: 51px;
     right: 25px;
     box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
     border-radius: 50%;

@@ -8,6 +8,7 @@ import { getActiveStop, getRoutePathAndStops } from 'src/app/state/selectors/app
 import { IMapData } from 'src/app/state/entities/map.data.entity';
 import { DataShareService } from 'src/app/services/data-share.service';
 import { IArrival } from 'src/app/state/entities/live.data';
+import { getEnd, getStart, MapState } from 'src/app/state/reducers/map.reducer';
 
 @Component({
   selector: 'map-area',
@@ -20,7 +21,8 @@ export class MapAreaComponent implements OnInit, OnDestroy {
 
   constructor(private store: Store<AppState>, 
               private mapService: MapService, 
-              private dataShare: DataShareService) { }
+              private dataShare: DataShareService,
+              private mapStore: Store<MapState>) { }
 
   ngOnInit() {
 
@@ -28,8 +30,8 @@ export class MapAreaComponent implements OnInit, OnDestroy {
     this.mapService.mapInit();
 
     this.subscribers.push(this.store.select(getRoutePathAndStops).pipe(
-      tap(() => this.mapService.clearMap()),
       filter(data => !!data.points),
+      tap(() => this.mapService.clearMap()),
     ).subscribe(route => this.displayInfo(route!)));
 
     this.subscribers.push(this.store.select(getActiveStop).pipe(
@@ -41,9 +43,16 @@ export class MapAreaComponent implements OnInit, OnDestroy {
     ).subscribe(buses => this.displayBusLocations(buses)));
 
     this.subscribers.push(this.dataShare.pointObserver.pipe(
-      tap(p=>console.log(p)),
-      filter(point => !!point)
+      filter(point => !!point && point.length > 0)
     ).subscribe(point => this.flyTo(point)));
+
+    this.subscribers.push(this.mapStore.select(getStart).pipe(
+      filter(data => !!data && data.length > 0)
+    ).subscribe(data => this.mapService.addStart(data)));
+
+    this.subscribers.push(this.mapStore.select(getEnd).pipe(
+      filter(data => !!data && data.length > 0)
+    ).subscribe(data => this.mapService.addEnd(data)));
 
   }
 

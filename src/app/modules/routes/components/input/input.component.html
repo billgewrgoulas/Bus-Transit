@@ -1,19 +1,65 @@
 
-<div class="input-section">
+<div class="input-section" *ngIf="startFlag">
     <div class="left-wrapper">
-        <div class="border"></div>
+        <span class="arrow material-symbols-outlined" (click)="cancel()">
+            keyboard_backspace
+        </span>
+        <span class="route material-symbols-outlined">
+            trip_origin
+        </span>
+    </div>
+    <div class="right-wrapper">
+        <div class="input-list">
+            <input [(ngModel)]="startValue" (keyup)="startKeyUp()"
+                name="myInput" 
+                type="text" 
+                placeholder="select start" 
+                class="text"
+                autocomplete="off"
+                autofocus="true">
+            <i *ngIf="!default" class="fas fa-times" (click)="clearStart()"></i>
+        </div>
+    </div>
+</div>
+
+<div class="input-section" *ngIf="destFlag">
+    <div class="left-wrapper">
+        <span class="arrow material-symbols-outlined" (click)="cancel()">
+            keyboard_backspace
+        </span>
+        <span class="purple route material-symbols-outlined">
+            location_on
+        </span>
+    </div>
+    <div class="right-wrapper">
+        <div class="input-list">
+            <input [(ngModel)]="endValue" (keyup)="destKeyUp()"
+                name="myInput" 
+                type="text" 
+                placeholder="select start" 
+                class="text"
+                autocomplete="off"
+                autofocus="true">
+            <i *ngIf="!default" class="fas fa-times" (click)="clearDest()"></i>
+        </div>
+    </div>
+</div>
+
+<div class="input-section" *ngIf="default">
+    <div class="left-wrapper">
+        <div [class.border]="default"></div>
         <span class="arrow material-symbols-outlined" (click)="navigate()">
             keyboard_backspace
         </span>
         <span class="start material-symbols-outlined">
             trip_origin
         </span>
-        <span class="end material-symbols-outlined">
+        <span class="end material-symbols-outlined" *ngIf="default">
             location_on
         </span>
     </div>
     <div class="right-wrapper">
-        <div class="swap-icon"(click)="swap()">
+        <div class="swap-icon" *ngIf="default" (click)="swap()">
             <span class="swap material-symbols-outlined">
                 swap_vert
             </span>
@@ -25,29 +71,51 @@
                 placeholder="select start" 
                 class="text"
                 autocomplete="off">
+                <i *ngIf="!default" class="fas fa-times" (click)="cancel()"></i>
         </div>
-        <div class="input-list">
+        <div class="input-list" *ngIf="default">
             <input [(ngModel)]="endValue" (keyup)="destKeyUp()" (click)="destKeyUp()"
                 name="myInput" 
                 type="text" 
                 placeholder="search destination" 
                 class="text dest"
                 autocomplete="off">
+                <i *ngIf="!default" class="fas fa-times" (click)="cancel()"></i>
         </div>
     </div>
 </div>
 
 <div class="stop-list-wrapper">
-    <h1>Stops</h1>
+    <h1 *ngIf="!default">Stops</h1>
     <div class="option-list">
-        <ng-container *ngFor="let stop of stops$ | async">
-            <app-option (onSelect)="onClick($event)"
-                [icon]="'location_on'"
-                [text]="stop.desc"
-                [desc]="stop.code"
-                [data]="[stop.code, stop.desc, stop.latitude, stop.longitude]">
-            </app-option>
+
+        <ng-container *ngIf="!default">
+            <ng-container *ngFor="let stop of stops$ | async">
+                <app-option (onSelect)="onClick($event)"
+                    [icon]="'location_on'"
+                    [text]="stop.desc"
+                    [desc]="stop.code"
+                    [data]="[stop.code, stop.desc, stop.latitude, stop.longitude]">
+                </app-option>
+            </ng-container>
         </ng-container>
+        
+        <ng-container *ngIf="default">
+
+            <app-option (onSelect)="onClick($event)"
+                [icon]="'file_present'"
+                [text]="'Saved stops'"
+                [data]="['saved']">
+            </app-option>
+
+            <app-option (onSelect)="onClick($event)"
+                [icon]="'folder_special'"
+                [text]="'Recently searched'"
+                [data]="['recent']">
+            </app-option>
+
+        </ng-container>
+
     </div>
 </div>
 

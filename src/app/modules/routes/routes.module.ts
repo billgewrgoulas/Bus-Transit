@@ -15,6 +15,6 @@ import { SharedModule } from '../shared-module/shared-module.module';
     FormsModule,
     SharedModule
   ],
-  providers: [DataShareService]
+  providers: []
 })
 export class RoutesModule { }

@@ -16,6 +16,6 @@ import { StationEntityComponent } from './components/station-entity/station-enti
     OptionComponent, 
     BusEntityComponent, 
     StationEntityComponent, 
-  ]
+  ],
 })
 export class SharedModule { }

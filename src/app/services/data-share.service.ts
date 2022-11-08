@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { AsyncSubject, ReplaySubject, Subject} from 'rxjs';
+import { AsyncSubject, ReplaySubject, Subject, BehaviorSubject} from 'rxjs';
 import { IArrival } from '../state/entities/live.data';
 
 @Injectable({
@@ -39,6 +39,14 @@ export class DataShareService {
 
   public fly(point: string[]){
     this.point.next(point);
+  }
+
+  /* fly to point */
+  private readonly marker = new Subject<string[]>; 
+  public readonly markerObserver = this.marker.asObservable();
+
+  public updateMarkers(data: string[]){
+    this.marker.next(data);
   }
 
 }
