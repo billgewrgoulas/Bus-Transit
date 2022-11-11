@@ -1,7 +1,6 @@
 import { Injectable } from '@angular/core';
 import * as L from 'leaflet';
 import { latLng, tileLayer } from 'leaflet';
-import { Position } from 'src/app/models/position';
 
 export class MapController{
 

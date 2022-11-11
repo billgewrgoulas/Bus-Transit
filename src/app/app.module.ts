@@ -22,7 +22,7 @@ import { SocketIOService } from './services/socket-io.service';
 import { SocketEffects } from './state/effects/socket.effects';
 import { RouterEffects } from './state/effects/router.effects';
 import { DataShareService } from './services/data-share.service';
-import { mapStateReducer } from './state/reducers/map.reducer';
+
 
 @NgModule({
   declarations: [
@@ -39,7 +39,7 @@ import { mapStateReducer } from './state/reducers/map.reducer';
     SidebarModule,
     MapModule,
     HttpClientModule,
-    StoreModule.forRoot({api: appStateReducer, router: routerReducer, map: mapStateReducer}),
+    StoreModule.forRoot({api: appStateReducer, router: routerReducer}),
     EffectsModule.forRoot([ApiEffects, SocketEffects, RouterEffects]),
     StoreDevtoolsModule.instrument({ maxAge: 25, logOnly: environment.production }),
     StoreRouterConnectingModule.forRoot()

@@ -29,7 +29,12 @@ export const getRouteDetails = createAction('[API] Get Route Details', props<{co
 export const getRouteDetailsuccess = createAction('[API] Loaded Success', props<{routeInfo: IRouteInfo}>());
 export const getRouteDetailsError = createAction('[API] Details load error');
 
-/* Fetch the weekly route schdeules */
+/* Fetch the weekly route schdules */
 export const getSchedules = createAction('[API] Get route schdeules', props<{code: string}>());
 export const getSchedulesSuccess = createAction('[API] Get route schedules success', props<{schedules: IScheduleDetails}>());
 export const getSchedulesError = createAction('[API] Get schedules error');
+
+/* Fetch the routes based on the selected stops */
+export const getFilteredRoutes = createAction('[Api] Get filtered routes', props<{code1: string, code2: string}>());
+export const routesFilteredSucces = createAction('[API] Filtered routes success', props<{routes: IRoute[], add: any}>());
+export const filteredRoutesError = createAction('[API] Filter Routes error');

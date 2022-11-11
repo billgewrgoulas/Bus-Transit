@@ -87,7 +87,6 @@ export class LiveDataStore extends ComponentStore<LiveState> {
     });
 
     private updateBuses = this.updater((state, buses: IArrival[]): LiveState => {
-        console.log(buses);
         return {buses: [...buses], arrivals: [...state.arrivals]};
     });
 

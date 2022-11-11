@@ -1,0 +1,33 @@
+
+<div class="option-list">
+
+    <ng-container *ngIf="flag else stopList">
+        <ng-container *ngIf="showDefaultSwitch$ | async as flag else stopList">
+
+            <app-option (onSelect)="navigate($event)"
+                [icon]="'file_present'"
+                [text]="'Saved stops'"
+                [data]="['0']">
+            </app-option>
+    
+            <app-option (onSelect)="navigate($event)"
+                [icon]="'folder_special'"
+                [text]="'Recently searched'"
+                [data]="['1']">
+            </app-option>
+    
+        </ng-container>
+    </ng-container>
+
+</div>
+
+<ng-template #stopList>
+    <ng-container *ngFor="let stop of stops$ | async">
+        <app-option (onSelect)="onClick($event)"
+            [icon]="'location_on'"
+            [text]="stop.desc"
+            [desc]="stop.code"
+            [data]="[stop.code, stop.desc, stop.latitude, stop.longitude]">
+        </app-option>
+    </ng-container>
+</ng-template>

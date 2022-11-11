@@ -2,7 +2,7 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { MultipleDropdownComponent } from '../sidebar/components/multiple-dropdown/multiple-dropdown.component';
-import { RouteListComponent } from '../sidebar/components/route-list/route-list.component';
+import { RouteListComponent } from '../shared-module/components/route-list/route-list.component';
 import { SliderComponent } from '../sidebar/components/slider/slider.component';
 import { StationListComponent } from '../sidebar/components/station-list/station-list.component';
 import { LinesComponent } from './lines.component';

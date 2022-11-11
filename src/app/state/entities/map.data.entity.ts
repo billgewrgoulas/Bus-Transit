@@ -5,3 +5,13 @@ export interface IMapData{
     stops: IStop[];
     points: IPoint[];
 }
+
+export interface TripData{
+    start: string[];
+    destination: string[];
+}
+
+export const defaultTrip: TripData = {
+    start: [],
+    destination: []
+}

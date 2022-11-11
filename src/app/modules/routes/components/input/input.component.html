@@ -85,37 +85,4 @@
     </div>
 </div>
 
-<div class="stop-list-wrapper">
-    <h1 *ngIf="!default">Stops</h1>
-    <div class="option-list">
-
-        <ng-container *ngIf="!default">
-            <ng-container *ngFor="let stop of stops$ | async">
-                <app-option (onSelect)="onClick($event)"
-                    [icon]="'location_on'"
-                    [text]="stop.desc"
-                    [desc]="stop.code"
-                    [data]="[stop.code, stop.desc, stop.latitude, stop.longitude]">
-                </app-option>
-            </ng-container>
-        </ng-container>
-        
-        <ng-container *ngIf="default">
-
-            <app-option (onSelect)="onClick($event)"
-                [icon]="'file_present'"
-                [text]="'Saved stops'"
-                [data]="['saved']">
-            </app-option>
-
-            <app-option (onSelect)="onClick($event)"
-                [icon]="'folder_special'"
-                [text]="'Recently searched'"
-                [data]="['recent']">
-            </app-option>
-
-        </ng-container>
-
-    </div>
-</div>
-
+<router-outlet></router-outlet>

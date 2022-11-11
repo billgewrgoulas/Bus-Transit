@@ -5,6 +5,7 @@ import { IStop } from '../state/entities/stop.entity';
 import { IPoint } from '../state/entities/route.entity';
 import { IArrival } from '../state/entities/live.data';
 import test from 'node:test';
+import { IMapData } from '../state/entities/map.data.entity';
 
 @Injectable({
   providedIn: 'root'
@@ -39,6 +40,13 @@ export class MapService {
     this.map.setView(this.center, 13);
   }
 
+  public displayRouteInformation(data: IMapData | undefined){
+    this.clearMap();
+    if(!data)return;
+    this.carvePath(data.points);
+    this.displayStops(data.stops);
+  }
+
   public carvePath(points: IPoint[]){
     const path: any = [];
     points.forEach(point => path.push([+point.latitude, +point.longitude]));
@@ -46,7 +54,7 @@ export class MapService {
     this.map.fitBounds(this.polyline.getBounds());
   }
 
-  public displayMarkers(stops: IStop[]){
+  public displayStops(stops: IStop[]){
     stops.forEach((s: IStop) => {
       const marker = this.createMarker(s.latitude, s.longitude, s.code, this.icon);
       marker.addTo(this.map);
@@ -55,6 +63,7 @@ export class MapService {
   }
 
   public displayBusLocations(buses: IArrival[]){
+    if(buses.length == 0)return;
     this.buses.forEach(bus => this.map.removeLayer(bus));
     buses.forEach((bus: IArrival) => {
       const marker = this.createMarker(bus.latitude, bus.longitude, bus.lineCode, this.busIcon);
@@ -75,29 +84,43 @@ export class MapService {
   }
 
   public focusOnPoint(point: string[]){
+    if(!point) return;
     const coords = <LatLngExpression>[+point[0], +point[1]];
     this.map.flyTo(coords, 18);
   }
 
   public addStart(data: string[]){
+    
+    if(data.length == 0){
+      this.clearMap();
+      return;
+    }
+
     this.map.removeLayer(this.start);
     const marker = this.createMarker(data[2], data[3], data[1], this.marker);
     marker.addTo(this.map);
     this.start = marker;
+    this.focusOnPoint([data[2], data[3]]);
   }
 
   public addEnd(data: string[]){
+
+    if(data.length == 0){
+      this.clearMap();
+      return;
+    }
+    
     this.map.removeLayer(this.end);
     const marker = this.createMarker(data[2], data[3], data[1], this.marker);
     marker.addTo(this.map);
     this.end = marker;
+    this.focusOnPoint([data[2], data[3]]);
   }
 
   private createMarker(x: string, y: string, text: string, icon: L.Icon){
     const coords = <LatLngExpression>[+x, +y];
     const marker = new L.Marker(coords, {icon: icon, interactive: true});
     marker.bindPopup(`<b>${text}</b>`);
-    this.map.flyTo(coords, 17);
     return marker;
   }
 

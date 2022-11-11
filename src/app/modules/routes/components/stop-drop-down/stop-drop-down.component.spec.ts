@@ -1,18 +1,18 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { StationListComponent } from './station-list.component';
+import { StopDropDownComponent } from './stop-drop-down.component';
 
-describe('StationListComponent', () => {
-  let component: StationListComponent;
-  let fixture: ComponentFixture<StationListComponent>;
+describe('StopDropDownComponent', () => {
+  let component: StopDropDownComponent;
+  let fixture: ComponentFixture<StopDropDownComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ StationListComponent ]
+      declarations: [ StopDropDownComponent ]
     })
     .compileComponents();
 
-    fixture = TestBed.createComponent(StationListComponent);
+    fixture = TestBed.createComponent(StopDropDownComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

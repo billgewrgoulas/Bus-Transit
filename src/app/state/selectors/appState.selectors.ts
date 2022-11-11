@@ -3,7 +3,7 @@ import { IRoute, RouteState } from "../entities/route.entity";
 import { IStop, stopStateAdapter } from "../entities/stop.entity";
 import { AppState } from "../reducers/api-reducer";
 import { lineStateAdapter } from "../entities/line.entity";
-import { IMapData } from "../entities/map.data.entity";
+import { IMapData, TripData } from "../entities/map.data.entity";
 
 export const getAppState = createFeatureSelector<AppState>('api');
 
@@ -55,21 +55,15 @@ export const selectRoute = (routeCode: string) =>
 /* Select the current route daily schedule */
 export const getActiveRouteSchedules = createSelector(
     currentRoute, selectAllSchedules, (route, schedules) => {
-        if(route){
-            return schedules[route.code]?.schedules;
-        }else{
-            return undefined;
-        }
+        if(!route) return undefined;
+        return schedules[route.code]?.schedules;
     }
 );
 
 export const getDailySchedule = (day: number, stopCode: string) =>{
     return createSelector(getActiveRouteSchedules, (schedules) => {
-        if(schedules){
-            return schedules.filter(sch => sch.day == day && sch.stopCode == stopCode);
-        }else{
-            return [];
-        }
+        if(!schedules)return [];
+        return schedules.filter(sch => sch.day == day && sch.stopCode == stopCode);
     });
 }
 
@@ -78,13 +72,13 @@ export const selectCurrentLineRoutes = createSelector(
     currentLine, selectAllRoutes, (line, routeEntities) => {
 
         const routes: IRoute[] = [];
-        if(line){
-            line.routeCodes.split(',').forEach(code => {
-                const route: IRoute | undefined = routeEntities[code];
-                if(route) routes.push(route);
-            });
-        }
+        if(!line) return routes;
 
+        line.routeCodes.split(',').forEach(code => {
+            const route: IRoute | undefined = routeEntities[code];
+            if(route) routes.push(route);
+        });
+        
         return routes;
     }
 );
@@ -99,21 +93,22 @@ export const getRouteStops = createSelector(
     currentRoute, selectAllStops, (route, stopEntities) => {
 
         const stops: IStop[] = [];
-        if(route){
-            route.stopCodes.split(',').forEach(code =>{
-                const stop: IStop | undefined = stopEntities[code];
-                if(stop) stops.push(stop);
-            });
-        }
+        if(!route) return stops;
 
+        route.stopCodes.split(',').forEach(code =>{
+            const stop: IStop | undefined = stopEntities[code];
+            if(stop) stops.push(stop);
+        });
+        
         return stops;
     }
 );
 
 /* Select the map data from the current route */
 export const getRoutePathAndStops = createSelector(
-    currentRoute, getRouteStops, (route, stops): IMapData => {
-        return {points: route!?.points, stops: stops};
+    currentRoute, getRouteStops, (route, stops): IMapData | undefined => {
+        if(!(route && route.points)) return undefined;
+        return {points: route.points, stops: stops};
     }
 );
 
@@ -127,7 +122,7 @@ export const filterLines = (value: string) => {
     });
 }
 
-/* Filter lines */
+/* Filter stops*/
 export const filterStops = (value: string) => {
     return createSelector(getAllStops, (stops) => {
         return stops.filter(stop => 
@@ -136,3 +131,11 @@ export const filterStops = (value: string) => {
         ).slice(0, 20);
     });
 }
+
+/* fetch the current markers from the state */
+export const getTripEntity = createSelector(
+    getAppState, (state) => state.tripData
+);
+
+export const getStart = createSelector(getTripEntity, (state: TripData) => state.start);
+export const getEnd = createSelector(getTripEntity, (state: TripData) => state.destination);

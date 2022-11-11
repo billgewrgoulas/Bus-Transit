@@ -1,4 +1,3 @@
-
 import { Injectable } from "@angular/core";
 import { Store } from "@ngrx/store";
 import { Actions, createEffect, ofType } from "@ngrx/effects";
@@ -6,9 +5,10 @@ import { filter, map, mergeMap, switchMap, tap, withLatestFrom } from "rxjs";
 import * as navigation from'../actions/navigation.actions';
 import * as api_actions from "../actions/api-calls.actions";
 import * as select_actions from '../actions/select.actions';
+import * as map_actions from '../actions/map.actions';
 import { AppState } from "../reducers/api-reducer";
 import { ROUTER_NAVIGATED, ROUTER_NAVIGATION } from "@ngrx/router-store";
-import { getNavigationRoute, getUrl } from "../selectors/router.reducer";
+import { getNavigationRoute, getUrl } from "../selectors/router.selectors";
 import { currentLine } from "../selectors/appState.selectors";
 import { Router } from "@angular/router";
 
@@ -79,7 +79,7 @@ export class RouterEffects{
         this.actions$.pipe(
             ofType(navigation.arrowNavigation),
             withLatestFrom(this.store.select(getUrl), this.store.select(currentLine)),
-            tap(([action, url, line]) =>{
+            tap(([action, url, line]) => {
 
                 if(url.includes('/route')){
                     this.router.navigate([{ outlets: { sidebar: [ 'lines', line?.id] }}]);
@@ -87,6 +87,8 @@ export class RouterEffects{
                     this.router.navigate([{ outlets: { sidebar: [ 'lines'] }}]);
                 }else if(url === '/(sidebar:routes)'){
                     this.router.navigate(['']);
+                }else if (url === '/(sidebar:routes/saved)'){
+                    this.router.navigate([{ outlets: { sidebar: [ 'routes'] }}]);
                 }else{
                     this.router.navigate(['']);
                 }

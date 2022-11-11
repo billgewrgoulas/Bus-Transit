@@ -4,21 +4,25 @@ import { inititialRouteState, RouteState, routeStateAdapter } from "../entities/
 import { inititialStopState, StopState, stopStateAdapter } from "../entities/stop.entity";
 import * as select_actions from '../actions/select.actions';
 import * as api_actions from '../actions/api-calls.actions';
+import * as map_actions from "../actions/map.actions";
 import { inititialSchdeduleState, IScheduleDetails, ScheduleState, scheduleStateAdapter } from "../entities/schedule.entity";
+import { defaultTrip, TripData } from "../entities/map.data.entity";
 
 
 export interface AppState{
     stops: StopState;
     lines: LineState;
     routes: RouteState;
-    schedule: ScheduleState
+    schedule: ScheduleState;
+    tripData: TripData
 };
 
 export const initialAppState: AppState = {
     lines: inititialLineState,
     stops: inititialStopState,
     routes: inititialRouteState,
-    schedule: inititialSchdeduleState
+    schedule: inititialSchdeduleState,
+    tripData: defaultTrip
 };
 
 /* API Reducer */
@@ -53,6 +57,15 @@ export const appStateReducer = createReducer(
     }),
     on(api_actions.getStopsSuccess, (state: AppState, action): AppState => {
         return {...state, stops: stopStateAdapter.addMany(action.stops, state.stops)};
+    }),
+    on(map_actions.addStart, (state: AppState, action): AppState => {
+        return {...state, tripData: {...state.tripData, start: action.data}};
+    }),
+    on(map_actions.addEnd, (state: AppState, action): AppState => {
+        return {...state, tripData: {...state.tripData, destination: action.data}};
+    }),
+    on(map_actions.swapPoints, (state: AppState, action): AppState => {
+        return {...state, tripData: {destination: state.tripData.start, start: state.tripData.destination}};
     }),
     on(api_actions.getRouteDetailsuccess, (state: AppState, action): AppState=>{
         return {...state, stops: stopStateAdapter.addMany(action.routeInfo.stops, state.stops), 
