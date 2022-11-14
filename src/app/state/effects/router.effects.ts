@@ -70,7 +70,7 @@ export class RouterEffects{
                 select_actions.selectLine({id: ''}),
                 select_actions.selectRoute({code: ''}),
                 select_actions.selectStop({code: ''}),
-                select_actions.emptyRoutes()
+                //select_actions.emptyRoutes()
             ])
         )
     );
@@ -81,13 +81,15 @@ export class RouterEffects{
             withLatestFrom(this.store.select(getUrl), this.store.select(currentLine)),
             tap(([action, url, line]) => {
 
-                if(url.includes('/route')){
+                if(url.includes('/route/')){
                     this.router.navigate([{ outlets: { sidebar: [ 'lines', line?.id] }}]);
                 }else if(url.includes('/(sidebar:lines/')){
                     this.router.navigate([{ outlets: { sidebar: [ 'lines'] }}]);
                 }else if(url === '/(sidebar:routes)'){
                     this.router.navigate(['']);
                 }else if (url === '/(sidebar:routes/saved)'){
+                    this.router.navigate([{ outlets: { sidebar: [ 'routes'] }}]);
+                }else if(url === '/(sidebar:routes/route)'){
                     this.router.navigate([{ outlets: { sidebar: [ 'routes'] }}]);
                 }else{
                     this.router.navigate(['']);

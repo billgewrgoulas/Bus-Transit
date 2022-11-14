@@ -17,7 +17,7 @@ import { Router } from '@angular/router';
 })
 export class InputComponent implements OnInit, OnDestroy {
 
-  private endPointSub!: Subscription;
+  private subs: Subscription[] = [];
   public startValue: string = '';
   public endValue: string = '';
 
@@ -28,11 +28,12 @@ export class InputComponent implements OnInit, OnDestroy {
   constructor(private store: Store<AppState>, private router: Router, private msg: DataShareService) { }
   
   ngOnInit(): void {
-    this.endPointSub = this.msg.markerObserver.subscribe(v => this.onClick(v));
+    this.subs.push(this.msg.markerObserver.subscribe(v => this.onClick(v)));
+    this.subs.push(this.msg.calculateRoutesObserver.subscribe(v => this.onCalculate(v)));
   }
 
   ngOnDestroy(): void{
-    this.endPointSub.unsubscribe();
+    this.subs.forEach(s => s.unsubscribe());
   }
 
   public swap(){
@@ -80,6 +81,21 @@ export class InputComponent implements OnInit, OnDestroy {
 
   public clearDest(){
     this.endValue = '';
+  }
+
+  public onCalculate(data: string){
+
+    let message: string;
+    if(this.startValue == '' && this.endValue == ''){
+      message = 'Select stops';
+    }else if(this.startValue == ''){
+      message = 'Select start'
+    }else if(this.endValue == ''){
+      message = 'Select destination';
+    }
+
+
+
   }
 
   public navigate(){

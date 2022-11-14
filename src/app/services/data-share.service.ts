@@ -12,6 +12,7 @@ export class DataShareService {
   private readonly point = new Subject<string[]>; 
   private readonly marker = new Subject<string[]>; 
   private readonly day = new Subject<number>; 
+  private readonly calculateRoutes = new Subject<string>;
   private readonly stopDefaultList = new BehaviorSubject<boolean>(true);
 
   public readonly tabObserver = this.tab.asObservable();
@@ -19,6 +20,7 @@ export class DataShareService {
   public readonly pointObserver = this.point.asObservable();
   public readonly markerObserver = this.marker.asObservable();
   public readonly dayObserver = this.day.asObservable();
+  public readonly calculateRoutesObserver = this.calculateRoutes.asObservable();
   public stopListObserver = this.stopDefaultList.asObservable();
 
   constructor() { }
@@ -45,6 +47,10 @@ export class DataShareService {
 
   public showDefault(flag: boolean){
     this.stopDefaultList.next(flag);
+  }
+
+  public startCalculation(data: string){
+    this.calculateRoutes.next(data);
   }
 
 }

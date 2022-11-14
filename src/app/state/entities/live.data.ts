@@ -1,7 +1,7 @@
 
 export interface IArrival{
-    arrivalMins: number;
-    arrivalSeconds: number;
+    departureMins: number;
+    departureSeconds: number;
     routeCode: string;
     vehicleCode: string;
     routeName: string;

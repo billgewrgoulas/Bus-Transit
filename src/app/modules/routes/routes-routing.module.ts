@@ -11,6 +11,7 @@ const routes: Routes = [
   {path: '', component: InputComponent, children: [
     {path: '', component: StopDropDownComponent},
     {path: 'saved', component: StopSliderComponent, data: {type: 'saved'}},
+    {path: 'route', component: RouteListComponent},
   ]}, 
 ];
 

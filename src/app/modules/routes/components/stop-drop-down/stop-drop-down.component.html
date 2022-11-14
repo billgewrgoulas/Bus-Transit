@@ -4,6 +4,12 @@
     <ng-container *ngIf="flag else stopList">
         <ng-container *ngIf="showDefaultSwitch$ | async as flag else stopList">
 
+            <app-option (onSelect)="onCalculate()"
+                [icon]="'route'"
+                [text]="'Calculate route'"
+                [data]="['directions']">
+            </app-option>
+
             <app-option (onSelect)="navigate($event)"
                 [icon]="'file_present'"
                 [text]="'Saved stops'"

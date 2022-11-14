@@ -33,7 +33,11 @@ export class StopDropDownComponent implements OnInit {
 
   public navigate(data: string[]){
     this.router.navigate([{ outlets: { sidebar: [ 'routes', 'saved'] }}]);
-    
+  }
+
+  public onCalculate(){
+    this.msg.startCalculation('path');
+    this.router.navigate([{ outlets: { sidebar: [ 'routes', 'route'] }}]);
   }
 
 }

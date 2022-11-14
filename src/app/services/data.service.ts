@@ -37,32 +37,37 @@ export class DataService {
   public getLineRoutes(id: string): Observable<IRoute[]>{
     return this.http.get(this.url + 'lineRoutes/' + id, this.options).pipe(
       map((res: any) => <IRoute[]>res),
-      catchError((err) => throwError(()=>new Error(err)))
-    );
+      catchError((err) => throwError(()=>new Error(err))));
   }
 
   public getRouteDetails(code: string): Observable<IRouteInfo>{
     return this.http.get(this.url + 'routeInfo/' + code, this.options).pipe(
       map((res: any) => <IRouteInfo>res), 
-      catchError((err) => throwError(()=>new Error(err))))
+      catchError((err) => throwError(()=>new Error(err))));
   }
 
   public getRouteSchedules(code: string): Observable<IScheduleDetails>{
     return this.http.get(this.url + 'routeSchedules/' + code, this.options).pipe(
       map((res: any) => <IScheduleDetails>res), 
-      catchError((err) => throwError(()=>new Error(err))))
+      catchError((err) => throwError(()=>new Error(err))));
   }
 
   public getLiveUpdates(code: string, slug: string): Observable<IArrival[]>{
     return this.http.get(this.liveUri + slug + code, this.options).pipe(
       map((res: any) => <IArrival[]>res), 
-      catchError((err) => throwError(()=>new Error(err))))
+      catchError((err) => throwError(()=>new Error(err))));
+  }
+
+  public getFilteredRoutes(start: string, end: string): Observable<IRoute[]>{
+    return this.http.post(this.liveUri + 'endpoint', {start: start, end: end}, this.options).pipe(
+      map((res: any) => <IRoute[]>res), 
+      catchError((err) => throwError(()=>new Error(err))));
   }
 
   public getFilteredStops(code: string): Observable<IStop[]>{
     return this.http.get(this.url + 'filterStops/' + code, this.options).pipe(
       map((res: any) => <IStop[]>res),
-      catchError((err) => throwError(()=>new Error(err))))
+      catchError((err) => throwError(()=>new Error(err))));
   }
 
 }
