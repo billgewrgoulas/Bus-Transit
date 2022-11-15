@@ -15,11 +15,10 @@ import * as navigation from'../../../../state/actions/navigation.actions';
   styleUrls: ['./bus-entity.component.css'],
   providers: [LiveDataStore]
 })
-export class BusEntityComponent implements OnInit, OnDestroy {
+export class BusEntityComponent implements OnInit {
 
   public buses$!: Observable<IArrival[] | undefined>;
   public currentLine$!: Observable<ILine | undefined>;
-  public sendBuses!: Subscription;
 
   constructor(private store: Store<AppState>, 
               private liveStore: LiveDataStore,
@@ -29,11 +28,6 @@ export class BusEntityComponent implements OnInit, OnDestroy {
     this.currentLine$ = this.store.select(currentLine);
     this.liveStore.fetchBusLocations(this.currentLine$);
     this.buses$ = this.liveStore.getBusLocations();
-    this.sendBuses = this.buses$.subscribe(buses => this.dataShare.sendBusStatus(buses!));
-  }
-
-  ngOnDestroy(): void {
-    this.sendBuses.unsubscribe();
   }
 
   public selectBus(bus: IArrival){

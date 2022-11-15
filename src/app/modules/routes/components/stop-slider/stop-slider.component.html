@@ -1,6 +1,9 @@
 
-<mat-tab-group mat-stretch-tabs animationDuration="300ms" [(selectedIndex)]="selectedTab">
-    <mat-tab label="Saved stops">
+<mat-tab-group mat-stretch-tabs animationDuration="300ms">
+    <mat-tab label="Places">
+        <stop-dropdown [flag]="false"></stop-dropdown>
+    </mat-tab>
+    <mat-tab label="Saved">
         <stop-dropdown [flag]="false"></stop-dropdown>
     </mat-tab>
     <mat-tab label="Recent">

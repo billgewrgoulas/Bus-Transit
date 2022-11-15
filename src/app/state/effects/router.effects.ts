@@ -89,7 +89,7 @@ export class RouterEffects{
                     this.router.navigate(['']);
                 }else if (url === '/(sidebar:routes/saved)'){
                     this.router.navigate([{ outlets: { sidebar: [ 'routes'] }}]);
-                }else if(url === '/(sidebar:routes/route)'){
+                }else if(url === '/(sidebar:routes/places)'){
                     this.router.navigate([{ outlets: { sidebar: [ 'routes'] }}]);
                 }else{
                     this.router.navigate(['']);

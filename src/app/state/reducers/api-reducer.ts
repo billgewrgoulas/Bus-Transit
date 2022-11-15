@@ -14,7 +14,6 @@ export interface AppState{
     lines: LineState;
     routes: RouteState;
     schedule: ScheduleState;
-    tripData: TripData
 };
 
 export const initialAppState: AppState = {
@@ -22,7 +21,6 @@ export const initialAppState: AppState = {
     stops: inititialStopState,
     routes: inititialRouteState,
     schedule: inititialSchdeduleState,
-    tripData: defaultTrip
 };
 
 /* API Reducer */
@@ -57,15 +55,6 @@ export const appStateReducer = createReducer(
     }),
     on(api_actions.getStopsSuccess, (state: AppState, action): AppState => {
         return {...state, stops: stopStateAdapter.addMany(action.stops, state.stops)};
-    }),
-    on(map_actions.addStart, (state: AppState, action): AppState => {
-        return {...state, tripData: {...state.tripData, start: action.data}};
-    }),
-    on(map_actions.addEnd, (state: AppState, action): AppState => {
-        return {...state, tripData: {...state.tripData, destination: action.data}};
-    }),
-    on(map_actions.swapPoints, (state: AppState, action): AppState => {
-        return {...state, tripData: {destination: state.tripData.start, start: state.tripData.destination}};
     }),
     on(api_actions.getRouteDetailsuccess, (state: AppState, action): AppState=>{
         return {...state, stops: stopStateAdapter.addMany(action.routeInfo.stops, state.stops), 

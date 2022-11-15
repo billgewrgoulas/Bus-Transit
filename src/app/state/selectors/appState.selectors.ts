@@ -52,6 +52,10 @@ export const selectRoute = (routeCode: string) =>
     createSelector(selectAllRoutes, (routes) => routes[routeCode]
 );
 
+export const selectStop = (code: string) => 
+    createSelector(selectAllStops, (stops) => stops[code]
+);
+
 /* Select the current route daily schedule */
 export const getActiveRouteSchedules = createSelector(
     currentRoute, selectAllSchedules, (route, schedules) => {
@@ -131,11 +135,3 @@ export const filterStops = (value: string) => {
         ).slice(0, 20);
     });
 }
-
-/* fetch the current markers from the state */
-export const getTripEntity = createSelector(
-    getAppState, (state) => state.tripData
-);
-
-export const getStart = createSelector(getTripEntity, (state: TripData) => state.start);
-export const getEnd = createSelector(getTripEntity, (state: TripData) => state.destination);

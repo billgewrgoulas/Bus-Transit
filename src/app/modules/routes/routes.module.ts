@@ -9,6 +9,7 @@ import { StopDropDownComponent } from './components/stop-drop-down/stop-drop-dow
 import { StopSliderComponent } from './components/stop-slider/stop-slider.component';
 import { MatSelectModule } from '@angular/material/select';
 import { MatTabsModule } from '@angular/material/tabs';
+import { DirectionsStore } from 'src/app/state/componentStore/directions.store';
 
 
 @NgModule({
@@ -21,6 +22,6 @@ import { MatTabsModule } from '@angular/material/tabs';
     MatTabsModule,
     MatSelectModule
   ],
-  providers: []
+  providers: [DirectionsStore]
 })
 export class RoutesModule { }

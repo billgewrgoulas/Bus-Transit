@@ -17,6 +17,10 @@
     box-shadow: 0 2px 5px #0000004d;
 }
 
+.show{
+    display: none !important;
+}
+
 .left-wrapper{
     display: flex;
     flex-direction: column;
@@ -144,4 +148,3 @@ h1{
     font-weight: 600;
     font-size: 21px;
 }
-
