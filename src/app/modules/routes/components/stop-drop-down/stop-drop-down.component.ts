@@ -4,10 +4,10 @@ import { Store } from '@ngrx/store';
 import { debounceTime, distinctUntilChanged, filter, Observable, Subscription, switchMap } from 'rxjs';
 import { DataShareService } from 'src/app/services/data-share.service';
 import { DataService } from 'src/app/services/data.service';
-import { DirectionsStore, TripState } from 'src/app/state/componentStore/directions.store';
-import { IStop } from 'src/app/state/entities/stop.entity';
-import { AppState } from 'src/app/state/reducers/api-reducer';
-import { filterStops } from 'src/app/state/selectors/appState.selectors';
+import { DirectionsStore, TripState } from 'src/app/state/LocalStore/directions.store';
+import { IStop } from 'src/app/state/Entities/stop.entity';
+import { AppState } from 'src/app/state/Reducers/api-reducer';
+import { filterStops } from 'src/app/state/Selectors/appState.selectors';
 
 @Component({
   selector: 'stop-dropdown',
@@ -40,7 +40,7 @@ export class StopDropDownComponent implements OnInit {
 
   public onClick(data: string[]){
     this.local.updatePoint(data);
-    this.msg.selectEndpoint(data);
+    this.msg.selectEndpoint(this.local.state$);
   }
 
   public navigate(data: string[]){
@@ -48,7 +48,7 @@ export class StopDropDownComponent implements OnInit {
   }
 
   public onCalculate(){
-    //this.router.navigate([{ outlets: { sidebar: [ 'routes', 'route'] }}]);
+    this.router.navigateByUrl('(sidebar:routes/places)');
   }
 
 }

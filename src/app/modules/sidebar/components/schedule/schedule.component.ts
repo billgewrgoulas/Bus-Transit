@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
 
-import { AppState } from 'src/app/state/reducers/api-reducer';
+import { AppState } from 'src/app/state/Reducers/api-reducer';
 
 @Component({
   selector: 'schedule-component',

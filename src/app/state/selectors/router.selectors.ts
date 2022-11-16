@@ -1,33 +1,34 @@
-
-import { Params } from '@angular/router';
 import { getSelectors, RouterReducerState } from '@ngrx/router-store';
 import { createFeatureSelector, createSelector } from '@ngrx/store';
+import { RouterStateUrl } from './custom-route-serializer';
 
+export const selectRouter = createFeatureSelector<RouterReducerState<RouterStateUrl>>('router');
 
-export const selectRouter = createFeatureSelector<RouterReducerState>('router');
-export const {
-    selectCurrentRoute, // select the current route
-    selectFragment, // select the current route fragment
-    selectQueryParams, // select the current route query params
-    selectQueryParam, // factory function to select a query param
-    selectRouteParams, // select the current route params
-    selectRouteParam, // factory function to select a route param
-    selectRouteData, // select the current route data
-    selectUrl, // select the current url
-    selectTitle, // Select the title if available
-} = getSelectors();
+/* Current URL */
+export const {selectUrl} = getSelectors(selectRouter);
 
+/* Current Route Params */
+export const getParams = createSelector(selectRouter, (router) => {
+    if(router){
+        return router.state.params;
+    }else{
+        return undefined;
+    }
+});
 
-export const getParams = createSelector(
-    selectRouteParams, (params: Params) => params
+/* Optional q params */
+export const queryParams = createSelector(selectRouter, (router) => {
+    if(router){
+        return router.state.queryParams
+    }else{
+        return undefined;
+    }
+});
+
+/* get the entire state */
+export const getState = createSelector(
+    selectUrl, getParams, queryParams, (url, params, query) => {
+        return {url, params, query};
+    }
 );
-
-export const getNavigationRoute = createSelector(
-    selectCurrentRoute, (route) => route
-);
-
-export const getUrl = createSelector(
-    selectUrl, (url: string) => url
-);
-
 

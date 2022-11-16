@@ -4,11 +4,11 @@ import { ComponentStore, tapResponse } from "@ngrx/component-store";
 import { Store } from "@ngrx/store";
 import { filter, Observable, switchMap, takeUntil, timer } from "rxjs";
 import { DataService } from "src/app/services/data.service";
-import { IArrival } from "src/app/state/entities/live.data";
-import { ILine } from "../entities/line.entity";
-import { IStop } from "../entities/stop.entity";
-import { AppState } from "../reducers/api-reducer";
-import { currentRoute, getActiveStop } from "../selectors/appState.selectors";
+import { IArrival } from "src/app/state/Entities/live.data";
+import { ILine } from "../Entities/line.entity";
+import { IStop } from "../Entities/stop.entity";
+import { AppState } from "../Reducers/api-reducer";
+import { currentRoute, getActiveStop } from "../Selectors/appState.selectors";
 
 export interface LiveState {
     arrivals: IArrival[];

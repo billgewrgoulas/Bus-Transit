@@ -1,9 +1,9 @@
 import { createFeatureSelector, createSelector } from "@ngrx/store";
-import { IRoute, RouteState } from "../entities/route.entity";
-import { IStop, stopStateAdapter } from "../entities/stop.entity";
-import { AppState } from "../reducers/api-reducer";
-import { lineStateAdapter } from "../entities/line.entity";
-import { IMapData, TripData } from "../entities/map.data.entity";
+import { IRoute, RouteState } from "../Entities/route.entity";
+import { IStop, stopStateAdapter } from "../Entities/stop.entity";
+import { AppState } from "../Reducers/api-reducer";
+import { lineStateAdapter } from "../Entities/line.entity";
+import { IMapData, TripData } from "../Entities/map.data.entity";
 
 export const getAppState = createFeatureSelector<AppState>('api');
 

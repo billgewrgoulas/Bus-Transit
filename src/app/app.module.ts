@@ -11,17 +11,18 @@ import { MatTabsModule } from '@angular/material/tabs';
 import { SidebarModule } from './modules/sidebar/sidebar.module';
 import { EffectsModule } from '@ngrx/effects';
 import { HttpClient } from '@angular/common/http';
-import { ApiEffects } from './state/effects/api.effects';
-import { appStateReducer } from './state/reducers/api-reducer';
+import { ApiEffects } from './state/Effects/api.effects';
+import { appStateReducer } from './state/Reducers/api-reducer';
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 import { environment } from '../environments/environment';
 import { MapModule } from './modules/map/map.module';
 import { RouterModule } from '@angular/router';
-import { StoreRouterConnectingModule, routerReducer} from '@ngrx/router-store';
+import { StoreRouterConnectingModule, routerReducer, RouterState} from '@ngrx/router-store';
 import { SocketIOService } from './services/socket-io.service';
-import { SocketEffects } from './state/effects/socket.effects';
-import { RouterEffects } from './state/effects/router.effects';
+import { SocketEffects } from './state/Effects/socket.effects';
+import { RouterEffects } from './state/Effects/router.effects';
 import { DataShareService } from './services/data-share.service';
+import { CustomSerializer } from './state/Selectors/custom-route-serializer';
 
 
 @NgModule({
@@ -42,7 +43,7 @@ import { DataShareService } from './services/data-share.service';
     StoreModule.forRoot({api: appStateReducer, router: routerReducer}),
     EffectsModule.forRoot([ApiEffects, SocketEffects, RouterEffects]),
     StoreDevtoolsModule.instrument({ maxAge: 25, logOnly: environment.production }),
-    StoreRouterConnectingModule.forRoot()
+    StoreRouterConnectingModule.forRoot({serializer: CustomSerializer, stateKey: 'router'})
   ],
   providers: [HttpClient, SocketIOService, DataShareService],
   bootstrap: [AppComponent]

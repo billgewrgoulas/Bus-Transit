@@ -3,10 +3,10 @@ import { Injectable } from "@angular/core";
 import { Store } from "@ngrx/store";
 import { Actions, createEffect, ofType } from "@ngrx/effects";
 import { filter, map, tap, withLatestFrom } from "rxjs";
-import * as actions from '../actions/socketIO.actions';
-import { AppState } from "../reducers/api-reducer";
+import * as actions from '../Actions/socketIO.actions';
+import { AppState } from "../Reducers/api-reducer";
 import { SocketIOService } from "src/app/services/socket-io.service";
-import { currentRoute } from "../selectors/appState.selectors";
+import { currentRoute } from "../Selectors/appState.selectors";
 
 @Injectable()
 export class SocketEffects{

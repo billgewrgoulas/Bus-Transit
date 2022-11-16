@@ -1,9 +1,9 @@
 import { Injectable } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { io, Socket } from 'socket.io-client';
-import { AppState } from '../state/reducers/api-reducer';
-import * as actions from '../state/actions/api-calls.actions'
-import * as socket from '../state/actions/socketIO.actions';
+import { AppState } from '../state/Reducers/api-reducer';
+import * as actions from '../state/Actions/api-calls.actions'
+import * as socket from '../state/Actions/socketIO.actions';
 import { filter, Subscription, take, tap } from 'rxjs';
 
 

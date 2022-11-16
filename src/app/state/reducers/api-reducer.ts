@@ -1,12 +1,10 @@
 import { createReducer, on} from "@ngrx/store";
-import { inititialLineState, LineState, lineStateAdapter } from "../entities/line.entity";
-import { inititialRouteState, RouteState, routeStateAdapter } from "../entities/route.entity";
-import { inititialStopState, StopState, stopStateAdapter } from "../entities/stop.entity";
-import * as select_actions from '../actions/select.actions';
-import * as api_actions from '../actions/api-calls.actions';
-import * as map_actions from "../actions/map.actions";
-import { inititialSchdeduleState, IScheduleDetails, ScheduleState, scheduleStateAdapter } from "../entities/schedule.entity";
-import { defaultTrip, TripData } from "../entities/map.data.entity";
+import { inititialLineState, LineState, lineStateAdapter } from "../Entities/line.entity";
+import { inititialRouteState, RouteState, routeStateAdapter } from "../Entities/route.entity";
+import { inititialStopState, StopState, stopStateAdapter } from "../Entities/stop.entity";
+import * as select_actions from '../Actions/select.actions';
+import * as api_actions from '../Actions/api-calls.actions';
+import { inititialSchdeduleState, ScheduleState, scheduleStateAdapter } from "../Entities/schedule.entity";
 
 
 export interface AppState{

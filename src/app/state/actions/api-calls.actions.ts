@@ -1,8 +1,9 @@
 import { createAction, props } from "@ngrx/store";
-import { ILine } from "../entities/line.entity";
-import { IRoute, IRouteInfo } from "../entities/route.entity";
-import { IScheduleDetails } from "../entities/schedule.entity";
-import { IStop } from "../entities/stop.entity";
+import { TripState } from "../LocalStore/directions.store";
+import { ILine } from "../Entities/line.entity";
+import { IRoute, IRouteInfo } from "../Entities/route.entity";
+import { IScheduleDetails } from "../Entities/schedule.entity";
+import { IStop } from "../Entities/stop.entity";
 
 /* Fetch all lines based on station name, bus... */
 export const getLines = createAction('[API] GET Lines');
@@ -35,6 +36,6 @@ export const getSchedulesSuccess = createAction('[API] Get route schedules succe
 export const getSchedulesError = createAction('[API] Get schedules error');
 
 /* Fetch the routes based on the selected stops */
-export const getFilteredRoutes = createAction('[Api] Get filtered routes', props<{code1: string, code2: string}>());
+export const getFilteredRoutes = createAction('[Api] Get filtered routes', props<{data: TripState}>());
 export const routesFilteredSucces = createAction('[API] Filtered routes success', props<{routes: IRoute[], add: any}>());
 export const filteredRoutesError = createAction('[API] Filter Routes error');

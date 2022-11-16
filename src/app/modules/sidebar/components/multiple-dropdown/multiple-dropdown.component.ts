@@ -1,6 +1,6 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { Observable } from 'rxjs';
-import { ILine } from 'src/app/state/entities/line.entity';
+import { ILine } from 'src/app/state/Entities/line.entity';
 
 @Component({
   selector: 'multiple-dropdown',

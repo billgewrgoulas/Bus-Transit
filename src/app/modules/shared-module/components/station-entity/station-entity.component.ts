@@ -2,13 +2,13 @@ import { Component, OnInit } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
 import { DataShareService } from 'src/app/services/data-share.service';
-import { IStop } from 'src/app/state/entities/stop.entity';
-import { AppState } from 'src/app/state/reducers/api-reducer';
-import * as navigation from'../../../../state/actions/navigation.actions';
-import * as actions from '../../../../state/actions/api-calls.actions';
-import { getActiveStop } from 'src/app/state/selectors/appState.selectors';
-import { LiveDataStore } from 'src/app/state/componentStore/live.data.store';
-import { IArrival } from 'src/app/state/entities/live.data';
+import { IStop } from 'src/app/state/Entities/stop.entity';
+import { AppState } from 'src/app/state/Reducers/api-reducer';
+import * as navigation from'../../../../state/Actions/navigation.actions';
+import * as actions from '../../../../state/Actions/api-calls.actions';
+import { getActiveStop } from 'src/app/state/Selectors/appState.selectors';
+import { LiveDataStore } from 'src/app/state/LocalStore/live.data.store';
+import { IArrival } from 'src/app/state/Entities/live.data';
 
 @Component({
   selector: 'station-entity',

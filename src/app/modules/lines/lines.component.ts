@@ -1,12 +1,12 @@
 import { Component, OnChanges, OnDestroy, OnInit } from '@angular/core';
-import * as navigation from'../../state/actions/navigation.actions';
+import * as navigation from'../../state/Actions/navigation.actions';
 import { Router } from '@angular/router';
 import { Store } from '@ngrx/store';
-import { AppState } from 'src/app/state/reducers/api-reducer';
+import { AppState } from 'src/app/state/Reducers/api-reducer';
 import { filter, Observable, ObservedValueOf, Subscription } from 'rxjs';
-import { currentRoute, filterLines, getAllLines } from 'src/app/state/selectors/appState.selectors';
-import { ILine } from 'src/app/state/entities/line.entity';
-import { IRoute } from 'src/app/state/entities/route.entity';
+import { currentRoute, filterLines, getAllLines } from 'src/app/state/Selectors/appState.selectors';
+import { ILine } from 'src/app/state/Entities/line.entity';
+import { IRoute } from 'src/app/state/Entities/route.entity';
 
 @Component({
   selector: 'lines-component',
@@ -35,7 +35,7 @@ export class LinesComponent implements OnInit, OnDestroy {
   public changeValue(line: ILine){
     this.currentLine = line;
     this.value = `Line ${line.name}`;
-    this.router.navigate([{ outlets: { sidebar: [ 'lines', line.id ] }}]);
+    this.router.navigate([{ outlets: { sidebar: [ 'lines', line.id ] }}], {queryParams: {module: 'line_click'}});
   }
 
   public clear(){

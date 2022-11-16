@@ -1,11 +1,12 @@
 import { Injectable } from '@angular/core';
 import { LatLngExpression } from 'leaflet';
 import * as L from 'leaflet';
-import { IStop } from '../state/entities/stop.entity';
-import { IPoint } from '../state/entities/route.entity';
-import { IArrival } from '../state/entities/live.data';
+import { IStop } from '../state/Entities/stop.entity';
+import { IPoint } from '../state/Entities/route.entity';
+import { IArrival } from '../state/Entities/live.data';
 import test from 'node:test';
-import { IMapData } from '../state/entities/map.data.entity';
+import { IMapData } from '../state/Entities/map.data.entity';
+import { TripState } from '../state/LocalStore/directions.store';
 
 @Injectable({
   providedIn: 'root'
@@ -17,7 +18,7 @@ export class MapService {
   private buses: L.Marker[] = [];
   private polyline: any = L.polyline([]);
 
-  private readonly center: LatLngExpression = [39.667341104708946, 20.854922400637918];
+  private center: LatLngExpression = [39.667341104708946, 20.854922400637918];
   private marker: L.Icon = L.icon({iconUrl: '../../assets/location.png', iconSize: [45, 45]});
   private icon: L.Icon = L.icon({iconUrl: '../../assets/bus-stop.png', iconSize: [35, 35]});
   private busIcon: L.Icon = L.icon({iconUrl: '../../assets/bus-icon.png', iconSize: [45, 45]});
@@ -89,37 +90,36 @@ export class MapService {
     this.map.flyTo(coords, 18);
   }
 
-  public addStart(data: string[]){
-    
-    if(data.length == 0){
-      this.clearMap();
+  public addMarker(data: TripState){
+
+    let point: string[] = [];
+    if(data.direction == 'start'){
+      point = data.start;
+      this.map.removeLayer(this.start);
+    }else if(data.direction == 'dest'){
+      point = data.destination;
+      this.map.removeLayer(this.end);
+    }
+
+    if(point.length == 0){
       return;
     }
 
-    this.map.removeLayer(this.start);
-    const marker = this.createMarker(data[2], data[3], data[1], this.marker);
-    marker.addTo(this.map);
-    this.start = marker;
-    this.focusOnPoint([data[2], data[3]]);
-  }
-
-  public addEnd(data: string[]){
-
-    if(data.length == 0){
-      this.clearMap();
-      return;
-    }
+    const marker: L.Marker = this.createMarker(point[2], point[3], point[1], this.marker);
     
-    this.map.removeLayer(this.end);
-    const marker = this.createMarker(data[2], data[3], data[1], this.marker);
+    if(data.direction == 'start'){
+      this.start = marker;
+    }else if(data.direction == 'dest'){
+      this.end = marker;
+    }
+
     marker.addTo(this.map);
-    this.end = marker;
-    this.focusOnPoint([data[2], data[3]]);
+    this.map.flyTo([+point[2], +point[3]], 16);
   }
 
   private createMarker(x: string, y: string, text: string, icon: L.Icon){
     const coords = <LatLngExpression>[+x, +y];
-    const marker = new L.Marker(coords, {icon: icon, interactive: true});
+    const marker = new L.Marker(coords, {icon: icon, interactive: true, draggable: true});
     marker.bindPopup(`<b>${text}</b>`);
     return marker;
   }

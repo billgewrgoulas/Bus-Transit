@@ -2,12 +2,12 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { Observable, Subscription, takeLast } from 'rxjs';
 import { DataShareService } from 'src/app/services/data-share.service';
-import { LiveDataStore } from 'src/app/state/componentStore/live.data.store';
-import { ILine } from 'src/app/state/entities/line.entity';
-import { IArrival } from 'src/app/state/entities/live.data';
-import { AppState } from 'src/app/state/reducers/api-reducer';
-import { currentLine } from 'src/app/state/selectors/appState.selectors';
-import * as navigation from'../../../../state/actions/navigation.actions';
+import { LiveDataStore } from 'src/app/state/LocalStore/live.data.store';
+import { ILine } from 'src/app/state/Entities/line.entity';
+import { IArrival } from 'src/app/state/Entities/live.data';
+import { AppState } from 'src/app/state/Reducers/api-reducer';
+import { currentLine } from 'src/app/state/Selectors/appState.selectors';
+import * as navigation from'../../../../state/Actions/navigation.actions';
 
 @Component({
   selector: 'bus-entity',

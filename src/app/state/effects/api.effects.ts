@@ -1,15 +1,15 @@
 import { Injectable } from "@angular/core";
 import { Store } from "@ngrx/store";
 import { Actions, concatLatestFrom, createEffect, ofType } from "@ngrx/effects";
-import { exhaustMap, filter, map, mapTo, of, Subject, switchMap, takeUntil, tap, timer, withLatestFrom } from "rxjs";
+import { distinctUntilChanged, exhaustMap, filter, map, mapTo, of, Subject, switchMap, take, takeUntil, tap, timer, withLatestFrom } from "rxjs";
 import { DataService } from "src/app/services/data.service";
-import * as api_actions from '../actions/api-calls.actions';
-import { AppState } from "../reducers/api-reducer";
-import { getActiveRouteSchedules, getAllLines, getRouteStops, selectAll, selectAllLines, selectCurrentLineRoutes, selectLine, selectRoute, selectRoutePoints } from "../selectors/appState.selectors";
-import { ILine } from "../entities/line.entity";
-import { IRoute, IRouteInfo } from "../entities/route.entity";
-import { IScheduleDetails } from "../entities/schedule.entity";
-import { IStop } from "../entities/stop.entity";
+import * as api_actions from '../Actions/api-calls.actions';
+import { AppState } from "../Reducers/api-reducer";
+import { getActiveRouteSchedules, getAllLines, getRouteStops, selectAll, selectAllLines, selectCurrentLineRoutes, selectLine, selectRoute, selectRoutePoints } from "../Selectors/appState.selectors";
+import { ILine } from "../Entities/line.entity";
+import { IRoute, IRouteInfo } from "../Entities/route.entity";
+import { IScheduleDetails } from "../Entities/schedule.entity";
+import { IStop } from "../Entities/stop.entity";
 
 @Injectable()
 export class ApiEffects{
@@ -19,21 +19,13 @@ export class ApiEffects{
     loadLines$ = createEffect(()=>
         this.actions$.pipe(
             ofType(api_actions.getLines),
-            withLatestFrom(this.store.select(getAllLines)),
-            filter(([action, lines]) => lines.length == 0),
-            exhaustMap(() => this.dataService.getAllLines()),
+            take(1),
+            switchMap(() => this.dataService.getAllLines()),
             map((response: ILine[]) => api_actions.getLinesSuccess({lines: response}))
         )     
     );
 
-    loadStops$ = createEffect(()=>
-        this.actions$.pipe(
-            ofType(api_actions.getStops),
-            withLatestFrom(this.store.select(getAllLines)),
-            exhaustMap(() => this.dataService.getAllStops()),
-            map((response: IStop[]) => api_actions.getStopsSuccess({stops: response}))
-        )     
-    );
+    
 
     loadLineRoutes$ = createEffect(()=>
         this.actions$.pipe(
@@ -71,6 +63,22 @@ export class ApiEffects{
             switchMap((action) => this.dataService.getFilteredStops(action.stopCode)),
             map((response: IStop[]) => api_actions.getFilteredStopsSuccess({stops: response}))
         )
+    );
+
+    loadSearchedPaths$ = createEffect(() => 
+        this.actions$.pipe(
+            ofType(api_actions.getFilteredRoutes),
+            tap(d => console.log(d))
+        ), {dispatch: false}
+    );
+
+    loadStops$ = createEffect(()=>
+        this.actions$.pipe(
+            ofType(api_actions.getStops),
+            withLatestFrom(this.store.select(getAllLines)),
+            exhaustMap(() => this.dataService.getAllStops()),
+            map((response: IStop[]) => api_actions.getStopsSuccess({stops: response}))
+        )     
     );
 
 }

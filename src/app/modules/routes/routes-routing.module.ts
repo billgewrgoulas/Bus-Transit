@@ -10,8 +10,8 @@ import { StopSliderComponent } from './components/stop-slider/stop-slider.compon
 const routes: Routes = [
   {path: '', component: InputComponent, children: [
     {path: '', component: StopDropDownComponent},
-    {path: 'places', component: StopSliderComponent, data: {type: 'saved'}},
-    {path: 'route', component: RouteListComponent},
+    {path: 'places', component: StopSliderComponent},
+    {path: 'search', component: RouteListComponent},
   ]}, 
 ];
 

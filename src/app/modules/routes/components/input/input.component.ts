@@ -1,24 +1,19 @@
-import { AfterViewInit, Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Store } from '@ngrx/store';
-import { debounceTime, distinctUntilChanged, filter, fromEvent, map, Observable, of, Subscription } from 'rxjs';
+import { filter, Observable, Subscription, tap } from 'rxjs';
 import { DataShareService } from 'src/app/services/data-share.service';
-import { IStop } from 'src/app/state/entities/stop.entity';
-import { AppState } from 'src/app/state/reducers/api-reducer';
-import { filterStops } from 'src/app/state/selectors/appState.selectors';
-import * as api_actions from '../../../../state/actions/api-calls.actions';
-import * as navigation from '../../../../state/actions/navigation.actions';
-import * as map_actions from '../../../../state/actions/map.actions';
+import { AppState } from 'src/app/state/Reducers/api-reducer';
+import * as navigation from '../../../../state/Actions/navigation.actions';
 import { Router } from '@angular/router';
-import { DirectionsStore } from 'src/app/state/componentStore/directions.store';
+import { DirectionsStore } from 'src/app/state/LocalStore/directions.store';
 
 @Component({
   selector: 'app-input',
   templateUrl: './input.component.html',
   styleUrls: ['./input.component.css'],
 })
-export class InputComponent implements OnInit, OnDestroy {
+export class InputComponent implements OnInit {
 
-  public sub!: Subscription;
   public obs$!: Observable<any>;
   public ob$!: Observable<any>;
 
@@ -37,12 +32,9 @@ export class InputComponent implements OnInit, OnDestroy {
   ) { }
   
   ngOnInit(): void {
-    this.obs$ = this.local.getNames();
-    this.sub = this.msg.markerObserver.subscribe(e => this.onSelect(e));
-  }
-
-  ngOnDestroy(): void {
-    this.sub.unsubscribe();
+    this.obs$ = this.local.getNames().pipe(
+      tap((data) => this.updateValues(data))
+    );
   }
 
   public swap(){
@@ -98,15 +90,9 @@ export class InputComponent implements OnInit, OnDestroy {
     this.store.dispatch(navigation.arrowNavigation());
   }
 
-  public onSelect(data: string[]){
-
-    if(this.destFlag){
-      this.endValue = data[1];
-    }else if(this.startFlag){
-      this.startValue = data[1];
-    }
-
-    this.cancel();
+  public updateValues(data: any){
+    this.endValue = data.end;
+    this.startValue = data.start;
   }
 
   private updateOnclick(dest: string){

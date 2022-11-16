@@ -1,11 +1,11 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { catchError, map, Observable, throwError } from 'rxjs';
-import { ILine } from '../state/entities/line.entity';
-import { IRoute, IRouteInfo } from '../state/entities/route.entity';
-import { IArrival } from '../state/entities/live.data';
-import { IScheduleDetails } from '../state/entities/schedule.entity';
-import { IStop } from '../state/entities/stop.entity';
+import { ILine } from '../state/Entities/line.entity';
+import { IRoute, IRouteInfo } from '../state/Entities/route.entity';
+import { IArrival } from '../state/Entities/live.data';
+import { IScheduleDetails } from '../state/Entities/schedule.entity';
+import { IStop } from '../state/Entities/stop.entity';
 
 @Injectable({
   providedIn: 'root'

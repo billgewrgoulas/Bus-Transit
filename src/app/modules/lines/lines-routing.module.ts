@@ -14,7 +14,6 @@ const routes: Routes = [
       {
         path: ':lineCode',
         component: RouteListComponent,
-        data: {type: 'lineSlider'}
       },
       {
         path: ':lineCode/route/:routeCode', 

@@ -1,13 +1,11 @@
 import { Injectable } from "@angular/core";
-import { ComponentStore } from "@ngrx/component-store";
+import { ComponentStore, tapResponse } from "@ngrx/component-store";
 import { Store } from "@ngrx/store";
-import { Observable, switchMap } from "rxjs";
-import { DataService } from "src/app/services/data.service";
-import { IRoute } from "../entities/route.entity";
-import { IStop } from "../entities/stop.entity";
-import { AppState } from "../reducers/api-reducer";
-import { filterStops } from "../selectors/appState.selectors";
-
+import { debounceTime, filter, map, Observable, of, switchMap, tap } from "rxjs";
+import { TripData } from "../Entities/map.data.entity";
+import * as api_actions from "../Actions/api-calls.actions";
+import { AppState } from "../Reducers/api-reducer";
+import { Router } from "@angular/router";
 
 export interface TripState {
     start: string[];
@@ -26,10 +24,10 @@ export const initialState: TripState = {
 @Injectable()
 export class DirectionsStore extends ComponentStore<TripState> {
     
-    public constructor() {
+    public constructor(private router: Router, private store: Store<AppState>) {
         super(initialState);
     }
-
+    
     /* STATE UPDATERS */
     public updatePoint = this.updater((state: TripState, point: string[]): TripState => {
         if(state.direction === 'start') return {...state, start: point};
