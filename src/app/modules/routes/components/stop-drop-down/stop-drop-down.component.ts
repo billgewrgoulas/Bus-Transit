@@ -1,13 +1,14 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { Store } from '@ngrx/store';
-import { debounceTime, distinctUntilChanged, filter, Observable, Subscription, switchMap } from 'rxjs';
+import { debounceTime, distinctUntilChanged, filter, Observable, Subscription, switchMap, take } from 'rxjs';
 import { DataShareService } from 'src/app/services/data-share.service';
 import { DataService } from 'src/app/services/data.service';
 import { DirectionsStore, TripState } from 'src/app/state/LocalStore/directions.store';
 import { IStop } from 'src/app/state/Entities/stop.entity';
 import { AppState } from 'src/app/state/Reducers/api-reducer';
 import { filterStops } from 'src/app/state/Selectors/appState.selectors';
+import * as nav_actions from '../../../../state/Actions/navigation.actions';
 
 @Component({
   selector: 'stop-dropdown',
@@ -21,6 +22,7 @@ export class StopDropDownComponent implements OnInit {
   public showDefaultSwitch$!: Observable<boolean>;
   
   @Input() public flag: boolean = true;
+  @Input() public saved: boolean = false;
 
   constructor(
     private store: Store<AppState>, 
@@ -31,7 +33,9 @@ export class StopDropDownComponent implements OnInit {
 
   ngOnInit(): void {
     this.showDefaultSwitch$ = this.msg.stopListObserver;
-    this.stops$ = this.msg.startValueMsg.pipe(
+    this.msg.selectEndpoint(this.local.state$);
+    this.local.fetchPaths();
+    this.stops$ = this.msg.searchValueMsg.pipe(
       debounceTime(10),
       distinctUntilChanged(),
       switchMap(v => this.store.select(filterStops(v)))
@@ -40,15 +44,19 @@ export class StopDropDownComponent implements OnInit {
 
   public onClick(data: string[]){
     this.local.updatePoint(data);
-    this.msg.selectEndpoint(this.local.state$);
+    this.msg.slide(0);
   }
 
-  public navigate(data: string[]){
-    this.router.navigate([{ outlets: { sidebar: [ 'routes', 'saved'] }}]);
+  public onLocation(data: string[]){
+
+  }
+
+  public onMap(data: string[]){
+    this.local.addOption(data[0]);
   }
 
   public onCalculate(){
-    this.router.navigateByUrl('(sidebar:routes/places)');
+    this.router.navigate([{ outlets: { sidebar: [ 'routes', 'search'] }}]);
   }
 
 }

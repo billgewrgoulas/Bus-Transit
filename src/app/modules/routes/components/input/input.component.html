@@ -12,7 +12,7 @@
         </div>
         <div class="right-wrapper">
             <div class="input-list">
-                <input #searchBox [value]="obs.start" [(ngModel)]="startValue" (keyup)="startKeyUp()"
+                <input #searchBox [value]="obs.start" [(ngModel)]="startValue" (keyup)="keyUp(startValue)"
                     type="text" 
                     placeholder="select start" 
                     class="text"
@@ -33,7 +33,7 @@
         </div>
         <div class="right-wrapper">
             <div class="input-list">
-                <input [value]="obs.end" [(ngModel)]="endValue" (keyup)="destKeyUp()"
+                <input [value]="obs.end" [(ngModel)]="endValue" (keyup)="keyUp(endValue)"
                     name="myInput" 
                     type="text" 
                     placeholder="select start" 

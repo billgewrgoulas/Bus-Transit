@@ -4,15 +4,15 @@
     <ng-container *ngIf="flag else stopList">
         <ng-container *ngIf="showDefaultSwitch$ | async as flag else stopList">
 
-            <app-option (onSelect)="navigate($event)"
+            <app-option
                 [icon]="'settings'"
-                [text]="'Options'"
+                [text]="'Preferences'"
                 [data]="['options']">
             </app-option>
 
             <app-option (onSelect)="onCalculate()"
                 [icon]="'route'"
-                [text]="'Calculate route'"
+                [text]="'Suggested Routes'"
                 [data]="['directions']">
             </app-option>
     
@@ -22,13 +22,28 @@
 </div>
 
 <ng-template #stopList>
+
+    <app-option (onSelect)="onLocation($event)"
+        [icon]="'my_location'"
+        [text]="'My location'"
+        [data]="['my_location']">
+    </app-option>
+
+    <app-option *ngIf="!saved" (onSelect)="onMap($event)"
+        [icon]="'map'"
+        [text]="'Select on map'"
+        [data]="['interactive']">
+    </app-option>
+
     <ng-container *ngFor="let stop of stops$ | async">
+
         <app-option (onSelect)="onClick($event)"
             [icon]="'location_on'"
             [text]="stop.desc"
             [desc]="stop.code"
             [data]="[stop.code, stop.desc, stop.latitude, stop.longitude]">
         </app-option>
+
     </ng-container>
 </ng-template>
 

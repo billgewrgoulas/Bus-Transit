@@ -7,18 +7,24 @@ import * as api_actions from "../Actions/api-calls.actions";
 import * as select_actions from "../Actions/select.actions";
 import { AppState } from "../Reducers/api-reducer";
 import { ROUTER_NAVIGATED } from "@ngrx/router-store";
-import { getParams, getState, selectUrl } from "../Selectors/router.selectors";
-import { currentLine } from "../Selectors/appState.selectors";
+import { getState } from "../Selectors/router.selectors";
 import { Router } from "@angular/router";
+import { Location } from '@angular/common'
 
 @Injectable()
 export class RouterEffects{
 
-    constructor(private actions$: Actions, private store: Store<AppState>, private router: Router){}
+    constructor(
+        private location: Location, 
+        private actions$: Actions, 
+        private store: Store<AppState>, 
+    ){}
 
     fetchLines$ = createEffect(()=>
         this.actions$.pipe(
             ofType(ROUTER_NAVIGATED),
+            withLatestFrom(this.store.select(getState)),
+            filter(([action, {query}]) => query!['module'] == 'lines_load'),
             map((event) => api_actions.getLines())
         )
     );
@@ -27,7 +33,7 @@ export class RouterEffects{
         this.actions$.pipe(
             ofType(ROUTER_NAVIGATED),
             withLatestFrom(this.store.select(getState)),
-            filter(([action, state]) => state.query!['module'] === 'stop_load'),
+            filter(([action, {query}]) => query!['module'] == 'stop_load'),
             map(() => api_actions.getStops())
         )
     );
@@ -36,8 +42,8 @@ export class RouterEffects{
         this.actions$.pipe(
             ofType(ROUTER_NAVIGATED),
             withLatestFrom(this.store.select(getState)),
-            filter(([action, state]) => state.query!['module'] === 'line_click'),
-            map(([action, state]) => state.params!['lineCode']),
+            filter(([action, {query}]) => query!['module'] == 'line_data'),
+            map(([action, {params}]) => params!['lineCode']),
             switchMap((lineCode: string) => [
                 select_actions.selectLine({id: lineCode}),
                 api_actions.getLineRoutes({id: lineCode}),
@@ -51,8 +57,8 @@ export class RouterEffects{
         this.actions$.pipe(
             ofType(ROUTER_NAVIGATED),
             withLatestFrom(this.store.select(getState)),
-            filter(([action, state]) => state.query!['module'] === 'route_click'),
-            map(([action, state]) => state.params!['routeCode']),
+            filter(([action, {query}]) => query!['module'] == 'route_data'),
+            map(([action, {params}]) => params!['routeCode']),
             switchMap((routeCode) => [
                 api_actions.getRouteDetails({code: routeCode}),
                 select_actions.selectRoute({code: routeCode}),
@@ -64,7 +70,7 @@ export class RouterEffects{
         this.actions$.pipe(
             ofType(ROUTER_NAVIGATED),
             withLatestFrom(this.store.select(getState)),
-            filter(([action, state]) => state.query!['module'] === 'lines_load'),
+            filter(([action, {query}]) => query!['module'] == 'lines_load'),
             switchMap(() => [
                 select_actions.selectLine({id: ''}),
                 select_actions.selectRoute({code: ''}),
@@ -77,25 +83,8 @@ export class RouterEffects{
     previousView$ = createEffect(()=>
         this.actions$.pipe(
             ofType(navigation.arrowNavigation),
-            withLatestFrom(this.store.select(getState)),
-            tap(([action, state]) => {
-
-                const {query, url, params} = state;
-
-                if(query!['module'] === 'route_click'){
-                    this.router.navigate([{ outlets: { sidebar: [ 'lines', params!['lineCode']] }}], {queryParams: {module: 'line_click'}});
-                }else if(query!['module'] === 'line_click'){
-                    this.router.navigate([{ outlets: { sidebar: [ 'lines'] }}]);
-                }else if(url === '/(sidebar:routes)'){
-                    this.router.navigate(['']);
-                }else if(url === '/(sidebar:routes/places)'){
-                    this.router.navigate([{ outlets: { sidebar: [ 'routes'] }}]);
-                }else{
-                    this.router.navigate(['']);
-                }
-
-            })),
-            {dispatch: false}
+            tap(() => this.location.back())
+        ), {dispatch: false}
     );
 
 }

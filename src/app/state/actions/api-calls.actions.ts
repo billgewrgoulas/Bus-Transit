@@ -37,5 +37,5 @@ export const getSchedulesError = createAction('[API] Get schedules error');
 
 /* Fetch the routes based on the selected stops */
 export const getFilteredRoutes = createAction('[Api] Get filtered routes', props<{data: TripState}>());
-export const routesFilteredSucces = createAction('[API] Filtered routes success', props<{routes: IRoute[], add: any}>());
+export const routesFilteredSuccess = createAction('[API] Filtered routes success', props<{routes: IRoute[], add: any}>());
 export const filteredRoutesError = createAction('[API] Filter Routes error');

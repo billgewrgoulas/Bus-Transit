@@ -22,6 +22,5 @@ import { DirectionsStore } from 'src/app/state/LocalStore/directions.store';
     MatTabsModule,
     MatSelectModule
   ],
-  providers: [DirectionsStore]
 })
 export class RoutesModule { }

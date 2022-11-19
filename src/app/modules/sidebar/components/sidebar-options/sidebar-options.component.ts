@@ -13,7 +13,7 @@ export class SidebarOptionsComponent implements OnInit {
     {text: 'Find routes', icon: 'swap_vert', desc: 'Estimate the best route or bus', link: ['routes', 'stop_load']},
     {text: 'Closest stops', icon: 'where_to_vote', desc: 'Find closest stops and lines'},
     {text: 'Saved information', icon: 'file_present', desc: 'Saved lines, stops...'},
-    {text: 'Recently searched', icon: 'folder_special', desc: 'Recent searches'}
+    {text: 'Settings', icon: 'settings', desc: 'Application settings'}
   ];
 
   constructor(private router: Router) { }

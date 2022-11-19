@@ -1,5 +1,5 @@
 import { createFeatureSelector, createSelector } from "@ngrx/store";
-import { IRoute, RouteState } from "../Entities/route.entity";
+import { IRoute, RouteState, routeStateAdapter } from "../Entities/route.entity";
 import { IStop, stopStateAdapter } from "../Entities/stop.entity";
 import { AppState } from "../Reducers/api-reducer";
 import { lineStateAdapter } from "../Entities/line.entity";
@@ -22,6 +22,10 @@ export const selectAllSchedules = createSelector(getScheduleState, (schedule) =>
 /* Select all lines */
 export const {selectAll} = lineStateAdapter.getSelectors();
 export const getAllLines = createSelector(getLineState, selectAll);
+
+/* Select all routes */
+const getAllRoutes = routeStateAdapter.getSelectors().selectAll;
+export const getRouteList = createSelector(getRouteState, getAllRoutes);
 
 /* Select all stops */
 const selectStops = stopStateAdapter.getSelectors().selectAll;

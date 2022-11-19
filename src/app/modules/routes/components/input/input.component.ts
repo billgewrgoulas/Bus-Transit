@@ -6,16 +6,18 @@ import { AppState } from 'src/app/state/Reducers/api-reducer';
 import * as navigation from '../../../../state/Actions/navigation.actions';
 import { Router } from '@angular/router';
 import { DirectionsStore } from 'src/app/state/LocalStore/directions.store';
+import * as select_actions from '../../../../state/Actions/select.actions';
 
 @Component({
   selector: 'app-input',
   templateUrl: './input.component.html',
   styleUrls: ['./input.component.css'],
+  providers: [DirectionsStore]
 })
-export class InputComponent implements OnInit {
+export class InputComponent implements OnInit, OnDestroy {
 
   public obs$!: Observable<any>;
-  public ob$!: Observable<any>;
+  public sub!: Subscription;
 
   public startValue: string = '';
   public endValue: string = '';
@@ -32,37 +34,33 @@ export class InputComponent implements OnInit {
   ) { }
   
   ngOnInit(): void {
-    this.obs$ = this.local.getNames().pipe(
-      tap((data) => this.updateValues(data))
-    );
+    this.sub = this.msg.tabObserver.subscribe(v => this.cancel());
+    this.obs$ = this.local.getNames();
+  }
+
+  ngOnDestroy(): void{
+    this.sub.unsubscribe();
   }
 
   public swap(){
-    let temp = this.endValue;
-    this.endValue = this.startValue;
-    this.startValue = temp;
     this.local.swapPoints();
   }
 
-  public destKeyUp(){
-    this.msg.onKeyUp(this.endValue);
-  }
-
-  public startKeyUp(){
-    this.msg.onKeyUp(this.startValue);
+  public keyUp(value: string){
+    this.msg.onKeyUp(value);
   }
 
   public startClick(){
     this.default = false;
     this.startFlag = true;
-    this.startKeyUp();
+    this.keyUp(this.startValue);
     this.updateOnclick('start');
   }
 
   public destClick(){
     this.default = false;
     this.destFlag = true;
-    this.destKeyUp();
+    this.keyUp(this.endValue);
     this.updateOnclick('dest');
   }
 
@@ -76,23 +74,18 @@ export class InputComponent implements OnInit {
 
   public clearStart(){
     this.startValue = '';
-    this.startKeyUp();
+    this.keyUp('');
     this.local.updatePoint([]);
   }
 
   public clearDest(){
     this.endValue = '';
-    this.destKeyUp();
+    this.keyUp('');
     this.local.updatePoint([]);
   }
 
   public navigate(){
     this.store.dispatch(navigation.arrowNavigation());
-  }
-
-  public updateValues(data: any){
-    this.endValue = data.end;
-    this.startValue = data.start;
   }
 
   private updateOnclick(dest: string){

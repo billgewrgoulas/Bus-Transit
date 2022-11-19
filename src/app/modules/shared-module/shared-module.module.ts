@@ -5,10 +5,7 @@ import { RouterModule } from '@angular/router';
 import { BusEntityComponent } from './components/bus-entity/bus-entity.component';
 import { StationEntityComponent } from './components/station-entity/station-entity.component';
 import { RouteListComponent } from './components/route-list/route-list.component';
-import { SliderComponent } from '../sidebar/components/slider/slider.component';
-import { MatSelectModule } from '@angular/material/select';
-import { MatTabsModule } from '@angular/material/tabs';
-import { StationListComponent } from '../sidebar/components/station-list/station-list.component';
+import { DropDownWrapperComponent } from './components/drop-down-wrapper/drop-down-wrapper.component';
 
 @NgModule({
   declarations: [
@@ -16,6 +13,7 @@ import { StationListComponent } from '../sidebar/components/station-list/station
     BusEntityComponent, 
     StationEntityComponent, 
     RouteListComponent,
+    DropDownWrapperComponent
   ],
   imports: [
     CommonModule, 
@@ -26,6 +24,7 @@ import { StationListComponent } from '../sidebar/components/station-list/station
     BusEntityComponent, 
     StationEntityComponent, 
     RouteListComponent,
+    DropDownWrapperComponent
   ],
 })
 export class SharedModule { }

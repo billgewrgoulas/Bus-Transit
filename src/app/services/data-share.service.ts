@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { AsyncSubject, ReplaySubject, Subject, BehaviorSubject, Observable} from 'rxjs';
+import { AsyncSubject, ReplaySubject, Subject, BehaviorSubject, Observable, take} from 'rxjs';
 import { IArrival } from '../state/Entities/live.data';
 import { TripState } from '../state/LocalStore/directions.store';
 
@@ -14,7 +14,7 @@ export class DataShareService {
   private readonly marker = new Subject<Observable<TripState>>; 
   private readonly day = new Subject<number>; 
   private readonly stopDefaultList = new BehaviorSubject<boolean>(true);
-  private readonly startValue = new BehaviorSubject<string>('');
+  private readonly searchValue = new BehaviorSubject<string>('');
 
   public readonly tabObserver = this.tab.asObservable();
   public readonly busObserver = this.bus.asObservable();
@@ -22,7 +22,7 @@ export class DataShareService {
   public readonly markerObserver = this.marker.asObservable();
   public readonly dayObserver = this.day.asObservable();
   public readonly stopListObserver = this.stopDefaultList.asObservable();
-  public readonly startValueMsg = this.startValue.asObservable();
+  public readonly searchValueMsg = this.searchValue.asObservable();
   
   constructor() { }
 
@@ -51,7 +51,7 @@ export class DataShareService {
   }
 
   public onKeyUp(v: string){
-    this.startValue.next(v);
+    this.searchValue.next(v);
   }
 
 }

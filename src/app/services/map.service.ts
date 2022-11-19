@@ -7,6 +7,7 @@ import { IArrival } from '../state/Entities/live.data';
 import test from 'node:test';
 import { IMapData } from '../state/Entities/map.data.entity';
 import { TripState } from '../state/LocalStore/directions.store';
+import { ConstantPool } from '@angular/compiler';
 
 @Injectable({
   providedIn: 'root'
@@ -18,13 +19,13 @@ export class MapService {
   private buses: L.Marker[] = [];
   private polyline: any = L.polyline([]);
 
-  private center: LatLngExpression = [39.667341104708946, 20.854922400637918];
-  private marker: L.Icon = L.icon({iconUrl: '../../assets/location.png', iconSize: [45, 45]});
-  private icon: L.Icon = L.icon({iconUrl: '../../assets/bus-stop.png', iconSize: [35, 35]});
+  private center: any = [39.667341104708946, 20.854922400637918];
+  private marker: L.Icon = L.icon({iconUrl: '../../assets/location.png', iconSize: [50, 50]});
+  private icon: L.Icon = L.icon({iconUrl: '../../assets/bus-stop.png', iconSize: [25, 25]});
   private busIcon: L.Icon = L.icon({iconUrl: '../../assets/bus-icon.png', iconSize: [45, 45]});
 
-  private start: L.Marker = <L.Marker>{};
-  private end: L.Marker = <L.Marker>{};
+  private start: L.Marker | undefined = undefined;
+  private end: L.Marker | undefined = undefined;
 
   constructor() {}
 
@@ -41,9 +42,8 @@ export class MapService {
     this.map.setView(this.center, 13);
   }
 
-  public displayRouteInformation(data: IMapData | undefined){
+  public displayRouteInformation(data: IMapData){
     this.clearMap();
-    if(!data)return;
     this.carvePath(data.points);
     this.displayStops(data.stops);
   }
@@ -64,7 +64,6 @@ export class MapService {
   }
 
   public displayBusLocations(buses: IArrival[]){
-    if(buses.length == 0)return;
     this.buses.forEach(bus => this.map.removeLayer(bus));
     buses.forEach((bus: IArrival) => {
       const marker = this.createMarker(bus.latitude, bus.longitude, bus.lineCode, this.busIcon);
@@ -80,32 +79,59 @@ export class MapService {
     this.map.setView(this.center, 13);
     this.markers = [];
     this.buses = [];
-    this.map.removeLayer(this.start);
-    this.map.removeLayer(this.end);
+    this.clearMarkers();
+  }
+
+  public clearMarkers(){
+
+    if(this.start){
+      this.map.removeLayer(this.start);
+    }
+
+    if(this.end){
+      this.map.removeLayer(this.end);
+    }
+
+    this.start = undefined;
+    this.end = undefined;
   }
 
   public focusOnPoint(point: string[]){
-    if(!point) return;
     const coords = <LatLngExpression>[+point[0], +point[1]];
     this.map.flyTo(coords, 18);
   }
 
   public addMarker(data: TripState){
 
+    if(data.direction == ''){
+      this.clearMap();
+    }
+
     let point: string[] = [];
     if(data.direction == 'start'){
       point = data.start;
-      this.map.removeLayer(this.start);
+      if(this.start){
+        this.map.removeLayer(this.start);
+      }
     }else if(data.direction == 'dest'){
       point = data.destination;
-      this.map.removeLayer(this.end);
+      if(this.end){
+        this.map.removeLayer(this.end);
+      }
+    }else if(data.direction == 'swap'){
+      let temp = this.start;
+      this.start = this.end;
+      this.end = temp;
     }
 
-    if(point.length == 0){
+    let marker: L.Marker;
+    if(data.options.includes("interactive")){
+      marker = this.createMarker(this.center[0], this.center[1], '', this.marker, true);
+    }else if (point.length == 0){
       return;
+    }else{
+      marker = this.createMarker(point[2], point[3], point[1], this.marker);
     }
-
-    const marker: L.Marker = this.createMarker(point[2], point[3], point[1], this.marker);
     
     if(data.direction == 'start'){
       this.start = marker;
@@ -114,12 +140,17 @@ export class MapService {
     }
 
     marker.addTo(this.map);
-    this.map.flyTo([+point[2], +point[3]], 16);
+    this.map.flyTo(marker.getLatLng(), 16);
   }
 
-  private createMarker(x: string, y: string, text: string, icon: L.Icon){
+  private focusOnPath(p1: L.Marker, p2: L.Marker){
+    const polyline = L.polyline([p1.getLatLng(), p2.getLatLng()]);
+    this.map.fitBounds(polyline.getBounds());
+  }
+
+  private createMarker(x: string, y: string, text: string, icon: L.Icon, draggable: boolean = false){
     const coords = <LatLngExpression>[+x, +y];
-    const marker = new L.Marker(coords, {icon: icon, interactive: true, draggable: true});
+    const marker = new L.Marker(coords, {icon: icon, interactive: true, draggable: draggable, autoPan: true});
     marker.bindPopup(`<b>${text}</b>`);
     return marker;
   }

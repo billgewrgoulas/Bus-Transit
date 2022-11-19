@@ -1,7 +1,6 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import * as path from 'path';
-import { RouteListComponent } from '../shared-module/components/route-list/route-list.component';
+import { DropDownWrapperComponent } from '../shared-module/components/drop-down-wrapper/drop-down-wrapper.component';
 import { SliderComponent } from '../sidebar/components/slider/slider.component';
 import { InputComponent } from './components/input/input.component';
 import { StopDropDownComponent } from './components/stop-drop-down/stop-drop-down.component';
@@ -11,7 +10,7 @@ const routes: Routes = [
   {path: '', component: InputComponent, children: [
     {path: '', component: StopDropDownComponent},
     {path: 'places', component: StopSliderComponent},
-    {path: 'search', component: RouteListComponent},
+    {path: 'search', component: DropDownWrapperComponent, data: {type: 'route_module'}},
   ]}, 
 ];
 

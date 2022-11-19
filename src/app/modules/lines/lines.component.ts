@@ -3,7 +3,7 @@ import * as navigation from'../../state/Actions/navigation.actions';
 import { Router } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { AppState } from 'src/app/state/Reducers/api-reducer';
-import { filter, Observable, ObservedValueOf, Subscription } from 'rxjs';
+import { filter, Observable, ObservedValueOf, startWith, Subscription } from 'rxjs';
 import { currentRoute, filterLines, getAllLines } from 'src/app/state/Selectors/appState.selectors';
 import { ILine } from 'src/app/state/Entities/line.entity';
 import { IRoute } from 'src/app/state/Entities/route.entity';
@@ -13,35 +13,34 @@ import { IRoute } from 'src/app/state/Entities/route.entity';
   templateUrl: './lines.component.html',
   styleUrls: ['./lines.component.css']
 })
-export class LinesComponent implements OnInit, OnDestroy {
+export class LinesComponent implements OnInit {
 
   public value: string = '';
   public lines$!: Observable<ILine[]>;
   public selected: boolean = false;
-  public activeRoute$!: Subscription;
+  public activeRoute$!: Observable<IRoute | undefined>;
   public currentLine: ILine | undefined;
 
   constructor(private router: Router, private store: Store<AppState>) { }
 
-  ngOnDestroy(): void {
-    this.activeRoute$.unsubscribe();
-  }
-
   ngOnInit(): void {
     this.lines$ = this.store.select(filterLines(this.value));
-    this.activeRoute$ = this.store.select(currentRoute).pipe(filter(e => !!e)).subscribe(e => this.value = e?.desc!);
+    this.activeRoute$ = this.store.select(currentRoute).pipe(
+      startWith(<IRoute>{}),
+      filter(e => !!e)
+    );
   }
 
   public changeValue(line: ILine){
     this.currentLine = line;
     this.value = `Line ${line.name}`;
-    this.router.navigate([{ outlets: { sidebar: [ 'lines', line.id ] }}], {queryParams: {module: 'line_click'}});
+    this.router.navigate([{ outlets: { sidebar: [ 'lines', line.id ] }}], {queryParams: {module: 'line_data'}});
   }
 
   public clear(){
     this.value = '';
     this.selected = false;
-    this.router.navigateByUrl('(sidebar:lines)');
+    this.store.dispatch(navigation.arrowNavigation());
   }
 
   public navigate(){

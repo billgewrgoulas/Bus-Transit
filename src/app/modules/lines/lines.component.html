@@ -1,24 +1,29 @@
 
-<div class="input-section">
-    <div class="left-wrapper">
-        <span class="arrow material-symbols-outlined" (click)="navigate()">
-            keyboard_backspace
-        </span>
-        <span class="route material-symbols-outlined">
-            route
-        </span>
+<ng-container *ngIf="activeRoute$ | async as ar">
+
+    <div class="input-section">
+        <div class="left-wrapper">
+            <span class="arrow material-symbols-outlined" (click)="navigate()">
+                keyboard_backspace
+            </span>
+            <span class="route material-symbols-outlined">
+                route
+            </span>
+        </div>
+        <div class="right-wrapper">
+            <input [value]="ar.desc" [(ngModel)]="value" 
+                (keyup)="onKeyUp()"
+                name="myInput" 
+                type="text" 
+                placeholder="search lines..." 
+                class="text"
+                autocomplete="off">
+            <i *ngIf="value!=''" (click)="clear()" class="fas fa-times"></i>
+        </div>
     </div>
-    <div class="right-wrapper">
-        <input [(ngModel)]="value" 
-            (keyup)="onKeyUp()"
-            name="myInput" 
-            type="text" 
-            placeholder="search lines..." 
-            class="text"
-            autocomplete="off">
-        <i *ngIf="value!=''" (click)="clear()" class="fas fa-times"></i>
-    </div>
-</div>
+
+</ng-container>
+
 
 <multiple-dropdown *ngIf="!selected"
     [data$]="lines$"

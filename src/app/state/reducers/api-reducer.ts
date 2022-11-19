@@ -27,11 +27,14 @@ export const appStateReducer = createReducer(
     on(api_actions.getLineRoutes, api_actions.getLines, (state: AppState, action): AppState=>{
         return {...state};
     }),
-    on(select_actions.emptyRoutes, (state: AppState, action): AppState => {
-        return {...initialAppState, lines: state.lines};
-    }),
     on(api_actions.getFilteredStopsSuccess, (state: AppState, action): AppState=>{
         return {...state, stops: stopStateAdapter.setAll(action.stops, state.stops)};
+    }),
+    on(api_actions.routesFilteredSuccess, (state: AppState, action): AppState => {
+        return {...state, routes: routeStateAdapter.setAll(action.routes, state.routes)};
+    }),
+    on(select_actions.emptyRoutes, (state: AppState, action): AppState => {
+        return {...state, routes: routeStateAdapter.removeAll(state.routes)};
     }),
     on(api_actions.getLinesSuccess, (state: AppState, action): AppState=>{
         return {...state, lines: lineStateAdapter.addMany(action.lines, state.lines)};

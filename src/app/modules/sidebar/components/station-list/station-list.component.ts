@@ -1,13 +1,9 @@
-import { AfterViewInit, Component, EventEmitter, Input, OnChanges, OnDestroy, OnInit, SimpleChanges, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, Input, OnChanges, OnInit, SimpleChanges, ViewChild } from '@angular/core';
 import { Store } from '@ngrx/store';
-import { Observable, Subscription } from 'rxjs';
+import { Observable } from 'rxjs';
 import { AppState } from 'src/app/state/Reducers/api-reducer';
-import { currentLine, currentRoute, getRouteStops } from 'src/app/state/Selectors/appState.selectors';
+import { currentRoute, getRouteStops } from 'src/app/state/Selectors/appState.selectors';
 import { IStop } from 'src/app/state/Entities/stop.entity';
-import { LiveDataStore } from 'src/app/state/LocalStore/live.data.store';
-import { IArrival } from 'src/app/state/Entities/live.data';
-import { ILine } from 'src/app/state/Entities/line.entity';
-import { DataShareService } from 'src/app/services/data-share.service';
 import { IRoute } from 'src/app/state/Entities/route.entity';
 
 @Component({

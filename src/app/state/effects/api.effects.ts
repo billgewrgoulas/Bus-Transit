@@ -5,7 +5,7 @@ import { distinctUntilChanged, exhaustMap, filter, map, mapTo, of, Subject, swit
 import { DataService } from "src/app/services/data.service";
 import * as api_actions from '../Actions/api-calls.actions';
 import { AppState } from "../Reducers/api-reducer";
-import { getActiveRouteSchedules, getAllLines, getRouteStops, selectAll, selectAllLines, selectCurrentLineRoutes, selectLine, selectRoute, selectRoutePoints } from "../Selectors/appState.selectors";
+import { getActiveRouteSchedules, getAllLines, getAllStops, getRouteStops, selectAll, selectAllLines, selectCurrentLineRoutes, selectLine, selectRoute, selectRoutePoints } from "../Selectors/appState.selectors";
 import { ILine } from "../Entities/line.entity";
 import { IRoute, IRouteInfo } from "../Entities/route.entity";
 import { IScheduleDetails } from "../Entities/schedule.entity";
@@ -24,8 +24,6 @@ export class ApiEffects{
             map((response: ILine[]) => api_actions.getLinesSuccess({lines: response}))
         )     
     );
-
-    
 
     loadLineRoutes$ = createEffect(()=>
         this.actions$.pipe(
@@ -68,15 +66,17 @@ export class ApiEffects{
     loadSearchedPaths$ = createEffect(() => 
         this.actions$.pipe(
             ofType(api_actions.getFilteredRoutes),
-            tap(d => console.log(d))
-        ), {dispatch: false}
+            switchMap((action) => this.dataService.getFilteredRoutes(action.data)),
+            map((res: IRoute[]) => api_actions.routesFilteredSuccess({routes: res, add: undefined}))
+        )
     );
 
     loadStops$ = createEffect(()=>
         this.actions$.pipe(
             ofType(api_actions.getStops),
-            withLatestFrom(this.store.select(getAllLines)),
-            exhaustMap(() => this.dataService.getAllStops()),
+            withLatestFrom(this.store.select(getAllStops)),
+            filter(([action, stops]) => stops.length == 0),
+            switchMap(() => this.dataService.getAllStops()),
             map((response: IStop[]) => api_actions.getStopsSuccess({stops: response}))
         )     
     );

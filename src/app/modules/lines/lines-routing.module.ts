@@ -1,4 +1,3 @@
-
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { MultipleDropdownComponent } from '../sidebar/components/multiple-dropdown/multiple-dropdown.component';
@@ -6,6 +5,7 @@ import { RouteListComponent } from '../shared-module/components/route-list/route
 import { SliderComponent } from '../sidebar/components/slider/slider.component';
 import { StationListComponent } from '../sidebar/components/station-list/station-list.component';
 import { LinesComponent } from './lines.component';
+import { DropDownWrapperComponent } from '../shared-module/components/drop-down-wrapper/drop-down-wrapper.component';
 
 const routes: Routes = [
 
@@ -13,7 +13,8 @@ const routes: Routes = [
     children: [
       {
         path: ':lineCode',
-        component: RouteListComponent,
+        component: DropDownWrapperComponent,
+        data: {type: 'line_module'},
       },
       {
         path: ':lineCode/route/:routeCode', 

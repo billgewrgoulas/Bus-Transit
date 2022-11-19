@@ -6,6 +6,7 @@ import { IRoute, IRouteInfo } from '../state/Entities/route.entity';
 import { IArrival } from '../state/Entities/live.data';
 import { IScheduleDetails } from '../state/Entities/schedule.entity';
 import { IStop } from '../state/Entities/stop.entity';
+import { TripState } from '../state/LocalStore/directions.store';
 
 @Injectable({
   providedIn: 'root'
@@ -58,8 +59,8 @@ export class DataService {
       catchError((err) => throwError(()=>new Error(err))));
   }
 
-  public getFilteredRoutes(start: string, end: string): Observable<IRoute[]>{
-    return this.http.post(this.liveUri + 'endpoint', {start: start, end: end}, this.options).pipe(
+  public getFilteredRoutes(payload: TripState): Observable<IRoute[]>{
+    return this.http.post(this.url + 'getPaths', {data: payload}, this.options).pipe(
       map((res: any) => <IRoute[]>res), 
       catchError((err) => throwError(()=>new Error(err))));
   }
