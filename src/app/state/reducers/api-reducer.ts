@@ -5,6 +5,7 @@ import { inititialStopState, StopState, stopStateAdapter } from "../Entities/sto
 import * as select_actions from '../Actions/select.actions';
 import * as api_actions from '../Actions/api-calls.actions';
 import { inititialSchdeduleState, ScheduleState, scheduleStateAdapter } from "../Entities/schedule.entity";
+import { Plan } from "../Entities/itinerary";
 
 
 export interface AppState{
@@ -12,6 +13,7 @@ export interface AppState{
     lines: LineState;
     routes: RouteState;
     schedule: ScheduleState;
+    plan: Plan | undefined;
 };
 
 export const initialAppState: AppState = {
@@ -19,6 +21,7 @@ export const initialAppState: AppState = {
     stops: inititialStopState,
     routes: inititialRouteState,
     schedule: inititialSchdeduleState,
+    plan: undefined
 };
 
 /* API Reducer */
@@ -34,7 +37,7 @@ export const appStateReducer = createReducer(
         return {...state, routes: routeStateAdapter.setAll(action.routes, state.routes)};
     }),
     on(select_actions.emptyRoutes, (state: AppState, action): AppState => {
-        return {...state, routes: routeStateAdapter.removeAll(state.routes)};
+        return {...state, routes: routeStateAdapter.removeAll(state.routes), plan: undefined};
     }),
     on(api_actions.getLinesSuccess, (state: AppState, action): AppState=>{
         return {...state, lines: lineStateAdapter.addMany(action.lines, state.lines)};
@@ -56,6 +59,9 @@ export const appStateReducer = createReducer(
     }),
     on(api_actions.getStopsSuccess, (state: AppState, action): AppState => {
         return {...state, stops: stopStateAdapter.addMany(action.stops, state.stops)};
+    }),
+    on(api_actions.fetchPlanSuccess, (state: AppState, action): AppState => {
+        return {...state, plan: action.data};
     }),
     on(api_actions.getRouteDetailsuccess, (state: AppState, action): AppState=>{
         return {...state, stops: stopStateAdapter.addMany(action.routeInfo.stops, state.stops), 

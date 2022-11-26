@@ -1,0 +1,72 @@
+
+<h1>Preferences</h1>
+<form [formGroup]="tripOptions" novalidate class="option-list" *ngIf="state$ | async as state">
+
+    <div class="time-date">
+
+        <mat-form-field class="time-fields" appearance="fill">
+            <mat-label>Date</mat-label>
+            <input formControlName="date" id="date"
+                (dateInput)="updateDate($event)"
+                (dateChange)="updateDate($event)"
+                placeholder="pick a date" 
+                matInput [matDatepicker]="picker">
+            <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+            <mat-datepicker #picker></mat-datepicker>
+            <mat-hint>MM/DD/YYYY</mat-hint>
+            <mat-error *ngIf="tripOptions.controls['date'].hasError('required')">Date is required</mat-error>
+        </mat-form-field>
+    
+        <mat-form-field appearance="fill" class="time-fields pl-sm-8 no-errors-spacer" >
+            <mat-label>Time</mat-label>
+            <input (change)="updateTime($event)" class="input" formControlName="time" id="time" matInput type="time">
+            <mat-hint>HH/MM/AM-PM</mat-hint>
+            <mat-error *ngIf="tripOptions.controls['time'].hasError('required')">Time is required</mat-error>
+        </mat-form-field>
+
+    </div>
+
+    <div class="time-date">
+
+        <mat-form-field class="time-fields" appearance="fill">
+            <mat-label>Direction</mat-label>
+            <mat-select (valueChange)="updateSelect('direction', $event)" [value]="state.arriveBy">
+                <mat-option value="depart">Depart</mat-option>
+                <mat-option value="arrive">Arrive</mat-option>
+            </mat-select>
+        </mat-form-field>
+
+        <mat-form-field class="time-fields" appearance="fill">
+            <mat-label>Mode</mat-label>
+            <mat-select (valueChange)="updateSelect('mode', $event)" [value]="state.mode">
+                <mat-option value="TRANSIT,WALK">Bus/Walk</mat-option>
+                <mat-option value="'CAR'">Car</mat-option>
+            </mat-select>
+        </mat-form-field>
+
+    </div>
+
+    <mat-form-field appearance="fill">
+        <mat-label>Sort by</mat-label>
+        <mat-select (valueChange)="updateSelect('sortBy', $event)" [value]="state.sortBy">
+            <mat-option value="travel_time">Least travel time</mat-option>
+            <mat-option value="'walk_time'">Least walk time</mat-option>
+            <mat-option value="'transit_time'">Least transit time</mat-option>
+        </mat-select>
+    </mat-form-field>
+
+    <div class="error-msg" *ngIf="
+        !tripOptions.valid || 
+        state.start.length == 0 || 
+        state.destination.length == 0">
+        Some fields are missing
+    </div>
+
+    <app-option (click)="plan()"
+        [icon]="'route'"
+        [text]="'Plan your trip'"
+        [data]="[]">
+    </app-option>
+
+</form>
+

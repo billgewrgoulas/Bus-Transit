@@ -48,6 +48,7 @@ export class MapAreaComponent implements OnInit, OnDestroy {
 
       this.msg.markerObserver.pipe(
         switchMap(obs => obs),
+        filter(v => !v.fetch)
       ).subscribe(data => this.mapService.addMarker(data))
       
     ];

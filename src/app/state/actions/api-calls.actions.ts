@@ -4,6 +4,7 @@ import { ILine } from "../Entities/line.entity";
 import { IRoute, IRouteInfo } from "../Entities/route.entity";
 import { IScheduleDetails } from "../Entities/schedule.entity";
 import { IStop } from "../Entities/stop.entity";
+import { Plan } from "../Entities/itinerary";
 
 /* Fetch all lines based on station name, bus... */
 export const getLines = createAction('[API] GET Lines');
@@ -39,3 +40,8 @@ export const getSchedulesError = createAction('[API] Get schedules error');
 export const getFilteredRoutes = createAction('[Api] Get filtered routes', props<{data: TripState}>());
 export const routesFilteredSuccess = createAction('[API] Filtered routes success', props<{routes: IRoute[], add: any}>());
 export const filteredRoutesError = createAction('[API] Filter Routes error');
+
+/* Fetch the trip plan from Open Trip Planner */
+export const fetchPlan = createAction('[API] Get plan', props<{data: TripState}>());
+export const fetchPlanSuccess = createAction('[API] Get plan success', props<{data: Plan}>());
+export const fetchPlanError = createAction('[API] Get plan error');

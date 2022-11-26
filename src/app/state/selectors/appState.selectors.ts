@@ -12,6 +12,7 @@ export const getLineState = createSelector(getAppState, (state: AppState)=> stat
 export const getRouteState = createSelector(getAppState, (state: AppState) => state.routes);
 export const getStopState = createSelector(getAppState, (state: AppState) => state.stops);
 export const getScheduleState = createSelector(getAppState, (state: AppState) => state.schedule);
+export const getPlanState = createSelector(getAppState, state => state.plan);
 
 /* Grab the state entities */
 export const selectAllLines = createSelector(getLineState, (line) => line.entities);

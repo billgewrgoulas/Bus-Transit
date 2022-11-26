@@ -10,6 +10,7 @@ import { ILine } from "../Entities/line.entity";
 import { IRoute, IRouteInfo } from "../Entities/route.entity";
 import { IScheduleDetails } from "../Entities/schedule.entity";
 import { IStop } from "../Entities/stop.entity";
+import { Plan } from "../Entities/itinerary";
 
 @Injectable()
 export class ApiEffects{
@@ -68,6 +69,15 @@ export class ApiEffects{
             ofType(api_actions.getFilteredRoutes),
             switchMap((action) => this.dataService.getFilteredRoutes(action.data)),
             map((res: IRoute[]) => api_actions.routesFilteredSuccess({routes: res, add: undefined}))
+        )
+    );
+
+    loadPlans$ = createEffect(() => 
+        this.actions$.pipe(
+            ofType(api_actions.fetchPlan),
+            filter(({data}) => !!data),
+            switchMap(({data}) => this.dataService.getPlan(data)),
+            map((response: Plan) => api_actions.fetchPlanSuccess({data: response}))
         )
     );
 

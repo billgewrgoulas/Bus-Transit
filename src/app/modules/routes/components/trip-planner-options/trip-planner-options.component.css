@@ -1,0 +1,107 @@
+:host{
+    width: 99%;
+    padding: 20px 13px 0 20px;
+}
+
+.option-list{
+    display: flex;
+    flex-direction: column;
+    width: 99%;
+    overflow: auto;
+    max-height: calc(100vh - 265px);
+    padding-right: 5px;
+    gap: 10px;
+}
+
+.options{
+    width: 100%;
+}
+
+h1{
+    margin-bottom: 15px;
+    color: #2b3b4c;
+    font-family: "Lexend Deca",sans-serif;
+    font-weight: 600;
+    font-size: 21px;
+}
+
+.mat-input-element {
+    caret-color: #545f6d;
+}
+
+.mat-form-field-appearance-legacy .mat-form-field-label{
+    color: #545f6d !important;
+}
+
+.mat-hint .mat-datepicker-toggle{
+    color: #545f6d !important;
+}
+
+::ng-deep .mat-focused .mat-form-field-label {
+    /*change color of label*/
+    color: #545f6d!important;
+    font-size: 15px;
+}
+   
+::ng-deep .mat-form-field-underline {
+    /*change color of underline*/
+    background-color: linear-gradient(90deg, rgba(195,197,213,1) 0%, rgba(239,243,248,1) 100%) !important;
+} 
+   
+::ng-deep .mat-form-field-ripple {
+    /*change color of underline when focused*/
+    background-color: #3e3aef !important;
+}
+   
+::ng-deep .mat-form-field-label {
+    /*change color of label*/
+    color: #545f6d !important;
+}
+
+.mat-label{
+    font-size: 15px;
+}
+   
+mat-hint{
+    color: #545f6d !important;
+}
+   
+mat-datepicker-toggle {
+    color: #545f6d !important;
+}
+
+::placeholder{
+    color: #727f90 !important;
+}
+
+.time-date{
+    display: flex;
+    flex-direction: row;
+    gap: 20px;
+}
+
+.time-fields{
+    flex: 1 1 auto !important;
+    width: 45% !important;
+}
+
+.mat-select-value-text{
+    color: #545f6d !important;
+}
+
+.panel .mat-mdc-select-panel {
+    background: rgba(255, 0, 0, 0.5);
+}
+
+::ng-deep .mat-select-value{
+    color: #545f6d !important;
+}
+
+::ng-deep .mat-select-arrow{
+    color: #545f6d !important;
+}
+
+.error-msg{
+    color: red;
+    align-self: center;
+}

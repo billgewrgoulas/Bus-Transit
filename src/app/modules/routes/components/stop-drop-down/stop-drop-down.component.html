@@ -5,15 +5,15 @@
         <ng-container *ngIf="showDefaultSwitch$ | async as flag else stopList">
 
             <app-option
-                [icon]="'settings'"
-                [text]="'Preferences'"
-                [data]="['options']">
+                [icon]="'route'"
+                [text]="'Direct routes'"
+                [data]="['route']">
             </app-option>
 
-            <app-option (onSelect)="onCalculate()"
-                [icon]="'route'"
-                [text]="'Suggested Routes'"
-                [data]="['directions']">
+            <app-option (onSelect)="tripPlanner()"
+                [icon]="'departure_board'"
+                [text]="'Trip planner'"
+                [data]="['plan']">
             </app-option>
     
         </ng-container>

@@ -34,7 +34,7 @@ export class StopDropDownComponent implements OnInit {
   ngOnInit(): void {
     this.showDefaultSwitch$ = this.msg.stopListObserver;
     this.msg.selectEndpoint(this.local.state$);
-    this.local.fetchPaths();
+    //this.local.fetchPlan();
     this.stops$ = this.msg.searchValueMsg.pipe(
       debounceTime(10),
       distinctUntilChanged(),
@@ -49,6 +49,10 @@ export class StopDropDownComponent implements OnInit {
 
   public onLocation(data: string[]){
 
+  }
+
+  public tripPlanner(){
+    this.router.navigate([{ outlets: { sidebar: [ 'routes', 'trip', 'options'] }}], {queryParams: {module: 'trip_options'}});
   }
 
   public onMap(data: string[]){
