@@ -16,6 +16,9 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { TripPlannerOptionsComponent } from './components/trip-planner-options/trip-planner-options.component';
 import { TripComponent } from './components/trip/trip.component';
 import { TripListComponent } from './components/trip-list/trip-list.component';
+import {MatExpansionModule} from '@angular/material/expansion';
+import {MatButtonModule} from '@angular/material/button';
+import { TripDetailsComponent } from './components/trip-details/trip-details.component';
 
 @NgModule({
   declarations: [
@@ -24,7 +27,8 @@ import { TripListComponent } from './components/trip-list/trip-list.component';
     StopSliderComponent, 
     TripPlannerOptionsComponent,
     TripComponent,
-    TripListComponent
+    TripListComponent,
+    TripDetailsComponent
   ],
   imports: [
     CommonModule,
@@ -37,6 +41,8 @@ import { TripListComponent } from './components/trip-list/trip-list.component';
     MatNativeDateModule,
     MatInputModule,
     ReactiveFormsModule,
+    MatExpansionModule,
+    MatButtonModule
   ],
 })
 export class RoutesModule { }

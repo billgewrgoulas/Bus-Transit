@@ -1,8 +1,16 @@
 
 <h1>Itineraries</h1>
-<div class="option-list">
+<div class="option-list" *ngIf="true as plan">
 
-    <trip-component
-    ></trip-component>
+    <ng-container *ngFor="let it of [1, 2, 3] let i=index">
+        <trip-component (msg)="onSelect($event)"
+            [duration]="10"
+            [totalWalk]="500"
+            [startTime]="'7:50'"
+            [endTime]="'8:10'"
+            [itinerary]="null"
+            [data]="i">
+        </trip-component>
+    </ng-container>
 
 </div>

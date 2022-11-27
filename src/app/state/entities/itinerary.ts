@@ -37,6 +37,7 @@ export interface Leg{
     departureDelay: number;
     arrivalDelay: number;
     routeShortName: string;
+    flex: number;
     from: Vertex;
     to: Vertex;
     intermediateStops: Vertex[];

@@ -31,11 +31,12 @@ export class InputComponent implements OnInit, OnDestroy {
     private msg: DataShareService, 
     private local: DirectionsStore,
     private router: Router
-  ) { }
+  ) {}
   
   ngOnInit(): void {
     this.sub = this.msg.tabObserver.subscribe(v => this.cancel());
     this.obs$ = this.local.getNames();
+    this.checkUrl();
   }
 
   ngOnDestroy(): void{
@@ -88,10 +89,23 @@ export class InputComponent implements OnInit, OnDestroy {
     this.store.dispatch(navigation.arrowNavigation());
   }
 
+  public routerActive(e: any){
+    console.log(typeof e);
+  }
+
   private updateOnclick(dest: string){
     this.msg.showDefault(false);
     this.local.changeDirection(dest);
-    this.router.navigate([{ outlets: { sidebar: [ 'routes', 'places'] }}]);
+    this.router.navigate([{ outlets: { sidebar: [ 'routes', 'places'] }}], {queryParams: {module: dest + '_input'}});
+  }
+
+  private checkUrl(){
+    const queryParam: string = this.router.url.split("=")[1];
+    if(queryParam == 'start_input'){
+      this.startClick();
+    }else if(queryParam == 'dest_input'){
+      this.destClick();
+    }
   }
 
 }

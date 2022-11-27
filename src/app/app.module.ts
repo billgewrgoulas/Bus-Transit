@@ -26,6 +26,7 @@ import { CustomSerializer } from './state/Selectors/custom-route-serializer';
 
 
 
+
 @NgModule({
   declarations: [
     AppComponent,

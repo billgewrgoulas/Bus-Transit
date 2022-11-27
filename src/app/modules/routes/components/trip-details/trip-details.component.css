@@ -1,20 +1,35 @@
 
 :host{
     width: 100%;
+    padding: 20px 0px 0px 20px;
 }
 
-:host:hover{
-    cursor: pointer;
-    transform: translateX(2px);
-    transition-duration: 300ms;
+.option-list{
+    display: flex;
+    flex-direction: column;
+    width: 99%;
+    overflow: auto;
+    max-height: calc(100vh - 270px);
+    padding-right: 7px;
+    gap: 5px;
+}
+
+h1{
+    margin-bottom: 10px;
+    color: #2b3b4c;
+    font-family: "Lexend Deca",sans-serif;
+    font-weight: 600;
+    font-size: 21px;
 }
 
 .entity-wrapper{
     background: rgb(227,227,236);
     background: linear-gradient(90deg, rgba(227,227,236,1) 0%, rgba(255,255,255,1) 100%);
-    margin-top: 10px;
-    margin-right: 5px;
+    margin-right: 8px;
     box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
+}
+
+.entity-wrapper:hover{
     cursor: pointer;
 }
 
@@ -24,97 +39,69 @@
     padding: 10px 10px 10px 10px;
 }
 
-.context{
+.panel-title{
     display: flex;
     flex-direction: row;
-    width: 100%;
-    gap: 3px;
-    position: relative;
-    font-size: 13px;
+    gap: 5px;
 }
 
-.bus-mode{
-    flex: 1 1;
-    background: #002D62;
-}
-
-.walk-mode{
-    flex: 1 1;
-    background: rgb(187, 187, 187);
-}
-
-.trail{
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    justify-content: center;
-    color: white;
-    z-index: 3;
-}
-
-.code{
-    margin-left: 4px;
-    margin-top: 1px;
-}
-
-.time{
-    background-color: black;
-    color: white;
-    font-size: 11px;
+.mode{
+    font-size: 12px;
     font-weight: bold;
-    align-self: center;
-    height: 14px;
-    line-height: 15px;
-    padding-left: 2px;
-    padding-right: 2px;
-    z-index: 3;
+    color: #2e3e51;
 }
 
-.line{
-    position: absolute;
-    top: 9px;
-    right: 0px;
-    z-index: 1;
-    width: 100%;
-    border-bottom: 2px solid rgb(20, 20, 20);
+.mode-details{
+    font-size: 12px;
+    color: #2e3e51;
 }
 
-.sumary-section{
+.walk-steps, .bus-route{
     display: flex;
     flex-direction: column;
-    padding: 10px 5px 0px 5px;
+    gap: 2px;
+    padding: 8px;
+    width: 100%;
 }
 
-.header{
+.step{
     display: flex;
     flex-direction: row;
-    justify-content: space-between;
-    margin-bottom: 5px;
-    margin-top: 3px;
+    width: 100%;
+    gap: 8px;
+    padding: 3px 3px 3px 3px;
+    background: linear-gradient(90deg, rgb(210 210 225) 0%, rgb(245 245 255) 100%);
+    align-items: center;
 }
 
-.malakas{
-    color: #2e3e51;
-    font-weight: bold;
-    font-size: 16px;
-}
-
-.field{
-    display: flex;
-    flex-direction: row;
-    gap: 10px;
-    font-weight: bold;
-}
-
-.title{
-    color: #2e3e51;
+.step>i{
+    color:#2e3e51;
     font-size: 14px;
     font-weight: bold;
 }
 
-.value{
+.step-desc{
+    color:#2e3e51;
+    font-size: 14px;
+}
+
+.stops{
+    padding: 0.2em 0.4em;
+    font-style: italic;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.step-dist{
     color: #545f6d;
-    font-size: 13px;
+    font-size: 11px;
+    font-weight: bold;
+    margin-left: auto;
+}
+
+.fa-sort-down{
+    margin-left: auto;
+    color: #002D62;
 }
 
 ::ng-deep .mat-expansion-panel-header {
@@ -150,4 +137,8 @@
     line-height: unset !important;
     padding: 1px 5px 0px 5px !important;
     font-size: 14px !important;
+}
+
+::ng-deep .mat-expansion-panel-header-title, .mat-expansion-panel-header-description {
+    margin-right: 0px !important;
 }
