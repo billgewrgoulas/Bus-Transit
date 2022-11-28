@@ -1,76 +1,76 @@
 
-<ng-container *ngIf="true">
-
+<ng-container *ngIf="itinerary as it">
+    <div class="entity-wrapper">
+        <div class="entity-container">
+            <mat-accordion>
+                <mat-expansion-panel hideToggle>
+                    <mat-expansion-panel-header>
+                        <div class="context">
+                            <div class="line"></div>
+                            <div class="time">{{it.startTime}}</div>
+                            <ng-container *ngFor="let leg of it.legs">
+                                <div class="walk-mode trail" [style.flex]="leg.flex" *ngIf="leg.mode == 'WALK'">
+                                    <i class="fa fa-walking"></i>
+                                </div>
+                                <div class="bus-mode trail" [style.flex]="leg.flex" *ngIf="leg.mode == 'TRAM'">
+                                    <i class="fa fa-bus"></i>
+                                    <div class="code">{{leg.routeId}}</div>
+                                </div>
+                            </ng-container>
+                            <div class="time">
+                                <span class="">{{it.endTime}}</span>
+                            </div>
+                        </div>   
+                    </mat-expansion-panel-header>
+                    <div class="sumary-section">
+                        <div class="header">
+                            <span class="malakas">Sumary</span>
+                            <section>
+                                <div class="example-button-row">
+                                    <button mat-raised-button (click)="onSelect()" color="primary">Details</button>
+                                </div>
+                            </section>
+                        </div>
+                        <div class="field">
+                            <div class="title">
+                                Travel
+                            </div>
+                            <div class="value">
+                                {{it.startTime}}
+                            </div>
+                        </div>
+                        <div class="field">
+                            <div class="title">
+                                Arrive
+                            </div>
+                            <div class="value">
+                                {{it.endTime}}
+                            </div>
+                        </div>
+                        <div class="field">
+                            <div class="title">
+                                Duration
+                            </div>
+                            <div class="value">
+                                {{it.duration}} minutes
+                            </div>
+                        </div>
+                        <div class="field">
+                            <div class="title">
+                                Walk
+                            </div>
+                            <div class="value">
+                                {{it.walkDistance}} meters
+                            </div>
+                        </div>
+                    </div>
+                </mat-expansion-panel>
+            </mat-accordion>
+        </div>
+    </div>
 </ng-container>
 
-<div class="entity-wrapper">
-    <div class="entity-container">
-        <mat-accordion>
-            <mat-expansion-panel hideToggle>
-                <mat-expansion-panel-header>
-                    <div class="context">
-                        <div class="line"></div>
-                        <div class="time">{{startTime}}</div>
-                        <ng-container *ngFor="let leg of[{mode: 'WALK', code: 0}, {mode: 'BUS', code: 16}, {mode: 'WALK', code: 0}]">
-                            <div class="walk-mode trail" *ngIf="leg.mode == 'WALK'">
-                                <i class="fa fa-walking"></i>
-                            </div>
-                            <div class="bus-mode trail" *ngIf="leg.mode == 'BUS'">
-                                <i class="fa fa-bus"></i>
-                                <div class="code">{{leg.code}}</div>
-                            </div>
-                        </ng-container>
-                        <div class="time">
-                            <span class="">{{endTime}}</span>
-                        </div>
-                    </div>   
-                </mat-expansion-panel-header>
-                <div class="sumary-section">
-                    <div class="header">
-                        <span class="malakas">Sumary</span>
-                        <section>
-                            <div class="example-button-row">
-                                <button mat-raised-button (click)="onSelect()" color="primary">Details</button>
-                            </div>
-                        </section>
-                    </div>
-                    <div class="field">
-                        <div class="title">
-                            Travel
-                        </div>
-                        <div class="value">
-                            {{startTime}}
-                        </div>
-                    </div>
-                    <div class="field">
-                        <div class="title">
-                            Arrive
-                        </div>
-                        <div class="value">
-                            {{endTime}}
-                        </div>
-                    </div>
-                    <div class="field">
-                        <div class="title">
-                            Duration
-                        </div>
-                        <div class="value">
-                            {{duration}} minutes
-                        </div>
-                    </div>
-                    <div class="field">
-                        <div class="title">
-                            Walk
-                        </div>
-                        <div class="value">
-                            {{totalWalk}} meters
-                        </div>
-                    </div>
-                </div>
-            </mat-expansion-panel>
-        </mat-accordion>
-    </div>
-</div>
+
 
 
 

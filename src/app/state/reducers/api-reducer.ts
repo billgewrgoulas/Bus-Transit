@@ -14,6 +14,7 @@ export interface AppState{
     routes: RouteState;
     schedule: ScheduleState;
     plan: Plan | undefined;
+    itinerary: number;
 };
 
 export const initialAppState: AppState = {
@@ -21,7 +22,8 @@ export const initialAppState: AppState = {
     stops: inititialStopState,
     routes: inititialRouteState,
     schedule: inititialSchdeduleState,
-    plan: undefined
+    plan: undefined,
+    itinerary: -1
 };
 
 /* API Reducer */
@@ -42,7 +44,7 @@ export const appStateReducer = createReducer(
     on(api_actions.getLinesSuccess, (state: AppState, action): AppState=>{
         return {...state, lines: lineStateAdapter.addMany(action.lines, state.lines)};
     }),
-    on(select_actions.selectLine, (state: AppState, action): AppState=>{
+    on(select_actions.selectLine, (state: AppState, action): AppState => {
         return {...state, lines: {...state.lines, activeLineId: action.id}};
     }),
     on(select_actions.selectRoute, (state: AppState, action): AppState => {
@@ -62,6 +64,9 @@ export const appStateReducer = createReducer(
     }),
     on(api_actions.fetchPlanSuccess, (state: AppState, action): AppState => {
         return {...state, plan: action.data};
+    }),
+    on(select_actions.selectItinerary, (state: AppState, action): AppState =>{
+        return {...state, itinerary: action.index};
     }),
     on(api_actions.getRouteDetailsuccess, (state: AppState, action): AppState=>{
         return {...state, stops: stopStateAdapter.addMany(action.routeInfo.stops, state.stops), 

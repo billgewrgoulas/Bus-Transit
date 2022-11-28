@@ -8,6 +8,7 @@ import test from 'node:test';
 import { IMapData } from '../state/Entities/map.data.entity';
 import { TripState } from '../state/LocalStore/directions.store';
 import { ConstantPool } from '@angular/compiler';
+import { Itinerary } from '../state/Entities/itinerary';
 
 @Injectable({
   providedIn: 'root'
@@ -43,7 +44,7 @@ export class MapService {
   }
 
   public displayRouteInformation(data: IMapData){
-    this.clearMap();
+    this.clearMap('start');
     this.carvePath(data.points);
     this.displayStops(data.stops);
   }
@@ -72,14 +73,18 @@ export class MapService {
     });
   }
 
-  public clearMap(){
+  public clearMap(mode: string){
     this.map.removeLayer(this.polyline);
     this.markers.forEach(marker => this.map.removeLayer(marker));
     this.buses.forEach(bus => this.map.removeLayer(bus));
     this.map.setView(this.center, 13);
     this.markers = [];
     this.buses = [];
-    this.clearMarkers();
+
+    if(mode != 'plan'){
+      this.clearMarkers();
+    }
+
   }
 
   public clearMarkers(){
@@ -104,7 +109,7 @@ export class MapService {
   public addMarker(data: TripState){
 
     if(data.direction == ''){
-      this.clearMap();
+      this.clearMap('delete_marker');
     }
 
     let point: string[] = [];
@@ -143,9 +148,55 @@ export class MapService {
     this.map.flyTo(marker.getLatLng(), 16);
   }
 
+  public displayItinerary(it: Itinerary){
+    this.clearMap('plan');
+
+    let path: any = [];
+    it.legs.forEach(leg =>{
+
+      leg.points.forEach(point => path.push([+point[0], +point[1]])); 
+
+      let color: string = '#002D62'
+      if(leg.mode == 'WALK'){
+        color = 'rgb(187, 187, 187)';
+      }
+
+      if(leg.from.vertexType == 'TRANSIT'){
+        const marker = this.createMarker(leg.from.lat, leg.from.lon, stop.name, this.icon);
+        marker.addTo(this.map);
+        this.markers.push(marker);
+      }
+
+      if(leg.to.vertexType == 'TRANSIT'){
+        const marker = this.createMarker(leg.to.lat, leg.to.lon, stop.name, this.icon);
+        marker.addTo(this.map);
+        this.markers.push(marker);
+      }
+
+      if(leg.mode == 'TRAM'){
+        leg.intermediateStops.forEach(stop => {
+          const marker = this.createMarker(stop.lat, stop.lon, stop.name, this.icon);
+          marker.addTo(this.map);
+          this.markers.push(marker);
+        });
+        
+      }
+      
+      L.polyline(<LatLngExpression[][]>path, {color: color}).addTo(this.map);
+      path = [];
+    });
+
+    this.focusOnPath(this.start!, this.end!);
+
+  }
+
   private focusOnPath(p1: L.Marker, p2: L.Marker){
-    const polyline = L.polyline([p1.getLatLng(), p2.getLatLng()]);
-    this.map.fitBounds(polyline.getBounds());
+
+    if(p1 && p2){
+      const polyline = L.polyline([p1.getLatLng(), p2.getLatLng()]);
+      this.map.fitBounds(polyline.getBounds());
+    }
+    
   }
 
   private createMarker(x: string, y: string, text: string, icon: L.Icon, draggable: boolean = false){

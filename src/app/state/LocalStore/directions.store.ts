@@ -13,15 +13,16 @@ import { emptyRoutes } from "../Actions/select.actions";
 import { state } from "@angular/animations";
 import { FormControl } from "@angular/forms";
 
+const now = () => new Date().getHours() + ':' + new Date().getMinutes();
+
 export interface TripState {
     start: string[];
     destination: string[];
     options: string[];
     direction: string;
     time: string;
-    date: string;
+    date: Date;
     arriveBy: string;
-    sortBy: string;
     mode: string;
     strategy: string;
     fetch: boolean;
@@ -32,10 +33,9 @@ export const initialState: TripState = {
     destination: [],
     options: [],
     direction: '',
-    time: '',
-    date: '',
+    time: now(),
+    date: new Date(),
     arriveBy: 'depart',
-    sortBy: 'travel_time',
     mode: 'TRANSIT,WALK',
     strategy: '',
     fetch: false,
@@ -44,7 +44,7 @@ export const initialState: TripState = {
 @Injectable()
 export class DirectionsStore extends ComponentStore<TripState> {
     
-    public constructor(private router: Router, private store: Store<AppState>, private data: DataService) {
+    public constructor(private router: Router, private store: Store<AppState>) {
         super(initialState);
     }
 
@@ -88,11 +88,7 @@ export class DirectionsStore extends ComponentStore<TripState> {
         return {...state, mode: mode};
     });
 
-    public updateSortBy = this.updater((state: TripState, sortBy: string): TripState => {
-        return {...state, sortBy: sortBy};
-    });
-
-    public updateDate = this.updater((state: TripState, date: string | undefined): TripState => {
+    public updateDate = this.updater((state: TripState, date: Date | undefined): TripState => {
 
         if(date){
             return {...state, date: date};
@@ -140,6 +136,7 @@ export class DirectionsStore extends ComponentStore<TripState> {
                     this.router.navigate([{ outlets: { sidebar: [ 'routes', 'trips'] }}], {queryParams: {module: 'trips'}});
                 }, 
                 (error: HttpErrorResponse) => {
+                    console.log(error);
                     this.fetchComplete() //fetch will be completed even if it fails 
                 }
             )

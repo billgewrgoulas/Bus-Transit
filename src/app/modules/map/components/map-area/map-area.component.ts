@@ -4,7 +4,7 @@ import { filter, Subscription, switchMap, take, tap } from 'rxjs';
 import { Store } from '@ngrx/store';
 import { AppState} from 'src/app/state/Reducers/api-reducer';
 import * as L from "leaflet";
-import { getActiveStop, getRoutePathAndStops } from 'src/app/state/Selectors/appState.selectors';
+import { getActiveStop, getRoutePathAndStops, selectItinerary } from 'src/app/state/Selectors/appState.selectors';
 import { DataShareService } from 'src/app/services/data-share.service';
 
 
@@ -31,7 +31,7 @@ export class MapAreaComponent implements OnInit, OnDestroy {
     this.subscribers = [
 
       this.store.select(getRoutePathAndStops).pipe(
-        tap(() => this.mapService.clearMap()), filter(data => !!data)
+        tap(() => this.mapService.clearMap('route')), filter(data => !!data)
       ).subscribe(data => this.mapService.displayRouteInformation(data!)), 
 
       this.msg.busObserver.pipe(
@@ -49,7 +49,12 @@ export class MapAreaComponent implements OnInit, OnDestroy {
       this.msg.markerObserver.pipe(
         switchMap(obs => obs),
         filter(v => !v.fetch)
-      ).subscribe(data => this.mapService.addMarker(data))
+      ).subscribe(data => this.mapService.addMarker(data)),
+
+      this.store.select(selectItinerary).pipe(
+        tap(() => this.mapService.clearMap('plan')),
+        filter(it => !!it)
+      ).subscribe((it) => this.mapService.displayItinerary(it!))
       
     ];
 

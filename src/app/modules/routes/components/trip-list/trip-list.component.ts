@@ -22,7 +22,9 @@ export class TripListComponent implements OnInit {
   }
 
   public onSelect(itinerary: number){
-    this.router.navigate([{ outlets: { sidebar: [ 'routes', 'trips', itinerary] }}], {queryParams: {module: 'trip_details'}});
+    this.router.navigate([{ outlets: { sidebar: [ 'routes', 'trips', itinerary] }}], 
+      {queryParams: {module: 'trip_details'}
+    });
   }
 
 }

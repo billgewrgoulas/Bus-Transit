@@ -66,6 +66,18 @@ export class RouterEffects{
         ),
     );
 
+    selectItinerary$ = createEffect(()=>
+        this.actions$.pipe(
+            ofType(ROUTER_NAVIGATED),
+            withLatestFrom(this.store.select(getState)),
+            filter(([action, {query}]) => query!['module'] == 'trip_details'),
+            map(([action, {params}]) => params!['index']),
+            switchMap((index) => [
+                select_actions.selectItinerary({index: index}),
+            ])
+        ),
+    );
+
     clearLine$ = createEffect(() => 
         this.actions$.pipe(
             ofType(ROUTER_NAVIGATED),

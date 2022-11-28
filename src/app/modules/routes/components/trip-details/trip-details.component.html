@@ -1,112 +1,106 @@
 
-<h1>Itinerary Steps</h1>
-<div class="option-list">
-    <span><strong style="color: #2b3b4c;">Start</strong>: 5:35pm, 11/29/2022</span>
-    <div class="entity-wrapper">
-        <div class="entity-container">
-            <mat-accordion>
-                <mat-expansion-panel hideToggle>
-                    <mat-expansion-panel-header>
-                        <mat-panel-title class="panel-title">
-                            <div class="mode">WALK</div>
-                            <span class="mode-details">0.28 miles, 6 mins to DIKASTIKO</span>
-                            <i class="fas fa-sort-down"></i>
-                        </mat-panel-title>
-                    </mat-expansion-panel-header>
-                    <div class="walk-steps">
-                        <div class="step">
-                            <i class="fas fa-arrow-up"></i>
-                            <span class="step-desc">Start on karaoli heading south</span>
-                            <div class="step-dist">100m</div>
-                        </div>
-                        <div class="step">
-                            <i class="fas fa-arrow-up"></i>
-                            <span class="step-desc">Start on karaoli heading south</span>
-                            <div class="step-dist">100m</div>
-                        </div>
-                        <div class="step">
-                            <i class="fas fa-arrow-up"></i>
-                            <span class="step-desc">Start on karaoli heading south</span>
-                            <div class="step-dist">100m</div>
-                        </div>
-                        <div class="step">
-                            <i class="fas fa-arrow-up"></i>
-                            <span class="step-desc">Start on karaoli heading south</span>
-                            <div class="step-dist">100m</div>
-                        </div>
-                        <div class="step">
-                            <i class="fas fa-arrow-up"></i>
-                            <span class="step-desc">Start on karaoli heading south</span>
-                            <div class="step-dist">100m</div>
-                        </div>
-                        <div class="step">
-                            <i class="fas fa-arrow-up"></i>
-                            <span class="step-desc">Start on karaoli heading south</span>
-                            <div class="step-dist">100m</div>
-                        </div>
-                    </div>
-                </mat-expansion-panel>
-            </mat-accordion>
-        </div>
-    </div>    
-    <div class="entity-wrapper">
-        <div class="entity-container">
-            <mat-accordion>
-                <mat-expansion-panel hideToggle>
-                    <mat-expansion-panel-header>
-                        <mat-panel-title class="panel-title">
-                            <div class="mode">BUS</div>
-                            <span class="mode-details">Route 16</span>
-                            <i class="fas fa-sort-down"></i>
-                        </mat-panel-title>
-                    </mat-expansion-panel-header>
-                    <div class="bus-route">
-                        <div class="step">
-                            <i class="fas fa-bus"></i>
-                            <span class="step-desc">Board at Dikastiko</span>
-                            <div class="step-dist">4:40am</div>
-                        </div>
-                        <mat-accordion>
-                            <mat-expansion-panel hideToggle>
-                                <mat-expansion-panel-header>
-                                    <mat-panel-title class="panel-title">
-                                        <div class="step">
-                                            <i class="fas fa-route"></i>
-                                            <span class="step-desc stops">5 stops</span>
-                                            <div class="step-dist">5 mins</div>
+<ng-container *ngIf="trip$ | async as it">
+    <h1>Itinerary Steps</h1>
+    <div class="option-list">
+        <span><strong style="color: #2b3b4c;">Start</strong>: {{it.startTime}}</span>
+        <ng-container *ngFor="let leg of it.legs let leg_index=index">
+            <div class="entity-wrapper" *ngIf="leg.mode=='WALK'">
+                <div class="entity-container">
+                    <mat-accordion>
+                        <mat-expansion-panel hideToggle>
+                            <mat-expansion-panel-header>
+                                <mat-panel-title class="panel-title">
+                                    <div class="mode">WALK</div>
+                                    <span class="mode-details">{{leg.distance}}m, {{leg.duration}} 
+                                        <div *ngIf="leg.duration > 1"> mins&nbsp;</div>
+                                        <div *ngIf="leg.duration <= 1"> min&nbsp;</div>
+                                        to {{leg.to.name}}</span>
+                                    <i class="fas fa-sort-down"></i>
+                                </mat-panel-title>
+                            </mat-expansion-panel-header>
+                            <div class="walk-steps" >
+                                <div class="step" *ngFor="let step of leg.steps">
+
+                                    <span class="material-symbols-outlined">
+                                        {{arrows[step.relativeDirection]}}
+                                    </span>
+
+                                    <div class="step-desc">
+                                        <div *ngIf="step.streetName=='road'">
+                                            Continue {{step.absoluteDirection}}
                                         </div>
-                                    </mat-panel-title>
-                                </mat-expansion-panel-header>
-                                <div class="walk-steps">
-                                    <div class="step">
-                                        <i class="fas fa-map-marker-alt"></i>
-                                        <span class="step-desc">JUMBO(101)</span>
-                                        <div class="step-dist">4:42am</div>
+                                        <div *ngIf="step.streetName!='road'">
+                                            {{directions[step.relativeDirection]}}
+                                            {{step.streetName}}
+                                        </div>
+                                        <div *ngIf="step.relativeDirection == 'DEPART'">
+                                            heading {{step.absoluteDirection}}
+                                        </div>
                                     </div>
-                                    <div class="step">
-                                        <i class="fas fa-map-marker-alt"></i>
-                                        <span class="step-desc">JUMBO(101)</span>
-                                        <div class="step-dist">4:42am</div>
-                                    </div>
-                                    <div class="step">
-                                        <i class="fas fa-map-marker-alt"></i>
-                                        <span class="step-desc">JUMBO(101)</span>
-                                        <div class="step-dist">4:42am</div>
-                                    </div>
+
+                                    <div class="step-dist">{{step.distance}}m</div>
+
                                 </div>
-                            </mat-expansion-panel>
-                        </mat-accordion>
-                        <div class="step">
-                            <i class="fas fa-bus"></i>
-                            <span class="step-desc">Alight at PYLH PANEP</span>
-                            <div class="step-dist">4:60am</div>
-                        </div>
-                    </div>
-                </mat-expansion-panel>
-            </mat-accordion>
-        </div>
-    </div> 
-    <span><strong style="color: #2b3b4c;">End</strong>: 5:50pm, 11/29/2022</span>
-</div>
+                            </div>
+                        </mat-expansion-panel>
+                    </mat-accordion>
+                </div>
+            </div>
+            <div class="entity-wrapper" *ngIf="leg.mode=='TRAM'">
+                <div class="entity-container">
+                    <mat-accordion>
+                        <mat-expansion-panel hideToggle>
+                            <mat-expansion-panel-header>
+                                <mat-panel-title class="panel-title">
+                                    <div class="mode">BUS</div>
+                                    <span class="mode-details">Route {{leg.routeShortName}}, {{leg.duration}}
+                                        <div *ngIf="leg.duration > 1">mins</div>
+                                        <div *ngIf="leg.duration <= 1">min</div>
+                                    </span>
+                                    <i class="fas fa-sort-down"></i>
+                                </mat-panel-title>
+                            </mat-expansion-panel-header>
+                            <div class="bus-route">
+                                <div class="step">
+                                    <i class="fas fa-bus"></i>
+                                    <span class="step-desc">Board at {{leg.from.name}}</span>
+                                    <div class="step-dist">{{leg.startTime}}</div>
+                                </div>
+                                <mat-accordion>
+                                    <mat-expansion-panel hideToggle>
+                                        <mat-expansion-panel-header>
+                                            <mat-panel-title class="panel-title">
+                                                <div class="step">
+                                                    <i class="fas fa-route"></i>
+                                                    <span class="step-desc stops">{{leg.intermediateStops.length}} stops</span>
+                                                    <div class="step-dist">{{leg.duration}} mins</div>
+                                                </div>
+                                            </mat-panel-title>
+                                        </mat-expansion-panel-header>
+                                        <div class="walk-steps">
+                                            <div class="step" *ngFor="let stop of leg.intermediateStops">
+                                                <i class="fas fa-map-marker-alt"></i>
+                                                <span class="step-desc">{{stop.name}}</span>
+                                                <div class="step-dist">{{stop.arrival}}</div>
+                                            </div>
+                                        </div>
+                                    </mat-expansion-panel>
+                                </mat-accordion>
+                                <div class="step">
+                                    <i class="fas fa-bus"></i>
+                                    <span class="step-desc">Alight at {{leg.to.name}}</span>
+                                    <div class="step-dist">{{leg.to.arrival}}</div>
+                                </div>
+                            </div>
+                        </mat-expansion-panel>
+                    </mat-accordion>
+                </div>
+            </div> 
+        </ng-container>
+        <span><strong style="color: #2b3b4c;">End</strong>: {{it.endTime}}</span>
+    </div>
+</ng-container>
+
+
 
 

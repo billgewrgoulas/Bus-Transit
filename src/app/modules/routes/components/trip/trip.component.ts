@@ -8,10 +8,6 @@ import { Itinerary } from 'src/app/state/Entities/itinerary';
 })
 export class TripComponent implements OnInit {
 
-  @Input() public startTime: string = '';
-  @Input() public endTime: string = '';
-  @Input() public duration: number = 0;
-  @Input() public totalWalk: number = 0;
   @Input() public data: number = 0;
   @Input() public itinerary: Itinerary | null = null;
 

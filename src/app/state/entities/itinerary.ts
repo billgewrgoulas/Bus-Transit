@@ -22,7 +22,7 @@ export interface Vertex{
 }
 
 export interface Leg{
-    points: string;
+    points: string[];
     duration: number;
     mode: string;
     steps: Step[];
@@ -56,10 +56,7 @@ export interface Itinerary{
 
 export interface Plan{
     date: string;
-    arrival: string;
     from: Vertex;
     to: Vertex;
-    totalWalk: number;
-    duration: number;
     itineraries: Itinerary[];
 }

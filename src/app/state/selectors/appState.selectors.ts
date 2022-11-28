@@ -57,8 +57,20 @@ export const selectRoute = (routeCode: string) =>
     createSelector(selectAllRoutes, (routes) => routes[routeCode]
 );
 
+/* Select stop by stopCode */
 export const selectStop = (code: string) => 
     createSelector(selectAllStops, (stops) => stops[code]
+);
+
+/* Select itinerary by index */
+export const selectItinerary = createSelector(
+    getPlanState, getAppState, (plan, state) => {
+        if(plan && state.itinerary != -1){
+            return plan.itineraries[state.itinerary];
+        }else{
+            return undefined;
+        }
+    }
 );
 
 /* Select the current route daily schedule */
@@ -126,7 +138,7 @@ export const filterLines = (value: string) => {
     return createSelector(getAllLines, (lines) => {
         return lines.filter(line => 
             line.desc.toLowerCase().includes(value.trim().toLowerCase()) ||
-            line.name.toLowerCase().includes(value.trim().toLowerCase())
+            line.name.includes(value.trim())
         ).slice(0, 20);
     });
 }
@@ -136,7 +148,7 @@ export const filterStops = (value: string) => {
     return createSelector(getAllStops, (stops) => {
         return stops.filter(stop => 
             stop.desc.toLowerCase().includes(value.trim().toLowerCase()) ||
-            stop.code.includes(value.trim().toLowerCase())
+            stop.code.includes(value.trim())
         ).slice(0, 20);
     });
 }
