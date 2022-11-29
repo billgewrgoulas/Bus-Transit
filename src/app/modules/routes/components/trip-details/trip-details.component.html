@@ -1,5 +1,5 @@
 
-<ng-container *ngIf="trip$ | async as it">
+<ng-container *ngIf="trip$ | async as it else noItineraries">
     <h1>Itinerary Steps</h1>
     <div class="option-list">
         <span><strong style="color: #2b3b4c;">Start</strong>: {{it.startTime}}</span>
@@ -19,7 +19,7 @@
                                 </mat-panel-title>
                             </mat-expansion-panel-header>
                             <div class="walk-steps" >
-                                <div class="step" *ngFor="let step of leg.steps">
+                                <div class="step" *ngFor="let step of leg.steps" (click)="focus(step.lat, step.lon)" >
 
                                     <span class="material-symbols-outlined">
                                         {{arrows[step.relativeDirection]}}
@@ -61,10 +61,20 @@
                                 </mat-panel-title>
                             </mat-expansion-panel-header>
                             <div class="bus-route">
-                                <div class="step">
+                                <div class="step" (click)="focus(+leg.from.lat, +leg.from.lon)">
                                     <i class="fas fa-bus"></i>
                                     <span class="step-desc">Board at {{leg.from.name}}</span>
                                     <div class="step-dist">{{leg.startTime}}</div>
+                                </div>
+                                <div class="step">
+                                    <i class="far fa-hourglass"></i>
+                                    <span class="step-desc">Departure delay</span>
+                                    <div class="step-dist">{{leg.departureDelay}} min</div>
+                                </div>
+                                <div class="step">
+                                    <i class="far fa-hourglass"></i>
+                                    <span class="step-desc">Arrival delay</span>
+                                    <div class="step-dist">{{leg.arrivalDelay}} min</div>
                                 </div>
                                 <mat-accordion>
                                     <mat-expansion-panel hideToggle>
@@ -78,7 +88,7 @@
                                             </mat-panel-title>
                                         </mat-expansion-panel-header>
                                         <div class="walk-steps">
-                                            <div class="step" *ngFor="let stop of leg.intermediateStops">
+                                            <div class="step" *ngFor="let stop of leg.intermediateStops" (click)="focus(+stop.lat, +stop.lon)">
                                                 <i class="fas fa-map-marker-alt"></i>
                                                 <span class="step-desc">{{stop.name}}</span>
                                                 <div class="step-dist">{{stop.arrival}}</div>
@@ -86,7 +96,7 @@
                                         </div>
                                     </mat-expansion-panel>
                                 </mat-accordion>
-                                <div class="step">
+                                <div class="step" (click)="focus(+leg.to.lat, +leg.to.lon)">
                                     <i class="fas fa-bus"></i>
                                     <span class="step-desc">Alight at {{leg.to.name}}</span>
                                     <div class="step-dist">{{leg.to.arrival}}</div>
@@ -100,6 +110,13 @@
         <span><strong style="color: #2b3b4c;">End</strong>: {{it.endTime}}</span>
     </div>
 </ng-container>
+
+<ng-template #noItineraries>
+
+    <div class="option-list">
+        <app-option [text]="'No itineraries found'"></app-option>
+    </div>
+</ng-template>
 
 
 

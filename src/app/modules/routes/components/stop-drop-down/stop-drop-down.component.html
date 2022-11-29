@@ -1,9 +1,10 @@
 
 <div class="option-list">
 
+    
     <ng-container *ngIf="flag else stopList">
         <ng-container *ngIf="showDefaultSwitch$ | async as flag else stopList">
-
+            <h1>Select mode</h1>
             <app-option
                 [icon]="'route'"
                 [text]="'Direct routes'"
@@ -29,10 +30,10 @@
         [data]="['my_location']">
     </app-option>
 
-    <app-option *ngIf="!saved" (onSelect)="onMap($event)"
+    <app-option *ngIf="!saved" (onSelect)="onClick($event)"
         [icon]="'map'"
         [text]="'Select on map'"
-        [data]="['interactive']">
+        [data]="['0', 'Custom', '39.667341104708946', '20.854922400637918']">
     </app-option>
 
     <ng-container *ngFor="let stop of stops$ | async">

@@ -5,6 +5,7 @@ import { Itinerary } from 'src/app/state/Entities/itinerary';
 import { AppState } from 'src/app/state/Reducers/api-reducer';
 import { selectItinerary } from 'src/app/state/Selectors/appState.selectors';
 import * as select_actions from 'src/app/state/Actions/select.actions';
+import { DataShareService } from 'src/app/services/data-share.service';
 
 @Component({
   selector: 'app-trip-details',
@@ -31,7 +32,7 @@ export class TripDetailsComponent implements OnInit, OnDestroy {
     CONTINUE: 'Continue to', HARD_LEFT: 'Sharp left to', HARD_RIGHT: 'Sharp right to'
   };
 
-  constructor(private store: Store<AppState>) { }
+  constructor(private store: Store<AppState>, private msg: DataShareService) { }
 
   ngOnInit(): void {
     this.trip$ = this.store.select(selectItinerary);
@@ -40,5 +41,11 @@ export class TripDetailsComponent implements OnInit, OnDestroy {
   ngOnDestroy(): void{
     this.store.dispatch(select_actions.selectItinerary({index: -1}));
   }
+
+  public focus(x: number, y: number){
+    this.msg.fly([x+'', y+'']);
+  }
+
+
 
 }

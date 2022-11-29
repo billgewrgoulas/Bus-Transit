@@ -9,8 +9,8 @@
     flex-direction: column;
     width: 99%;
     overflow: auto;
-    max-height: calc(100vh - 290px);
-    padding-right: 7px;
+    max-height: calc(100vh - 240px);
+    padding-right: 3px;
 }
 
 h1{

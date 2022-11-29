@@ -17,7 +17,7 @@ import * as select_actions from '../../../../state/Actions/select.actions';
 export class InputComponent implements OnInit, OnDestroy {
 
   public obs$!: Observable<any>;
-  public sub!: Subscription;
+  public subs: Subscription[] = [];
 
   public startValue: string = '';
   public endValue: string = '';
@@ -34,13 +34,20 @@ export class InputComponent implements OnInit, OnDestroy {
   ) {}
   
   ngOnInit(): void {
-    this.sub = this.msg.tabObserver.subscribe(v => this.cancel());
+
+    this.subs = [
+      this.msg.tabObserver.subscribe(v => this.cancel()),
+      this.msg.dragStartObserver.subscribe(v => this.onDrag(v, 'start')),
+      this.msg.dragEndObserver.subscribe(v => this.onDrag(v, 'dest'))
+    ];
+
     this.obs$ = this.local.getNames();
     this.checkUrl();
   }
 
   ngOnDestroy(): void{
-    this.sub.unsubscribe();
+    this.local.updateStrategy('clear');
+    this.subs.forEach(sub => sub.unsubscribe());
   }
 
   public swap(){
@@ -77,26 +84,30 @@ export class InputComponent implements OnInit, OnDestroy {
     this.startValue = '';
     this.keyUp('');
     this.local.updatePoint([]);
+    this.store.dispatch(select_actions.emptyPlan());
   }
 
   public clearDest(){
     this.endValue = '';
     this.keyUp('');
     this.local.updatePoint([]);
+    this.store.dispatch(select_actions.emptyPlan());
   }
 
   public navigate(){
     this.store.dispatch(navigation.arrowNavigation());
   }
 
-  public routerActive(e: any){
-    console.log(typeof e);
-  }
-
   private updateOnclick(dest: string){
     this.msg.showDefault(false);
     this.local.changeDirection(dest);
     this.router.navigate([{ outlets: { sidebar: [ 'routes', 'places'] }}], {queryParams: {module: dest + '_input'}});
+  }
+
+  private onDrag(point: string[], direction: string){
+    this.local.changeDirection(direction);
+    this.local.updatePoint(point);
+    this.local.changeDirection('');
   }
 
   private checkUrl(){

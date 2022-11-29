@@ -34,7 +34,6 @@ export class StopDropDownComponent implements OnInit {
   ngOnInit(): void {
     this.showDefaultSwitch$ = this.msg.stopListObserver;
     this.msg.selectEndpoint(this.local.state$);
-    //this.local.fetchPlan();
     this.stops$ = this.msg.searchValueMsg.pipe(
       debounceTime(10),
       distinctUntilChanged(),
@@ -47,11 +46,14 @@ export class StopDropDownComponent implements OnInit {
     this.msg.slide(0);
   }
 
-  public onLocation(data: string[]){
-
+  public async onLocation(data: string[]){
+    const {coords} = await this.getPosition();
+    this.local.updatePoint([0, 'My location', coords.latitude, coords.longitude]);
+    this.msg.slide(0);
   }
 
   public tripPlanner(){
+    this.local.changeDirection('');
     this.router.navigate([{ outlets: { sidebar: [ 'routes', 'trip', 'options'] }}], {queryParams: {module: 'trip_options'}});
   }
 
@@ -61,6 +63,16 @@ export class StopDropDownComponent implements OnInit {
 
   public onCalculate(){
     this.router.navigate([{ outlets: { sidebar: [ 'routes', 'search'] }}]);
+  }
+
+  private getPosition(): Promise<any>{
+    return new Promise((resolve, reject) => {
+      if(navigator.geolocation){
+        navigator.geolocation.getCurrentPosition(resolve);
+      }else{
+        reject('Geolocation not supported');
+      }
+    });
   }
 
 }

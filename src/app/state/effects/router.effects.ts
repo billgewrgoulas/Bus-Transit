@@ -10,6 +10,7 @@ import { ROUTER_NAVIGATED } from "@ngrx/router-store";
 import { getState } from "../Selectors/router.selectors";
 import { Router } from "@angular/router";
 import { Location } from '@angular/common'
+import { getAllStops } from "../Selectors/appState.selectors";
 
 @Injectable()
 export class RouterEffects{
@@ -32,8 +33,8 @@ export class RouterEffects{
     fetchStops$ = createEffect(() =>
         this.actions$.pipe(
             ofType(ROUTER_NAVIGATED),
-            withLatestFrom(this.store.select(getState)),
-            filter(([action, {query}]) => query!['module'] == 'stop_load'),
+            withLatestFrom(this.store.select(getState), this.store.select(getAllStops)),
+            filter(([action, {url}, stops]) => url.includes('sidebar:routes') && stops.length == 0),
             map(() => api_actions.getStops())
         )
     );
@@ -89,6 +90,15 @@ export class RouterEffects{
                 select_actions.selectStop({code: ''}),
                 //select_actions.emptyRoutes()
             ])
+        )
+    );
+
+    clearPlan$ = createEffect(() => 
+        this.actions$.pipe(
+            ofType(ROUTER_NAVIGATED),
+            withLatestFrom(this.store.select(getState)),
+            filter(([action, {query}]) => query!['module'] == 'trip_options'),
+            switchMap(action => [select_actions.emptyPlan()])
         )
     );
 

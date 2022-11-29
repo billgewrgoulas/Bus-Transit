@@ -37,7 +37,7 @@
         Some fields are invalid
     </div>
 
-    <app-option (onSelect)="plan()"
+    <app-option (onSelect)="plan(state.start, state.destination)"
         [icon]="'route'"
         [text]="'Plan your trip'"
         [data]="['route']">

@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { MatDatepickerInputEvent } from '@angular/material/datepicker';
+import { Router } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { Observable, take, tap } from 'rxjs';
 import { Plan } from 'src/app/state/Entities/itinerary';
@@ -20,7 +21,7 @@ export class TripPlannerOptionsComponent implements OnInit {
   public date!: FormControl<Date | null>;
   public time!: FormControl<string | null>;
 
-  constructor(private local: DirectionsStore) { }
+  constructor(private local: DirectionsStore, private router: Router) { }
 
   ngOnInit(): void {
 
@@ -48,10 +49,12 @@ export class TripPlannerOptionsComponent implements OnInit {
     this.local.updateArriveBy(value);
   }
 
-  public plan(){
+  public plan(start: string[], end: string[]){
 
-    if(this.tripOptions.valid){
-      this.local.initFetch();
+    if(this.tripOptions.valid && start.length > 0 && end.length > 0){
+      this.router.navigate([{ outlets: { sidebar: [ 'routes', 'trips'] }}], 
+        {queryParams: {module: 'trips'}
+      });
     }
     
   }

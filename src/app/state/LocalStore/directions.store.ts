@@ -1,7 +1,7 @@
 import { Injectable } from "@angular/core";
 import { ComponentStore, tapResponse } from "@ngrx/component-store";
 import { Store } from "@ngrx/store";
-import { debounceTime, filter, map, Observable, of, switchMap, tap } from "rxjs";
+import { debounceTime, filter, map, Observable, of, switchMap, tap, throttleTime } from "rxjs";
 import { TripData } from "../Entities/map.data.entity";
 import * as api_actions from "../Actions/api-calls.actions";
 import { AppState } from "../Reducers/api-reducer";
@@ -53,7 +53,7 @@ export class DirectionsStore extends ComponentStore<TripState> {
     });
 
     public swapPoints = this.updater((state: TripState): TripState =>{
-        return {...state, direction: 'swap',  start: state.destination, destination: state.start};
+        return {...state, direction: 'swap',  start: [...state.destination], destination: [...state.start], fetch: true};
     });
 
     public changeDirection = this.updater((state: TripState, direction: string): TripState =>{
@@ -67,8 +67,10 @@ export class DirectionsStore extends ComponentStore<TripState> {
     public updatePoint = this.updater((state: TripState, point: string[]): TripState => {
         if(state.direction === 'start'){
             return {...state, start: point};
-        }else{
+        }else if (state.direction == 'dest'){
             return {...state, destination: point};
+        }else{
+            return initialState;
         }
     });
 
@@ -127,16 +129,17 @@ export class DirectionsStore extends ComponentStore<TripState> {
 
     public fetchPlan = this.effect(() => {
         return this.state$.pipe(
-            filter(state => state.fetch),
-            debounceTime(500),
+            filter(state => state.fetch && state.start.length > 0 && state.destination.length > 0),
+            throttleTime(500),
             map((data: TripState) => this.store.dispatch(api_actions.fetchPlan({data: data}))),
             tapResponse(
                 (action) => {
                     this.fetchComplete();
-                    this.router.navigate([{ outlets: { sidebar: [ 'routes', 'trips'] }}], {queryParams: {module: 'trips'}});
+                    this.changeDirection('');
                 }, 
                 (error: HttpErrorResponse) => {
                     console.log(error);
+                    this.changeDirection('');
                     this.fetchComplete() //fetch will be completed even if it fails 
                 }
             )

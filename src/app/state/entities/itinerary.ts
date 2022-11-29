@@ -50,6 +50,9 @@ export interface Itinerary{
     walkTime: number;
     transitTime: number;
     waitingTime: number;
+    arrivalDelay: number;
+    departureDelay: number;
+    serviceDate: number;
     walkDistance: number;
     legs: Leg[];
 }

@@ -1,12 +1,20 @@
 
-<h1>Itineraries</h1>
-<div class="option-list" *ngIf="plan$ | async as plan">
 
-    <ng-container *ngFor="let it of plan.itineraries let i=index">
-        <trip-component (msg)="onSelect($event)"
+<h1>Itineraries</h1>
+<div class="option-list" *ngIf="plan$ | async as plan else noItineraries">
+
+    <ng-container *ngIf="plan.itineraries.length > 0 else noItineraries" >
+        <trip-component *ngFor="let it of plan.itineraries let i=index"
+            (msg)="onSelect($event)"
             [itinerary]="it"
             [data]="i">
         </trip-component>
     </ng-container>
-
+    
 </div>
+
+<ng-template #noItineraries>
+    <div class="option-list">
+        <app-option [text]="'No itineraries found'"></app-option>
+    </div>
+</ng-template>

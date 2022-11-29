@@ -68,6 +68,9 @@ export const appStateReducer = createReducer(
     on(select_actions.selectItinerary, (state: AppState, action): AppState =>{
         return {...state, itinerary: action.index};
     }),
+    on(select_actions.emptyPlan, (state: AppState, action): AppState => {
+        return {...state, plan: undefined, itinerary: -1};
+    }),
     on(api_actions.getRouteDetailsuccess, (state: AppState, action): AppState=>{
         return {...state, stops: stopStateAdapter.addMany(action.routeInfo.stops, state.stops), 
                 routes: routeStateAdapter.updateOne({id: action.routeInfo.code, changes: 

@@ -15,6 +15,9 @@ export class DataShareService {
   private readonly day = new Subject<number>; 
   private readonly stopDefaultList = new BehaviorSubject<boolean>(true);
   private readonly searchValue = new BehaviorSubject<string>('');
+  private readonly dragStart = new Subject<string[]>;
+  private readonly dragEnd = new Subject<string[]>;
+  private readonly clearMap = new Subject<number>;
 
   public readonly tabObserver = this.tab.asObservable();
   public readonly busObserver = this.bus.asObservable();
@@ -23,6 +26,9 @@ export class DataShareService {
   public readonly dayObserver = this.day.asObservable();
   public readonly stopListObserver = this.stopDefaultList.asObservable();
   public readonly searchValueMsg = this.searchValue.asObservable();
+  public readonly dragStartObserver= this.dragStart.asObservable();
+  public readonly dragEndObserver = this.dragEnd.asObservable();
+  public readonly clearMapObserver = this.clearMap.asObservable();
   
   constructor() { }
 
@@ -52,6 +58,18 @@ export class DataShareService {
 
   public onKeyUp(v: string){
     this.searchValue.next(v);
+  }
+
+  public onDragStart(value: string[]){
+    this.dragStart.next(value);
+  }
+
+  public onDragEnd(value: string[]){
+    this.dragEnd.next(value);
+  }
+
+  public clearLayers(){
+    this.clearMap.next(0);
   }
 
 }
