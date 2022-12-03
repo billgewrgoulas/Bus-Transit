@@ -14,12 +14,12 @@ const routes: Routes = [
       {
         path: ':lineCode',
         component: DropDownWrapperComponent,
-        data: {type: 'line_module'},
+        data: {animation: 'isLeft', type: 'line_module'},
       },
       {
         path: ':lineCode/route/:routeCode', 
         component: SliderComponent,
-        data: {type: 'routeSlider'}
+        data: {animation: 'isLeft', type: 'routeSlider'}
       }]
   }
     

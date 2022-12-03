@@ -1,6 +1,6 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Store } from '@ngrx/store';
-import { Observable, Subscription, takeLast } from 'rxjs';
+import { Observable, Subscription, takeLast, tap } from 'rxjs';
 import { DataShareService } from 'src/app/services/data-share.service';
 import { LiveDataStore } from 'src/app/state/LocalStore/live.data.store';
 import { ILine } from 'src/app/state/Entities/line.entity';
@@ -27,7 +27,9 @@ export class BusEntityComponent implements OnInit {
   ngOnInit(): void {
     this.currentLine$ = this.store.select(currentLine);
     this.liveStore.fetchBusLocations(this.currentLine$);
-    this.buses$ = this.liveStore.getBusLocations();
+    this.buses$ = this.liveStore.getBusLocations().pipe(
+      tap(buses => this.dataShare.sendBusStatus(buses))
+    );
   }
 
   public selectBus(bus: IArrival){

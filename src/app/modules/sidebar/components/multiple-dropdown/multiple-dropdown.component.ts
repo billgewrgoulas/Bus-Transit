@@ -5,7 +5,7 @@ import { ILine } from 'src/app/state/Entities/line.entity';
 @Component({
   selector: 'multiple-dropdown',
   templateUrl: './multiple-dropdown.component.html',
-  styleUrls: ['./multiple-dropdown.component.css']
+  styleUrls: ['./multiple-dropdown.component.css'],
 })
 export class MultipleDropdownComponent implements OnInit{
 

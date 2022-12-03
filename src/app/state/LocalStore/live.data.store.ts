@@ -2,7 +2,7 @@ import { HttpErrorResponse } from "@angular/common/http";
 import { Injectable } from "@angular/core";
 import { ComponentStore, tapResponse } from "@ngrx/component-store";
 import { Store } from "@ngrx/store";
-import { filter, Observable, switchMap, takeUntil, timer } from "rxjs";
+import { filter, Observable, switchMap, takeUntil, tap, timer } from "rxjs";
 import { DataService } from "src/app/services/data.service";
 import { IArrival } from "src/app/state/Entities/live.data";
 import { ILine } from "../Entities/line.entity";

@@ -25,8 +25,6 @@ import { DataShareService } from './services/data-share.service';
 import { CustomSerializer } from './state/Selectors/custom-route-serializer';
 
 
-
-
 @NgModule({
   declarations: [
     AppComponent,
@@ -38,6 +36,7 @@ import { CustomSerializer } from './state/Selectors/custom-route-serializer';
     AppRoutingModule,
     BrowserAnimationsModule,
     MatTabsModule,
+    BrowserAnimationsModule,
     LeafletModule,
     SidebarModule,
     MapModule,

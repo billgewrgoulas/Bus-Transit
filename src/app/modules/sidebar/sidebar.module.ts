@@ -7,6 +7,7 @@ import { RouterModule } from '@angular/router';
 import { SidebarRoutingModule } from './sidebar-routing.mudule';
 import { SharedModule } from '../shared-module/shared-module.module';
 import { DataShareService } from 'src/app/services/data-share.service';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 @NgModule({
   declarations: [
@@ -18,7 +19,8 @@ import { DataShareService } from 'src/app/services/data-share.service';
     CommonModule,
     RouterModule,
     SidebarRoutingModule,
-    SharedModule
+    SharedModule,
+    BrowserAnimationsModule
   ],
   exports: [SideNavComponent],
   providers: [DataShareService]

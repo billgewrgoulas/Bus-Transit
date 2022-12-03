@@ -1,17 +1,20 @@
 import { Component, OnChanges, OnDestroy, OnInit } from '@angular/core';
 import * as navigation from'../../state/Actions/navigation.actions';
-import { Router } from '@angular/router';
+import { Router, RouterOutlet } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { AppState } from 'src/app/state/Reducers/api-reducer';
 import { filter, Observable, ObservedValueOf, startWith, Subscription } from 'rxjs';
 import { currentRoute, filterLines, getAllLines } from 'src/app/state/Selectors/appState.selectors';
 import { ILine } from 'src/app/state/Entities/line.entity';
 import { IRoute } from 'src/app/state/Entities/route.entity';
+import { slideAnimation } from 'src/app/route-animations';
+
 
 @Component({
   selector: 'lines-component',
   templateUrl: './lines.component.html',
-  styleUrls: ['./lines.component.css']
+  styleUrls: ['./lines.component.css'],
+  animations: [slideAnimation]
 })
 export class LinesComponent implements OnInit {
 
@@ -55,6 +58,10 @@ export class LinesComponent implements OnInit {
 
   public outletActive(e$: Object){
     this.selected = true;
+  }
+
+  public prepareOutlet(outlet: RouterOutlet){
+    return outlet && outlet.activatedRouteData;
   }
 
 }
