@@ -13,6 +13,9 @@ import { SliderComponent } from "../sidebar/components/slider/slider.component";
 import { StationListComponent } from "../sidebar/components/station-list/station-list.component";
 import { MatSelectModule } from "@angular/material/select";
 import { MatTabsModule } from "@angular/material/tabs";
+import { LinesDropdownComponent } from "./lines-dropdown/lines-dropdown.component";
+import { RouteListComponent } from "src/app/modules/lines/route-list/route-list.component";
+import { RouteDetailsComponent } from "src/app/modules/lines/route-details/route-details.component";
 
 
 @NgModule({
@@ -23,7 +26,10 @@ import { MatTabsModule } from "@angular/material/tabs";
     ScheduleComponent,
     SelectComponent,
     SliderComponent,
-    StationListComponent
+    StationListComponent,
+    LinesDropdownComponent,
+    RouteListComponent,
+    RouteDetailsComponent
   ],
   imports: [
     CommonModule,

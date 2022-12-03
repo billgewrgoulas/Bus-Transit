@@ -1,0 +1,35 @@
+
+<div class="input-section">
+    <div class="left-wrapper">
+        <span class="arrow material-symbols-outlined" >
+            keyboard_backspace
+        </span>
+        <span class="route material-symbols-outlined">
+            route
+        </span>
+    </div>
+    <div class="right-wrapper">
+        <input [(ngModel)]="value" (keyup)="filter()"
+            name="myInput" 
+            type="text" 
+            placeholder="search lines..." 
+            class="text"
+            autocomplete="off">
+        <i *ngIf="false"  class="fas fa-times"></i>
+    </div>
+</div>
+
+<div class="main">
+    <h1>Routes</h1>
+    <div class="option-list">
+        <app-option *ngFor="let route of routes$ | async"
+            (onSelect)="onSelect($event)"
+            [icon]="'route'"
+            [text]="route.desc"
+            [desc]="route.code"
+            [data]="['lines', route.lineId, 'route', route.code]">
+        </app-option>
+    </div>
+</div>
+
+

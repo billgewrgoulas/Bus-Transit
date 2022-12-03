@@ -1,0 +1,98 @@
+
+:host{
+    width: 23.8vw;
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    font-family: "Lexend Deca",sans-serif;
+    align-items: center;
+}
+
+.input-section{
+    display: flex;
+    flex-direction: row;
+    align-items: flex-end;
+    width: 100%;
+    gap: 10px;
+    background: white;
+    box-shadow: 0 2px 5px #0000004d;
+}
+
+.left-wrapper{
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    gap: 30px;
+    padding: 15px 0 35px 20px;
+    background: rgb(221,220,229);
+    background: linear-gradient(90deg, rgba(221,220,229,1) 0%, rgba(254,254,254,1) 100%);
+}
+
+.right-wrapper{
+    padding-bottom: 18px;
+    width: inherit;
+    display: flex;
+    flex-direction: row;
+    gap: 15px;
+}
+
+.right-wrapper>i{
+    margin-top: 5px;
+    cursor: pointer;
+}
+
+.inputs{
+    display: flex;
+    flex-direction: row;
+    gap: 5px;
+}
+
+input{
+    outline: none;
+    border: none;
+    border-bottom: 3px solid #f7f8fe;
+    background: transparent;
+    width: 85%;
+    font-size: 16px;
+    padding-bottom: 16px;
+    color: #2b3b4c;
+    font-weight: 500;
+}
+
+.arrow{
+    color: #2d3b50;
+    font-size: 33px;
+    font-weight: 600;
+    cursor: pointer;
+}
+
+.route{
+    color: #3e3aef;
+    font-weight: 700;
+}
+
+.option-list{
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    width: 100%;
+    overflow: auto;
+    max-height: calc(100vh - 225px);
+    padding-right: 3px;
+}
+
+h1{
+    margin-bottom: 15px;
+    color: #2b3b4c;
+    font-family: "Lexend Deca",sans-serif;
+    font-weight: 600;
+    font-size: 21px;
+}
+
+.main{
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    width: 100%;
+    padding: 0px 15px 0px 15px;
+}

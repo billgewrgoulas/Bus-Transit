@@ -143,6 +143,17 @@ export const filterLines = (value: string) => {
     });
 }
 
+/* Filter current line routes */
+export const filterCurrentLineRoutes = (value: string) => {
+    return createSelector(selectCurrentLineRoutes, (routes) => {
+        return routes.filter(route => 
+            route.desc.toLowerCase().includes(value.trim().toLowerCase()) ||
+            route.code.includes(value.trim()) ||
+            route.desc_eng.includes(value.trim().toLowerCase())
+        ).slice(0, 20);
+    });
+}
+
 /* Filter stops*/
 export const filterStops = (value: string) => {
     return createSelector(getAllStops, (stops) => {

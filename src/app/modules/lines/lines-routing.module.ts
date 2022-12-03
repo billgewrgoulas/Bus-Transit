@@ -1,28 +1,15 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { MultipleDropdownComponent } from '../sidebar/components/multiple-dropdown/multiple-dropdown.component';
-import { RouteListComponent } from '../shared-module/components/route-list/route-list.component';
-import { SliderComponent } from '../sidebar/components/slider/slider.component';
-import { StationListComponent } from '../sidebar/components/station-list/station-list.component';
-import { LinesComponent } from './lines.component';
-import { DropDownWrapperComponent } from '../shared-module/components/drop-down-wrapper/drop-down-wrapper.component';
+import { RouteListComponent } from './route-list/route-list.component';
+import { LinesDropdownComponent } from './lines-dropdown/lines-dropdown.component';
+import { RouteDetailsComponent } from './route-details/route-details.component';
 
 const routes: Routes = [
 
-  {path: '', component: LinesComponent, 
-    children: [
-      {
-        path: ':lineCode',
-        component: DropDownWrapperComponent,
-        data: {animation: 'isLeft', type: 'line_module'},
-      },
-      {
-        path: ':lineCode/route/:routeCode', 
-        component: SliderComponent,
-        data: {animation: 'isLeft', type: 'routeSlider'}
-      }]
-  }
-    
+  {path: '', component: LinesDropdownComponent, },
+  {path: ':lineCode', component: RouteListComponent, data: {animation: 'isLeft', type: 'line_module'}},
+  {path: ':lineCode/route/:routeCode', component: RouteDetailsComponent, data: {animation: 'isLeft', type: 'routeSlider'}}
+  
 ];
 
 @NgModule({
