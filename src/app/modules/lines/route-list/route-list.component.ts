@@ -7,7 +7,7 @@ import { AppState } from 'src/app/state/Reducers/api-reducer';
 import { filterCurrentLineRoutes, selectCurrentLineRoutes } from 'src/app/state/Selectors/appState.selectors';
 
 @Component({
-  selector: 'app-route-list',
+  selector: 'route-list',
   templateUrl: './route-list.component.html',
   styleUrls: ['./route-list.component.css']
 })

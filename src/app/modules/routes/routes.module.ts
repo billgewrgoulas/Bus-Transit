@@ -19,6 +19,7 @@ import { TripListComponent } from './components/trip-list/trip-list.component';
 import {MatExpansionModule} from '@angular/material/expansion';
 import {MatButtonModule} from '@angular/material/button';
 import { TripDetailsComponent } from './components/trip-details/trip-details.component';
+import { DirectionsStore } from 'src/app/state/LocalStore/directions.store';
 
 @NgModule({
   declarations: [
@@ -28,7 +29,7 @@ import { TripDetailsComponent } from './components/trip-details/trip-details.com
     TripPlannerOptionsComponent,
     TripComponent,
     TripListComponent,
-    TripDetailsComponent
+    TripDetailsComponent,
   ],
   imports: [
     CommonModule,

@@ -24,9 +24,6 @@ import { RouterEffects } from './state/Effects/router.effects';
 import { DataShareService } from './services/data-share.service';
 import { CustomSerializer } from './state/Selectors/custom-route-serializer';
 
-
-
-
 @NgModule({
   declarations: [
     AppComponent,

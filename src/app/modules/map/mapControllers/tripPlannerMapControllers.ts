@@ -47,7 +47,7 @@ export class TripPlannerMap extends Map{
             this.start.setLatLng([+data.start[2], +data.start[3]]);
             this.start.setPopupContent(`<b>${data.start[1]}</b>`);
             this.start.addTo(this.map);
-            this.map.flyTo(this.start.getLatLng(), 13);
+            this.map.flyTo(this.start.getLatLng(), 15);
         }else if(data.direction == 'dest' && data.destination.length > 0){
             this.end.setLatLng([+data.destination[2], +data.destination[3]]);
             this.end.setPopupContent(`<b>${data.destination[1]}</b>`);

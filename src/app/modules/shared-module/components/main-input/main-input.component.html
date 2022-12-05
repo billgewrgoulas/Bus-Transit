@@ -1,0 +1,22 @@
+
+<div class="left-wrapper">
+    <span class="arrow material-symbols-outlined">
+        keyboard_backspace
+    </span>
+    <span class="purple route material-symbols-outlined">
+        {{icon}}
+    </span>
+</div>
+<div class="right-wrapper">
+    <div class="input-list">
+        <input [(ngModel)]="value"
+            name="myInput" 
+            type="text" 
+            placeholder="{{placeholder}}" 
+            class="text"
+            autocomplete="off"
+            autofocus="true">
+        <i class="fas fa-times"></i>
+    </div>
+</div>   
+

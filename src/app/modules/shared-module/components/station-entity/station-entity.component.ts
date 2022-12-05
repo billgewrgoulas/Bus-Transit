@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
 import { DataShareService } from 'src/app/services/data-share.service';
@@ -14,12 +14,13 @@ import { IArrival } from 'src/app/state/Entities/live.data';
   selector: 'station-entity',
   templateUrl: './station-entity.component.html',
   styleUrls: ['./station-entity.component.css'],
-  providers: [LiveDataStore]
 })
 export class StationEntityComponent implements OnInit {
 
   public stop$!: Observable<IStop | undefined>;
   public arrivals$!: Observable<IArrival[]>;
+
+  @Output() public onClick = new EventEmitter<number>();
 
   constructor(private store: Store<AppState>, 
               private dataShare: DataShareService,
@@ -32,7 +33,7 @@ export class StationEntityComponent implements OnInit {
   }
 
   public swapTab(){
-    this.dataShare.slide(0);
+    this.onClick.emit(0);
   }
 
   public flyToStop(point: IStop){

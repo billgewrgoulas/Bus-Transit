@@ -1,26 +1,21 @@
-import { Component, OnChanges, OnDestroy, OnInit, SimpleChanges } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
-import { Observable, Subscription } from 'rxjs';
-import { DataShareService } from 'src/app/services/data-share.service';
+import { Component, OnInit } from '@angular/core';
 
 @Component({
   selector: 'slider-component',
   templateUrl: './slider.component.html',
   styleUrls: ['./slider.component.css'],
 })
-export class SliderComponent implements OnInit, OnDestroy {
+export class SliderComponent implements OnInit {
 
   public selectedTab: number = 0;
-  private subscriber!: Subscription;
   
-  constructor(private dataShare: DataShareService) { }
+  constructor() { }
 
-  ngOnInit(): void {
-    this.subscriber = this.dataShare.tabObserver.subscribe(tab => this.selectedTab = tab);
+  ngOnInit(): void {}
+
+  public slide(tab: number){
+    this.selectedTab = tab;
   }
 
-  ngOnDestroy(): void {
-    this.subscriber.unsubscribe();
-  }
 
 }

@@ -1,4 +1,4 @@
-import { Component, Input, OnDestroy, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, OnDestroy, OnInit, Output } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { Observable, Subscription } from 'rxjs';
 import { DataShareService } from 'src/app/services/data-share.service';
@@ -17,6 +17,7 @@ export class ListItemComponent implements OnInit, OnDestroy {
 
   @Input() public stop!: IStop;
   @Input() public isLast: boolean = false;
+  @Output() public onClick = new EventEmitter<number>();
 
   public schedules$!: Observable<ISchedule[]>;
   private onSelect!: Subscription;
@@ -37,7 +38,7 @@ export class ListItemComponent implements OnInit, OnDestroy {
 
   public selectStop(){
     this.store.dispatch(select_actions.selectStop({code: this.stop.code}));
-    this.dataShare.slide(2);
+    this.onClick.emit(2);
   }
 
 }

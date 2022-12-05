@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, Input, OnChanges, OnInit, SimpleChanges, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, EventEmitter, OnChanges, OnInit, Output, SimpleChanges, ViewChild } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
 import { AppState } from 'src/app/state/Reducers/api-reducer';
@@ -19,8 +19,8 @@ export class StationListComponent implements OnInit, AfterViewInit, OnChanges {
   private el: any;
   private scrollPosition: number = 0;
   
-  @ViewChild('stationList') stationList: any;
-  @Input() public onSwap: number = 0;
+  @ViewChild('stationList') public stationList: any;
+  @Output() public onClick = new EventEmitter<number>();
 
   constructor(private store: Store<AppState>) { }
 
@@ -38,8 +38,12 @@ export class StationListComponent implements OnInit, AfterViewInit, OnChanges {
     this.currentRoute$ = this.store.select(currentRoute);
   }
 
-  public onScroll($e: any){
+  public onScroll($e: any): void{
     this.scrollPosition = this.el.scrollTop;
+  }
+
+  public onSelect(tab: number): void{
+    this.onClick.emit(tab);
   }
 
 }

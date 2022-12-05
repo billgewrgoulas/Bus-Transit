@@ -8,16 +8,12 @@
 <div class="stations-list" #stationList (scroll)="onScroll($event)">
     <div class="outer-container">
       <ul class="station-line">
-
-        <ng-container *ngFor="let stop of currentRouteStops$ | async let last = last">
-          <li>
-            <list-item 
+          <li *ngFor="let stop of currentRouteStops$ | async let last = last">
+            <list-item (onClick)="onSelect($event)"
               [stop]="stop"
               [isLast]="last">
             </list-item>
           </li>
-        </ng-container>
-
       </ul>
     </div>
 </div>

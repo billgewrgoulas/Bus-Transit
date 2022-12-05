@@ -15,12 +15,15 @@ import { Plan } from "../Entities/itinerary";
 @Injectable()
 export class ApiEffects{
 
-    constructor(private dataService: DataService, private actions$: Actions, private store: Store<AppState>){}
+    constructor(
+        private dataService: DataService, 
+        private actions$: Actions, 
+        private store: Store<AppState>
+    ){}
 
     loadLines$ = createEffect(()=>
         this.actions$.pipe(
-            ofType(api_actions.getLines),
-            take(1),
+            ofType(api_actions.getLines), take(1),
             switchMap(() => this.dataService.getAllLines()),
             map((response: ILine[]) => api_actions.getLinesSuccess({lines: response}))
         )     
@@ -29,7 +32,7 @@ export class ApiEffects{
     loadLineRoutes$ = createEffect(()=>
         this.actions$.pipe(
             ofType(api_actions.getLineRoutes),
-            concatLatestFrom((action) => this.store.select(selectCurrentLineRoutes)),
+            withLatestFrom(this.store.select(selectCurrentLineRoutes)),
             filter(([action, routes]) => routes.length == 0),
             switchMap(([action, line]) => this.dataService.getLineRoutes(action.id)),
             map((response: IRoute[]) => api_actions.getLineRoutesSuccess({routes: response})),
