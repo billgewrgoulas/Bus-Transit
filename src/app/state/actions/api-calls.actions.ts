@@ -4,7 +4,8 @@ import { ILine } from "../Entities/line.entity";
 import { IRoute, IRouteInfo } from "../Entities/route.entity";
 import { IScheduleDetails } from "../Entities/schedule.entity";
 import { IStop } from "../Entities/stop.entity";
-import { Plan } from "../Entities/itinerary";
+import { Itinerary, Plan } from "../Entities/itinerary";
+import { Booking } from "../Entities/booking.entity";
 
 /* Fetch all lines based on station name, bus... */
 export const getLines = createAction('[API] GET Lines');
@@ -45,3 +46,18 @@ export const filteredRoutesError = createAction('[API] Filter Routes error');
 export const fetchPlan = createAction('[API] Get plan', props<{data: TripState}>());
 export const fetchPlanSuccess = createAction('[API] Get plan success', props<{data: Plan}>());
 export const fetchPlanError = createAction('[API] Get plan error');
+
+/* Login actions */
+export const login = createAction('[API] Initiate login', props<{data: any}>());
+export const loginSuccess = createAction('[API] Login success', props<{data: any}>());
+export const loginError = createAction('[API] Initiate login failed');
+
+/* Register */
+export const register = createAction('[API] Initiate register', props<{credentials: any}>());
+export const registerSuccess = createAction('[API] Register success', props<{data: any}>());
+export const registerError = createAction('[API], Register failed');
+
+/* Booking actions */
+export const book = createAction('[API] Book Itinerary', props<{data: Booking[]}>);
+export const bookSuccess = createAction('[API] Book success', props<{data: any}>());
+export const bookError = createAction('[API] Book error');

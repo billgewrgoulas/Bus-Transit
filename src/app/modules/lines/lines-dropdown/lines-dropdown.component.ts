@@ -10,7 +10,7 @@ import { IRoute } from 'src/app/state/Entities/route.entity';
 import { slideAnimation } from 'src/app/route-animations';
 
 @Component({
-  selector: 'app-lines-dropdown',
+  selector: 'lines-dropdown',
   templateUrl: './lines-dropdown.component.html',
   styleUrls: ['./lines-dropdown.component.css']
 })
@@ -49,9 +49,6 @@ export class LinesDropdownComponent implements OnInit {
 
   public onKeyUp(){
     this.lines$ = this.store.select(filterLines(this.value));
-  }
-
-  public outletActive(e$: Object){
   }
 
   public prepareOutlet(outlet: RouterOutlet){

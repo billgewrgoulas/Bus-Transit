@@ -8,6 +8,7 @@ import { SidebarRoutingModule } from './sidebar-routing.mudule';
 import { SharedModule } from '../shared-module/shared-module.module';
 import { DataShareService } from 'src/app/services/data-share.service';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import {DragDropModule} from '@angular/cdk/drag-drop';
 
 @NgModule({
   declarations: [
@@ -20,7 +21,8 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
     RouterModule,
     SidebarRoutingModule,
     SharedModule,
-    BrowserAnimationsModule
+    BrowserAnimationsModule,
+    DragDropModule,
   ],
   exports: [SideNavComponent],
   providers: [DataShareService]

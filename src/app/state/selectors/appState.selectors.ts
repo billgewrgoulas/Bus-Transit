@@ -4,6 +4,7 @@ import { IStop, stopStateAdapter } from "../Entities/stop.entity";
 import { AppState } from "../Reducers/api-reducer";
 import { lineStateAdapter } from "../Entities/line.entity";
 import { IMapData, TripData } from "../Entities/map.data.entity";
+import { Booking } from "../Entities/booking.entity";
 
 export const getAppState = createFeatureSelector<AppState>('api');
 
@@ -12,7 +13,7 @@ export const getLineState = createSelector(getAppState, (state: AppState)=> stat
 export const getRouteState = createSelector(getAppState, (state: AppState) => state.routes);
 export const getStopState = createSelector(getAppState, (state: AppState) => state.stops);
 export const getScheduleState = createSelector(getAppState, (state: AppState) => state.schedule);
-export const getPlanState = createSelector(getAppState, state => state.plan);
+export const getPlanState = createSelector(getAppState, (state: AppState) => state.plan);
 
 /* Grab the state entities */
 export const selectAllLines = createSelector(getLineState, (line) => line.entities);
@@ -73,6 +74,16 @@ export const selectItinerary = createSelector(
     }
 );
 
+export const getPlanAndIndex = createSelector(
+    getPlanState, getAppState, (plan, state) => {
+        if(plan && state.itinerary != -1){
+            return {plan: plan, index: state.itinerary};
+        }else{
+            return undefined;
+        }
+    }
+);
+
 /* Select the current route daily schedule */
 export const getActiveRouteSchedules = createSelector(
     currentRoute, selectAllSchedules, (route, schedules) => {
@@ -81,9 +92,9 @@ export const getActiveRouteSchedules = createSelector(
     }
 );
 
-export const getDailySchedule = (day: number, stopCode: string) =>{
+export const getDailySchedule = (day: number, stopCode: string) => {
     return createSelector(getActiveRouteSchedules, (schedules) => {
-        if(!schedules)return [];
+        if(!schedules) return [];
         return schedules.filter(sch => sch.day == day && sch.stopCode == stopCode);
     });
 }
@@ -163,3 +174,30 @@ export const filterStops = (value: string) => {
         ).slice(0, 20);
     });
 }
+
+/* Create a booking */
+export const newBooking = createSelector(
+    getAppState, getPlanState, (state, plan) => {
+
+        const bookings: Booking[] = [];
+        const it: number = state.itinerary;
+
+        if(plan && it != -1){
+            plan.itineraries[it].legs.forEach(leg => {
+                if(leg.mode == 'TRAM'){
+                    const booking: Booking = {
+                        trip_id: +leg.tripId.split(":")[1],
+                        user_id: 'billygeo24@gmail.com',
+                        startStop: leg.from.stopCode!,
+                        endStop: leg.to.stopCode!,
+                        slug: plan.slug,
+                        it: it
+                    }
+                    bookings.push(booking);
+                }
+            });
+        }
+
+        return bookings;
+    }
+);

@@ -12,10 +12,10 @@ import { filter, Subscription, take, tap } from 'rxjs';
 })
 export class SocketIOService {
 
-  private socket: Socket;
+  private socket!: Socket;
 
   constructor(private store: Store<AppState>) { 
-    this.socket = io('http://localhost:3000');
+    //this.socket = io('http://localhost:3000');
   }
 
   public setupSocketConnection() {

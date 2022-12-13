@@ -1,7 +1,6 @@
 import { NgModule } from "@angular/core";
 import { AppComponent } from "src/app/app.component";
 import { LinesRoutingModule } from "./lines-routing.module";
-import { LinesComponent } from "./lines.component";
 import { MultipleDropdownComponent } from "../sidebar/components/multiple-dropdown/multiple-dropdown.component";
 import { CommonModule } from "@angular/common";
 import { FormsModule } from "@angular/forms";
@@ -20,7 +19,6 @@ import { RouteDetailsComponent } from "src/app/modules/lines/route-details/route
 
 @NgModule({
   declarations: [
-    LinesComponent,
     MultipleDropdownComponent,
     ListItemComponent,
     ScheduleComponent,

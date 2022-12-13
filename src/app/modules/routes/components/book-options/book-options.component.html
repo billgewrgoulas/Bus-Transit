@@ -1,0 +1,17 @@
+
+<div class="option-list">
+
+    <h1>Options</h1>
+    <app-option (onSelect)="tripPlanner()"
+        [icon]="'route'"
+        [text]="'Book a trip'"
+        [data]="['trip_planner']">
+    </app-option>
+
+    <app-option
+        [icon]="'departure_board'"
+        [text]="'My bookings'"
+        [data]="['bookings']">
+    </app-option>
+
+</div>

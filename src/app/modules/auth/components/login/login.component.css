@@ -1,0 +1,98 @@
+
+:host{
+    width: 23.8vw;
+    display: flex;
+    flex-direction: column;
+}
+
+.simple-form{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 30px 15px 0px 15px;
+    gap: 5px;
+}
+
+.left-wrapper{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px 20px 20px 20px;
+    background: rgb(221,220,229);
+    background: linear-gradient(90deg, rgba(221,220,229,1) 0%, rgba(254,254,254,1) 100%);
+    position: relative;
+    width: 100%;
+    box-shadow: 0 2px 5px #0000004d;
+}
+
+.arrow{
+    color: #2d3b50;
+    font-size: 33px;
+    font-weight: 600;
+    cursor: pointer;
+}
+
+i{
+    color: #373a50;;
+    font-weight: 600;
+    font-size: 27px;
+    cursor: pointer;
+}
+
+::ng-deep mat-form-field{
+    width: 100% !important;
+}
+
+h1{
+    margin-bottom: 15px;
+    color: #2b3b4c;
+    font-family: "Lexend Deca",sans-serif;
+    font-weight: 600;
+    font-size: 25px;
+}
+
+.mat-input-element {
+    caret-color: #545f6d;
+}
+
+.mat-form-field-appearance-legacy .mat-form-field-label{
+    color: #545f6d !important;
+}
+
+.mat-hint .mat-datepicker-toggle{
+    color: #545f6d !important;
+}
+
+::ng-deep .mat-focused .mat-form-field-label {
+    /*change color of label*/
+    color: #545f6d!important;
+    font-size: 15px;
+}
+   
+::ng-deep .mat-form-field-ripple {
+    /*change color of underline when focused*/
+    background-color: #3e3aef !important;
+}
+   
+::ng-deep .mat-form-field-label {
+    /*change color of label*/
+    color: #545f6d !important;
+}
+
+::ng-deep .mat-form-field-appearance-fill .mat-form-field-flex {
+    background-color: rgb(135 135 135 / 10%) !important;
+}
+
+::ng-deep .mat-button.mat-primary, .mat-icon-button.mat-primary, .mat-stroked-button.mat-primary {
+    color: #2b3b4c !important;
+}
+
+::ng-deep .mat-button, .mat-icon-button, .mat-stroked-button {
+    background: rgb(135 135 135 / 10%) !important;
+}
+
+button{
+    font-size: 17px !important;
+    font-weight: bold;
+}

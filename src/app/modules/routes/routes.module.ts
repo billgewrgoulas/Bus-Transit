@@ -3,10 +3,8 @@ import { CommonModule } from '@angular/common';
 import { RoutesRoutingModule } from './routes-routing.module';
 import { FormsModule } from '@angular/forms';
 import { InputComponent } from './components/input/input.component';
-import { DataShareService } from 'src/app/services/data-share.service';
 import { SharedModule } from '../shared-module/shared-module.module';
 import { StopDropDownComponent } from './components/stop-drop-down/stop-drop-down.component';
-import { StopSliderComponent } from './components/stop-slider/stop-slider.component';
 import { MatSelectModule } from '@angular/material/select';
 import { MatTabsModule } from '@angular/material/tabs';
 import {MatDatepickerModule} from '@angular/material/datepicker';
@@ -20,16 +18,21 @@ import {MatExpansionModule} from '@angular/material/expansion';
 import {MatButtonModule} from '@angular/material/button';
 import { TripDetailsComponent } from './components/trip-details/trip-details.component';
 import { DirectionsStore } from 'src/app/state/LocalStore/directions.store';
+import { PlacesComponent } from './components/places/places.component';
+import { BookOptionsComponent } from 'src/app/modules/routes/components/book-options/book-options.component';
+import {MatMenuModule} from '@angular/material/menu';
+import { AuthModule } from '../auth/auth.module';
 
 @NgModule({
   declarations: [
     InputComponent, 
     StopDropDownComponent, 
-    StopSliderComponent, 
     TripPlannerOptionsComponent,
     TripComponent,
     TripListComponent,
     TripDetailsComponent,
+    PlacesComponent,
+    BookOptionsComponent
   ],
   imports: [
     CommonModule,
@@ -43,7 +46,9 @@ import { DirectionsStore } from 'src/app/state/LocalStore/directions.store';
     MatInputModule,
     ReactiveFormsModule,
     MatExpansionModule,
-    MatButtonModule
-  ],
+    MatButtonModule,
+    MatMenuModule,
+    AuthModule
+  ],providers: [DirectionsStore]
 })
 export class RoutesModule { }

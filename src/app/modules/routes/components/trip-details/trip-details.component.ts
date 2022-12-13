@@ -5,7 +5,10 @@ import { Itinerary } from 'src/app/state/Entities/itinerary';
 import { AppState } from 'src/app/state/Reducers/api-reducer';
 import { selectItinerary } from 'src/app/state/Selectors/appState.selectors';
 import * as select_actions from 'src/app/state/Actions/select.actions';
+import * as api_actions from 'src/app/state/Actions/api-calls.actions';
 import { DataShareService } from 'src/app/services/data-share.service';
+import { AuthService } from 'src/app/modules/auth/services/auth.service';
+import { DirectionsStore } from 'src/app/state/LocalStore/directions.store';
 
 @Component({
   selector: 'app-trip-details',
@@ -32,7 +35,12 @@ export class TripDetailsComponent implements OnInit, OnDestroy {
     CONTINUE: 'Continue to', HARD_LEFT: 'Sharp left to', HARD_RIGHT: 'Sharp right to'
   };
 
-  constructor(private store: Store<AppState>, private msg: DataShareService) { }
+  constructor(
+    private store: Store<AppState>, 
+    private msg: DataShareService, 
+    private auth: AuthService,
+    private local: DirectionsStore
+  ) { }
 
   ngOnInit(): void {
     this.trip$ = this.store.select(selectItinerary);
@@ -45,6 +53,16 @@ export class TripDetailsComponent implements OnInit, OnDestroy {
   public focus(x: number, y: number){
     this.msg.fly([x+'', y+'']);
   }
+
+  public book(){
+    this.store.dispatch(api_actions.book());
+  }
+
+  public isAuthenticated(): boolean{
+    return this.auth.isAuthenticated();
+  }
+
+
 
 
 

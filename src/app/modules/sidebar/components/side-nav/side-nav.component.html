@@ -1,2 +1,32 @@
 
+<div class="slider-wrapper" #wrapper [class.z]="!flag">
+    <div (cdkDragEnded)="dragEnd($event)" 
+        (focusout)="onFocusOut($event)"
+        class="bar" 
+        cdkDragLockAxis="x" 
+        cdkDrag 
+        cdkDragBoundary=".slider-wrapper"
+        [cdkDragFreeDragPosition]="dragPosition"
+        [cdkDragStartDelay]="20">
+        <div class="header">
+            <i class="fas fa-bus"></i>
+            <span>City Bus</span>
+        </div>
+        <div class="item" (click)="login()">
+            <i class="fas fa-user"></i>
+            <span>Log In</span>
+        </div>
+        <div class="item" (click)="register()">
+            <i class="fas fa-user"></i>
+            <span>Register</span>
+        </div>
+        <div class="item" (click)="home()">
+            <i class="fas fa-home"></i>
+            <span>Home</span>
+        </div>
+    </div>
+</div>
+
+<div id="overlay" (click)="onFocusOut($event)" [class.block]="flag"></div>
+
 <router-outlet name="sidebar" #outlet="outlet"></router-outlet>

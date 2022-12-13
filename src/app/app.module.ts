@@ -24,6 +24,7 @@ import { RouterEffects } from './state/Effects/router.effects';
 import { DataShareService } from './services/data-share.service';
 import { CustomSerializer } from './state/Selectors/custom-route-serializer';
 
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -45,7 +46,7 @@ import { CustomSerializer } from './state/Selectors/custom-route-serializer';
     StoreDevtoolsModule.instrument({ maxAge: 25, logOnly: environment.production }),
     StoreRouterConnectingModule.forRoot({serializer: CustomSerializer, stateKey: 'router'})
   ],
-  providers: [HttpClient, SocketIOService, DataShareService],
+  providers: [HttpClient, SocketIOService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

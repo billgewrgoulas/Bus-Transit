@@ -1,22 +1,24 @@
 
 <div class="left-wrapper">
-    <span class="arrow material-symbols-outlined">
+    <span class="arrow material-symbols-outlined" (click)="goBack()">
         keyboard_backspace
     </span>
-    <span class="purple route material-symbols-outlined">
+    <span class="route material-symbols-outlined" [ngClass]="{'start': type === 'start', 'end' : type === 'dest' }">
         {{icon}}
     </span>
 </div>
 <div class="right-wrapper">
     <div class="input-list">
-        <input [(ngModel)]="value"
+        <input [value]="value" 
+            [(ngModel)]="value"
+            (keyup)="send()"
             name="myInput" 
             type="text" 
             placeholder="{{placeholder}}" 
             class="text"
             autocomplete="off"
             autofocus="true">
-        <i class="fas fa-times"></i>
+        <i *ngIf="value!=''" class="fas fa-times" (click)="clear()" ></i>
     </div>
 </div>   
 

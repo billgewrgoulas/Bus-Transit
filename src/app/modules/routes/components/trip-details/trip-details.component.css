@@ -19,7 +19,7 @@ h1{
     color: #2b3b4c;
     font-family: "Lexend Deca",sans-serif;
     font-weight: 600;
-    font-size: 21px;
+    font-size: 18px;
 }
 
 .entity-wrapper{
@@ -143,4 +143,30 @@ h1{
 
 ::ng-deep .mat-expansion-panel-header-title, .mat-expansion-panel-header-description {
     margin-right: 0px !important;
+}
+
+.header{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    padding-right: 10px;
+    gap: 5px;
+}
+
+.book-menu{
+    margin-right: 10px;
+    margin-left: 5px;
+}
+
+::ng-deep .mat-button.mat-primary, .mat-icon-button.mat-primary, .mat-stroked-button.mat-primary {
+    color: #2b3b4c !important;
+}
+
+::ng-deep .mat-button, .mat-icon-button, .mat-stroked-button {
+    background: rgb(0 0 0 / 10%) !important;
+}
+
+button{
+    font-size: 14px !important;
+    font-weight: bold;
 }

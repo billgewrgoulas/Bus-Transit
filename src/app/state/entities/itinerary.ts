@@ -61,5 +61,6 @@ export interface Plan{
     date: string;
     from: Vertex;
     to: Vertex;
+    slug: string;
     itineraries: Itinerary[];
 }

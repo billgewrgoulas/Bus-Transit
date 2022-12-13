@@ -1,86 +1,40 @@
 
 <ng-container *ngIf="obs$ | async as obs">
 
-    <div class="input-section" [class.show]="!startFlag">
+    <div class="input-section">
         <div class="left-wrapper">
-            <span class="arrow material-symbols-outlined" (click)="cancel()">
-                keyboard_backspace
-            </span>
-            <span class="route material-symbols-outlined">
-                trip_origin
-            </span>
-        </div>
-        <div class="right-wrapper">
-            <div class="input-list">
-                <input #searchBox [value]="obs.start" [(ngModel)]="startValue" (keyup)="keyUp(startValue)"
-                    type="text" 
-                    placeholder="select start" 
-                    class="text"
-                    autocomplete="off">
-                <i *ngIf="!default" class="fas fa-times" (click)="clearStart()"></i>
-            </div>
-        </div>
-    </div>
-    
-    <div class="input-section" [class.show]="!destFlag">
-        <div class="left-wrapper">
-            <span class="arrow material-symbols-outlined" (click)="cancel()">
-                keyboard_backspace
-            </span>
-            <span class="purple route material-symbols-outlined">
-                location_on
-            </span>
-        </div>
-        <div class="right-wrapper">
-            <div class="input-list">
-                <input [value]="obs.end" [(ngModel)]="endValue" (keyup)="keyUp(endValue)"
-                    name="myInput" 
-                    type="text" 
-                    placeholder="select start" 
-                    class="text"
-                    autocomplete="off"
-                    autofocus="true">
-                <i *ngIf="!default" class="fas fa-times" (click)="clearDest()"></i>
-            </div>
-        </div>
-    </div>
-
-    <div class="input-section" *ngIf="default">
-        <div class="left-wrapper">
-            <div [class.border]="default"></div>
+            <div class="border"></div>
             <span class="arrow material-symbols-outlined" (click)="navigate()">
                 keyboard_backspace
             </span>
             <span class="start material-symbols-outlined">
                 trip_origin
             </span>
-            <span class="end material-symbols-outlined" *ngIf="default">
+            <span class="end material-symbols-outlined">
                 location_on
             </span>
         </div>
         <div class="right-wrapper">
-            <div class="swap-icon" *ngIf="default" (click)="swap()">
+            <div class="swap-icon" (click)="swap()">
                 <span class="swap material-symbols-outlined">
                     swap_vert
                 </span>
             </div>
             <div class="input-list">
-                <input readonly [value]="obs.start" (click)="startClick()"
+                <input readonly [value]="obs.start" (click)="places('start')"
                     name="myInput" 
                     type="text" 
                     placeholder="select start" 
                     class="text"
                     autocomplete="off">
-                    <i *ngIf="!default" class="fas fa-times" (click)="cancel()"></i>
             </div>
-            <div class="input-list" *ngIf="default">
-                <input readonly [value]="obs.end" (click)="destClick()"
+            <div class="input-list">
+                <input readonly [value]="obs.end" (click)="places('dest')"
                     name="myInput" 
                     type="text" 
                     placeholder="search destination" 
                     class="text dest"
                     autocomplete="off">
-                    <i *ngIf="!default" class="fas fa-times" (click)="cancel()"></i>
             </div>
         </div>
     </div>

@@ -1,30 +1,7 @@
 
 <div class="option-list">
 
-    
-    <ng-container *ngIf="flag else stopList">
-        <ng-container *ngIf="showDefaultSwitch$ | async as flag else stopList">
-            <h1>Select mode</h1>
-            <app-option
-                [icon]="'route'"
-                [text]="'Direct routes'"
-                [data]="['route']">
-            </app-option>
-
-            <app-option (onSelect)="tripPlanner()"
-                [icon]="'departure_board'"
-                [text]="'Trip planner'"
-                [data]="['plan']">
-            </app-option>
-    
-        </ng-container>
-    </ng-container>
-
-</div>
-
-<ng-template #stopList>
-
-    <app-option (onSelect)="onLocation($event)"
+    <app-option *ngIf="!saved" (onSelect)="onLocation($event)"
         [icon]="'my_location'"
         [text]="'My location'"
         [data]="['my_location']">
@@ -36,15 +13,12 @@
         [data]="['0', 'Custom', '39.667341104708946', '20.854922400637918']">
     </app-option>
 
-    <ng-container *ngFor="let stop of stops$ | async">
+    <app-option *ngFor="let stop of stops$ | async"
+        (onSelect)="onClick($event)"
+        [icon]="'location_on'"
+        [text]="stop.desc"
+        [desc]="stop.code"
+        [data]="[stop.code, stop.desc, stop.latitude, stop.longitude]">
+    </app-option>
 
-        <app-option (onSelect)="onClick($event)"
-            [icon]="'location_on'"
-            [text]="stop.desc"
-            [desc]="stop.code"
-            [data]="[stop.code, stop.desc, stop.latitude, stop.longitude]">
-        </app-option>
-
-    </ng-container>
-</ng-template>
-
+</div>

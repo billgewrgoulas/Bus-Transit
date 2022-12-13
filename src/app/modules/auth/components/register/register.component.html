@@ -1,0 +1,41 @@
+<div class="left-wrapper">
+    <span class="arrow material-symbols-outlined" (click)="back()">
+      keyboard_backspace
+    </span>
+    <i class="fas fa-bars" (click)="toggle()"></i>
+  </div>
+  
+<form [formGroup]="credentials" action="javascript:void(0);" class="simple-form">
+  
+    <h1>Register</h1>
+
+    <mat-form-field appearance="fill">
+        <mat-label>Name</mat-label>
+        <input matInput formControlName="name">
+        <mat-error *ngIf="errors('name', 'required')">name is required</mat-error>
+        <mat-error *ngIf="errors('name', 'minlength')">at least 3 characters long</mat-error>
+    </mat-form-field>
+  
+    <mat-form-field appearance="fill">
+        <mat-label>Email</mat-label>
+        <input matInput formControlName="email">
+        <mat-error *ngIf="errors('email', 'required')">email is required</mat-error>
+        <mat-error *ngIf="errors('email', 'email')">must be an email</mat-error>
+        <mat-error *ngIf="errors('email', 'minlength')">at least 3 characters long</mat-error>
+    </mat-form-field>
+  
+    <mat-form-field appearance="fill">
+        <mat-label>Password</mat-label>
+        <input type="password" matInput formControlName="password">
+        <mat-error *ngIf="errors('password', 'minlength')">at least 3 characters</mat-error>
+        <mat-error *ngIf="errors('password', 'required')">password is required</mat-error>
+    </mat-form-field>
+  
+    <section>
+        <div class="example-button-row">
+            <button (click)="register()" mat-stroked-button color="primary">Register</button>
+        </div>
+    </section>
+    
+</form>
+  

@@ -1,11 +1,11 @@
 import { Injectable } from "@angular/core";
 import { Store } from "@ngrx/store";
 import { Actions, concatLatestFrom, createEffect, ofType } from "@ngrx/effects";
-import { distinctUntilChanged, exhaustMap, filter, map, mapTo, of, Subject, switchMap, take, takeUntil, tap, timer, withLatestFrom } from "rxjs";
+import { catchError, filter, map, of, switchMap, take, withLatestFrom } from "rxjs";
 import { DataService } from "src/app/services/data.service";
 import * as api_actions from '../Actions/api-calls.actions';
 import { AppState } from "../Reducers/api-reducer";
-import { getActiveRouteSchedules, getAllLines, getAllStops, getRouteStops, selectAll, selectAllLines, selectCurrentLineRoutes, selectLine, selectRoute, selectRoutePoints } from "../Selectors/appState.selectors";
+import { getActiveRouteSchedules, getAllStops, newBooking, selectCurrentLineRoutes, selectRoutePoints } from "../Selectors/appState.selectors";
 import { ILine } from "../Entities/line.entity";
 import { IRoute, IRouteInfo } from "../Entities/route.entity";
 import { IScheduleDetails } from "../Entities/schedule.entity";
@@ -92,6 +92,34 @@ export class ApiEffects{
             switchMap(() => this.dataService.getAllStops()),
             map((response: IStop[]) => api_actions.getStopsSuccess({stops: response}))
         )     
+    );
+
+    book$ = createEffect(() => 
+        this.actions$.pipe(
+            ofType(api_actions.book),
+            withLatestFrom(this.store.select(newBooking)),
+            filter(([action, data]) => data.length > 0),
+            switchMap(([action, data]) => this.dataService.book(data)),
+            map(res => api_actions.bookSuccess({data: res}))
+        )
+    );
+
+    login$ = createEffect(() => 
+        this.actions$.pipe(
+            ofType(api_actions.login),
+            switchMap((action) => this.dataService.login(action.data)),
+            map(res => api_actions.loginSuccess({data: res})),
+            catchError(() => of(api_actions.loginError()))
+        )
+    );
+
+    register$ = createEffect(() => 
+        this.actions$.pipe(
+            ofType(api_actions.register),
+            switchMap((action) => this.dataService.register(action.credentials)),
+            map(res => api_actions.registerSuccess({data: res})),
+            catchError(() => of(api_actions.registerError()))
+        )
     );
 
 }

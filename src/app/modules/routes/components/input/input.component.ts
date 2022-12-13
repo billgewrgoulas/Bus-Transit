@@ -12,19 +12,11 @@ import * as select_actions from '../../../../state/Actions/select.actions';
   selector: 'app-input',
   templateUrl: './input.component.html',
   styleUrls: ['./input.component.css'],
-  providers: [DirectionsStore]
 })
 export class InputComponent implements OnInit, OnDestroy {
 
   public obs$!: Observable<any>;
   public subs: Subscription[] = [];
-
-  public startValue: string = '';
-  public endValue: string = '';
-  
-  public destFlag: boolean = false;
-  public startFlag: boolean = false;
-  public default: boolean = true;
 
   constructor(
     private store: Store<AppState>, 
@@ -36,13 +28,11 @@ export class InputComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
 
     this.subs = [
-      this.msg.tabObserver.subscribe(v => this.cancel()),
       this.msg.dragStartObserver.subscribe(v => this.onDrag(v, 'start')),
       this.msg.dragEndObserver.subscribe(v => this.onDrag(v, 'dest'))
     ];
 
     this.obs$ = this.local.getNames();
-    this.checkUrl();
   }
 
   ngOnDestroy(): void{
@@ -54,43 +44,10 @@ export class InputComponent implements OnInit, OnDestroy {
     this.local.swapPoints();
   }
 
-  public keyUp(value: string){
-    this.msg.onKeyUp(value);
-  }
-
-  public startClick(){
-    this.default = false;
-    this.startFlag = true;
-    this.keyUp(this.startValue);
-    this.updateOnclick('start');
-  }
-
-  public destClick(){
-    this.default = false;
-    this.destFlag = true;
-    this.keyUp(this.endValue);
-    this.updateOnclick('dest');
-  }
-
-  public cancel(){
-    this.default = true;
-    this.destFlag = false;
-    this.startFlag = false;
-    this.msg.showDefault(true);
-    this.navigate();
-  }
-
-  public clearStart(){
-    this.startValue = '';
-    this.keyUp('');
+  public clear(dest: string){
+    this.local.changeDirection(dest);
     this.local.updatePoint([]);
-    this.store.dispatch(select_actions.emptyPlan());
-  }
-
-  public clearDest(){
-    this.endValue = '';
-    this.keyUp('');
-    this.local.updatePoint([]);
+    this.local.changeDirection('');
     this.store.dispatch(select_actions.emptyPlan());
   }
 
@@ -98,25 +55,17 @@ export class InputComponent implements OnInit, OnDestroy {
     this.store.dispatch(navigation.arrowNavigation());
   }
 
-  private updateOnclick(dest: string){
-    this.msg.showDefault(false);
-    this.local.changeDirection(dest);
-    this.router.navigate([{ outlets: { sidebar: [ 'routes', 'places'] }}], {queryParams: {module: dest + '_input'}});
+  public places(dest: string){
+    this.router.navigate([{ outlets: 
+      { sidebar: [ 'routes', 'places', dest] }}], 
+      {queryParams: {module: dest + '_input'}
+    });
   }
 
   private onDrag(point: string[], direction: string){
     this.local.changeDirection(direction);
     this.local.updatePoint(point);
     this.local.changeDirection('');
-  }
-
-  private checkUrl(){
-    const queryParam: string = this.router.url.split("=")[1];
-    if(queryParam == 'start_input'){
-      this.startClick();
-    }else if(queryParam == 'dest_input'){
-      this.destClick();
-    }
   }
 
 }

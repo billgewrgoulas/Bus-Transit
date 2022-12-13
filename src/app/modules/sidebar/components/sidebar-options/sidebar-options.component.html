@@ -4,16 +4,16 @@
         <i class="fas fa-bus bus-big"></i>
         <span class="logo-text">Go Bus</span>
     </div>
+    <i class="fas fa-bars" (click)="toggle()"></i>
 </div>
 
 <div class="option-list">
-    <ng-container *ngFor="let option of options">
-        <app-option
-            [icon]="option.icon"
-            [text]="option.text"
-            [desc]="option.desc"
-            [data]="option.link"
-            (onSelect)="onSelect($event)">
-        </app-option>
-    </ng-container>
+    <app-option *ngFor="let option of options"
+        [icon]="option.icon"
+        [text]="option.text"
+        [desc]="option.desc"
+        [data]="option.link"
+        (onSelect)="onSelect($event)">
+    </app-option>
 </div>
+

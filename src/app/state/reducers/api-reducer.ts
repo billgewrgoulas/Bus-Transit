@@ -65,6 +65,10 @@ export const appStateReducer = createReducer(
     on(select_actions.selectLine, (state: AppState, action): AppState => {
         return {...state, lines: {...state.lines, activeLineId: action.id}, schedule: scheduleStateAdapter.removeAll(state.schedule)};
     }),
+    on(api_actions.registerSuccess, api_actions.loginSuccess, (state: AppState, action):AppState => {
+        setInfo(action.data);
+        return state;
+    }),
     on(api_actions.getRouteDetailsuccess, (state: AppState, action): AppState => {
         return {...state, stops: stopStateAdapter.addMany(action.routeInfo.stops, state.stops), 
                 routes: routeStateAdapter.updateOne({id: action.routeInfo.code, changes: 
@@ -72,3 +76,7 @@ export const appStateReducer = createReducer(
         };
     }),
 );
+
+const setInfo = (token: any) =>  {
+    localStorage.setItem('token', JSON.stringify(token.access_token));
+}

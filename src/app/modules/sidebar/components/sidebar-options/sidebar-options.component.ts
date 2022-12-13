@@ -18,6 +18,8 @@ export class SidebarOptionsComponent implements OnInit {
     {text: 'Settings', icon: 'settings', desc: 'Application settings'}
   ];
 
+  public on: boolean = false;
+
   constructor(private router: Router, private msg: DataShareService) { }
 
   ngOnInit(): void {
@@ -26,6 +28,10 @@ export class SidebarOptionsComponent implements OnInit {
 
   public onSelect(data: string[]){
     this.router.navigate([{ outlets: { sidebar: data[0] }}], {queryParams: {module: data[1]}});
+  }
+
+  public toggle(){
+    this.msg.onToggle();
   }
 
 }

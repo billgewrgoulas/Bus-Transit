@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnChanges, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { debounceTime, distinctUntilChanged, filter, Observable, Subscription, switchMap, take } from 'rxjs';
@@ -16,13 +16,13 @@ import * as nav_actions from '../../../../state/Actions/navigation.actions';
   styleUrls: ['./stop-drop-down.component.css'],
 
 })
-export class StopDropDownComponent implements OnInit {
+export class StopDropDownComponent implements OnInit, OnChanges {
 
   public stops$!: Observable<IStop[]>;
-  public showDefaultSwitch$!: Observable<boolean>;
   
   @Input() public flag: boolean = true;
   @Input() public saved: boolean = false;
+  @Input() public value: string = '';
 
   constructor(
     private store: Store<AppState>, 
@@ -32,24 +32,24 @@ export class StopDropDownComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    this.showDefaultSwitch$ = this.msg.stopListObserver;
     this.msg.selectEndpoint(this.local.state$);
-    this.stops$ = this.msg.searchValueMsg.pipe(
-      debounceTime(10),
-      distinctUntilChanged(),
-      switchMap(v => this.store.select(filterStops(v)))
+  }
+
+  ngOnChanges(): void{
+    this.stops$ = this.store.select(filterStops(this.value)).pipe(
+      debounceTime(10), distinctUntilChanged()
     );
   }
 
   public onClick(data: string[]){
     this.local.updatePoint(data);
-    this.msg.slide(0);
+    this.store.dispatch(nav_actions.arrowNavigation());
   }
 
   public async onLocation(data: string[]){
     const {coords} = await this.getPosition();
     this.local.updatePoint([0, 'My location', coords.latitude, coords.longitude]);
-    this.msg.slide(0);
+    this.store.dispatch(nav_actions.arrowNavigation());
   }
 
   public tripPlanner(){
@@ -59,19 +59,18 @@ export class StopDropDownComponent implements OnInit {
 
   public onMap(data: string[]){
     this.local.addOption(data[0]);
-  }
-
-  public onCalculate(){
-    this.router.navigate([{ outlets: { sidebar: [ 'routes', 'search'] }}]);
+    this.store.dispatch(nav_actions.arrowNavigation());
   }
 
   private getPosition(): Promise<any>{
     return new Promise((resolve, reject) => {
+
       if(navigator.geolocation){
         navigator.geolocation.getCurrentPosition(resolve);
       }else{
         reject('Geolocation not supported');
       }
+
     });
   }
 

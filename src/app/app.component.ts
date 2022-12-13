@@ -9,10 +9,10 @@ import { SocketIOService } from './services/socket-io.service';
 export class AppComponent implements OnInit {
   title = 'CityBus';
 
-  constructor(private io: SocketIOService){}
+  constructor(){}
 
   ngOnInit(){
-    this.io.setupSocketConnection();
+    // this.io.setupSocketConnection();
   }
 
   

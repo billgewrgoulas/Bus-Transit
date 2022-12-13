@@ -1,7 +1,7 @@
 :host{
     width: 25vw;
     box-sizing: border-box;
-    height: 100vh;
+    max-height: 100vh;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -9,4 +9,79 @@
     background: linear-gradient(90deg, rgba(195,197,213,1) 0%, rgba(239,243,248,1) 100%);
     font-family: Roboto, "Helvetica Neue", sans-serif;
     overflow: auto;
+    position: relative;
+}
+
+.slider-wrapper{
+    width: 30vw;
+    left: -15vw;
+    position: absolute;
+}
+
+.bar{
+    width: 15vw;
+    transition-duration: 100ms;
+    height: 100vh;
+    background-color: #1f2224;
+    z-index: 3;
+    position: absolute;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    color: rgba(255, 255, 255, 0.50);
+    padding-top: 20px;
+}
+
+.z{
+    z-index: -1;
+}
+
+#overlay {
+    position: fixed; /* Sit on top of the page content */
+    display: none; /* Hidden by default */
+    width: 100%; /* Full width (cover the whole page) */
+    height: 100%; /* Full height (cover the whole page) */
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0,0,0,0.5); /* Black background with opacity */
+    z-index: 2; /* Specify a stack order in case you're using a different order for other elements */
+    cursor: pointer; /* Add a pointer on hover */
+  }
+
+.block{
+    display: block !important;
+}
+
+.header, .item{
+    font-family: 'Varela Round', sans-serif;
+    font-size: 18px;
+    font-weight: bold;
+    width: 100%;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.10);
+    padding: 15px;
+    display: flex;
+    flex-direction: row;
+    gap: 10px;
+    transition-duration: 300ms;
+}
+
+span{
+    display: block;
+}
+
+.header{
+    padding-bottom: 30px;
+    font-size: 22px;
+}
+
+.header:hover{
+    cursor: pointer;
+    color: rgb(214, 214, 214) !important;
+}
+
+.item:hover{
+    cursor: pointer;
+    color: rgb(214, 214, 214) !important;
 }
