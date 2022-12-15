@@ -26,12 +26,6 @@ export class InputComponent implements OnInit, OnDestroy {
   ) {}
   
   ngOnInit(): void {
-
-    this.subs = [
-      this.msg.dragStartObserver.subscribe(v => this.onDrag(v, 'start')),
-      this.msg.dragEndObserver.subscribe(v => this.onDrag(v, 'dest'))
-    ];
-
     this.obs$ = this.local.getNames();
   }
 
@@ -60,12 +54,6 @@ export class InputComponent implements OnInit, OnDestroy {
       { sidebar: [ 'routes', 'places', dest] }}], 
       {queryParams: {module: dest + '_input'}
     });
-  }
-
-  private onDrag(point: string[], direction: string){
-    this.local.changeDirection(direction);
-    this.local.updatePoint(point);
-    this.local.changeDirection('');
   }
 
 }

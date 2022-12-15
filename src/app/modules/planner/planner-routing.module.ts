@@ -1,9 +1,9 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { TripDetailsComponent } from 'src/app/modules/routes/components/trip-details/trip-details.component';
 import { BookOptionsComponent } from './components/book-options/book-options.component';
 import { InputComponent } from './components/input/input.component';
 import { PlacesComponent } from './components/places/places.component';
+import { TripDetailsComponent } from './components/trip-details/trip-details.component';
 import { TripListComponent } from './components/trip-list/trip-list.component';
 import { TripPlannerOptionsComponent } from './components/trip-planner-options/trip-planner-options.component';
 

@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { RoutesRoutingModule } from './routes-routing.module';
+import { RoutesRoutingModule } from './planner-routing.module';
 import { FormsModule } from '@angular/forms';
 import { InputComponent } from './components/input/input.component';
 import { SharedModule } from '../shared-module/shared-module.module';
@@ -19,9 +19,9 @@ import {MatButtonModule} from '@angular/material/button';
 import { TripDetailsComponent } from './components/trip-details/trip-details.component';
 import { DirectionsStore } from 'src/app/state/LocalStore/directions.store';
 import { PlacesComponent } from './components/places/places.component';
-import { BookOptionsComponent } from 'src/app/modules/routes/components/book-options/book-options.component';
 import {MatMenuModule} from '@angular/material/menu';
 import { AuthModule } from '../auth/auth.module';
+import { BookOptionsComponent } from './components/book-options/book-options.component';
 
 @NgModule({
   declarations: [
@@ -51,4 +51,4 @@ import { AuthModule } from '../auth/auth.module';
     AuthModule
   ],providers: [DirectionsStore]
 })
-export class RoutesModule { }
+export class PlannerModule { }

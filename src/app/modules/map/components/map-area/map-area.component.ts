@@ -55,8 +55,8 @@ export class MapAreaComponent implements OnInit, OnDestroy {
       ).subscribe(data => this.tripMap.addMarker(data)),
 
       this.store.select(selectItinerary).subscribe(it => this.tripMap.displayItinerary(it)),
-
-      this.msg.clearMapObserver.subscribe(v => this.clearMap())
+      this.msg.clearMapObserver.subscribe(v => this.clearMap()),
+      this.msg.removeDragObserver.subscribe(v => this.tripMap.dragOff())
       
     ];
 

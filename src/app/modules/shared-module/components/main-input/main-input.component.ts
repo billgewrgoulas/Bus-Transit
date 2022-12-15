@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { AppState } from 'src/app/state/Reducers/api-reducer';
 import * as nav_actions from 'src/app/state/Actions/navigation.actions';

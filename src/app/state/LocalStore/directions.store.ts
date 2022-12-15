@@ -67,7 +67,7 @@ export class DirectionsStore extends ComponentStore<TripState> {
     public updatePoint = this.updater((state: TripState, point: string[]): TripState => {
         if(state.direction === 'start'){
             return {...state, start: point};
-        }else if (state.direction == 'dest'){
+        }else if (state.direction === 'dest'){
             return {...state, destination: point};
         }else{
             return initialState;

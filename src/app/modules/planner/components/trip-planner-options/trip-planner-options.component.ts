@@ -2,12 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { MatDatepickerInputEvent } from '@angular/material/datepicker';
 import { Router } from '@angular/router';
-import { Store } from '@ngrx/store';
 import { Observable, take, tap } from 'rxjs';
-import { Plan } from 'src/app/state/Entities/itinerary';
 import { DirectionsStore, TripState } from 'src/app/state/LocalStore/directions.store';
-import { AppState } from 'src/app/state/Reducers/api-reducer';
-import { getPlanState } from 'src/app/state/Selectors/appState.selectors';
 
 @Component({
   selector: 'trip-planner-options',

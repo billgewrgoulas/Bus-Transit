@@ -1,10 +1,8 @@
-import { Component, Input, OnInit, Output, EventEmitter } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { Store } from '@ngrx/store';
 import * as api_actions from '../../../../state/Actions/api-calls.actions';
 import { AppState } from 'src/app/state/Reducers/api-reducer';
 import { IRoute } from 'src/app/state/Entities/route.entity';
-import { of } from 'rxjs';
-import { DataService } from 'src/app/services/data.service';
 import { DataShareService } from 'src/app/services/data-share.service';
 
 @Component({

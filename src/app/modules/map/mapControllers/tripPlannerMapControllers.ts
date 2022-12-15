@@ -8,8 +8,9 @@ import { DataShareService } from "src/app/services/data-share.service";
 export class TripPlannerMap extends Map{
 
     private layerGroup: L.LayerGroup = new L.LayerGroup() ;
-    private start: L.Marker = this.createMarker('0', '0', '', this.marker, true);
-    private end: L.Marker = this.createMarker('0', '0', '', this.dest_marker, true);
+    private start: L.Marker = this.createMarker('0', '0', '', this.marker, false);
+    private end: L.Marker = this.createMarker('0', '0', '', this.dest_marker, false);
+    private custom: string[] = ['0', 'Custom', '39.667341104708946', '20.854922400637918'];
     private msg: DataShareService;
 
     public constructor(map: L.Map, msg: DataShareService){
@@ -41,6 +42,22 @@ export class TripPlannerMap extends Map{
 
     }
 
+    public enableDrag(data: TripState){
+        console.log(data);
+        if(data.direction == 'start' && data.start[0] == '0'){
+            this.start.dragging?.enable();
+        }else if(data.direction == 'dest' && data.destination[0] == '0'){
+            this.end.dragging?.enable();
+        }else{
+            this.dragOff();
+        }
+    }
+
+    public dragOff(){
+        this.start.dragging?.disable();
+        this.end.dragging?.disable();
+    }
+
     public addMarker(data: TripState){
 
         if(data.direction == 'start' && data.start.length > 0){
@@ -63,6 +80,7 @@ export class TripPlannerMap extends Map{
             this.clearPoint(data.direction);
         }
 
+        this.enableDrag(data);
     }
 
     public displayItinerary(it: Itinerary | undefined){

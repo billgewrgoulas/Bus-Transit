@@ -20,7 +20,7 @@
     <div class="slider-wrapper">
         <mat-tab-group mat-stretch-tabs animationDuration="300ms">
             <mat-tab label="Places">
-                <stop-dropdown [value]="value" [flag]="false"></stop-dropdown>
+                <stop-dropdown (custom)="custom($event)" [value]="value" [flag]="false"></stop-dropdown>
             </mat-tab>
             <mat-tab label="Saved">
                 <stop-dropdown [value]="value" [saved]="true" [flag]="false"></stop-dropdown>

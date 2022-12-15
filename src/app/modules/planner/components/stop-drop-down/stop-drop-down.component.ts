@@ -1,4 +1,4 @@
-import { Component, Input, OnChanges, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, OnChanges, OnInit, Output } from '@angular/core';
 import { Router } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { debounceTime, distinctUntilChanged, filter, Observable, Subscription, switchMap, take } from 'rxjs';
@@ -24,6 +24,8 @@ export class StopDropDownComponent implements OnInit, OnChanges {
   @Input() public saved: boolean = false;
   @Input() public value: string = '';
 
+  @Output() public custom = new EventEmitter<string>();
+
   constructor(
     private store: Store<AppState>, 
     private msg: DataShareService, 
@@ -48,7 +50,7 @@ export class StopDropDownComponent implements OnInit, OnChanges {
 
   public async onLocation(data: string[]){
     const {coords} = await this.getPosition();
-    this.local.updatePoint([0, 'My location', coords.latitude, coords.longitude]);
+    this.local.updatePoint([1, 'My location', coords.latitude, coords.longitude]);
     this.store.dispatch(nav_actions.arrowNavigation());
   }
 
@@ -58,8 +60,8 @@ export class StopDropDownComponent implements OnInit, OnChanges {
   }
 
   public onMap(data: string[]){
-    this.local.addOption(data[0]);
-    this.store.dispatch(nav_actions.arrowNavigation());
+    this.local.updatePoint(data);
+    this.custom.next('Custom');
   }
 
   private getPosition(): Promise<any>{
@@ -68,6 +70,7 @@ export class StopDropDownComponent implements OnInit, OnChanges {
       if(navigator.geolocation){
         navigator.geolocation.getCurrentPosition(resolve);
       }else{
+        confirm("Can't access device location");
         reject('Geolocation not supported');
       }
 

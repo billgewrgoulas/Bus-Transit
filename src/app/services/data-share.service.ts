@@ -19,6 +19,7 @@ export class DataShareService {
   private readonly dragEnd = new Subject<string[]>;
   private readonly clearMap = new Subject<number>;
   private readonly toggle = new Subject<void>();
+  private readonly removeDrag = new Subject<void>();
 
   public readonly tabObserver = this.tab.asObservable();
   public readonly busObserver = this.bus.asObservable();
@@ -31,6 +32,7 @@ export class DataShareService {
   public readonly dragEndObserver = this.dragEnd.asObservable();
   public readonly clearMapObserver = this.clearMap.asObservable();
   public readonly toggleObserver = this.toggle.asObservable();
+  public readonly removeDragObserver = this.removeDrag.asObservable();
   
   constructor() { }
 
@@ -76,6 +78,10 @@ export class DataShareService {
 
   public onToggle(){
     this.toggle.next();
+  }
+
+  public dragOff(){
+    this.removeDrag.next();
   }
 
 }

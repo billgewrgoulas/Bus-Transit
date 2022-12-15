@@ -7,7 +7,7 @@
         [data]="['my_location']">
     </app-option>
 
-    <app-option *ngIf="!saved" (onSelect)="onClick($event)"
+    <app-option *ngIf="!saved" (onSelect)="onMap($event)"
         [icon]="'map'"
         [text]="'Select on map'"
         [data]="['0', 'Custom', '39.667341104708946', '20.854922400637918']">

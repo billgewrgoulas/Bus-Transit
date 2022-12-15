@@ -6,7 +6,7 @@ import { ISchedule } from 'src/app/state/Entities/schedule.entity';
 import { IStop } from 'src/app/state/Entities/stop.entity';
 import { AppState } from 'src/app/state/Reducers/api-reducer';
 import { getDailySchedule } from 'src/app/state/Selectors/appState.selectors';
-import * as select_actions from '../../../../state/Actions/select.actions';
+import * as select_actions from 'src/app/state/Actions/select.actions';
 
 @Component({
   selector: 'list-item',

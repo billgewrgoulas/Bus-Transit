@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import * as navigation from'../../../state/Actions/navigation.actions';
+import * as navigation from'../../../../state/Actions/navigation.actions';
 import { Router, RouterOutlet } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { AppState } from 'src/app/state/Reducers/api-reducer';
