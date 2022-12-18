@@ -10,7 +10,6 @@ export class TripPlannerMap extends Map{
     private layerGroup: L.LayerGroup = new L.LayerGroup() ;
     private start: L.Marker = this.createMarker('0', '0', '', this.marker, false);
     private end: L.Marker = this.createMarker('0', '0', '', this.dest_marker, false);
-    private custom: string[] = ['0', 'Custom', '39.667341104708946', '20.854922400637918'];
     private msg: DataShareService;
 
     public constructor(map: L.Map, msg: DataShareService){
@@ -43,7 +42,6 @@ export class TripPlannerMap extends Map{
     }
 
     public enableDrag(data: TripState){
-        console.log(data);
         if(data.direction == 'start' && data.start[0] == '0'){
             this.start.dragging?.enable();
         }else if(data.direction == 'dest' && data.destination[0] == '0'){
@@ -91,13 +89,13 @@ export class TripPlannerMap extends Map{
 
         it.legs.forEach(leg =>{
     
-            const path = leg.points.map(point => [+point[0], +point[1]]); 
+            const path: number[][] = leg.points.map(point => [+point[0], +point[1]]); 
 
             let color: string = ''
-            let text = '';
+            let text: string = '';
 
             if(leg.mode == 'WALK'){
-                color = 'rgb(187, 187, 187)';
+                color = '#ff726f';
                 text = 'Walk';
             }else{
                 color = '#002D62'

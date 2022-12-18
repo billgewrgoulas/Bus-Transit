@@ -12,17 +12,29 @@
             <i class="fas fa-bus"></i>
             <span>City Bus</span>
         </div>
-        <div class="item" (click)="login()">
-            <i class="fas fa-user"></i>
+        <div *ngIf="!authenticated" class="item" (click)="logInOut('login')">
+            <i class="fas fa-sign-in-alt"></i>
             <span>Log In</span>
         </div>
-        <div class="item" (click)="register()">
+        <div *ngIf="!authenticated" class="item" (click)="logInOut('register')">
             <i class="fas fa-user"></i>
             <span>Register</span>
+        </div>
+        <div *ngIf="authenticated" class="item">
+            <i class="fas fa-user-circle"></i>
+            <span>{{user.name}}</span>
         </div>
         <div class="item" (click)="home()">
             <i class="fas fa-home"></i>
             <span>Home</span>
+        </div>
+        <div *ngIf="authenticated" class="item" (click)="logout()">
+            <i class="fas fa-sign-out-alt"></i>
+            <span>Log out</span>
+        </div>
+        <div class="item" (click)="logout()">
+            <i class="fas fa-cog"></i>
+            <span>Settings</span>
         </div>
     </div>
 </div>

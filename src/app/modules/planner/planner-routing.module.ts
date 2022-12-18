@@ -6,16 +6,17 @@ import { PlacesComponent } from './components/places/places.component';
 import { TripDetailsComponent } from './components/trip-details/trip-details.component';
 import { TripListComponent } from './components/trip-list/trip-list.component';
 import { TripPlannerOptionsComponent } from './components/trip-planner-options/trip-planner-options.component';
+import { AuthGuardService } from '../auth/services/auth-guard.service';
 
 const routes: Routes = [
   {path: '', component: InputComponent, children: [
-    {path: '', component: BookOptionsComponent},
-    {path: 'trip/options', component: TripPlannerOptionsComponent},
-    {path: 'trips/:index', component: TripDetailsComponent},
-    {path: 'trips', component: TripListComponent},
-  ]}, 
-  {path: 'places/start', component: PlacesComponent, data: { type: 'start'}},
-  {path: 'places/dest', component: PlacesComponent, data: { type: 'dest'}},
+    {path: '', component: BookOptionsComponent, canActivate: [AuthGuardService]},
+    {path: 'trip/options', component: TripPlannerOptionsComponent, canActivate: [AuthGuardService]},
+    {path: 'trips/:index', component: TripDetailsComponent, canActivate: [AuthGuardService]},
+    {path: 'trips', component: TripListComponent, canActivate: [AuthGuardService]},
+  ], canActivate: [AuthGuardService]}, 
+  {path: 'places/start', component: PlacesComponent, data: { type: 'start'}, canActivate: [AuthGuardService]},
+  {path: 'places/dest', component: PlacesComponent, data: { type: 'dest'}, canActivate: [AuthGuardService]},
 ];
 
 @NgModule({

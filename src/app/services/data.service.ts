@@ -81,6 +81,13 @@ export class DataService {
     );
   }
 
+  public getRoutesByStop(code: string): Observable<IRoute[]>{
+    return this.http.get(this.url + '/transitAPI/stopRoutes/' + code, this.options).pipe(
+      map((res: any) => <IRoute[]>res),
+      catchError((err) => throwError(()=>new Error(err)))
+    );
+  }
+
   public getPlan(payload: TripState): Observable<Plan>{
     return this.http.post(this.url + '/transitAPI/getPaths', {data: payload}, this.options).pipe(
       map((res: any) => <Plan>res), 

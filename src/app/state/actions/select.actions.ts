@@ -10,3 +10,6 @@ import { createAction, props } from "@ngrx/store";
  /* Empty the state info */
  export const emptyRoutes = createAction('Empty state');
  export const emptyPlan = createAction('Empty plan');
+
+/* Change Module */ 
+export const module = createAction('Change Modle', props<{module: string}>());

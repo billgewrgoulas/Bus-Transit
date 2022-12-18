@@ -6,11 +6,11 @@ import * as navigation from'../Actions/navigation.actions';
 import * as api_actions from "../Actions/api-calls.actions";
 import * as select_actions from "../Actions/select.actions";
 import { AppState } from "../Reducers/api-reducer";
-import { ROUTER_NAVIGATED } from "@ngrx/router-store";
+import { ROUTER_NAVIGATED, ROUTER_NAVIGATION } from "@ngrx/router-store";
 import { getState } from "../Selectors/router.selectors";
-import { Router } from "@angular/router";
 import { Location } from '@angular/common'
-import { getAllLines, getAllStops, getRoutePathAndStops, selectCurrentLineRoutes } from "../Selectors/appState.selectors";
+import { state } from "@angular/animations";
+import { url } from "inspector";
 
 @Injectable()
 export class RouterEffects{
@@ -78,9 +78,30 @@ export class RouterEffects{
     fetchStops$ = createEffect(() =>
         this.actions$.pipe(
             ofType(ROUTER_NAVIGATED),
-            withLatestFrom(this.store.select(getState), this.store.select(getAllStops)),
-            filter(([action, {url}, stops]) => url.includes('sidebar:routes') && stops.length == 0),
+            withLatestFrom(this.store.select(getState)),
+            filter(([action, {url}]) => url.includes('sidebar:routes') || url.includes('sidebar:stops')),
             map(() => api_actions.getStops())
+        )
+    );
+
+    clearStop$ = createEffect(() => 
+        this.actions$.pipe(
+            ofType(ROUTER_NAVIGATED),
+            withLatestFrom(this.store.select(getState)),
+            filter(([action, {query}]) => query!['module'] == 'stops_module'),
+            map(() => select_actions.selectStop({code: ''}))
+        )
+    );
+
+    fetchStopRoutes$ = createEffect(() =>
+        this.actions$.pipe(
+            ofType(ROUTER_NAVIGATED),
+            withLatestFrom(this.store.select(getState)),
+            filter(([action, {url, params}]) => url.startsWith('/(sidebar:stops') && params!['stopCode']),
+            switchMap(([action, {params}]) => [
+                api_actions.stopRoutes({stopCode: params!['stopCode']}),
+                select_actions.selectStop({code: params!['stopCode']})
+            ])  
         )
     );
 
@@ -90,10 +111,8 @@ export class RouterEffects{
             withLatestFrom(this.store.select(getState)),
             filter(([action, {query}]) => query!['module'] == 'trip_details'),
             map(([action, {params}]) => params!['index']),
-            switchMap((index) => [
-                select_actions.selectItinerary({index: index}),
-            ])
-        ),
+            map((index) => select_actions.selectItinerary({index: index}))
+        )
     );
 
     clearPlan$ = createEffect(() => 
@@ -101,14 +120,34 @@ export class RouterEffects{
             ofType(ROUTER_NAVIGATED),
             withLatestFrom(this.store.select(getState)),
             filter(([action, {query}]) => query!['module'] == 'trip_options'),
-            switchMap(action => [select_actions.emptyPlan()])
+            map(action => select_actions.emptyPlan())
+        )
+    );
+
+    changeModule$ = createEffect(() =>
+        this.actions$.pipe(
+            ofType(ROUTER_NAVIGATED),
+            withLatestFrom(this.store.select(getState)),
+            map(([action, {url}]) => {
+                if(url.startsWith('/(sidebar:stops')){
+                    return 'stops'
+                }else if(url.startsWith('/(sidebar:lines')){
+                    return 'lines'
+                }else if(url.startsWith('/(sidebar:routes')){
+                    return 'planner';
+                }else{
+                    return '';
+                }
+            }),
+            map((module) => select_actions.module({module: module}))
         )
     );
 
     previousView$ = createEffect(()=>
         this.actions$.pipe(
             ofType(navigation.arrowNavigation),
-            tap(() => this.location.back())
+            withLatestFrom(this.store.select(getState)),
+            tap((url) => this.location.back())
         ), {dispatch: false}
     );
 

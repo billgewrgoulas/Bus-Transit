@@ -1,0 +1,53 @@
+
+.option-wrapper{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    border-bottom: 2px solid #bdbdbd;
+    padding-bottom: 10px;
+    font-family: "Lexend Deca",sans-serif;
+    cursor: pointer;
+}
+
+.text-section{
+    display: flex;
+    flex-direction: column;
+}
+
+.name{
+    font-size: 14px;
+    font-weight: 600;
+    margin-bottom: 2px;
+    color: #2b3b4c;
+}
+
+.code{
+    color: #868d95;
+}
+
+.details{
+    color: #868d95;
+    display: flex;
+    flex-direction: row;
+    gap: 15px;
+}
+
+.save-btn{
+    margin-left: 15px;
+}
+
+.mentos{
+    display: flex;
+    flex-direction: row;
+    gap: 5px;
+}
+
+.mentos>span{
+    background-color: #002D62;
+    color: white;
+    border-radius: 50%;
+    width: 19px;
+    height: 19px;
+    font-size: 11px;
+    text-align: center;
+}

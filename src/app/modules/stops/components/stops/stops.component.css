@@ -1,0 +1,30 @@
+
+:host{
+    width: 23.8vw;
+    display: flex;
+    flex-direction: column;
+    font-family: "Lexend Deca",sans-serif;
+    align-items: center;
+}
+
+.stop-dropdown{
+    width: 100%;
+    padding: 20px 20px 20px 20px;
+}
+
+h1{
+    margin-bottom: 15px;
+    color: #2b3b4c;
+    font-family: "Lexend Deca",sans-serif;
+    font-weight: 600;
+    font-size: 21px;
+}
+
+.list{
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    max-height: calc(100vh - 230px);
+    overflow: auto;
+    padding-right: 10px;
+}

@@ -21,7 +21,6 @@ import { StoreRouterConnectingModule, routerReducer, RouterState} from '@ngrx/ro
 import { SocketIOService } from './services/socket-io.service';
 import { SocketEffects } from './state/Effects/socket.effects';
 import { RouterEffects } from './state/Effects/router.effects';
-import { DataShareService } from './services/data-share.service';
 import { CustomSerializer } from './state/Selectors/custom-route-serializer';
 
 

@@ -8,17 +8,19 @@
     </span>
 </div>
 <div class="right-wrapper">
+    <i class="bars fas fa-bars" (click)="toggle()"></i>
     <div class="input-list">
         <input [value]="value" 
             [(ngModel)]="value"
             (keyup)="send()"
             name="myInput" 
             type="text" 
+            [disabled]="disabled"
             placeholder="{{placeholder}}" 
             class="text"
             autocomplete="off"
             autofocus="true">
-        <i *ngIf="value!=''" class="fas fa-times" (click)="clear()" ></i>
+        <i *ngIf="value!='' && !disabled" class="fas fa-times" (click)="clear()" ></i>
     </div>
 </div>   
 

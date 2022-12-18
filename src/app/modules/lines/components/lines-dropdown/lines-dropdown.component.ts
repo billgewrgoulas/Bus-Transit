@@ -16,39 +16,20 @@ import { slideAnimation } from 'src/app/route-animations';
 })
 export class LinesDropdownComponent implements OnInit {
 
-  public value: string = '';
   public lines$!: Observable<ILine[]>;
-  public activeRoute$!: Observable<IRoute | undefined>;
-  public currentLine: ILine | undefined;
 
   constructor(private router: Router, private store: Store<AppState>) { }
 
   ngOnInit(): void {
-    this.lines$ = this.store.select(filterLines(this.value));
-    this.activeRoute$ = this.store.select(currentRoute).pipe(
-      startWith(<IRoute>{}),
-      filter(e => !!e)
-    );
+    this.lines$ = this.store.select(filterLines(''));
   }
 
   public changeValue(line: ILine){
-    this.currentLine = line;
-    this.value = `Line ${line.name}`;
     this.router.navigate([{ outlets: { sidebar: [ 'lines', line.id ] }}], {queryParams: {module: 'line_data'}});
   }
 
-  public clear(){
-    this.value = '';
-    this.lines$ = this.store.select(filterLines(this.value));
-  }
-
-  public navigate(){
-    this.store.dispatch(navigation.arrowNavigation());
-    this.value = this.currentLine?.desc!;
-  }
-
-  public onKeyUp(){
-    this.lines$ = this.store.select(filterLines(this.value));
+  public onKeyUp(value: string){
+    this.lines$ = this.store.select(filterLines(value));
   }
 
   public prepareOutlet(outlet: RouterOutlet){

@@ -2,7 +2,7 @@
 <h1>{{title}}</h1>
 
 <div class="list">
-    <ng-container *ngFor="let data of data$ | async">
+    <ng-container *ngFor="let data of data">
         <div class="option-wrapper">
             <div class="text-section" (click)="select(data)">
                 <div class="name">

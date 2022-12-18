@@ -10,6 +10,7 @@ export abstract class Map{
     protected bus_stop_icon: L.Icon = L.icon({iconUrl: '../../../../assets/bus-stop.png', iconSize: [25, 25]});
     protected bus_icon: L.Icon = L.icon({iconUrl: '../../../../assets/bus-icon.png', iconSize: [45, 45]});
     protected dest_marker: L.Icon = L.icon({iconUrl: '../../../../assets/dest-marker.png', iconSize: [50, 50]});
+    protected pin: L.Icon = L.icon({iconUrl: '../../../../assets/pin.ico', iconSize: [50, 50]});
 
     abstract clearLayerGroup(): void;
 

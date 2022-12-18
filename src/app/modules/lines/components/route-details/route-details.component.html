@@ -1,22 +1,14 @@
 
-<div class="input-section">
-    <div class="left-wrapper">
-        <span class="arrow material-symbols-outlined">
-            keyboard_backspace
-        </span>
-        <span class="route material-symbols-outlined">
-            route
-        </span>
-    </div>
-    <div class="right-wrapper">
-        <input 
-            name="myInput" 
-            type="text" 
-            placeholder="search lines..." 
-            class="text"
-            autocomplete="off">
-        <i class="fas fa-times"></i>
-    </div>
-</div>
+<ng-container *ngIf="route$ | async as route">
 
-<slider-component></slider-component>
+    <input-field
+        [value]="route.desc"
+        [icon]="'route'"
+        [type]="'start'"
+        [disabled]="true">
+    </input-field>
+
+    <slider-component></slider-component>
+
+</ng-container>
+

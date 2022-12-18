@@ -1,0 +1,19 @@
+
+<input-field (onType)="filter($event)"
+    [icon]="'trip_origin'"
+    [placeholder]="'search stops'"
+    [type]="'start'">
+</input-field>
+
+<div class="stop-dropdown" *ngIf="stops$ | async as stops">
+    <h1>Stops</h1>
+    <div class="list" *ngIf="stops">
+        <dropdown-option *ngFor="let stop of stops"
+            [text]="stop.desc"
+            [details]="stop.code"
+            [mentos]="stop.lines.split(',')"
+            [data]="stop.code"
+            (e)="onSelect($event)">
+        </dropdown-option>
+    </div>
+</div>

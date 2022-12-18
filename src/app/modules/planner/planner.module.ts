@@ -23,6 +23,7 @@ import {MatMenuModule} from '@angular/material/menu';
 import { AuthModule } from '../auth/auth.module';
 import { BookOptionsComponent } from './components/book-options/book-options.component';
 
+
 @NgModule({
   declarations: [
     InputComponent, 
@@ -32,7 +33,7 @@ import { BookOptionsComponent } from './components/book-options/book-options.com
     TripListComponent,
     TripDetailsComponent,
     PlacesComponent,
-    BookOptionsComponent
+    BookOptionsComponent,
   ],
   imports: [
     CommonModule,

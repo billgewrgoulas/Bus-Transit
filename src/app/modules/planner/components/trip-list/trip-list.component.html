@@ -6,7 +6,9 @@
     <ng-container *ngIf="plan.itineraries.length > 0 else noItineraries" >
         <trip-component *ngFor="let it of plan.itineraries let i=index"
             (msg)="onSelect($event)"
+            (book)="onBook($event)"
             [itinerary]="it"
+            [date]="plan.date"
             [data]="i">
         </trip-component>
     </ng-container>

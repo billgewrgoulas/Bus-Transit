@@ -4,6 +4,7 @@ import { Actions, concatLatestFrom, createEffect, ofType } from "@ngrx/effects";
 import { catchError, filter, map, of, switchMap, take, withLatestFrom } from "rxjs";
 import { DataService } from "src/app/services/data.service";
 import * as api_actions from '../Actions/api-calls.actions';
+import * as nav_actions from '../Actions/navigation.actions';
 import { AppState } from "../Reducers/api-reducer";
 import { getActiveRouteSchedules, getAllStops, newBooking, selectCurrentLineRoutes, selectRoutePoints } from "../Selectors/appState.selectors";
 import { ILine } from "../Entities/line.entity";
@@ -67,6 +68,14 @@ export class ApiEffects{
         )
     );
 
+    loadStopRoutes$ = createEffect(() => 
+        this.actions$.pipe(
+            ofType(api_actions.stopRoutes),
+            switchMap((action) => this.dataService.getRoutesByStop(action.stopCode)),
+            map((response: IRoute[]) => api_actions.stopRoutesSuccess({routes: response}))
+        )
+    );
+
     loadSearchedPaths$ = createEffect(() => 
         this.actions$.pipe(
             ofType(api_actions.getFilteredRoutes),
@@ -97,7 +106,7 @@ export class ApiEffects{
     book$ = createEffect(() => 
         this.actions$.pipe(
             ofType(api_actions.book),
-            withLatestFrom(this.store.select(newBooking)),
+            concatLatestFrom((action) => this.store.select(newBooking(action.email, action.it))),
             filter(([action, data]) => data.length > 0),
             switchMap(([action, data]) => this.dataService.book(data)),
             map(res => api_actions.bookSuccess({data: res}))
@@ -119,6 +128,13 @@ export class ApiEffects{
             switchMap((action) => this.dataService.register(action.credentials)),
             map(res => api_actions.registerSuccess({data: res})),
             catchError(() => of(api_actions.registerError()))
+        )
+    );
+
+    loggedInSuccess$ = createEffect(() => 
+        this.actions$.pipe(
+            ofType(api_actions.registerSuccess, api_actions.loginSuccess),
+            map(() => nav_actions.arrowNavigation())
         )
     );
 

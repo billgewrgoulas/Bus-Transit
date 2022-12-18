@@ -1,0 +1,19 @@
+
+
+<div class="option-wrapper" >
+    <div class="text-section" (click)="onClick($event)">
+        <div class="name">
+            <span>{{text}}</span>
+            <span class="code"> ({{details}})</span>
+        </div>
+        <div class="details">
+            <div class="mentos">
+                <span *ngFor="let line of mentos">{{line}}</span>
+            </div>
+        </div>
+    </div>
+    <div class="save-btn" *ngIf="authenticated" (click)="onSave()">
+        <i class="far fa-bookmark"></i>
+    </div>
+</div>
+

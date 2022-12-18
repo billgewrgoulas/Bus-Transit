@@ -7,6 +7,7 @@ export interface IStop{
     longitude: string;
     desc: string;
     desc_eng: string;
+    lines: string;
 }
 
 export interface StopState extends EntityState<IStop>{

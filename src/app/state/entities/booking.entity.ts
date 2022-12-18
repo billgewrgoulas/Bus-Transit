@@ -6,4 +6,5 @@ export interface Booking{
     endStop: string;
     slug: string;
     it: number;
+    stopCodes: string[];
 }

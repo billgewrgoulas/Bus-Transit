@@ -4,13 +4,12 @@
     flex-direction: column;
     width: 100%;
     max-height: calc(100vh - 250px);
+    gap: 10px;
 }
 
 .entity-wrapper{
     background: rgb(227,227,236);
     background: linear-gradient(90deg, rgba(227,227,236,1) 0%, rgba(255,255,255,1) 100%);
-    margin-top: 10px;
-    margin-right: 5px;
     box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
     cursor: pointer;
 }
@@ -40,7 +39,7 @@
     gap: 7px;
     color: #545f6d;
     font-size: 14px;
-    padding: 17px 20px 17px 20px;
+    padding: 17px 15px 17px 20px;
 }
 
 .entity-type{

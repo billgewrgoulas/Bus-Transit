@@ -39,7 +39,6 @@ export class TripDetailsComponent implements OnInit, OnDestroy {
     private store: Store<AppState>, 
     private msg: DataShareService, 
     private auth: AuthService,
-    private local: DirectionsStore
   ) { }
 
   ngOnInit(): void {
@@ -55,15 +54,7 @@ export class TripDetailsComponent implements OnInit, OnDestroy {
   }
 
   public book(){
-    this.store.dispatch(api_actions.book());
+    
   }
-
-  public isAuthenticated(): boolean{
-    return this.auth.isAuthenticated();
-  }
-
-
-
-
 
 }

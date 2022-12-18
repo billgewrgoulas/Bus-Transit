@@ -1,33 +1,20 @@
 
-<ng-container *ngIf="activeRoute$ | async as ar">
+<input-field (onType)="onKeyUp($event)"
+    [value]="''"
+    [placeholder]="'search lines'"
+    [icon]="'route'"
+    [type]="'start'">
+</input-field>
 
-    <div class="input-section">
-        <div class="left-wrapper">
-            <span class="arrow material-symbols-outlined" (click)="navigate()">
-                keyboard_backspace
-            </span>
-            <span class="route material-symbols-outlined">
-                route
-            </span>
-        </div>
-        <div class="right-wrapper">
-            <input [value]="ar.desc" [(ngModel)]="value" 
-                (keyup)="onKeyUp()"
-                name="myInput" 
-                type="text" 
-                placeholder="search lines..." 
-                class="text"
-                autocomplete="off">
-            <i *ngIf="value!=''" (click)="clear()" class="fas fa-times"></i>
-        </div>
+<div class="stop-dropdown">
+    <h1>Lines</h1>
+    <div class="list">
+        <dropdown-option *ngFor="let line of lines$ | async"
+            [text]="line.desc"
+            [details]="line.name"
+            [data]="line"
+            (e)="changeValue($event)">
+        </dropdown-option>
     </div>
+</div>
 
-</ng-container>
-
-
-<multiple-dropdown
-    [data$]="lines$"
-    [title]="'Lines'"
-    [value]="value"
-    (selectedValue)="changeValue($event)">
-</multiple-dropdown>

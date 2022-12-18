@@ -85,3 +85,7 @@ span{
     cursor: pointer;
     color: rgb(214, 214, 214) !important;
 }
+
+.fa-user-circle{
+    font-size: 20px;
+}

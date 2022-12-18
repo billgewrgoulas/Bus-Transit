@@ -53,11 +53,11 @@ export class LiveDataStore extends ComponentStore<LiveState> {
         );
     }
 
-    /* Fetch the stop arrivals every 10secs and update the local state */
+    /* Fetch the stop arrivals every 20secs and update the local state */
     public fetchArrivals = this.effect((stop$: Observable<IStop | undefined>) =>{
         return stop$.pipe(
             filter((stop) => !!stop),
-            switchMap((stop)=> timer(0, 10000).pipe(
+            switchMap((stop)=> timer(0, 20000).pipe(
                 switchMap(() => this.dataService.getLiveUpdates(stop!.code, 'stops/')),
                 tapResponse(
                     (arrivals) => this.updateArrivals(arrivals),
@@ -67,11 +67,11 @@ export class LiveDataStore extends ComponentStore<LiveState> {
         );
     });
 
-    /* Fetch the bus locations every 15secs and update the local state */
+    /* Fetch the bus locations every 20secs and update the local state */
     public fetchBusLocations = this.effect((line$: Observable<ILine | undefined>) =>{
         return line$.pipe(
             filter((line) => !!line),
-            switchMap((line)=> timer(0, 15000).pipe(
+            switchMap((line)=> timer(0, 20000).pipe(
                 switchMap(() => this.dataService.getLiveUpdates(line!.name, 'lines/')),
                 tapResponse(
                     (buses) => this.updateBuses(buses),

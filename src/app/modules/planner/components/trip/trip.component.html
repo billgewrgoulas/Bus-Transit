@@ -5,6 +5,7 @@
             <mat-accordion>
                 <mat-expansion-panel hideToggle>
                     <mat-expansion-panel-header>
+                        <i class="fas fa-sort-down"></i>
                         <div class="context">
                             <div class="line"></div>
                             <div class="time">{{it.startTime}}</div>
@@ -25,18 +26,21 @@
                     <div class="sumary-section">
                         <div class="header">
                             <span class="malakas">Sumary</span>
-                            <section>
-                                <div class="example-button-row">
-                                    <button mat-raised-button (click)="onSelect()" color="primary">Details</button>
-                                </div>
-                            </section>
+                            <div class="inner-malakas">
+                                <i class="fas fa-map" (click)="onSelect()"></i>
+                                <section>
+                                    <div class="example-button-row">
+                                        <button class="custom-btn" mat-raised-button (click)="onBook()" color="primary">Κράτηση</button>
+                                    </div>
+                                </section>
+                            </div>
                         </div>
                         <div class="field">
                             <div class="title">
                                 Travel
                             </div>
                             <div class="value">
-                                {{it.startTime}}
+                                {{it.startTime}}, {{getDate}}
                             </div>
                         </div>
                         <div class="field">
@@ -44,7 +48,7 @@
                                 Arrive
                             </div>
                             <div class="value">
-                                {{it.endTime}}
+                                {{it.endTime}}, {{getDate}}
                             </div>
                         </div>
                         <div class="field">
@@ -57,14 +61,6 @@
                         </div>
                         <div class="field">
                             <div class="title">
-                                Waiting time
-                            </div>
-                            <div class="value">
-                                {{it.waitingTime}} minutes
-                            </div>
-                        </div>
-                        <div class="field">
-                            <div class="title">
                                 Walk
                             </div>
                             <div class="value">
@@ -73,20 +69,49 @@
                         </div>
                         <div class="field">
                             <div class="title">
-                                Available seats
+                                Waiting time
                             </div>
                             <div class="value">
-                                10
+                                {{it.waitingTime}} minutes
                             </div>
                         </div>
+                        <ng-container *ngFor="let leg of it.legs">
+                            <div class="field" *ngIf="leg.mode == 'TRAM'">
+                                <div class="title">
+                                   Route
+                                </div>
+                                <div class="value">
+                                    {{leg.routeId}}
+                                </div>
+                            </div>
+                            <div class="field" *ngIf="leg.mode == 'TRAM'">
+                                <div class="title">
+                                    Board at
+                                </div>
+                                <div class="value">
+                                    {{leg.from.name}}({{leg.from.stopCode}}), {{leg.startTime}}
+                                </div>
+                            </div>
+                            <div class="field" *ngIf="leg.mode == 'TRAM'">
+                                <div class="title">
+                                    Alight at
+                                </div>
+                                <div class="value">
+                                    {{leg.to.name}}({{leg.to.stopCode}}), {{leg.endTime}}
+                                </div>
+                            </div>
+                            <div class="field" *ngIf="leg.mode == 'TRAM'">
+                                <div class="title">
+                                    Available seats
+                                </div>
+                                <div class="value">
+                                    10
+                                </div>
+                            </div>
+                        </ng-container>
                     </div>
                 </mat-expansion-panel>
             </mat-accordion>
         </div>
     </div>
 </ng-container>
-
-
-
-
-

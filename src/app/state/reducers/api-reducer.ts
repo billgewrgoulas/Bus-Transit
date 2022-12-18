@@ -7,7 +7,6 @@ import * as api_actions from '../Actions/api-calls.actions';
 import { inititialSchdeduleState, ScheduleState, scheduleStateAdapter } from "../Entities/schedule.entity";
 import { Plan } from "../Entities/itinerary";
 
-
 export interface AppState{
     stops: StopState;
     lines: LineState;
@@ -15,6 +14,7 @@ export interface AppState{
     schedule: ScheduleState;
     plan: Plan | undefined;
     itinerary: number;
+    module: string;
 };
 
 export const initialAppState: AppState = {
@@ -23,7 +23,8 @@ export const initialAppState: AppState = {
     routes: inititialRouteState,
     schedule: inititialSchdeduleState,
     plan: undefined,
-    itinerary: -1
+    itinerary: -1,
+    module: ''
 };
 
 /* API Reducer */
@@ -44,7 +45,7 @@ export const appStateReducer = createReducer(
     on(select_actions.selectStop, (state: AppState, action): AppState => {
         return {...state, stops:{...state.stops, activeStopCode: action.code}};
     }),
-    on(api_actions.getLineRoutesSuccess, (state: AppState, action): AppState => {
+    on(api_actions.getLineRoutesSuccess, api_actions.stopRoutesSuccess, (state: AppState, action): AppState => {
         return {...state, routes: routeStateAdapter.setAll(action.routes, state.routes)};
     }),
     on(api_actions.getSchedulesSuccess, (state: AppState, action): AppState => {
@@ -65,8 +66,15 @@ export const appStateReducer = createReducer(
     on(select_actions.selectLine, (state: AppState, action): AppState => {
         return {...state, lines: {...state.lines, activeLineId: action.id}, schedule: scheduleStateAdapter.removeAll(state.schedule)};
     }),
+    on(select_actions.module, (state: AppState, action): AppState => {
+        return {...state, module: action.module};
+    }),
     on(api_actions.registerSuccess, api_actions.loginSuccess, (state: AppState, action):AppState => {
         setInfo(action.data);
+        return state;
+    }),
+    on(api_actions.logOut, (state: AppState, action):AppState => {
+        localStorage.removeItem('token');
         return state;
     }),
     on(api_actions.getRouteDetailsuccess, (state: AppState, action): AppState => {

@@ -74,3 +74,13 @@ input{
     flex-direction: row;
     gap: 5px;
 }
+
+.bars{
+    align-self: flex-end;
+    margin-bottom: 20px;
+    margin-right: 30px;
+    color: #373a50;;
+    font-weight: 600;
+    font-size: 27px;
+    cursor: pointer;
+}

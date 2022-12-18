@@ -1,0 +1,38 @@
+
+<div class="input-section">
+    <div class="left-wrapper">
+        <div class="border"></div>
+        <span class="arrow material-symbols-outlined" (click)="navigate()">
+            keyboard_backspace
+        </span>
+        <span class="start material-symbols-outlined">
+            trip_origin
+        </span>
+        <span class="end material-symbols-outlined">
+            location_on
+        </span>
+    </div>
+    <div class="right-wrapper">
+        <div *ngIf="!disabled" class="swap-icon" (click)="swapPoints()">
+            <span class="swap material-symbols-outlined">
+                swap_vert
+            </span>
+        </div>
+        <div class="input-list">
+            <input readonly [value]="start" (click)="onClick('start')"
+                name="myInput" 
+                type="text" 
+                [placeholder]="startPlaceholder" 
+                class="text"
+                autocomplete="off">
+        </div>
+        <div class="input-list">
+            <input readonly [value]="end" (click)="onClick('dest')"
+                name="myInput" 
+                type="text" 
+                [placeholder]="endPlaceholder" 
+                class="text dest"
+                autocomplete="off">
+        </div>
+    </div>
+</div>

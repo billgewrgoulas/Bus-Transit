@@ -1,44 +1,13 @@
 
 <ng-container *ngIf="obs$ | async as obs">
 
-    <div class="input-section">
-        <div class="left-wrapper">
-            <div class="border"></div>
-            <span class="arrow material-symbols-outlined" (click)="navigate()">
-                keyboard_backspace
-            </span>
-            <span class="start material-symbols-outlined">
-                trip_origin
-            </span>
-            <span class="end material-symbols-outlined">
-                location_on
-            </span>
-        </div>
-        <div class="right-wrapper">
-            <div class="swap-icon" (click)="swap()">
-                <span class="swap material-symbols-outlined">
-                    swap_vert
-                </span>
-            </div>
-            <div class="input-list">
-                <input readonly [value]="obs.start" (click)="places('start')"
-                    name="myInput" 
-                    type="text" 
-                    placeholder="select start" 
-                    class="text"
-                    autocomplete="off">
-            </div>
-            <div class="input-list">
-                <input readonly [value]="obs.end" (click)="places('dest')"
-                    name="myInput" 
-                    type="text" 
-                    placeholder="search destination" 
-                    class="text dest"
-                    autocomplete="off">
-            </div>
-        </div>
-    </div>
-
+    <double-input (clicked)="places($event)"
+        [start]="obs.start"
+        [end]="obs.end"
+        [disabled]="disabled"
+        (swap)="swap()">
+    </double-input>
+    
 </ng-container>
 
-<router-outlet></router-outlet>
+<router-outlet (activate)="checkUrl()"></router-outlet>

@@ -1,9 +1,13 @@
 import { OnDestroy } from '@angular/core';
 import { AfterViewInit, Component, HostListener, OnInit, ViewChild } from '@angular/core';
 import { Router, RouterOutlet } from '@angular/router';
+import { Store } from '@ngrx/store';
 import { Subscription } from 'rxjs/internal/Subscription';
+import { AuthService } from 'src/app/modules/auth/services/auth.service';
 import { slideAnimation } from 'src/app/route-animations';
 import { DataShareService } from 'src/app/services/data-share.service';
+import { AppState } from 'src/app/state/Reducers/api-reducer';
+import * as api_actions from 'src/app/state/Actions/api-calls.actions';
 
 
 @Component({
@@ -21,7 +25,11 @@ export class SideNavComponent implements OnInit, AfterViewInit, OnDestroy {
   private el: any;
   private sub!: Subscription;
 
-  constructor(private msg: DataShareService, private router: Router) { }
+  constructor(
+    private msg: DataShareService, 
+    private router: Router,
+    private auth: AuthService,
+  ) { }
 
   ngOnInit(): void {
     this.msg.toggleObserver.subscribe(v => this.toggle());
@@ -39,19 +47,27 @@ export class SideNavComponent implements OnInit, AfterViewInit, OnDestroy {
     return outlet && outlet.activatedRouteData;
   }
 
-  public register(){
+  public logInOut(type: string){
     this.toggle();
-    this.router.navigate([{ outlets: { sidebar: ['auth', 'register'] }}]);
+    this.router.navigate([{ outlets: { sidebar: ['auth', type] }}]);
   }
 
-  public login(){
-    this.toggle();
-    this.router.navigate([{ outlets: { sidebar: ['auth', 'login'] }}]);
+  public logout(){
+    this.auth.removeUserInfo();
+    this.home();
   }
 
   public home(){
     this.toggle();
     this.router.navigate(['']);
+  }
+
+  public get user(){
+    return this.auth.getUserInfo();
+  }
+
+  public get authenticated(){
+    return this.auth.isAuthenticated();
   }
 
   @HostListener('window:resize', ['$event'])

@@ -21,6 +21,7 @@ export interface IRoute{
     direction: string;
     desc_eng: string;
     desc: string;
+    name: string;
     stopCodes: string;
     points: IPoint[];
 }

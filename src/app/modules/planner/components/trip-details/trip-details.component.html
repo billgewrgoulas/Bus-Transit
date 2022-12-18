@@ -2,7 +2,7 @@
 <ng-container *ngIf="trip$ | async as it else noItineraries">
     <div class="header">
         <h1>Itinerary Steps</h1>
-        <section class="book-menu" *ngIf="isAuthenticated()" (click)="book()">
+        <section class="book-menu" (click)="book()">
             <div class="example-button-row">
                 <button mat-stroked-button color="primary">Κράτηση</button>
             </div>
@@ -120,8 +120,9 @@
 
 <ng-template #noItineraries>
 
+    <h1>Itinerary Steps</h1>
     <div class="option-list">
-        <app-option [text]="'No itineraries found'"></app-option>
+        <app-option [text]="'No routes found'"></app-option>
     </div>
     
 </ng-template>

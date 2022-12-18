@@ -5,7 +5,7 @@
     <i class="fas fa-bars" (click)="toggle()"></i>
   </div>
   
-<form [formGroup]="credentials" action="javascript:void(0);" class="simple-form">
+<form [formGroup]="credentials" (ngSubmit)="register()" class="simple-form">
   
     <h1>Register</h1>
 
@@ -33,7 +33,7 @@
   
     <section>
         <div class="example-button-row">
-            <button (click)="register()" mat-stroked-button color="primary">Register</button>
+            <button mat-stroked-button color="primary">Register</button>
         </div>
     </section>
     

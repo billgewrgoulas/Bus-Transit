@@ -14,7 +14,10 @@ export class BookOptionsComponent implements OnInit {
   }
 
   public tripPlanner(): void{
-    this.router.navigate([{ outlets: { sidebar: [ 'routes', 'trip', 'options'] }}], {queryParams: {module: 'trip_options'}});
+    this.router.navigate([{ outlets: 
+      { sidebar: [ 'routes', 'trip', 'options'] }}], 
+      {queryParams: {module: 'trip_options'}
+    });
   }
 
 }

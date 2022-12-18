@@ -1,6 +1,4 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { Observable } from 'rxjs';
-import { ILine } from 'src/app/state/Entities/line.entity';
 
 @Component({
   selector: 'multiple-dropdown',
@@ -11,15 +9,15 @@ export class MultipleDropdownComponent implements OnInit{
 
   @Input() public title: string = '';
   @Input() public value: string = '';
-  @Input() public data$!: Observable<ILine[]>;
-  @Output() selectedValue: EventEmitter<ILine> = new EventEmitter<ILine>();
+  @Input() public data: any[] = [];
+  @Output() public selectedValue = new EventEmitter<any>();
 
   constructor() { }
 
   ngOnInit(): void {}
 
-  public select(line: ILine){
-    this.selectedValue.emit(line);
+  public select(data: any){
+    this.selectedValue.emit(data);
   }
 
 }
