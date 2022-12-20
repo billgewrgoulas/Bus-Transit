@@ -25,7 +25,7 @@
                     </mat-expansion-panel-header>
                     <div class="sumary-section">
                         <div class="header">
-                            <span class="malakas">Sumary</span>
+                            <span class="malakas">Summary</span>
                             <div class="inner-malakas">
                                 <i class="fas fa-map" (click)="onSelect()"></i>
                                 <section>
@@ -33,46 +33,6 @@
                                         <button class="custom-btn" mat-raised-button (click)="onBook()" color="primary">Κράτηση</button>
                                     </div>
                                 </section>
-                            </div>
-                        </div>
-                        <div class="field">
-                            <div class="title">
-                                Travel
-                            </div>
-                            <div class="value">
-                                {{it.startTime}}, {{getDate}}
-                            </div>
-                        </div>
-                        <div class="field">
-                            <div class="title">
-                                Arrive
-                            </div>
-                            <div class="value">
-                                {{it.endTime}}, {{getDate}}
-                            </div>
-                        </div>
-                        <div class="field">
-                            <div class="title">
-                                Duration
-                            </div>
-                            <div class="value">
-                                {{it.duration}} minutes
-                            </div>
-                        </div>
-                        <div class="field">
-                            <div class="title">
-                                Walk
-                            </div>
-                            <div class="value">
-                                {{it.walkDistance}} meters
-                            </div>
-                        </div>
-                        <div class="field">
-                            <div class="title">
-                                Waiting time
-                            </div>
-                            <div class="value">
-                                {{it.waitingTime}} minutes
                             </div>
                         </div>
                         <ng-container *ngFor="let leg of it.legs">
@@ -86,7 +46,7 @@
                             </div>
                             <div class="field" *ngIf="leg.mode == 'TRAM'">
                                 <div class="title">
-                                    Board at
+                                    From
                                 </div>
                                 <div class="value">
                                     {{leg.from.name}}({{leg.from.stopCode}}), {{leg.startTime}}
@@ -94,7 +54,7 @@
                             </div>
                             <div class="field" *ngIf="leg.mode == 'TRAM'">
                                 <div class="title">
-                                    Alight at
+                                    To
                                 </div>
                                 <div class="value">
                                     {{leg.to.name}}({{leg.to.stopCode}}), {{leg.endTime}}
@@ -105,7 +65,7 @@
                                     Available seats
                                 </div>
                                 <div class="value">
-                                    10
+                                    {{leg.occupancyStatus}}
                                 </div>
                             </div>
                         </ng-container>

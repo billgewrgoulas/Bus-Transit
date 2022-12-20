@@ -5,7 +5,7 @@ import { DataShareService } from 'src/app/services/data-share.service';
 import { AppState } from 'src/app/state/Reducers/api-reducer';
 import * as navigation from '../../../../state/Actions/navigation.actions';
 import { ActivatedRoute, Router } from '@angular/router';
-import { DirectionsStore } from 'src/app/state/LocalStore/directions.store';
+import { DirectionsStore } from 'src/app/modules/planner/state/directions.store';
 import * as select_actions from '../../../../state/Actions/select.actions';
 
 @Component({
@@ -13,7 +13,7 @@ import * as select_actions from '../../../../state/Actions/select.actions';
   templateUrl: './input.component.html',
   styleUrls: ['./input.component.css'],
 })
-export class InputComponent implements OnInit, OnDestroy {
+export class InputComponent implements OnInit {
 
   public obs$!: Observable<any>;
   public disabled: boolean = false;
@@ -25,10 +25,6 @@ export class InputComponent implements OnInit, OnDestroy {
   
   ngOnInit(): void {
     this.obs$ = this.local.getNames();
-  }
-
-  ngOnDestroy(): void{
-    this.local.updateStrategy('clear');
   }
 
   public swap(){

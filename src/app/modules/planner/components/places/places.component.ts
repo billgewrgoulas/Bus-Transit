@@ -3,7 +3,7 @@ import { ActivatedRoute } from '@angular/router';
 import { dir } from 'console';
 import { combineLatest, map, Observable, Subscription, take, tap } from 'rxjs';
 import { DataShareService } from 'src/app/services/data-share.service';
-import { DirectionsStore, TripState } from 'src/app/state/LocalStore/directions.store';
+import { DirectionsStore, TripState } from 'src/app/modules/planner/state/directions.store';
 
 @Component({
   selector: 'places-component',
@@ -40,10 +40,10 @@ export class PlacesComponent implements OnInit, OnDestroy {
   ngOnDestroy(): void {
     this.local.changeDirection('');
     this.msg.dragOff();
+    this.subs.forEach(s => s.unsubscribe());
   }
 
   public keyup(value: string){
-    console.log('value: ' + value);
     this.value = value;
     if(this.value == ''){
       this.local.updatePoint([]);

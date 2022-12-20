@@ -4,7 +4,10 @@ import { Store } from '@ngrx/store';
 import { DataShareService } from 'src/app/services/data-share.service';
 import * as nav_actions from 'src/app/state/Actions/navigation.actions';
 import * as api_actions from 'src/app/state/Actions/api-calls.actions';
+import { clearState, getMsg } from '../../state/message.reducer';
 import { AppState } from 'src/app/state/Reducers/api-reducer';
+import { Observable } from 'rxjs';
+
 
 @Component({
   selector: 'app-login',
@@ -14,14 +17,22 @@ import { AppState } from 'src/app/state/Reducers/api-reducer';
 export class LoginComponent implements OnInit {
 
   public credentials!: FormGroup;
+  public authMsg$!: Observable<string>;
 
-  constructor(private store: Store<AppState>, private msg: DataShareService) { }
+  constructor(
+    private store: Store<AppState>, 
+    private msg: DataShareService,
+    private auth: Store<Notification>
+  ) { }
 
   ngOnInit(): void {
     this.credentials = new FormGroup({
       email: new FormControl('', [Validators.required, Validators.minLength(3), Validators.email]),
       password: new FormControl('', [Validators.required, Validators.minLength(3)]),
     });
+
+    this.auth.dispatch(clearState());
+    this.authMsg$ = this.auth.select(getMsg);
   }
 
   public toggle(){

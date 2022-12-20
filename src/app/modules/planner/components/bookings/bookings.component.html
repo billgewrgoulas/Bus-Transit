@@ -1,0 +1,31 @@
+
+<input-field
+    [icon]="'search'"
+    [placeholder]="'search bookings'">
+</input-field>
+
+<div class="main">
+    <h1>My bookings</h1>
+    <div class="option-list">
+        <ng-container *ngIf="bookings$ | async as bookings else noBookings">
+            <ng-container *ngIf="bookings.length > 0 else noBookings">
+
+                <booking-component *ngFor="let booking of bookings"
+                    [booking]="booking"
+                    (cancel)="onCancel($event)"
+                    (map)="onMap($event)">
+                </booking-component>
+                
+            </ng-container>
+        </ng-container>
+    </div>
+</div>
+
+<ng-template #noBookings>
+
+    <app-option
+        [text]="'No bookings'"
+        [desc]="'Click to add'">
+    </app-option>
+
+</ng-template>

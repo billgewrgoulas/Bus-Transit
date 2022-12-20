@@ -1,14 +1,15 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { catchError, map, Observable, tap, throwError } from 'rxjs';
+import { catchError, map, Observable, of, tap, throwError } from 'rxjs';
 import { ILine } from '../state/Entities/line.entity';
 import { IRoute, IRouteInfo } from '../state/Entities/route.entity';
 import { IArrival } from '../state/Entities/live.data';
 import { IScheduleDetails } from '../state/Entities/schedule.entity';
 import { IStop } from '../state/Entities/stop.entity';
-import { TripState } from '../state/LocalStore/directions.store';
+import { TripState } from '../modules/planner/state/directions.store';
 import { Plan } from '../state/Entities/itinerary';
 import { Booking } from '../state/Entities/booking.entity';
+import { ofType } from '@ngrx/effects';
 
 @Injectable({
   providedIn: 'root'
@@ -22,7 +23,7 @@ export class DataService {
   constructor(private http: HttpClient) { 
     const headers = new HttpHeaders();
     headers.append('Content-Type', 'application/json');
-    this.options = {headers: headers, withCredentials: false};
+    this.options = {headers: headers, withCredentials: false};    
   }
 
   public getAllLines(): Observable<ILine[]>{
@@ -96,23 +97,29 @@ export class DataService {
   }
 
   public login(credentials: any): Observable<any>{
-    return this.http.post(this.url + '/login', credentials, this.options).pipe(
-      catchError(async (err) => console.log(err))
-    );
+    return this.http.post(this.url + '/login', credentials, this.options);
   }
 
   public register(credentials: any): Observable<any>{
-    return this.http.post(this.url + '/register', credentials, this.options).pipe(
-      map((res: any) => <any>res),
-      catchError(async (err) => console.log(err))
-    );
+    return this.http.post(this.url + '/register', credentials, this.options);
   }
 
   public book(data: Booking[]): Observable<any>{
-    return this.http.post(this.url + '/bookings/new', data, this.options).pipe(
-      map((res: any) => <any>res),
-      catchError(async (err) => console.log(err))
+    return this.http.post(this.url + '/bookings/new', data, {withCredentials: false, headers:{
+      Authorization: 'Bearer ' + this.token(),
+    }}).pipe(map((res: any) => <any>res), catchError(async (err) => console.log(err)));
+  }
+
+  public getBookings(): Observable<Booking[] | void>{
+    return this.http.get(this.url + '/bookings/get', {withCredentials: false, headers:{
+      Authorization: 'Bearer ' + this.token()}}).pipe(
+        map((res: any) => <Booking[]>res), 
+        catchError(async (err) => console.log(err))
     );
+  }
+
+  private token(){
+    return JSON.parse(localStorage.getItem('token')!);
   }
 
 }

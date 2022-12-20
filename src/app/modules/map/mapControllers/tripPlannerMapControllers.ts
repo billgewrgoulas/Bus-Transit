@@ -1,6 +1,6 @@
 import { Map } from "./map";
 import * as L from 'leaflet';
-import { TripState } from "src/app/state/LocalStore/directions.store";
+import { TripState } from "src/app/modules/planner/state/directions.store";
 import { Itinerary } from "src/app/state/Entities/itinerary";
 import { DataService } from "src/app/services/data.service";
 import { DataShareService } from "src/app/services/data-share.service";
@@ -87,6 +87,8 @@ export class TripPlannerMap extends Map{
 
         if(!it) return;
 
+        let shape: number[][] = [];
+
         it.legs.forEach(leg =>{
     
             const path: number[][] = leg.points.map(point => [+point[0], +point[1]]); 
@@ -103,12 +105,12 @@ export class TripPlannerMap extends Map{
             }
     
             if(leg.from.vertexType == 'TRANSIT'){
-                const marker = this.createMarker(leg.from.lat, leg.from.lon, stop.name, this.bus_stop_icon);
+                const marker = this.createMarker(leg.from.lat, leg.from.lon, leg.from.name, this.bus_stop_icon);
                 this.layerGroup.addLayer(marker);
             }
     
             if(leg.to.vertexType == 'TRANSIT'){
-                const marker = this.createMarker(leg.to.lat, leg.to.lon, stop.name, this.bus_stop_icon);
+                const marker = this.createMarker(leg.to.lat, leg.to.lon, leg.to.name, this.bus_stop_icon);
                 this.layerGroup.addLayer(marker);
             }
     
@@ -119,12 +121,13 @@ export class TripPlannerMap extends Map{
                 });
             }
           
+            shape = shape.concat(path);
             const polyline = this.createPolyline(path, color);
             polyline.bindPopup(text);
             this.layerGroup.addLayer(polyline);
         });
     
-        this.focusOnPath(this.start, this.end);
+        this.map.fitBounds(this.createPolyline(shape).getBounds());
     }
 
     public clearPoint(direction: string){

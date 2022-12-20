@@ -55,6 +55,7 @@ h1{
     color: #2e3e51;
     display: flex;
     flex-direction: row;
+    flex-wrap: nowrap;
 }
 
 .walk-steps, .bus-route{

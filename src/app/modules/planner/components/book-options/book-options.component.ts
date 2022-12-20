@@ -13,6 +13,13 @@ export class BookOptionsComponent implements OnInit {
   ngOnInit(): void {
   }
 
+  public myBookings(data: any): void{
+    this.router.navigate([{ outlets: 
+      { sidebar: [ 'routes', 'bookings'] }}], 
+      {queryParams: {module: 'trip_options'}
+    });
+  }
+
   public tripPlanner(): void{
     this.router.navigate([{ outlets: 
       { sidebar: [ 'routes', 'trip', 'options'] }}], 

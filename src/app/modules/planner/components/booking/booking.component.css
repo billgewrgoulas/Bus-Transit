@@ -1,0 +1,151 @@
+
+
+:host{
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    max-height: calc(100vh - 250px);
+    gap: 10px;
+    font: 400 14px/20px Roboto, "Helvetica Neue", sans-serif;
+}
+
+.entity-wrapper{
+    background: rgb(227,227,236);
+    background: linear-gradient(90deg, rgba(227,227,236,1) 0%, rgba(255,255,255,1) 100%);
+    box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
+    cursor: pointer;
+}
+
+.text-content{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 7px;
+}
+
+.description{
+    font-size: 14px;
+    color: #8190a4;
+}
+
+.option-text{
+    font-weight: 600;
+    color: #2e3e51;
+}
+
+.entity-container{
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: flex-start;
+    gap: 2px;
+    color: #545f6d;
+    font-size: 14px;
+    padding: 17px 15px 17px 20px;
+}
+
+.entity-type{
+    display: flex;
+    flex-direction: row;
+    gap: 10px;
+    margin-bottom: 10px;
+    width: 100%;
+}
+
+.entity-type>i{
+    padding-top: 2px;
+}
+
+.center{
+    align-self: center !important;
+    justify-self: center !important;
+}
+
+.icon{
+    font-size: 14px;
+}
+
+.bold{
+    color: #2e3e51;
+    font-size: 15px;
+}
+
+.text-content-no-incoming{
+    display: flex;
+    flex-direction: column;
+}
+
+.malakas{
+    color: #2e3e51;
+    font-weight: bold;
+    font-size: 16px;
+}
+
+.small-malakas{
+    color: #2e3e51;
+    font-weight: bold;
+    font-size: 14px;
+}
+
+.right{
+    display: flex;
+    flex-direction: row;
+    gap: 7px;
+}
+
+.header{
+    justify-content: space-between !important;
+    align-items: center;
+}
+
+
+::ng-deep .mat-flat-button.mat-primary, .mat-raised-button.mat-primary, .mat-fab.mat-primary, .mat-mini-fab.mat-primary {
+    background-color: #002D62;
+}
+
+::ng-deep .mat-raised-button {
+    min-width: unset !important;
+    line-height: unset !important;
+    padding: 1px 5px 0px 5px !important;
+    font-size: 14px !important;
+}
+
+::ng-deep .mat-expansion-panel-header-title, .mat-expansion-panel-header-description {
+    margin-right: 0px !important;
+}
+
+.book-menu{
+    margin-left: 5px;
+}
+
+::ng-deep .mat-button.mat-primary, .mat-icon-button.mat-primary, .mat-stroked-button.mat-primary {
+    color: #2b3b4c !important;
+}
+
+::ng-deep .mat-button, .mat-icon-button, .mat-stroked-button {
+    background: rgb(0 0 0 / 10%) !important;
+}
+
+button{
+    font-size: 14px !important;
+    font-weight: bold;
+}
+
+.fa-map{
+    font-size: 20px !important;
+    padding: 6px 6px 6px 6px !important;
+    transition-duration: .4s;
+    border-radius: 3px;
+    color: #002D62;
+}
+
+.fa-map:hover{
+    background: #b7cbe4;
+}
+
+.left{
+    display: flex;
+    flex-direction: row;
+    gap: 5px;
+    align-items: center;
+}

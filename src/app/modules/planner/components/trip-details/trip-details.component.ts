@@ -8,7 +8,7 @@ import * as select_actions from 'src/app/state/Actions/select.actions';
 import * as api_actions from 'src/app/state/Actions/api-calls.actions';
 import { DataShareService } from 'src/app/services/data-share.service';
 import { AuthService } from 'src/app/modules/auth/services/auth.service';
-import { DirectionsStore } from 'src/app/state/LocalStore/directions.store';
+import { DirectionsStore } from 'src/app/modules/planner/state/directions.store';
 
 @Component({
   selector: 'app-trip-details',

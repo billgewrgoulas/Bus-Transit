@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { AsyncSubject, ReplaySubject, Subject, BehaviorSubject, Observable, take} from 'rxjs';
 import { IArrival } from '../state/Entities/live.data';
-import { TripState } from '../state/LocalStore/directions.store';
+import { TripState } from '../modules/planner/state/directions.store';
 import { IStop } from '../state/Entities/stop.entity';
 
 @Injectable({

@@ -14,7 +14,7 @@
         [data]="['trip_planner']">
     </app-option>
     
-    <app-option
+    <app-option (onSelect)="myBookings($event)"
         [icon]="'list'"
         [text]="'My bookings'"
         [data]="['bookings']">

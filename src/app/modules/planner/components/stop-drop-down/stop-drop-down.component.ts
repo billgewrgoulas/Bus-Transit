@@ -4,7 +4,7 @@ import { Store } from '@ngrx/store';
 import { debounceTime, distinctUntilChanged, filter, Observable, Subscription, switchMap, take } from 'rxjs';
 import { DataShareService } from 'src/app/services/data-share.service';
 import { DataService } from 'src/app/services/data.service';
-import { DirectionsStore, TripState } from 'src/app/state/LocalStore/directions.store';
+import { DirectionsStore, TripState } from 'src/app/modules/planner/state/directions.store';
 import { IStop } from 'src/app/state/Entities/stop.entity';
 import { AppState } from 'src/app/state/Reducers/api-reducer';
 import { filterStops } from 'src/app/state/Selectors/appState.selectors';

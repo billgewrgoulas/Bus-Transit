@@ -30,6 +30,10 @@
         <mat-error *ngIf="errors('password', 'minlength')">at least 3 characters</mat-error>
         <mat-error *ngIf="errors('password', 'required')">password is required</mat-error>
     </mat-form-field>
+
+    <div class="error-msg" *ngIf="authMsg$ | async as msg">
+        {{msg}}
+    </div>
   
     <section>
         <div class="example-button-row">

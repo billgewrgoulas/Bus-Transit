@@ -96,3 +96,9 @@ button{
     font-size: 17px !important;
     font-weight: bold;
 }
+
+.error-msg{
+    color: red;
+    align-self: center;
+    margin-bottom: 10px;
+}

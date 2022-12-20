@@ -1,0 +1,31 @@
+
+<div class="entity-wrapper" *ngIf="booking">
+    <div class="entity-container">
+        <div class="entity-type header">
+            <div class="right">
+                <span class="malakas">Route</span>
+                <span class="option-text">{{booking.route}}</span>
+            </div>
+            <div class="left">
+                <i (click)="onMap()" class="fas fa-map"></i>
+                <section class="book-menu">
+                    <div class="example-button-row">
+                        <button mat-stroked-button color="primary">Ακύρωση</button>
+                    </div>
+                </section>
+            </div>
+        </div>
+        <div class="text-content">
+            <span class="small-malakas">From</span>
+            <span class="description">{{booking.start}}({{booking.startStop}})</span>
+        </div>
+        <div class="text-content">
+            <span class="small-malakas">To</span>
+            <span class="description">{{booking.end}}({{booking.endStop}})</span>
+        </div>
+        <div class="text-content">
+            <span class="small-malakas">Travel</span>
+            <span class="description">{{booking.travel}}</span>
+        </div>
+    </div>
+</div>

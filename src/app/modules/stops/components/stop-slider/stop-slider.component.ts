@@ -6,7 +6,7 @@ import { ILine } from 'src/app/state/Entities/line.entity';
 import { IArrival } from 'src/app/state/Entities/live.data';
 import { IRoute } from 'src/app/state/Entities/route.entity';
 import { IStop } from 'src/app/state/Entities/stop.entity';
-import { StopsStore } from 'src/app/state/LocalStore/stop.store';
+import { StopsStore } from 'src/app/modules/stops/state/stop.store';
 import { AppState } from 'src/app/state/Reducers/api-reducer';
 import { getActiveStop, getRouteList, getStopLines } from 'src/app/state/Selectors/appState.selectors';
 

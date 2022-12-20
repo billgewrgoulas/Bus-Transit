@@ -203,12 +203,20 @@ export const newBooking = (email: string, it: number) =>
                     stops = stops.concat(leg.intermediateStops.map(v => v.stopCode));
 
                     const booking: Booking = {
-                        trip_id: +leg.tripId.split(":")[1],
+                        trip_id: +leg.tripId,
                         user_id: email,
                         startStop: leg.from.stopCode!,
                         endStop: leg.to.stopCode!,
                         slug: plan.slug,
                         it: it,
+                        start: leg.from.name,
+                        end: leg.to.name,
+                        route: leg.routeId,
+                        travel: leg.startTime + ', ' + leg.serviceDate,
+                        arrive: leg.endTime + ', ' + leg.serviceDate,
+                        fromPlace: leg.from.lat + ',' + leg.from.lon,
+                        toPlace: leg.to.lat + ',' + leg.to.lon,
+                        arriveBy: plan.arriveBy,
                         stopCodes: stops
                     };
                     

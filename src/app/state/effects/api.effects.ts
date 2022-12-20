@@ -1,7 +1,7 @@
 import { Injectable } from "@angular/core";
 import { Store } from "@ngrx/store";
 import { Actions, concatLatestFrom, createEffect, ofType } from "@ngrx/effects";
-import { catchError, filter, map, of, switchMap, take, withLatestFrom } from "rxjs";
+import { catchError, filter, map, of, switchMap, take, tap, withLatestFrom } from "rxjs";
 import { DataService } from "src/app/services/data.service";
 import * as api_actions from '../Actions/api-calls.actions';
 import * as nav_actions from '../Actions/navigation.actions';
@@ -12,6 +12,7 @@ import { IRoute, IRouteInfo } from "../Entities/route.entity";
 import { IScheduleDetails } from "../Entities/schedule.entity";
 import { IStop } from "../Entities/stop.entity";
 import { Plan } from "../Entities/itinerary";
+import { Router } from "@angular/router";
 
 @Injectable()
 export class ApiEffects{
@@ -19,7 +20,7 @@ export class ApiEffects{
     constructor(
         private dataService: DataService, 
         private actions$: Actions, 
-        private store: Store<AppState>
+        private store: Store<AppState>,
     ){}
 
     loadLines$ = createEffect(()=>
@@ -116,25 +117,20 @@ export class ApiEffects{
     login$ = createEffect(() => 
         this.actions$.pipe(
             ofType(api_actions.login),
-            switchMap((action) => this.dataService.login(action.data)),
-            map(res => api_actions.loginSuccess({data: res})),
-            catchError(() => of(api_actions.loginError()))
+            switchMap((action) => this.dataService.login(action.data).pipe(
+                map(res => api_actions.loginSuccess({data: res})),
+                catchError((err) => of(api_actions.loginError({msg: err})))
+            )),
         )
     );
 
     register$ = createEffect(() => 
         this.actions$.pipe(
             ofType(api_actions.register),
-            switchMap((action) => this.dataService.register(action.credentials)),
-            map(res => api_actions.registerSuccess({data: res})),
-            catchError(() => of(api_actions.registerError()))
-        )
-    );
-
-    loggedInSuccess$ = createEffect(() => 
-        this.actions$.pipe(
-            ofType(api_actions.registerSuccess, api_actions.loginSuccess),
-            map(() => nav_actions.arrowNavigation())
+            switchMap((action) => this.dataService.register(action.credentials).pipe(
+                map(res => api_actions.registerSuccess({data: res})),
+                catchError((err) => of(api_actions.registerError({msg: err}))),
+            )),
         )
     );
 

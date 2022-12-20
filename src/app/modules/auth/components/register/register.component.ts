@@ -6,6 +6,8 @@ import { AppState } from 'src/app/state/Reducers/api-reducer';
 import * as nav_actions from 'src/app/state/Actions/navigation.actions';
 import * as api_actions from 'src/app/state/Actions/api-calls.actions';
 import { AuthService } from '../../services/auth.service';
+import { Observable } from 'rxjs';
+import { clearState, getMsg, getNotificationState } from '../../state/message.reducer';
 
 @Component({
   selector: 'register-component',
@@ -15,10 +17,12 @@ import { AuthService } from '../../services/auth.service';
 export class RegisterComponent implements OnInit {
 
   public credentials!: FormGroup;
+  public authMsg$!: Observable<string>;
 
   constructor(
     private store: Store<AppState>, 
     private msg: DataShareService, 
+    private authStore: Store<Notification>
   ) { }
 
   ngOnInit(): void {
@@ -27,6 +31,9 @@ export class RegisterComponent implements OnInit {
       email: new FormControl('', [Validators.required, Validators.minLength(3), Validators.email]),
       password: new FormControl('', [Validators.required, Validators.minLength(3)]),
     });
+
+    this.authStore.dispatch(clearState());
+    this.authMsg$ = this.authStore.select(getMsg);
   }
 
   public toggle(){

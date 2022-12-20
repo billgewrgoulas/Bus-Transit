@@ -31,6 +31,7 @@ export interface Leg{
     serviceDate: string;
     agencyName: string;
     agencyTimeZoneOffset: number;
+    occupancyStatus: number;
     startTime: string;
     endTime: string;
     distance: string;
@@ -59,6 +60,7 @@ export interface Itinerary{
 
 export interface Plan{
     date: string;
+    arriveBy: string;
     from: Vertex;
     to: Vertex;
     slug: string;

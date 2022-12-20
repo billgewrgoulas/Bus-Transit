@@ -17,11 +17,13 @@ import { TripListComponent } from './components/trip-list/trip-list.component';
 import {MatExpansionModule} from '@angular/material/expansion';
 import {MatButtonModule} from '@angular/material/button';
 import { TripDetailsComponent } from './components/trip-details/trip-details.component';
-import { DirectionsStore } from 'src/app/state/LocalStore/directions.store';
+import { DirectionsStore } from 'src/app/modules/planner/state/directions.store';
 import { PlacesComponent } from './components/places/places.component';
 import {MatMenuModule} from '@angular/material/menu';
 import { AuthModule } from '../auth/auth.module';
 import { BookOptionsComponent } from './components/book-options/book-options.component';
+import { BookingsComponent } from './components/bookings/bookings.component';
+import { BookingComponent } from './components/booking/booking.component';
 
 
 @NgModule({
@@ -34,6 +36,8 @@ import { BookOptionsComponent } from './components/book-options/book-options.com
     TripDetailsComponent,
     PlacesComponent,
     BookOptionsComponent,
+    BookingsComponent,
+    BookingComponent
   ],
   imports: [
     CommonModule,

@@ -6,16 +6,16 @@
         [placeholder]="'search start'"
         [type]="'start'"
         [value]="value"
-        (onType)="keyup($event)"
-    ></input-field>
+        (onType)="keyup($event)">
+    </input-field>
 
     <input-field *ngIf="direction=='dest'"
         [icon]="'location_on'"
         [placeholder]="'search destination'"
         [type]="'dest'"
         [value]="value"
-        (onType)="keyup($event)"
-    ></input-field>
+        (onType)="keyup($event)">
+    </input-field>
 
     <div class="slider-wrapper">
         <mat-tab-group mat-stretch-tabs animationDuration="300ms">

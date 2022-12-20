@@ -7,4 +7,12 @@ export interface Booking{
     slug: string;
     it: number;
     stopCodes: string[];
+    start: string;
+    end: string;
+    route: string;
+    travel: string;
+    arrive: string;
+    fromPlace: string;
+    toPlace: string;
+    arriveBy: string;
 }

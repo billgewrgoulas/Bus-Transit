@@ -1,12 +1,10 @@
 import { createAction, props } from "@ngrx/store";
-import { TripState } from "../LocalStore/directions.store";
+import { TripState } from "../../modules/planner/state/directions.store";
 import { ILine } from "../Entities/line.entity";
 import { IRoute, IRouteInfo } from "../Entities/route.entity";
 import { IScheduleDetails } from "../Entities/schedule.entity";
 import { IStop } from "../Entities/stop.entity";
-import { Itinerary, Plan } from "../Entities/itinerary";
-import { Booking } from "../Entities/booking.entity";
-import { create } from "domain";
+import { Plan } from "../Entities/itinerary";
 
 /* Fetch all lines based on station name, bus... */
 export const getLines = createAction('[API] GET Lines');
@@ -51,13 +49,13 @@ export const fetchPlanError = createAction('[API] Get plan error');
 /* Login actions */
 export const login = createAction('[API] Initiate login', props<{data: any}>());
 export const loginSuccess = createAction('[API] Login success', props<{data: any}>());
-export const loginError = createAction('[API] Login failed');
+export const loginError = createAction('[API] Login failed', props<{msg: any}>());
 export const logOut = createAction('[Local] Logout');
 
 /* Register */
 export const register = createAction('[API] Initiate register', props<{credentials: any}>());
 export const registerSuccess = createAction('[API] Register success', props<{data: any}>());
-export const registerError = createAction('[API], Register failed');
+export const registerError = createAction('[API], Register failed', props<{msg: any}>());
 
 /* Booking actions */
 export const book = createAction('[API] Book Itinerary', props<{email: string, it: number}>());

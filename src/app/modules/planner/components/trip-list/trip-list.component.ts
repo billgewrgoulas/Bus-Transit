@@ -5,7 +5,7 @@ import { Observable, Subscriber, Subscription } from 'rxjs';
 import { AuthService } from 'src/app/modules/auth/services/auth.service';
 import { DataShareService } from 'src/app/services/data-share.service';
 import { Plan } from 'src/app/state/Entities/itinerary';
-import { DirectionsStore } from 'src/app/state/LocalStore/directions.store';
+import { DirectionsStore } from 'src/app/modules/planner/state/directions.store';
 import { AppState } from 'src/app/state/Reducers/api-reducer';
 import { getPlanState } from 'src/app/state/Selectors/appState.selectors';
 import * as api_actions from 'src/app/state/Actions/api-calls.actions';
@@ -28,7 +28,6 @@ export class TripListComponent implements OnInit {
 
   ngOnInit(): void {
     this.plan$ = this.store.select(getPlanState);
-    this.local.initFetch();
   }
 
   public onSelect(itinerary: number){

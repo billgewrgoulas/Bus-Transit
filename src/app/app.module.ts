@@ -22,6 +22,8 @@ import { SocketIOService } from './services/socket-io.service';
 import { SocketEffects } from './state/Effects/socket.effects';
 import { RouterEffects } from './state/Effects/router.effects';
 import { CustomSerializer } from './state/Selectors/custom-route-serializer';
+import { AuthEffects } from './modules/auth/state/auth.effects';
+import { authReducer } from './modules/auth/state/message.reducer';
 
 
 @NgModule({
@@ -40,8 +42,8 @@ import { CustomSerializer } from './state/Selectors/custom-route-serializer';
     SidebarModule,
     MapModule,
     HttpClientModule,
-    StoreModule.forRoot({api: appStateReducer, router: routerReducer}),
-    EffectsModule.forRoot([ApiEffects, SocketEffects, RouterEffects]),
+    StoreModule.forRoot({api: appStateReducer, router: routerReducer, auth: authReducer}),
+    EffectsModule.forRoot([ApiEffects, SocketEffects, RouterEffects, AuthEffects]),
     StoreDevtoolsModule.instrument({ maxAge: 25, logOnly: environment.production }),
     StoreRouterConnectingModule.forRoot({serializer: CustomSerializer, stateKey: 'router'})
   ],

@@ -6,6 +6,7 @@ import * as select_actions from '../Actions/select.actions';
 import * as api_actions from '../Actions/api-calls.actions';
 import { inititialSchdeduleState, ScheduleState, scheduleStateAdapter } from "../Entities/schedule.entity";
 import { Plan } from "../Entities/itinerary";
+import { Booking } from "../Entities/booking.entity";
 
 export interface AppState{
     stops: StopState;
@@ -69,14 +70,6 @@ export const appStateReducer = createReducer(
     on(select_actions.module, (state: AppState, action): AppState => {
         return {...state, module: action.module};
     }),
-    on(api_actions.registerSuccess, api_actions.loginSuccess, (state: AppState, action):AppState => {
-        setInfo(action.data);
-        return state;
-    }),
-    on(api_actions.logOut, (state: AppState, action):AppState => {
-        localStorage.removeItem('token');
-        return state;
-    }),
     on(api_actions.getRouteDetailsuccess, (state: AppState, action): AppState => {
         return {...state, stops: stopStateAdapter.addMany(action.routeInfo.stops, state.stops), 
                 routes: routeStateAdapter.updateOne({id: action.routeInfo.code, changes: 
@@ -84,7 +77,3 @@ export const appStateReducer = createReducer(
         };
     }),
 );
-
-const setInfo = (token: any) =>  {
-    localStorage.setItem('token', JSON.stringify(token.access_token));
-}

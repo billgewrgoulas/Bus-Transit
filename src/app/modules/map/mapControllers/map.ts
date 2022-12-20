@@ -29,7 +29,7 @@ export abstract class Map{
         this.map.setView(this.center, 13);
     }
 
-    protected createPolyline(path: number[][], color: string, text?: string){
+    protected createPolyline(path: number[][], color?: string, text?: string){
         const polyline = L.polyline(<LatLngExpression[]>path, {color: color});
         return polyline;
     }

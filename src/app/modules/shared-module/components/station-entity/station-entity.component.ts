@@ -7,7 +7,7 @@ import { AppState } from 'src/app/state/Reducers/api-reducer';
 import * as navigation from'../../../../state/Actions/navigation.actions';
 import * as actions from '../../../../state/Actions/api-calls.actions';
 import { getActiveStop } from 'src/app/state/Selectors/appState.selectors';
-import { LiveDataStore } from 'src/app/state/LocalStore/live.data.store';
+import { LiveDataStore } from 'src/app/modules/lines/state/live.data.store';
 import { IArrival } from 'src/app/state/Entities/live.data';
 
 @Component({
