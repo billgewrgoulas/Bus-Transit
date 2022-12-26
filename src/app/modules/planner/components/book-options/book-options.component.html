@@ -1,23 +1,28 @@
 
-<div class="option-list">
+<div class="main">
 
-    <h1>Options</h1>
-    <app-option (onSelect)="tripPlanner()"
-        [icon]="'route'"
-        [text]="'Book a trip'"
-        [data]="['trip_planner']">
-    </app-option>
+    <div class="option-list">
 
-    <app-option
-        [icon]="'save'"
-        [text]="'Saved trips'"
-        [data]="['trip_planner']">
-    </app-option>
+        <h1>Options</h1>
+        <app-option (onSelect)="tripPlanner()"
+            [icon]="'route'"
+            [text]="'Book a trip'"
+            [data]="['trip_planner']">
+        </app-option>
     
-    <app-option (onSelect)="myBookings($event)"
-        [icon]="'list'"
-        [text]="'My bookings'"
-        [data]="['bookings']">
-    </app-option>
-
+        <app-option
+            [icon]="'save'"
+            [text]="'Saved trips'"
+            [data]="['trip_planner']">
+        </app-option>
+        
+        <app-option (onSelect)="myBookings($event)"
+            [icon]="'list'"
+            [text]="'My bookings'"
+            [data]="['bookings']">
+        </app-option>
+    
+    </div>
 </div>
+
+

@@ -13,7 +13,7 @@ export class SidebarOptionsComponent implements OnInit {
     {text: 'Lines', icon: 'route', desc: 'Display line information', link: ['lines', 'lines_load']},
     {text: 'Stops', icon: 'where_to_vote', desc: 'Display stop information', link: ['stops', 'stops_module']},
     {text: 'Trip planner', icon: 'directions', desc: 'Get directions and plan trips', link: ['routes', 'trip_module']},
-    {text: 'Bookings', icon: 'departure_board', desc: 'Book a route', link: ['bookings', 'bookings_module']},
+    {text: 'Bookings', icon: 'departure_board', desc: 'Book a route', link: [[ 'routes', 'bookings'], 'trip_options']},
     {text: 'Saved information', icon: 'file_present', desc: 'Saved lines, stops...'},
   ];
 
@@ -23,7 +23,7 @@ export class SidebarOptionsComponent implements OnInit {
     this.msg.clearLayers();
   }
 
-  public onSelect(data: string[]){
+  public onSelect(data: string[] | string[][]){
     this.router.navigate([{ outlets: { sidebar: data[0] }}], {queryParams: {module: data[1]}});
   }
 

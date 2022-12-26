@@ -1,0 +1,8 @@
+
+:host{
+    width: 23.8vw;
+    display: flex;
+    flex-direction: column;
+    font-family: "Lexend Deca",sans-serif;
+    align-items: center;
+}

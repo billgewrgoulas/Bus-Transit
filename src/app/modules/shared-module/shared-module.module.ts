@@ -9,6 +9,9 @@ import { FormsModule } from "@angular/forms";
 import { MultipleDropdownComponent } from './components/multiple-dropdown/multiple-dropdown.component';
 import { DropdownOptionComponent } from './components/dropdown-option/dropdown-option.component';
 import { DoubleInputComponent } from './components/double-input/double-input.component';
+import { SpinnerComponent } from './components/spinner/spinner.component';
+import { ToasterComponent } from 'src/app/modules/shared-module/components/toaster/toaster.component';
+import {MatSnackBarModule} from '@angular/material/snack-bar';
 
 @NgModule({
   declarations: [
@@ -18,12 +21,15 @@ import { DoubleInputComponent } from './components/double-input/double-input.com
     MainInputComponent,
     MultipleDropdownComponent,
     DropdownOptionComponent,
-    DoubleInputComponent
+    DoubleInputComponent,
+    SpinnerComponent,
+    ToasterComponent
   ],
   imports: [
     CommonModule, 
     RouterModule, 
     FormsModule,
+    MatSnackBarModule
   ],
   exports: [
     OptionComponent, 
@@ -32,7 +38,9 @@ import { DoubleInputComponent } from './components/double-input/double-input.com
     MainInputComponent,
     MultipleDropdownComponent,
     DropdownOptionComponent,
-    DoubleInputComponent
+    DoubleInputComponent,
+    SpinnerComponent,
+    ToasterComponent
   ],
 })
 export class SharedModule { }

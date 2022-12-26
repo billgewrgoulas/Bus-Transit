@@ -26,8 +26,10 @@ export class ApiEffects{
     loadLines$ = createEffect(()=>
         this.actions$.pipe(
             ofType(api_actions.getLines), take(1),
-            switchMap(() => this.dataService.getAllLines()),
-            map((response: ILine[]) => api_actions.getLinesSuccess({lines: response}))
+            switchMap(() => this.dataService.getAllLines().pipe(
+                map((response: ILine[]) => api_actions.getLinesSuccess({lines: response})),
+                catchError((err) => of(api_actions.getLinesError({msg: err.error})))
+            )),
         )     
     );
 
@@ -36,8 +38,10 @@ export class ApiEffects{
             ofType(api_actions.getLineRoutes),
             withLatestFrom(this.store.select(selectCurrentLineRoutes)),
             filter(([action, routes]) => routes.length == 0),
-            switchMap(([action, line]) => this.dataService.getLineRoutes(action.id)),
-            map((response: IRoute[]) => api_actions.getLineRoutesSuccess({routes: response})),
+            switchMap(([action, line]) => this.dataService.getLineRoutes(action.id).pipe(
+                map((response: IRoute[]) => api_actions.getLineRoutesSuccess({routes: response})),
+                catchError(err => of(api_actions.getLineRoutesError({msg: err.error})))
+            )),
         )
     );
 
@@ -46,8 +50,10 @@ export class ApiEffects{
             ofType(api_actions.getRouteDetails),
             concatLatestFrom((action) => this.store.select(selectRoutePoints(action.code))),
             filter(([action, points]) => !points || points.length === 0),
-            switchMap(([action, points]) => this.dataService.getRouteDetails(action.code)),
-            map((response: IRouteInfo) => api_actions.getRouteDetailsuccess({routeInfo: response}))
+            switchMap(([action, points]) => this.dataService.getRouteDetails(action.code).pipe(
+                map((response: IRouteInfo) => api_actions.getRouteDetailsuccess({routeInfo: response})),
+                catchError(err => of(api_actions.getRouteDetailsError({msg: err.error})))
+            )),
         )
     );
 
@@ -56,32 +62,20 @@ export class ApiEffects{
             ofType(api_actions.getSchedules),
             withLatestFrom(this.store.select(getActiveRouteSchedules)),
             filter(([action, schedules]) => !schedules),
-            switchMap(([action]) => this.dataService.getRouteSchedules(action.code)),
-            map((response: IScheduleDetails) => api_actions.getSchedulesSuccess({schedules: response}))
-        )
-    );
-
-    loadFilteredStops$ = createEffect(() => 
-        this.actions$.pipe(
-            ofType(api_actions.getFilteredStops),
-            switchMap((action) => this.dataService.getFilteredStops(action.stopCode)),
-            map((response: IStop[]) => api_actions.getFilteredStopsSuccess({stops: response}))
+            switchMap(([action]) => this.dataService.getRouteSchedules(action.code).pipe(
+                map((response: IScheduleDetails) => api_actions.getSchedulesSuccess({schedules: response})),
+                catchError(err => of(api_actions.getSchedulesError({msg: err.error})))
+            )),
         )
     );
 
     loadStopRoutes$ = createEffect(() => 
         this.actions$.pipe(
             ofType(api_actions.stopRoutes),
-            switchMap((action) => this.dataService.getRoutesByStop(action.stopCode)),
-            map((response: IRoute[]) => api_actions.stopRoutesSuccess({routes: response}))
-        )
-    );
-
-    loadSearchedPaths$ = createEffect(() => 
-        this.actions$.pipe(
-            ofType(api_actions.getFilteredRoutes),
-            switchMap((action) => this.dataService.getFilteredRoutes(action.data)),
-            map((res: IRoute[]) => api_actions.routesFilteredSuccess({routes: res, add: undefined}))
+            switchMap((action) => this.dataService.getRoutesByStop(action.stopCode).pipe(
+                map((response: IRoute[]) => api_actions.stopRoutesSuccess({routes: response})),
+                catchError(err => of(api_actions.stopRoutesError({msg: err.error})))
+            ))
         )
     );
 
@@ -89,7 +83,20 @@ export class ApiEffects{
         this.actions$.pipe(
             ofType(api_actions.fetchPlan),
             filter(({data}) => !!data),
-            switchMap(({data}) => this.dataService.getPlan(data)),
+            tap(() => this.store.dispatch(api_actions.showSpinner())),
+            switchMap(({data}) => this.dataService.getPlan(data).pipe(
+                map((response: Plan) => api_actions.fetchPlanSuccess({data: response})),
+                catchError(err => of(api_actions.fetchPlanError({msg: err})))
+            ))
+        )
+    );
+
+    loadBookingPlan$ = createEffect(() => 
+        this.actions$.pipe(
+            ofType(api_actions.getItinerary),
+            filter(({data}) => !!data),
+            tap(() => this.store.dispatch(api_actions.showSpinner())),
+            switchMap(({data}) => this.dataService.getBookingPlan(data).pipe()),
             map((response: Plan) => api_actions.fetchPlanSuccess({data: response}))
         )
     );
@@ -99,19 +106,11 @@ export class ApiEffects{
             ofType(api_actions.getStops),
             withLatestFrom(this.store.select(getAllStops)),
             filter(([action, stops]) => stops.length == 0),
-            switchMap(() => this.dataService.getAllStops()),
-            map((response: IStop[]) => api_actions.getStopsSuccess({stops: response}))
+            switchMap(() => this.dataService.getAllStops().pipe(
+                map((response: IStop[]) => api_actions.getStopsSuccess({stops: response})),
+                catchError(err => of(api_actions.getStopsError({msg: err})))
+            ))      
         )     
-    );
-
-    book$ = createEffect(() => 
-        this.actions$.pipe(
-            ofType(api_actions.book),
-            concatLatestFrom((action) => this.store.select(newBooking(action.email, action.it))),
-            filter(([action, data]) => data.length > 0),
-            switchMap(([action, data]) => this.dataService.book(data)),
-            map(res => api_actions.bookSuccess({data: res}))
-        )
     );
 
     login$ = createEffect(() => 

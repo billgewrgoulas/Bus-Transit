@@ -13,3 +13,4 @@ import { createAction, props } from "@ngrx/store";
 
 /* Change Module */ 
 export const module = createAction('Change Modle', props<{module: string}>());
+export const updateOccupancy = createAction('Update occupancy', props<{value: number, trip_ids: number[]}>());

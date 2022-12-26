@@ -1,18 +1,23 @@
 
 
-<h1>Itineraries</h1>
-<div class="option-list" *ngIf="plan$ | async as plan else noItineraries">
+<div class="main" *ngIf="vm$ | async as vm else noItineraries">
 
-    <ng-container *ngIf="plan.itineraries.length > 0 else noItineraries" >
-        <trip-component *ngFor="let it of plan.itineraries let i=index"
+    <spinner-component *ngIf="vm.spinner || vm.state.book"></spinner-component>
+    <toaster-component [msg$]="vm.state.toaster"></toaster-component>
+
+    <h1>Itineraries</h1>
+    <div class="option-list" *ngIf="vm.plan && vm.plan.itineraries.length > 0 else noItineraries">
+
+        <trip-component *ngFor="let it of vm.plan.itineraries let i=index"
             (msg)="onSelect($event)"
             (book)="onBook($event)"
             [itinerary]="it"
-            [date]="plan.date"
-            [data]="i">
+            [date]="vm.plan.date"
+            [data]="i"
+            [occupancy]="vm.occupancy">
         </trip-component>
-    </ng-container>
-    
+
+    </div>
 </div>
 
 <ng-template #noItineraries>

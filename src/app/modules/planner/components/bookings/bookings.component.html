@@ -1,19 +1,25 @@
 
-<input-field
+<input-field (onType)="filter($event)"
     [icon]="'search'"
     [placeholder]="'search bookings'">
 </input-field>
 
-<div class="main">
+<div class="main" *ngIf="state$ | async as state">
+
+    <spinner-component *ngIf="state.fetch || state.delete_index != -1"></spinner-component>
+    <toaster-component [msg$]="state.toaster"></toaster-component>
+
     <h1>My bookings</h1>
     <div class="option-list">
         <ng-container *ngIf="bookings$ | async as bookings else noBookings">
             <ng-container *ngIf="bookings.length > 0 else noBookings">
 
-                <booking-component *ngFor="let booking of bookings"
+                <booking-component *ngFor="let booking of bookings; let i=index"
                     [booking]="booking"
+                    [index]="i"
                     (cancel)="onCancel($event)"
-                    (map)="onMap($event)">
+                    (map)="onMap($event)"
+                    (qr)="showQR($event)">
                 </booking-component>
                 
             </ng-container>
@@ -23,7 +29,7 @@
 
 <ng-template #noBookings>
 
-    <app-option
+    <app-option (onSelect)="tripPlanner()"
         [text]="'No bookings'"
         [desc]="'Click to add'">
     </app-option>

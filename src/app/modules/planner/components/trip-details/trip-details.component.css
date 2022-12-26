@@ -1,7 +1,6 @@
 
 :host{
     width: 100%;
-    padding: 15px 15px 0px 15px;
 }
 
 .option-list{
@@ -12,6 +11,16 @@
     max-height: calc(100vh - 270px);
     gap: 5px;
     padding-right: 3px;
+}
+
+.main{
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    width: 100%;
+    padding: 0px 15px 0px 15px;
+    height: calc(100vh - 183px);
+    position: relative;
 }
 
 h1{

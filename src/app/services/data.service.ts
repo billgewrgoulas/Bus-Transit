@@ -107,7 +107,7 @@ export class DataService {
   public book(data: Booking[]): Observable<any>{
     return this.http.post(this.url + '/bookings/new', data, {withCredentials: false, headers:{
       Authorization: 'Bearer ' + this.token(),
-    }}).pipe(map((res: any) => <any>res), catchError(async (err) => console.log(err)));
+    }}).pipe(map((res: any) => <any>res));
   }
 
   public getBookings(): Observable<Booking[] | void>{
@@ -115,6 +115,22 @@ export class DataService {
       Authorization: 'Bearer ' + this.token()}}).pipe(
         map((res: any) => <Booking[]>res), 
         catchError(async (err) => console.log(err))
+    );
+  }
+
+  public deleteBooking(booking: Booking): Observable<any>{
+    return this.http.post(this.url + '/bookings/delete', booking, {withCredentials: false, headers:{
+      Authorization: 'Bearer ' + this.token()}}).pipe(
+        map((res: any) => <any>res), 
+    );
+  }
+
+  public getBookingPlan(payload: Booking): Observable<Plan>{
+    return this.http.post(this.url + '/bookings/getPlan', {data: payload}, {withCredentials: false, headers:{
+      Authorization: 'Bearer ' + this.token(),
+      }}).pipe(
+        map((res: any) => <Plan>res), 
+        catchError((err) => throwError(()=>new Error(err)))
     );
   }
 

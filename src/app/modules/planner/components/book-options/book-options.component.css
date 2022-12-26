@@ -1,6 +1,5 @@
 :host{
     width: 100%;
-    padding: 25px 15px 0 15px;
 }
 
 .option-list{
@@ -17,4 +16,15 @@ h1{
     font-family: "Lexend Deca",sans-serif;
     font-weight: 600;
     font-size: 21px;
+    padding-top: 15px;
+}
+
+.main{
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    width: 100%;
+    padding: 0px 15px 0px 15px;
+    height: calc(100vh - 183px);
+    position: relative;
 }

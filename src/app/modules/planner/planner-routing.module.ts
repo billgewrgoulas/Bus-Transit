@@ -8,6 +8,7 @@ import { TripListComponent } from './components/trip-list/trip-list.component';
 import { TripPlannerOptionsComponent } from './components/trip-planner-options/trip-planner-options.component';
 import { AuthGuardService } from '../auth/services/auth-guard.service';
 import { BookingsComponent } from './components/bookings/bookings.component';
+import { QrComponent } from './components/qr/qr.component';
 
 const routes: Routes = [
   {path: '', component: InputComponent, children: [
@@ -18,6 +19,7 @@ const routes: Routes = [
   ], canActivate: [AuthGuardService]}, 
   {path: 'places/start', component: PlacesComponent, data: { type: 'start'}, canActivate: [AuthGuardService]},
   {path: 'places/dest', component: PlacesComponent, data: { type: 'dest'}, canActivate: [AuthGuardService]},
+  {path: 'booking/qr', component: QrComponent, canActivate: [AuthGuardService]},
   {path: 'bookings', component: BookingsComponent, canActivate: [AuthGuardService]},
 ];
 

@@ -1,7 +1,6 @@
 
 :host{
     width: 100%;
-    padding: 15px 15px 0 15px;
 }
 
 .option-list{
@@ -14,9 +13,21 @@
 }
 
 h1{
-    margin-bottom: 5px;
+    margin-top: 10px;
+    margin-bottom: 12px;
     color: #2b3b4c;
     font-family: "Lexend Deca",sans-serif;
     font-weight: 600;
     font-size: 18px;
 }
+
+.main{
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    width: 100%;
+    padding: 0px 15px 0px 15px;
+    height: calc(100vh - 183px);
+    position: relative;
+}
+

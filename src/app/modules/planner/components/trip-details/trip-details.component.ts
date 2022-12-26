@@ -1,9 +1,9 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Store } from '@ngrx/store';
-import { Observable } from 'rxjs';
+import { Observable, combineLatest, map } from 'rxjs';
 import { Itinerary } from 'src/app/state/Entities/itinerary';
 import { AppState } from 'src/app/state/Reducers/api-reducer';
-import { selectItinerary } from 'src/app/state/Selectors/appState.selectors';
+import { selectItinerary, spinner } from 'src/app/state/Selectors/appState.selectors';
 import * as select_actions from 'src/app/state/Actions/select.actions';
 import * as api_actions from 'src/app/state/Actions/api-calls.actions';
 import { DataShareService } from 'src/app/services/data-share.service';
@@ -17,7 +17,7 @@ import { DirectionsStore } from 'src/app/modules/planner/state/directions.store'
 })
 export class TripDetailsComponent implements OnInit, OnDestroy {
 
-  public trip$!: Observable<Itinerary | undefined>;
+  public vm$!: Observable<any>;
 
   public arrows: any = {
     RIGHT: 'turn_right', LEFT: 'turn_left', DEPART: 'arrow_upward',
@@ -38,11 +38,12 @@ export class TripDetailsComponent implements OnInit, OnDestroy {
   constructor(
     private store: Store<AppState>, 
     private msg: DataShareService, 
-    private auth: AuthService,
   ) { }
 
   ngOnInit(): void {
-    this.trip$ = this.store.select(selectItinerary);
+    this.vm$ = combineLatest([
+      this.store.select(selectItinerary), this.store.select(spinner)
+    ]).pipe(map(([itinerary, spinner]) => ({itinerary, spinner})));
   }
 
   ngOnDestroy(): void{

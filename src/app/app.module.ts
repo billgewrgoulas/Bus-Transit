@@ -19,7 +19,6 @@ import { MapModule } from './modules/map/map.module';
 import { RouterModule } from '@angular/router';
 import { StoreRouterConnectingModule, routerReducer, RouterState} from '@ngrx/router-store';
 import { SocketIOService } from './services/socket-io.service';
-import { SocketEffects } from './state/Effects/socket.effects';
 import { RouterEffects } from './state/Effects/router.effects';
 import { CustomSerializer } from './state/Selectors/custom-route-serializer';
 import { AuthEffects } from './modules/auth/state/auth.effects';
@@ -43,7 +42,7 @@ import { authReducer } from './modules/auth/state/message.reducer';
     MapModule,
     HttpClientModule,
     StoreModule.forRoot({api: appStateReducer, router: routerReducer, auth: authReducer}),
-    EffectsModule.forRoot([ApiEffects, SocketEffects, RouterEffects, AuthEffects]),
+    EffectsModule.forRoot([ApiEffects, RouterEffects, AuthEffects]),
     StoreDevtoolsModule.instrument({ maxAge: 25, logOnly: environment.production }),
     StoreRouterConnectingModule.forRoot({serializer: CustomSerializer, stateKey: 'router'})
   ],

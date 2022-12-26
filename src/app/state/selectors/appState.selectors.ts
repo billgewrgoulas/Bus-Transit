@@ -34,6 +34,11 @@ export const getRouteList = createSelector(getRouteState, getAllRoutes);
 const selectStops = stopStateAdapter.getSelectors().selectAll;
 export const getAllStops = createSelector(getStopState, selectStops);
 
+/* get spinner state */
+export const spinner = createSelector(
+    getAppState, (state) => state.spinner
+);
+
 /* Select all stops while the stops module is active */
 export const getStopsModule = createSelector(
     getAllStops, getAppState ,(stops, state) =>{
@@ -76,22 +81,16 @@ export const selectStop = (code: string) =>
     createSelector(selectAllStops, (stops) => stops[code]
 );
 
+/*Get the occupancies */
+export const getOccupancy = createSelector(
+    getAppState, (state) => state.occupancy
+);
+
 /* Select itinerary by index */
 export const selectItinerary = createSelector(
     getPlanState, getAppState, (plan, state) => {
         if(plan && state.itinerary != -1){
             return plan.itineraries[state.itinerary];
-        }else{
-            return undefined;
-        }
-    }
-);
-
-/* Get the current plan */
-export const getPlanAndIndex = createSelector(
-    getPlanState, getAppState, (plan, state) => {
-        if(plan && state.itinerary != -1){
-            return {plan: plan, index: state.itinerary};
         }else{
             return undefined;
         }
@@ -207,16 +206,11 @@ export const newBooking = (email: string, it: number) =>
                         user_id: email,
                         startStop: leg.from.stopCode!,
                         endStop: leg.to.stopCode!,
-                        slug: plan.slug,
-                        it: it,
                         start: leg.from.name,
                         end: leg.to.name,
                         route: leg.routeId,
+                        slug: plan.slug,
                         travel: leg.startTime + ', ' + leg.serviceDate,
-                        arrive: leg.endTime + ', ' + leg.serviceDate,
-                        fromPlace: leg.from.lat + ',' + leg.from.lon,
-                        toPlace: leg.to.lat + ',' + leg.to.lon,
-                        arriveBy: plan.arriveBy,
                         stopCodes: stops
                     };
                     

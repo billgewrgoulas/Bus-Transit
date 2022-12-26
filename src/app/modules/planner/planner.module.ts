@@ -24,6 +24,7 @@ import { AuthModule } from '../auth/auth.module';
 import { BookOptionsComponent } from './components/book-options/book-options.component';
 import { BookingsComponent } from './components/bookings/bookings.component';
 import { BookingComponent } from './components/booking/booking.component';
+import { QrComponent } from './components/qr/qr.component';
 
 
 @NgModule({
@@ -37,7 +38,8 @@ import { BookingComponent } from './components/booking/booking.component';
     PlacesComponent,
     BookOptionsComponent,
     BookingsComponent,
-    BookingComponent
+    BookingComponent, 
+    QrComponent
   ],
   imports: [
     CommonModule,

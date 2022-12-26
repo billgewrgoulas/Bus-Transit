@@ -1,3 +1,4 @@
+import { Dictionary } from "@ngrx/entity";
 
 export interface Step{
     distance: number;
@@ -60,9 +61,9 @@ export interface Itinerary{
 
 export interface Plan{
     date: string;
-    arriveBy: string;
     from: Vertex;
     to: Vertex;
     slug: string;
+    occupancy: Dictionary<number>;
     itineraries: Itinerary[];
 }

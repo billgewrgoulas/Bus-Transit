@@ -1,4 +1,5 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Dictionary } from '@ngrx/entity';
 import { Itinerary } from 'src/app/state/Entities/itinerary';
 
 @Component({
@@ -11,14 +12,14 @@ export class TripComponent implements OnInit {
   @Input() public data: number = 0;
   @Input() public itinerary: Itinerary | null = null;
   @Input() public date: string = '';
+  @Input() public occupancy: Dictionary<number> = {};
 
   @Output() public msg = new EventEmitter<number>();
   @Output() public book = new EventEmitter<number>();
 
   constructor() { }
 
-  ngOnInit(): void {
-  }
+  ngOnInit(): void {}
 
   public onSelect(){
     this.msg.emit(this.data);

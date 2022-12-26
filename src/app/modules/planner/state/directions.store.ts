@@ -6,6 +6,7 @@ import * as api_actions from "../../../state/Actions/api-calls.actions";
 import { AppState } from "../../../state/Reducers/api-reducer";
 import { Router } from "@angular/router";
 import { HttpErrorResponse } from "@angular/common/http";
+import { start } from "repl";
 
 const now = () => new Date().getHours() + ':' + new Date().getMinutes();
 
@@ -36,6 +37,10 @@ export class DirectionsStore extends ComponentStore<TripState> {
         super(initialState);
     }
 
+    public reset = this.updater((state: TripState) => {
+        return initialState;
+    });
+
     public fetchComplete = this.updater((state: TripState): TripState =>{
         return {...state, fetch: false};
     });
@@ -48,15 +53,22 @@ export class DirectionsStore extends ComponentStore<TripState> {
         return {...state, direction: direction};
     });
 
-
     public updatePoint = this.updater((state: TripState, point: string[]): TripState => {
         if(state.direction === 'start'){
             return {...state, start: point};
         }else if (state.direction === 'dest'){
             return {...state, destination: point};
-        }else{
-            return initialState;
         }
+
+        return initialState;
+    });
+
+    public updateStart = this.updater((state: TripState, point: string[]): TripState => {
+        return {...state, start: point};
+    });
+
+    public updateEnd = this.updater((state: TripState, point: string[]): TripState => {
+        return {...state, destination: point};
     });
 
     public updateTime = this.updater((state: TripState, time: string): TripState => {

@@ -6,16 +6,20 @@ import * as select_actions from '../Actions/select.actions';
 import * as api_actions from '../Actions/api-calls.actions';
 import { inititialSchdeduleState, ScheduleState, scheduleStateAdapter } from "../Entities/schedule.entity";
 import { Plan } from "../Entities/itinerary";
-import { Booking } from "../Entities/booking.entity";
+import { BookingState, initialBookingState } from "../Entities/booking.entity";
+import { Dictionary } from "@ngrx/entity";
 
 export interface AppState{
     stops: StopState;
     lines: LineState;
     routes: RouteState;
     schedule: ScheduleState;
+    bookings: BookingState;
     plan: Plan | undefined;
+    occupancy: Dictionary<number>;
     itinerary: number;
     module: string;
+    spinner: boolean;
 };
 
 export const initialAppState: AppState = {
@@ -23,9 +27,12 @@ export const initialAppState: AppState = {
     stops: inititialStopState,
     routes: inititialRouteState,
     schedule: inititialSchdeduleState,
+    bookings: initialBookingState,
+    occupancy: {},
     plan: undefined,
     itinerary: -1,
-    module: ''
+    module: '',
+    spinner: false
 };
 
 /* API Reducer */
@@ -56,7 +63,8 @@ export const appStateReducer = createReducer(
         return {...state, stops: stopStateAdapter.addMany(action.stops, state.stops)};
     }),
     on(api_actions.fetchPlanSuccess, (state: AppState, action): AppState => {
-        return {...state, plan: action.data};
+        console.log(action.data);
+        return {...state, plan: action.data, spinner: false, occupancy: action.data.occupancy};
     }),
     on(select_actions.selectItinerary, (state: AppState, action): AppState => {
         return {...state, itinerary: action.index};
@@ -70,10 +78,24 @@ export const appStateReducer = createReducer(
     on(select_actions.module, (state: AppState, action): AppState => {
         return {...state, module: action.module};
     }),
+    on(api_actions.showSpinner, (state: AppState, action): AppState => {
+        return {...state, spinner: true};
+    }),
     on(api_actions.getRouteDetailsuccess, (state: AppState, action): AppState => {
         return {...state, stops: stopStateAdapter.addMany(action.routeInfo.stops, state.stops), 
                 routes: routeStateAdapter.updateOne({id: action.routeInfo.code, changes: 
                 {points: action.routeInfo.points}}, state.routes), 
         };
+    }),
+    on(select_actions.updateOccupancy, (state: AppState, action): AppState => {
+        
+        const occupancy: Dictionary<number> = {...state.occupancy};
+        for (const key in occupancy) {
+            if (action.trip_ids.includes(+key)) {
+                occupancy[key]! += action.value;
+            }
+        }
+
+        return {...state, occupancy: occupancy};
     }),
 );
