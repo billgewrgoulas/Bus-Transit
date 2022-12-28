@@ -10,6 +10,7 @@ export class BookingComponent implements OnInit {
 
   @Input() public booking!: Booking;
   @Input() public index: number = 0;
+  @Input() public flag: boolean = true;
 
   @Output() public cancel = new EventEmitter<number>();
   @Output() public map = new EventEmitter<Booking>();
@@ -24,7 +25,7 @@ export class BookingComponent implements OnInit {
   }
 
   public onCancel(){
-    this.cancel.emit(this.index);
+    this.cancel.emit(this.booking.trip_id);
   }
 
   public onQR(){

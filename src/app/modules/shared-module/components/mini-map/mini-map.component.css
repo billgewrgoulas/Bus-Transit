@@ -1,0 +1,17 @@
+
+:host{
+    width: 25vw;
+    display: flex;
+    flex-direction: column;
+    font-family: "Lexend Deca",sans-serif;
+    align-items: center;
+}
+
+.main{
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    width: 100%;
+    height: calc(100vh - 137px);
+    position: relative;
+}

@@ -12,6 +12,10 @@ import { DoubleInputComponent } from './components/double-input/double-input.com
 import { SpinnerComponent } from './components/spinner/spinner.component';
 import { ToasterComponent } from 'src/app/modules/shared-module/components/toaster/toaster.component';
 import {MatSnackBarModule} from '@angular/material/snack-bar';
+import {MatMenuModule} from '@angular/material/menu';
+import {MatIconModule} from '@angular/material/icon'
+import { MiniMapComponent } from './components/mini-map/mini-map.component';
+import { MapModule } from '../map/map.module';
 
 @NgModule({
   declarations: [
@@ -23,13 +27,17 @@ import {MatSnackBarModule} from '@angular/material/snack-bar';
     DropdownOptionComponent,
     DoubleInputComponent,
     SpinnerComponent,
-    ToasterComponent
+    ToasterComponent,
+    MiniMapComponent
   ],
   imports: [
     CommonModule, 
     RouterModule, 
     FormsModule,
-    MatSnackBarModule
+    MatSnackBarModule,
+    MatMenuModule,
+    MatIconModule,
+    MapModule
   ],
   exports: [
     OptionComponent, 
@@ -40,7 +48,8 @@ import {MatSnackBarModule} from '@angular/material/snack-bar';
     DropdownOptionComponent,
     DoubleInputComponent,
     SpinnerComponent,
-    ToasterComponent
+    ToasterComponent,
+    MiniMapComponent
   ],
 })
 export class SharedModule { }

@@ -25,7 +25,7 @@ import { BookOptionsComponent } from './components/book-options/book-options.com
 import { BookingsComponent } from './components/bookings/bookings.component';
 import { BookingComponent } from './components/booking/booking.component';
 import { QrComponent } from './components/qr/qr.component';
-
+import { QRCodeModule } from 'angularx-qrcode';
 
 @NgModule({
   declarations: [
@@ -39,7 +39,7 @@ import { QrComponent } from './components/qr/qr.component';
     BookOptionsComponent,
     BookingsComponent,
     BookingComponent, 
-    QrComponent
+    QrComponent,
   ],
   imports: [
     CommonModule,
@@ -55,7 +55,8 @@ import { QrComponent } from './components/qr/qr.component';
     MatExpansionModule,
     MatButtonModule,
     MatMenuModule,
-    AuthModule
+    AuthModule,
+    QRCodeModule
   ],providers: [DirectionsStore]
 })
 export class PlannerModule { }

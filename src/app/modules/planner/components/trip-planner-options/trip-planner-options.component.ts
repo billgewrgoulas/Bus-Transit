@@ -17,7 +17,10 @@ export class TripPlannerOptionsComponent implements OnInit {
   public date!: FormControl<Date | null>;
   public time!: FormControl<string | null>;
 
-  constructor(private local: DirectionsStore, private router: Router) { }
+  constructor(
+    private local: DirectionsStore, 
+    private router: Router
+  ) { }
 
   ngOnInit(): void {
 

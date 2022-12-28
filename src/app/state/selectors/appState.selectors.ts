@@ -1,10 +1,11 @@
 import { createFeatureSelector, createSelector } from "@ngrx/store";
-import { IRoute, RouteState, routeStateAdapter } from "../Entities/route.entity";
+import { IRoute, routeStateAdapter } from "../Entities/route.entity";
 import { IStop, stopStateAdapter } from "../Entities/stop.entity";
 import { AppState } from "../Reducers/api-reducer";
-import { ILine, lineStateAdapter } from "../Entities/line.entity";
-import { IMapData, TripData } from "../Entities/map.data.entity";
-import { Booking } from "../Entities/booking.entity";
+import { lineStateAdapter } from "../Entities/line.entity";
+import { IMapData } from "../Entities/map.data.entity";
+import { Booking, bookingStateAdapter } from "../Entities/booking.entity";
+import { state } from "@angular/animations";
 
 /* Main App State selector */
 export const getAppState = createFeatureSelector<AppState>('api');
@@ -15,12 +16,14 @@ export const getRouteState = createSelector(getAppState, (state: AppState) => st
 export const getStopState = createSelector(getAppState, (state: AppState) => state.stops);
 export const getScheduleState = createSelector(getAppState, (state: AppState) => state.schedule);
 export const getPlanState = createSelector(getAppState, (state: AppState) => state.plan);
+export const getBookingState = createSelector(getAppState, (state: AppState) => state.bookings);
 
 /* Grab the state entities */
 export const selectAllLines = createSelector(getLineState, (line) => line.entities);
 export const selectAllRoutes = createSelector(getRouteState, (route) => route.entities);
 export const selectAllStops = createSelector(getStopState, (stop) => stop.entities);
 export const selectAllSchedules = createSelector(getScheduleState, (schedule) => schedule.entities);
+export const selectAllBookings = createSelector(getBookingState, (bookings) => bookings.entities);
 
 /* Select all lines */
 export const {selectAll} = lineStateAdapter.getSelectors();
@@ -33,6 +36,10 @@ export const getRouteList = createSelector(getRouteState, getAllRoutes);
 /* Select all stops */
 const selectStops = stopStateAdapter.getSelectors().selectAll;
 export const getAllStops = createSelector(getStopState, selectStops);
+
+/* Select all bookings */
+export const getBookings = bookingStateAdapter.getSelectors().selectAll;
+export const getAllBookings = createSelector(getBookingState, getBookings);
 
 /* get spinner state */
 export const spinner = createSelector(
@@ -134,6 +141,17 @@ export const selectRoutePoints = (code: string) => {
     return createSelector(selectAllRoutes, (routes) => routes[code]?.points);
 }
 
+/* Select a booking */
+export const selectBooking = (trip_id: number) => {
+    return createSelector(selectAllBookings, (booking) => booking[trip_id]);
+}
+
+/* Select the active booking */
+export const getACtiveBooking = createSelector(
+    selectAllBookings, getBookingState, 
+    (booking, state) => booking[state.activeBooking]
+);
+
 /* Select the current route stops */
 export const getRouteStops = createSelector(
     currentRoute, selectAllStops, (route, stopEntities) => {
@@ -166,6 +184,23 @@ export const getRoutePathAndStops = createSelector(
     }
 );
 
+export const filterSavedStops = (value: string) => createSelector(
+    getAppState, selectAllStops, (state, stops) => {
+        const saved: IStop[] = [];
+
+        state.savedStops.forEach(code => {
+            const stop: any = {...stops[code]};
+            stop.saved = true;
+            saved.push(stop);
+        });
+    
+        return saved.filter(stop => 
+            stop.desc.toUpperCase().includes(value.trim().toUpperCase()) ||
+            stop.code.includes(value.trim())
+        ).slice(0, 20);
+    }
+);
+
 /* Filter lines */
 export const filterLines = (value: string) => {
     return createSelector(getAllLines, (lines) => {
@@ -183,6 +218,18 @@ export const filterStops = (value: string) => {
             stop.desc.toUpperCase().includes(value.trim().toUpperCase()) ||
             stop.code.includes(value.trim())
         ).slice(0, 20);
+    });
+}
+
+/* filter bookings */
+export const filterBookings = (value: string) => {
+    return createSelector(getAllBookings, (bookings) => {
+        return bookings.filter(booking => 
+            booking.route.includes(value) || 
+            booking.travel.includes(value) || 
+            booking.start.includes(value) || 
+            booking.end.includes(value)
+        );
     });
 }
 

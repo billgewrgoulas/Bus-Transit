@@ -24,7 +24,6 @@ import { CustomSerializer } from './state/Selectors/custom-route-serializer';
 import { AuthEffects } from './modules/auth/state/auth.effects';
 import { authReducer } from './modules/auth/state/message.reducer';
 
-
 @NgModule({
   declarations: [
     AppComponent,

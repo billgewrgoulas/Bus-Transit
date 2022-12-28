@@ -6,3 +6,39 @@
     font-family: "Lexend Deca",sans-serif;
     align-items: center;
 }
+
+h1{
+    margin-bottom: 10px;
+    color: #2b3b4c;
+    margin-top: 10px;
+    font-family: "Lexend Deca",sans-serif;
+    font-weight: 600;
+    font-size: 21px;
+}
+
+.main{
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    width: 100%;
+    padding: 25px 15px 0px 15px;
+    height: calc(100vh - 137px);
+    position: relative;
+    gap: 40px;
+}
+
+.option-list{
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    width: 100%;
+    overflow: auto;
+    max-height: calc(100vh - 225px);
+    padding-right: 3px;
+    gap: 10px;
+}
+
+qrcode{
+    display: flex !important;
+    justify-content: center !important;
+}

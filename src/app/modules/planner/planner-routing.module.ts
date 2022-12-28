@@ -19,7 +19,7 @@ const routes: Routes = [
   ], canActivate: [AuthGuardService]}, 
   {path: 'places/start', component: PlacesComponent, data: { type: 'start'}, canActivate: [AuthGuardService]},
   {path: 'places/dest', component: PlacesComponent, data: { type: 'dest'}, canActivate: [AuthGuardService]},
-  {path: 'booking/qr', component: QrComponent, canActivate: [AuthGuardService]},
+  {path: 'booking/qr/:id', component: QrComponent, canActivate: [AuthGuardService]},
   {path: 'bookings', component: BookingsComponent, canActivate: [AuthGuardService]},
 ];
 

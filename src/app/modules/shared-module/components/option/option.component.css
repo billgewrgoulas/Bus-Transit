@@ -34,11 +34,39 @@
 .text-content{
     display: flex;
     flex-direction: column;
+    width: 100%;
 }
 
 .description{
     font-size: 14px;
     color: #8190a4;
+}
+
+.main{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+}
+
+button{
+    border: none !important;
+    background-color: transparent !important;
+}
+
+::ng-deep .mat-menu-panel {
+    background: rgba(255,255,255,1) !important;
+    color: #373a50 !important;
+}
+
+.text{
+    color: #373a50;
+    font-weight: bold;
+}
+
+.inner-button:hover{
+    background: rgb(235, 235, 235) !important;
 }
 
 .material-symbols-outlined {
@@ -57,4 +85,4 @@
     .option-content{
         font-size: 12px;
     }
-  }
+}

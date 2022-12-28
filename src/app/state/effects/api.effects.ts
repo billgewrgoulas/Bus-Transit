@@ -4,15 +4,14 @@ import { Actions, concatLatestFrom, createEffect, ofType } from "@ngrx/effects";
 import { catchError, filter, map, of, switchMap, take, tap, withLatestFrom } from "rxjs";
 import { DataService } from "src/app/services/data.service";
 import * as api_actions from '../Actions/api-calls.actions';
-import * as nav_actions from '../Actions/navigation.actions';
 import { AppState } from "../Reducers/api-reducer";
-import { getActiveRouteSchedules, getAllStops, newBooking, selectCurrentLineRoutes, selectRoutePoints } from "../Selectors/appState.selectors";
+import { getActiveRouteSchedules, getAllStops, selectCurrentLineRoutes, selectRoutePoints } from "../Selectors/appState.selectors";
 import { ILine } from "../Entities/line.entity";
 import { IRoute, IRouteInfo } from "../Entities/route.entity";
 import { IScheduleDetails } from "../Entities/schedule.entity";
 import { IStop } from "../Entities/stop.entity";
 import { Plan } from "../Entities/itinerary";
-import { Router } from "@angular/router";
+import { Booking } from "../Entities/booking.entity";
 
 @Injectable()
 export class ApiEffects{
@@ -96,8 +95,21 @@ export class ApiEffects{
             ofType(api_actions.getItinerary),
             filter(({data}) => !!data),
             tap(() => this.store.dispatch(api_actions.showSpinner())),
-            switchMap(({data}) => this.dataService.getBookingPlan(data).pipe()),
-            map((response: Plan) => api_actions.fetchPlanSuccess({data: response}))
+            switchMap(({data}) => this.dataService.getBookingPlan(data).pipe(
+                map((response: Plan) => api_actions.fetchPlanSuccess({data: response})),
+                catchError(err => of(api_actions.fetchPlanError({msg: err})))
+            )),
+        )
+    );
+
+    loadBookings$ = createEffect(() => 
+        this.actions$.pipe(
+            ofType(api_actions.fetchBookings),
+            tap(() => this.store.dispatch(api_actions.showSpinner())),
+            switchMap(() => this.dataService.getBookings().pipe(
+                map((res: Booking[]) => api_actions.fetchBookingsSuccess({data: res})),
+                catchError(err => of(api_actions.fetchBookingsError({msg: err.error.error})))
+            )),
         )
     );
 
@@ -109,6 +121,39 @@ export class ApiEffects{
             switchMap(() => this.dataService.getAllStops().pipe(
                 map((response: IStop[]) => api_actions.getStopsSuccess({stops: response})),
                 catchError(err => of(api_actions.getStopsError({msg: err})))
+            ))      
+        )     
+    );
+
+    saveStop$ = createEffect(()=>
+        this.actions$.pipe(
+            ofType(api_actions.saveStop),
+            tap(() => this.store.dispatch(api_actions.showSpinner())),
+            switchMap((action) => this.dataService.saveStop(action.code).pipe(
+                map((res: any) => api_actions.saveStopSuccess({code: action.code})),
+                catchError(err => of(api_actions.saveStopError({msg: err})))
+            ))      
+        )     
+    );
+
+    deleteStop$ = createEffect(()=>
+        this.actions$.pipe(
+            ofType(api_actions.deleteStop),
+            tap(() => this.store.dispatch(api_actions.showSpinner())),
+            switchMap((action) => this.dataService.deleteStop(action.code).pipe(
+                map((res: any) => api_actions.deleteStopSuccess({code: action.code})),
+                catchError(err => of(api_actions.deleteStopError({msg: err})))
+            ))      
+        )     
+    );
+
+    getSavedStops$ = createEffect(()=>
+        this.actions$.pipe(
+            ofType(api_actions.getSavedStops), take(1),
+            tap(() => this.store.dispatch(api_actions.showSpinner())),
+            switchMap((action) => this.dataService.getSavedStops().pipe(
+                map((res: any) => api_actions.getSavedStopsSuccess({codes: res})),
+                catchError(err => of(api_actions.getSavedStopsError({msg: err})))
             ))      
         )     
     );

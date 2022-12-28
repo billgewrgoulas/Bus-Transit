@@ -7,7 +7,7 @@
 
 <div class="stop-dropdown" *ngIf="stops$ | async as stops">
     <h1>Stops</h1>
-    <div class="list" *ngIf="stops">
+    <div class="list" *ngIf="stops && stops.length > 0">
         <dropdown-option *ngFor="let stop of stops"
             [text]="stop.desc"
             [details]="stop.code"

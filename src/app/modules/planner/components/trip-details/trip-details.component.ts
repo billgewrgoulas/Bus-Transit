@@ -54,8 +54,4 @@ export class TripDetailsComponent implements OnInit, OnDestroy {
     this.msg.fly([x+'', y+'']);
   }
 
-  public book(){
-    
-  }
-
 }

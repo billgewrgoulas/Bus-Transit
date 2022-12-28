@@ -16,8 +16,8 @@ export class StationListComponent implements OnInit, AfterViewInit, OnChanges {
   public currentRouteStops$!: Observable<IStop[]>;
   public currentRoute$!: Observable<IRoute | undefined>;
   public selectedDay: number = 0;
-  private el: any;
   private scrollPosition: number = 0;
+  private el: any;
   
   @ViewChild('stationList') public stationList: any;
   @Output() public onClick = new EventEmitter<number>();

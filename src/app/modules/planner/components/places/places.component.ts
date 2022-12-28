@@ -1,9 +1,11 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { dir } from 'console';
-import { combineLatest, map, Observable, Subscription, take, tap } from 'rxjs';
+import { combineLatest, map, Observable, Subject, Subscription, take, tap } from 'rxjs';
 import { DataShareService } from 'src/app/services/data-share.service';
 import { DirectionsStore, TripState } from 'src/app/modules/planner/state/directions.store';
+import { Store } from '@ngrx/store';
+import { AppState } from 'src/app/state/Reducers/api-reducer';
+import { spinner } from 'src/app/state/Selectors/appState.selectors';
 
 @Component({
   selector: 'places-component',
@@ -15,12 +17,14 @@ export class PlacesComponent implements OnInit, OnDestroy {
   public value: string = '';
   public direction: string = 'start';
   public vm$!: Observable<any>;
+  public spinner$!: Observable<boolean>;
   public subs: Subscription[] = [];
 
   constructor(
     private route: ActivatedRoute, 
     private local: DirectionsStore,
-    private msg: DataShareService
+    private msg: DataShareService,
+    private store: Store<AppState>
   ) { }
 
   ngOnInit(): void {
@@ -32,9 +36,10 @@ export class PlacesComponent implements OnInit, OnDestroy {
 
     this.vm$ = combineLatest([
       this.route.data, 
-      this.local.state$
+      this.local.state$,
     ]).pipe(take(1), map(([data, state]) => ({data, state})), tap(v => this.initStore(v.data['type'], v.state)));
 
+    this.spinner$ = this.store.select(spinner);
   }
 
   ngOnDestroy(): void {
@@ -64,6 +69,7 @@ export class PlacesComponent implements OnInit, OnDestroy {
     }else if(this.direction == 'dest' && state.destination.length > 0){
       this.value = state.destination[1];
     }
+    
   }
 
   private onDrag(point: string[], direction: string){

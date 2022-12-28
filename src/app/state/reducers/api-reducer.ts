@@ -6,8 +6,10 @@ import * as select_actions from '../Actions/select.actions';
 import * as api_actions from '../Actions/api-calls.actions';
 import { inititialSchdeduleState, ScheduleState, scheduleStateAdapter } from "../Entities/schedule.entity";
 import { Plan } from "../Entities/itinerary";
-import { BookingState, initialBookingState } from "../Entities/booking.entity";
+import { BookingState, bookingStateAdapter, initialBookingState } from "../Entities/booking.entity";
 import { Dictionary } from "@ngrx/entity";
+import { Actions } from "@ngrx/effects";
+import { Subject } from "rxjs";
 
 export interface AppState{
     stops: StopState;
@@ -20,6 +22,8 @@ export interface AppState{
     itinerary: number;
     module: string;
     spinner: boolean;
+    savedStops: string[];
+    savedLines: string[];
 };
 
 export const initialAppState: AppState = {
@@ -32,7 +36,9 @@ export const initialAppState: AppState = {
     plan: undefined,
     itinerary: -1,
     module: '',
-    spinner: false
+    spinner: false,
+    savedStops: [],
+    savedLines: [],
 };
 
 /* API Reducer */
@@ -60,17 +66,22 @@ export const appStateReducer = createReducer(
         return {...state, schedule: scheduleStateAdapter.setOne(action.schedules, state.schedule)};
     }),
     on(api_actions.getStopsSuccess, (state: AppState, action): AppState => {
-        return {...state, stops: stopStateAdapter.addMany(action.stops, state.stops)};
+        return {...state, spinner: false ,stops: stopStateAdapter.addMany(action.stops, state.stops)};
     }),
     on(api_actions.fetchPlanSuccess, (state: AppState, action): AppState => {
-        console.log(action.data);
         return {...state, plan: action.data, spinner: false, occupancy: action.data.occupancy};
+    }),
+    on(api_actions.fetchBookingsSuccess, (state: AppState, action): AppState => {
+        return {...state, spinner: false, bookings: bookingStateAdapter.setAll(action.data, state.bookings)};
     }),
     on(select_actions.selectItinerary, (state: AppState, action): AppState => {
         return {...state, itinerary: action.index};
     }),
     on(select_actions.emptyPlan, (state: AppState, action): AppState => {
         return {...state, plan: undefined, itinerary: -1};
+    }),
+    on(select_actions.selectBooking, (state: AppState, action): AppState => {
+        return {...state, bookings: {...state.bookings, activeBooking: action.trip_id}};
     }),
     on(select_actions.selectLine, (state: AppState, action): AppState => {
         return {...state, lines: {...state.lines, activeLineId: action.id}, schedule: scheduleStateAdapter.removeAll(state.schedule)};
@@ -80,6 +91,18 @@ export const appStateReducer = createReducer(
     }),
     on(api_actions.showSpinner, (state: AppState, action): AppState => {
         return {...state, spinner: true};
+    }),
+    on(api_actions.deleteBooking, (state: AppState, action): AppState => {
+        return {...state, spinner: false, bookings: bookingStateAdapter.removeOne(action.trip_id, state.bookings)};
+    }),
+    on(api_actions.getSavedStopsSuccess, (state: AppState, action): AppState => {
+        return {...state, spinner: false, savedStops: action.codes};
+    }),
+    on(api_actions.saveStopSuccess, (state: AppState, action): AppState => {
+        return {...state, spinner: false, savedStops: [...state.savedStops, action.code]};
+    }),
+    on(api_actions.deleteStopSuccess, (state: AppState, action): AppState => {
+        return {...state, spinner: false, savedStops: state.savedStops.filter(code => code != action.code)};
     }),
     on(api_actions.getRouteDetailsuccess, (state: AppState, action): AppState => {
         return {...state, stops: stopStateAdapter.addMany(action.routeInfo.stops, state.stops), 

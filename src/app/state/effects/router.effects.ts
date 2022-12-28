@@ -6,11 +6,11 @@ import * as navigation from'../Actions/navigation.actions';
 import * as api_actions from "../Actions/api-calls.actions";
 import * as select_actions from "../Actions/select.actions";
 import { AppState } from "../Reducers/api-reducer";
-import { ROUTER_NAVIGATED, ROUTER_NAVIGATION } from "@ngrx/router-store";
+import { ROUTER_NAVIGATED } from "@ngrx/router-store";
 import { getState } from "../Selectors/router.selectors";
 import { Location } from '@angular/common'
-import { state } from "@angular/animations";
-import { url } from "inspector";
+import { getAllBookings } from "../Selectors/appState.selectors";
+import { AuthService } from "src/app/modules/auth/services/auth.service";
 
 @Injectable()
 export class RouterEffects{
@@ -79,8 +79,17 @@ export class RouterEffects{
         this.actions$.pipe(
             ofType(ROUTER_NAVIGATED),
             withLatestFrom(this.store.select(getState)),
-            filter(([action, {url}]) => url.includes('sidebar:routes') || url.includes('sidebar:stops')),
+            filter(([action, {query}]) => query!['module'] == 'places' || query!['module'] == 'stops_module'),
             map(() => api_actions.getStops())
+        )
+    );
+
+    fetchSavedStops$ = createEffect(() =>
+        this.actions$.pipe(
+            ofType(ROUTER_NAVIGATED),
+            withLatestFrom(this.store.select(getState)),
+            filter(([action, {url}]) => url.includes('sidebar:routes')),
+            map(() => api_actions.getSavedStops())
         )
     );
 
@@ -112,6 +121,33 @@ export class RouterEffects{
             filter(([action, {query}]) => query!['module'] == 'trip_details'),
             map(([action, {params}]) => params!['index']),
             map((index) => select_actions.selectItinerary({index: index}))
+        )
+    );
+
+    getBookings$ = createEffect(()=>
+        this.actions$.pipe(
+            ofType(ROUTER_NAVIGATED),
+            withLatestFrom(this.store.select(getState)),
+            filter(([action, {url}]) => url.startsWith('/(sidebar:routes/bookings)')),
+            map(() => api_actions.fetchBookings())
+        )
+    );
+
+    qrCode$ = createEffect(()=>
+        this.actions$.pipe(
+            ofType(ROUTER_NAVIGATED),
+            withLatestFrom(this.store.select(getState)),
+            filter(([action, {query}]) => query!['module'] == 'qr_module'),
+            map(([action, {params}]) => select_actions.selectBooking({trip_id: params!['id']})),   
+        )
+    );
+
+    qrData$ = createEffect(() => 
+        this.actions$.pipe(
+            ofType(ROUTER_NAVIGATED), 
+            withLatestFrom(this.store.select(getAllBookings)),
+            filter(([action, bookings]) => bookings.length == 0),
+            map(() => api_actions.fetchBookings())
         )
     );
 

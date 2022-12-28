@@ -34,7 +34,7 @@ export class InputComponent implements OnInit {
   public places(dest: string){
     this.router.navigate([{ outlets: 
       { sidebar: [ 'routes', 'places', dest] }}], 
-      {queryParams: {module: dest + '_input'}
+      {queryParams: {module: 'places'}
     });
   }
 

@@ -4,25 +4,23 @@
     [placeholder]="'search bookings'">
 </input-field>
 
-<div class="main" *ngIf="state$ | async as state">
+<div class="main" *ngIf="vm$ | async as vm">
 
-    <spinner-component *ngIf="state.fetch || state.delete_index != -1"></spinner-component>
-    <toaster-component [msg$]="state.toaster"></toaster-component>
+    <spinner-component *ngIf="vm.spinner || vm.state.delete_id != -1"></spinner-component>
+    <toaster-component [msg$]="vm.state.toaster"></toaster-component>
 
     <h1>My bookings</h1>
     <div class="option-list">
-        <ng-container *ngIf="bookings$ | async as bookings else noBookings">
-            <ng-container *ngIf="bookings.length > 0 else noBookings">
+        <ng-container *ngIf="vm.bookings.length > 0 else noBookings">
 
-                <booking-component *ngFor="let booking of bookings; let i=index"
-                    [booking]="booking"
-                    [index]="i"
-                    (cancel)="onCancel($event)"
-                    (map)="onMap($event)"
-                    (qr)="showQR($event)">
-                </booking-component>
+            <booking-component *ngFor="let booking of vm.bookings; let i=index"
+                [booking]="booking"
+                [index]="i"
+                (cancel)="onCancel($event)"
+                (map)="onMap($event)"
+                (qr)="showQR($event)">
+             </booking-component>
                 
-            </ng-container>
         </ng-container>
     </div>
 </div>

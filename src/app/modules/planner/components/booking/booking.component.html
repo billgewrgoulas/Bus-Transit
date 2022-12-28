@@ -1,7 +1,7 @@
 
 <div class="entity-wrapper" *ngIf="booking">
     <div class="entity-container">
-        <div class="entity-type header">
+        <div class="entity-type header" *ngIf="flag">
             <div class="right">
                 <span class="malakas"><i class="fas fa-bus"></i></span>
                 <span class="option-text">{{booking.route}}</span>

@@ -110,11 +110,10 @@ export class DataService {
     }}).pipe(map((res: any) => <any>res));
   }
 
-  public getBookings(): Observable<Booking[] | void>{
+  public getBookings(): Observable<Booking[]>{
     return this.http.get(this.url + '/bookings/get', {withCredentials: false, headers:{
       Authorization: 'Bearer ' + this.token()}}).pipe(
-        map((res: any) => <Booking[]>res), 
-        catchError(async (err) => console.log(err))
+        map((res: any) => <Booking[]>res)
     );
   }
 
@@ -127,10 +126,30 @@ export class DataService {
 
   public getBookingPlan(payload: Booking): Observable<Plan>{
     return this.http.post(this.url + '/bookings/getPlan', {data: payload}, {withCredentials: false, headers:{
-      Authorization: 'Bearer ' + this.token(),
-      }}).pipe(
-        map((res: any) => <Plan>res), 
-        catchError((err) => throwError(()=>new Error(err)))
+      Authorization: 'Bearer ' + this.token()}}).pipe(
+        map((res: any) => <Plan>res)
+    );
+  }
+
+  public saveStop(code: string): Observable<any>{
+    return this.http.get(this.url + '/saved/saveStop/' + code, {withCredentials: false, headers:{
+      Authorization: 'Bearer ' + this.token()}}).pipe(
+        map((res: any) => <any>res), 
+    );
+  }
+
+  public deleteStop(code: string): Observable<any>{
+    console.log(code)
+    return this.http.get(this.url + '/saved/deleteStop/' + code, {withCredentials: false, headers:{
+      Authorization: 'Bearer ' + this.token()}}).pipe(
+        map((res: any) => <any>res), 
+    );
+  }
+
+  public getSavedStops(): Observable<any>{
+    return this.http.get(this.url + '/saved/getStops', {withCredentials: false, headers:{
+      Authorization: 'Bearer ' + this.token()}}).pipe(
+        map((res: any) => <string[]>res), 
     );
   }
 

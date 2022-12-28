@@ -15,7 +15,7 @@ export const getLinesError = createAction('[API] Lines error', props<{msg: strin
 
 /* Fetch all stops */
 export const getStops = createAction('[API] GET Stops');
-export const getStopsSuccess = createAction('[API] Stops loaded success', props<{stops: IStop[]}>());
+export const getStopsSuccess = createAction('[API] Stops loaded success', props<{stops: IStop[], saved?: string[]}>());
 export const getStopsError = createAction('[API] Stops error', props<{msg: string}>());
 
 /*Get all the stops of the routes that pass through a stop */
@@ -76,3 +76,17 @@ export const hideSpinner = createAction('Hide spinner');
 export const fetchBookings = createAction('[API] Fetch Bookings');
 export const fetchBookingsSuccess = createAction('[API] Fetch Bookings success', props<{data: Booking[]}>());
 export const fetchBookingsError = createAction('[API] Fetch bookings error', props<{msg: string}>());
+export const deleteBooking = createAction('[Local] Delete booking', props<{trip_id: number}>());
+
+/* Saved stops actions */
+export const saveStop = createAction('[API] Save stop', props<{code: string}>());
+export const saveStopSuccess = createAction('[API] Save stop success', props<{code: string}>());
+export const saveStopError = createAction('[API] Save stop error', props<{msg: string}>());
+
+export const deleteStop = createAction('[API] Delete stop', props<{code: string}>());
+export const deleteStopSuccess = createAction('[API] Delete stop success', props<{code: string}>());
+export const deleteStopError = createAction('[API] Delete stop error', props<{msg: string}>());
+
+export const getSavedStops = createAction('[API] Get saved stop');
+export const getSavedStopsSuccess = createAction('[API] Get saved stops success', props<{codes: string[]}>());
+export const getSavedStopsError = createAction('[API] Get saved stops error', props<{msg: string}>());

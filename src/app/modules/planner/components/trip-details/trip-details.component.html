@@ -5,7 +5,7 @@
         <div class="header">
             <h1>Itinerary Steps</h1>
         </div>
-        <div class="option-list">
+        <div class="option-list" *ngIf="vm.itinerary">
             <span><strong style="color: #2b3b4c;">Start</strong>: {{vm.itinerary.startTime}}</span>
             <ng-container *ngFor="let leg of vm.itinerary.legs let leg_index=index">
                 <div class="entity-wrapper" *ngIf="leg.mode=='WALK'">
