@@ -1,5 +1,4 @@
 
-
 .item-wrapper{
     border-left: 2px solid #6c757d2b;
     display: flex;
@@ -26,10 +25,12 @@
 .station-name{
     color: #373a50;
     font-weight: 600;
+    font-size: 14px;
 }
 
 .arrive-time{
     color: #868d95;
+    font-size: 14px;
 }
 
 .fa-map-marker-alt{
@@ -39,5 +40,23 @@
 
 .last-station{
     border: none;
+}
+
+@media screen and (max-width: 800px) {
+    .station-name{
+        font-size: 13px;
+    }
+}
+
+@media screen and (max-width: 700px) {
+    
+}
+
+@media screen and (max-width: 600px) {
+    
+}
+
+@media screen and (max-width: 500px) {
+    
 }
 

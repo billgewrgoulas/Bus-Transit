@@ -8,7 +8,10 @@
     </span>
 </div>
 <div class="right-wrapper">
-    <i class="bars fas fa-bars" (click)="toggle()"></i>
+    <div class="icons">
+        <i *ngIf="mapBtn && mapLink.length > 0" class="fas fa-map" (click)="map()"></i>
+        <i class="bars fas fa-bars" (click)="toggle()"></i>
+    </div>
     <div class="input-list">
         <input [value]="value" 
             [(ngModel)]="value"

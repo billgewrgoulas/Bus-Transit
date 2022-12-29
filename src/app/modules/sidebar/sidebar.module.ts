@@ -9,6 +9,7 @@ import { SharedModule } from '../shared-module/shared-module.module';
 import { DataShareService } from 'src/app/services/data-share.service';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import {DragDropModule} from '@angular/cdk/drag-drop';
+import { MiniMapService } from 'src/app/services/mini-map.service';
 
 @NgModule({
   declarations: [
@@ -25,6 +26,6 @@ import {DragDropModule} from '@angular/cdk/drag-drop';
     DragDropModule,
   ],
   exports: [SideNavComponent],
-  providers: [DataShareService]
+  providers: [DataShareService, MiniMapService]
 })
 export class SidebarModule { }

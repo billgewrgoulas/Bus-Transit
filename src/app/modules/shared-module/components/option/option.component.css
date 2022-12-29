@@ -4,6 +4,7 @@
     background: linear-gradient(90deg, rgba(227,227,236,1) 0%, rgba(255,255,255,1) 100%);
     margin-bottom: 10px;
     box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
+    width: 100%;
 }
 
 :host:hover{
@@ -77,12 +78,22 @@ button{
   'opsz' 48
 }
 
-@media only screen and (max-width: 600px) {
-    .description{
-        font-size: 10px;
+@media screen and (max-width: 700px) {
+    .option-content{
+        font-size: 16px;
     }
 
+    .description{
+        font-size: 13px;
+    }
+}
+
+@media screen and (max-width: 500px) {
     .option-content{
-        font-size: 12px;
+        font-size: 15px;
+    }
+
+    .description{
+        font-size: 14px;
     }
 }

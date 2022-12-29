@@ -2,8 +2,19 @@
 :host{
     width: 25vw;
     min-width: 342px;
-    display: block;
-    font-family: "Lexend Deca",sans-serif;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    height: 100%;
+}
+
+.main{
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    width: 100%;
+    height: 100%;
+    padding: 5px 5px 5px 5px;
 }
 
 @media screen and (max-width: 800px) {

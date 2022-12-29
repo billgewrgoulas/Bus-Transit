@@ -1,6 +1,7 @@
 
 :host{
-    width: 23.8vw;
+    width: 25vw;
+    min-width: 342px;
     display: flex;
     flex-direction: column;
     font-family: "Lexend Deca",sans-serif;
@@ -22,7 +23,7 @@ h1{
     justify-content: flex-start;
     width: 100%;
     padding: 25px 15px 0px 15px;
-    height: calc(100vh - 137px);
+    height: calc(100vh - 140px);
     position: relative;
     gap: 40px;
 }
@@ -41,4 +42,28 @@ h1{
 qrcode{
     display: flex !important;
     justify-content: center !important;
+}
+
+@media screen and (max-width: 800px) {
+    :host{
+        min-width: 330px;
+    }
+}
+
+@media screen and (max-width: 700px) {
+    :host{
+        min-width: 270px;
+    }
+}
+
+@media screen and (max-width: 600px) {
+    :host{
+        min-width: 250px;
+    }
+}
+
+@media screen and (max-width: 500px) {
+    :host{
+        width: 100vw;
+    }
 }

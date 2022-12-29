@@ -19,12 +19,11 @@
     justify-content: flex-start;
     width: 100%;
     padding: 0px 15px 0px 15px;
-    height: calc(100vh - 183px);
+    height: calc(100vh - 140px);
     position: relative;
 }
 
 h1{
-    margin-bottom: 10px;
     color: #2b3b4c;
     font-family: "Lexend Deca",sans-serif;
     font-weight: 600;
@@ -117,10 +116,7 @@ h1{
 
 ::ng-deep .mat-expansion-panel-header {
     padding: 0 !important;
-}
-
-::ng-deep .mat-expansion-panel-header{
-    height: 21px;
+    background: none !important;
 }
 
 ::ng-deep .mat-expansion-panel {

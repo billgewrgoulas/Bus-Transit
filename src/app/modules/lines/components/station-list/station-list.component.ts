@@ -26,7 +26,7 @@ export class StationListComponent implements OnInit, AfterViewInit, OnChanges {
 
   ngOnChanges(changes: SimpleChanges): void {
     if(!this.el) return;
-    setTimeout(() => this.el.scrollTop = this.scrollPosition, 100);
+    setTimeout(() => this.el.scrollTop = this.scrollPosition, 500);
   }
 
   ngAfterViewInit(): void {

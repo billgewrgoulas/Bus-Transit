@@ -2,12 +2,12 @@
 
 <mat-tab-group mat-stretch-tabs animationDuration="300ms" [(selectedIndex)]="selectedTab">
     <mat-tab label="Schedules">
-        <station-list-component></station-list-component>
+        <station-list-component (onClick)="slide($event)"></station-list-component>
     </mat-tab>
     <mat-tab label="Stop">
         <station-entity></station-entity>
     </mat-tab>
-    <mat-tab label="Bus details">
+    <mat-tab label="Buses">
         <bus-entity></bus-entity>
     </mat-tab>
 </mat-tab-group>

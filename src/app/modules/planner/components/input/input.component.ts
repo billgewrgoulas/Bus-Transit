@@ -1,12 +1,7 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
-import { Store } from '@ngrx/store';
-import { filter, Observable, Subscription, tap } from 'rxjs';
-import { DataShareService } from 'src/app/services/data-share.service';
-import { AppState } from 'src/app/state/Reducers/api-reducer';
-import * as navigation from '../../../../state/Actions/navigation.actions';
-import { ActivatedRoute, Router } from '@angular/router';
+import { Component, OnInit } from '@angular/core';
+import { Observable } from 'rxjs';
+import { Router } from '@angular/router';
 import { DirectionsStore } from 'src/app/modules/planner/state/directions.store';
-import * as select_actions from '../../../../state/Actions/select.actions';
 
 @Component({
   selector: 'app-input',

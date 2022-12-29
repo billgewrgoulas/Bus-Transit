@@ -33,7 +33,7 @@ export class MapAreaComponent implements OnInit, OnDestroy {
 
     const map = L.map('map');
     this.initMap(map);
-
+    
     this.linesMap = new LinesMap(map);
     this.tripMap = new TripPlannerMap(map, this.msg);
     this.stopsMap = new StopsMap(map, this.router);

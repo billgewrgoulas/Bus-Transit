@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, HostListener, OnInit } from '@angular/core';
 import { SocketIOService } from './services/socket-io.service';
 
 @Component({
@@ -7,10 +7,25 @@ import { SocketIOService } from './services/socket-io.service';
   styleUrls: ['./app.component.css']
 })
 export class AppComponent implements OnInit {
-  title = 'CityBus';
+
+  public title = 'CityBus';
+  public flag: boolean = true;
 
   constructor(private io: SocketIOService){}
 
-  ngOnInit(){}
+  ngOnInit(){
+    this.onResize();
+  }
 
+  @HostListener('window:resize', ['$event'])
+  public onResize(){
+
+    if(window.innerWidth > 500){
+      this.flag = true;
+    }else{
+      this.flag = false;
+    }
+
+  }
+  
 }

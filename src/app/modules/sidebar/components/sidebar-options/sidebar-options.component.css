@@ -9,7 +9,7 @@
     flex-direction: row;
     justify-content: space-between;
     align-items: center;
-    height: 17vh;
+    height: 100px;
     width: 100%;
     font-size: 30px;
 }
@@ -32,3 +32,7 @@ i{
 .fa-bars{
     margin-left: 5px;
 }
+
+@media screen and (max-width: 600px) {
+    
+  }

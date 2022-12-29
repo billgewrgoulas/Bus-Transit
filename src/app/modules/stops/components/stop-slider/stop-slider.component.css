@@ -1,12 +1,12 @@
 
 :host{
-    width: 23.8vw;
-    display: flex;
+    width: 25vw;
+    min-width: 342px;
     flex-direction: column;
     font-family: "Lexend Deca",sans-serif;
     align-items: center;
+    display: block;
 }
-
 
 ::ng-deep .mat-ink-bar{
     background-color: #1f63d4 !important;
@@ -34,4 +34,28 @@ mat-tab-group{
     max-height: calc(100vh - 220px);
     padding-right: 3px;
     margin-top: 5px;
+}
+
+@media screen and (max-width: 800px) {
+    :host{
+        min-width: 330px;
+    }
+}
+
+@media screen and (max-width: 700px) {
+    :host{
+        min-width: 270px;
+    }
+}
+
+@media screen and (max-width: 600px) {
+    :host{
+        min-width: 250px;
+    }
+}
+
+@media screen and (max-width: 500px) {
+    :host{
+        width: 100vw;
+    }
 }

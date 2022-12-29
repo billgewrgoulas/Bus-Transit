@@ -38,7 +38,7 @@ export class ListItemComponent implements OnInit, OnDestroy {
 
   public selectStop(){
     this.store.dispatch(select_actions.selectStop({code: this.stop.code}));
-    this.onClick.emit(2);
+    this.onClick.emit(1);
   }
 
 }

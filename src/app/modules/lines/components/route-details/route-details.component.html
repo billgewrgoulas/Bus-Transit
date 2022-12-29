@@ -5,7 +5,8 @@
         [value]="route.desc"
         [icon]="'route'"
         [type]="'start'"
-        [disabled]="true">
+        [disabled]="true"
+        [mapLink]="['lines', route.lineId, 'route', route.code, 'map']">
     </input-field>
 
     <slider-component></slider-component>

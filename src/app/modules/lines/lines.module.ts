@@ -14,6 +14,8 @@ import { RouteDetailsComponent } from "./components/route-details/route-details.
 import { RouteListComponent } from "./components/route-list/route-list.component";
 import { SliderComponent } from "./components/slider/slider.component";
 import { StationListComponent } from "./components/station-list/station-list.component";
+import { LinesMapComponent } from "./components/lines-map/lines-map.component";
+import { MapModule } from "../map/map.module";
 
 
 @NgModule({
@@ -24,7 +26,8 @@ import { StationListComponent } from "./components/station-list/station-list.com
     StationListComponent,
     LinesDropdownComponent,
     RouteListComponent,
-    RouteDetailsComponent
+    RouteDetailsComponent,
+    LinesMapComponent
   ],
   imports: [
     CommonModule,
@@ -33,6 +36,7 @@ import { StationListComponent } from "./components/station-list/station-list.com
     SharedModule,
     MatTabsModule,
     MatSelectModule,
+    MapModule
   ],
   providers: [],
   bootstrap: [AppComponent]
