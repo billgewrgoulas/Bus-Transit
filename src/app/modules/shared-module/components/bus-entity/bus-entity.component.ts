@@ -12,9 +12,6 @@ import { IArrival } from 'src/app/state/Entities/live.data';
 })
 export class BusEntityComponent implements OnInit {
 
-  public buses$!: Observable<IArrival[] | undefined>;
-  public currentLine$!: Observable<ILine | undefined>;
-
   @Input() public buses: IArrival[] = [];
   @Output() public onClick = new EventEmitter<number>();
 

@@ -1,4 +1,4 @@
-import { Component, EventEmitter, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
 import { DataShareService } from 'src/app/services/data-share.service';
@@ -18,18 +18,17 @@ import { IArrival } from 'src/app/state/Entities/live.data';
 export class StationEntityComponent implements OnInit {
 
   public stop$!: Observable<IStop | undefined>;
-  public arrivals$!: Observable<IArrival[]>;
 
+  @Input() public arrivals!: IArrival[];
   @Output() public onClick = new EventEmitter<number>();
 
-  constructor(private store: Store<AppState>, 
-              private dataShare: DataShareService,
-              private liveStore: LiveDataStore) { }
+  constructor(
+    private store: Store<AppState>, 
+    private dataShare: DataShareService,
+  ) { }
 
   ngOnInit(): void {
     this.stop$ = this.store.select(getActiveStop);
-    this.liveStore.fetchArrivals(this.stop$);
-    this.arrivals$ = this.liveStore.getStopArrivals();
   }
 
   public swapTab(){

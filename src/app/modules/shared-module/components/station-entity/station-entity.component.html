@@ -13,26 +13,24 @@
                     </span>
                 </div>
             </div>
-            <ng-container *ngIf="arrivals$ | async as arrivals">
-                <ng-container *ngIf="arrivals.length > 0 else noBus">
-                    <div class="text-content">
-                        <i class="far fa-hourglass icon"></i>
-                        <div class="arrival-list">
-                            <ng-container *ngFor="let arrival of arrivals let last=last">
-                                <span class="description" *ngIf="!last">
-                                    <span class="bold">{{arrival.departureMins}}:{{arrival.departureSeconds}}', </span>
-                                </span>
-                                <span class="description" *ngIf="last">
-                                    <span class="bold">{{arrival.departureMins}}:{{arrival.departureSeconds}}'</span>
-                                </span>
-                            </ng-container>
-                        </div>
+            <ng-container *ngIf="arrivals.length > 0 else noBus">
+                <div class="text-content">
+                    <i class="far fa-hourglass icon"></i>
+                    <div class="arrival-list">
+                        <ng-container *ngFor="let arrival of arrivals let last=last">
+                            <span class="description" *ngIf="!last">
+                                <span class="bold">{{arrival.departureMins}}:{{arrival.departureSeconds}}', </span>
+                            </span>
+                            <span class="description" *ngIf="last">
+                                <span class="bold">{{arrival.departureMins}}:{{arrival.departureSeconds}}'</span>
+                            </span>
+                        </ng-container>
                     </div>
-                    <div class="text-content">
-                        <i class="fas fa-bus icon"></i>
-                        <span class="description"><span class="bold">{{arrivals[0].lineCode}}</span></span>
-                    </div>
-                </ng-container>
+                </div>
+                <div class="text-content">
+                    <i class="fas fa-bus icon"></i>
+                    <span class="description"><span class="bold">{{arrivals[0].lineCode}}</span></span>
+                </div>
             </ng-container>
         </div>
     </div>

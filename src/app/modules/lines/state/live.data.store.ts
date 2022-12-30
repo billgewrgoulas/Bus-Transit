@@ -2,13 +2,14 @@ import { HttpErrorResponse } from "@angular/common/http";
 import { Injectable } from "@angular/core";
 import { ComponentStore, tapResponse } from "@ngrx/component-store";
 import { Store } from "@ngrx/store";
-import { filter, Observable, switchMap, takeUntil, tap, timer } from "rxjs";
+import { filter, map, Observable, switchMap, takeUntil, tap, timer } from "rxjs";
 import { DataService } from "src/app/services/data.service";
 import { IArrival } from "src/app/state/Entities/live.data";
 import { ILine } from "../../../state/Entities/line.entity";
 import { IStop } from "../../../state/Entities/stop.entity";
 import { AppState } from "../../../state/Reducers/api-reducer";
 import { currentRoute, getActiveStop } from "../../../state/Selectors/appState.selectors";
+import { DataShareService } from "src/app/services/data-share.service";
 
 export interface LiveState {
     arrivals: IArrival[];
@@ -23,7 +24,11 @@ export const initialState: LiveState = {
 @Injectable()
 export class LiveDataStore extends ComponentStore<LiveState> {
     
-    public constructor(private dataService: DataService, private store: Store<AppState>) {
+    public constructor(
+        private dataService: DataService, 
+        private store: Store<AppState>,
+        private msg: DataShareService
+    ) {
         super(initialState);
     }
 
@@ -76,14 +81,14 @@ export class LiveDataStore extends ComponentStore<LiveState> {
                 tapResponse(
                     (buses) => this.updateBuses(buses),
                     (error: HttpErrorResponse) => console.log(error)
-                )
+                ),
             ))
         );
     });
 
     /* STATE UPDATERS */
     private updateArrivals = this.updater((state, arrivals: IArrival[]): LiveState => {
-        return {arrivals: [...arrivals], buses: []};
+        return {arrivals: [...arrivals], buses: [...state.buses]};
     });
 
     private updateBuses = this.updater((state, buses: IArrival[]): LiveState => {

@@ -2,7 +2,8 @@
 <input-field (onType)="filter($event)"
     [icon]="'trip_origin'"
     [placeholder]="'search stops'"
-    [type]="'start'">
+    [type]="'start'"
+    [mapLink]="['stops', 'map']">
 </input-field>
 
 <div class="stop-dropdown" *ngIf="stops$ | async as stops">

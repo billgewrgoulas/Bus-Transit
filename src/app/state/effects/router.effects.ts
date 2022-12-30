@@ -109,6 +109,7 @@ export class RouterEffects{
             filter(([action, {url, params}]) => url.startsWith('/(sidebar:stops') && params!['stopCode']),
             switchMap(([action, {params}]) => [
                 api_actions.stopRoutes({stopCode: params!['stopCode']}),
+                api_actions.getStops(),
                 select_actions.selectStop({code: params!['stopCode']})
             ])  
         )

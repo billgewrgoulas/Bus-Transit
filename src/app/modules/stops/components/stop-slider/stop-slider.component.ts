@@ -22,6 +22,7 @@ export class StopSliderComponent implements OnInit {
   public routes$!: Observable<IRoute[]>;
   public departures$!: Observable<IArrival[]>;
   public value: string = '';
+  public code: string = '';
   public latLng: string[] = [];
 
   constructor(
@@ -46,6 +47,7 @@ export class StopSliderComponent implements OnInit {
 
     if(stop){
       this.value = stop.desc;
+      this.code = stop.code;
       this.latLng = [stop.latitude, stop.longitude];
     }
 

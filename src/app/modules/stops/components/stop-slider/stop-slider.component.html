@@ -4,7 +4,8 @@
     [value]="value"
     [icon]="'trip_origin'"
     [placeholder]="'search stops'"
-    [type]="'start'">
+    [type]="'start'"
+    [mapLink]="[ 'stops', code, 'map' ]">
 </input-field>
 
 <mat-tab-group mat-stretch-tabs animationDuration="300ms" [(selectedIndex)]="selectedTab">

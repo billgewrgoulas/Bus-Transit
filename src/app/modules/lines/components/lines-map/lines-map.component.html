@@ -1,13 +1,5 @@
 
-<input-field
-    [value]="'Map'"
-    [icon]="'route'"
-    [type]="'start'"
-    [disabled]="true"
-    [mapLink]="[]">
-</input-field>
-
-<div class="main">
+<div class="main" *ngIf="buses$ | async">
     <div class="option-list">
         <map-area></map-area>
     </div>
