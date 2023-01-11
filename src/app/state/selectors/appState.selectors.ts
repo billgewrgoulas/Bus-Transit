@@ -5,7 +5,8 @@ import { AppState } from "../Reducers/api-reducer";
 import { lineStateAdapter } from "../Entities/line.entity";
 import { IMapData } from "../Entities/map.data.entity";
 import { Booking, bookingStateAdapter } from "../Entities/booking.entity";
-import { state } from "@angular/animations";
+import { stat } from "fs";
+import { create } from "domain";
 
 /* Main App State selector */
 export const getAppState = createFeatureSelector<AppState>('api');
@@ -41,6 +42,10 @@ export const getAllStops = createSelector(getStopState, selectStops);
 export const getBookings = bookingStateAdapter.getSelectors().selectAll;
 export const getAllBookings = createSelector(getBookingState, getBookings);
 
+/* Select saved info */
+export const getSavedRouteCodes = createSelector(getAppState, (state) => state.savedRoutes);
+export const getSavedStopCodes = createSelector(getAppState, (state) => state.savedStops);
+
 /* get spinner state */
 export const spinner = createSelector(
     getAppState, (state) => state.spinner
@@ -59,7 +64,8 @@ export const getStopsModule = createSelector(
 
 /* Select the active stop */
 export const getActiveStop = createSelector(
-    getStopState, selectAllStops, (state, stops) => stops[state.activeStopCode]
+    getStopState, selectAllStops, getAppState, 
+    (stopState, stops, state) => stops[stopState.activeStopCode]
 );
 
 /* - Select the current line - */
@@ -72,6 +78,45 @@ export const currentLine = createSelector(
 export const currentRoute = createSelector(
     selectAllRoutes, getRouteState,
     (routes, routeState) => routes[routeState.activeRoute]
+);
+
+/* Check if current route is saved */
+export const isRouteSaved = createSelector(
+    getAppState, currentRoute, (state, route) => {
+
+        if(!state.savedRoutes || !route){
+            return false;
+        }
+
+        return state.savedRoutes.includes(route.code);
+    }
+);
+
+/* Check if current stop is saved */
+export const isStopSaved = createSelector(
+    getAppState, getActiveStop, (state, stop) => {
+
+        if(!state.savedStops || !stop){
+            return false;
+        }
+
+        return state.savedStops.includes(stop.code);
+    }
+);
+
+/* Get saved information */
+export const getSavedInfo = createSelector(
+    getAppState, selectAllRoutes, selectAllStops, (state, routes, stops) => {
+
+        if(!state.savedRoutes || !state.savedStops){
+            return undefined;
+        }
+
+        const saved_stops: IStop[] = state.savedStops.map(code => stops[code]!);
+        const saved_routes: IRoute[] = state.savedRoutes.map(code => routes[code]!);
+
+        return {stops: saved_stops, routes: saved_routes};
+    }
 );
 
 /* Select line by lineCode */
@@ -184,20 +229,20 @@ export const getRoutePathAndStops = createSelector(
     }
 );
 
-export const filterSavedStops = (value: string) => createSelector(
+export const getSavedStops = createSelector(
     getAppState, selectAllStops, (state, stops) => {
         const saved: IStop[] = [];
 
+        if(!state.savedStops){
+            return [];
+        }
+
         state.savedStops.forEach(code => {
-            const stop: any = {...stops[code]};
-            stop.saved = true;
-            saved.push(stop);
+            const stop: IStop | undefined = stops[code];
+            if(stop) saved.push(stop);
         });
-    
-        return saved.filter(stop => 
-            stop.desc.toUpperCase().includes(value.trim().toUpperCase()) ||
-            stop.code.includes(value.trim())
-        ).slice(0, 20);
+
+        return saved;
     }
 );
 

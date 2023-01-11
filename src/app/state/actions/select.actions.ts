@@ -1,4 +1,5 @@
 import { createAction, props } from "@ngrx/store";
+import * as exp from "constants";
 
 
  /* Line, booking, station, bus, itinerary and route changed */
@@ -11,6 +12,7 @@ import { createAction, props } from "@ngrx/store";
  /* Empty the state info */
  export const emptyRoutes = createAction('Empty state');
  export const emptyPlan = createAction('Empty plan');
+ export const emptyPath = createAction('Empty path');
 
 /* Change Module */ 
 export const module = createAction('Change Modle', props<{module: string}>());

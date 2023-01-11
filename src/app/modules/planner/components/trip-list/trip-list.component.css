@@ -10,11 +10,11 @@
     overflow: auto;
     max-height: calc(100vh - 270px);
     padding-right: 3px;
+    gap: 10px;
 }
 
 h1{
-    margin-top: 10px;
-    margin-bottom: 12px;
+    margin-top: 15px;
     color: #2b3b4c;
     font-family: "Lexend Deca",sans-serif;
     font-weight: 600;

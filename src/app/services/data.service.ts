@@ -139,17 +139,44 @@ export class DataService {
   }
 
   public deleteStop(code: string): Observable<any>{
-    console.log(code)
     return this.http.get(this.url + '/saved/deleteStop/' + code, {withCredentials: false, headers:{
       Authorization: 'Bearer ' + this.token()}}).pipe(
         map((res: any) => <any>res), 
     );
   }
 
-  public getSavedStops(): Observable<any>{
+  public getSavedStops(): Observable<string[]>{
     return this.http.get(this.url + '/saved/getStops', {withCredentials: false, headers:{
       Authorization: 'Bearer ' + this.token()}}).pipe(
         map((res: any) => <string[]>res), 
+    );
+  }
+
+  public getSavedRoutes(): Observable<string[]>{
+    return this.http.get(this.url + '/saved/getRoutes', {withCredentials: false, headers:{
+      Authorization: 'Bearer ' + this.token()}}).pipe(
+        map((res: any) => <string[]>res), 
+    );
+  }
+
+  public saveRoute(code: string): Observable<any>{
+    return this.http.get(this.url + '/saved/saveRoute/' + code, {withCredentials: false, headers:{
+      Authorization: 'Bearer ' + this.token()}}).pipe(
+        map((res: any) => <any>res), 
+    );
+  }
+
+  public deleteRoute(code: string): Observable<any>{
+    return this.http.get(this.url + '/saved/deleteRoute/' + code, {withCredentials: false, headers:{
+      Authorization: 'Bearer ' + this.token()}}).pipe(
+        map((res: any) => <any>res), 
+    );
+  }
+
+  public getSavedInfo(): Observable<{stops: IStop[], routes: IRoute[]}>{
+    return this.http.get(this.url + '/saved/getSavedInfo/', {withCredentials: false, headers:{
+      Authorization: 'Bearer ' + this.token()}}).pipe(
+        map((res: any) => <{stops: IStop[], routes: IRoute[]}>res), 
     );
   }
 

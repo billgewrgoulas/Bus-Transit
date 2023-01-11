@@ -8,7 +8,7 @@ export interface IStop{
     desc: string;
     desc_eng: string;
     lines: string;
-    saved: boolean;
+    saved: boolean | undefined;
 }
 
 export interface StopState extends EntityState<IStop>{

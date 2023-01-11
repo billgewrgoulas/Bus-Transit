@@ -19,6 +19,15 @@
     font-weight: 600;
     margin-bottom: 2px;
     color: #2b3b4c;
+    display: flex;
+}
+
+.flex-row{
+    flex-direction: row;
+}
+
+.flex-column{
+    flex-direction: column;
 }
 
 .code{

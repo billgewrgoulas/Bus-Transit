@@ -9,14 +9,14 @@ import { AppState } from "../Reducers/api-reducer";
 import { ROUTER_NAVIGATED } from "@ngrx/router-store";
 import { getState } from "../Selectors/router.selectors";
 import { Location } from '@angular/common'
-import { getAllBookings } from "../Selectors/appState.selectors";
-import { AuthService } from "src/app/modules/auth/services/auth.service";
+import { Router } from "@angular/router";
 
 @Injectable()
 export class RouterEffects{
 
     constructor(
         private location: Location, 
+        private router: Router,
         private actions$: Actions, 
         private store: Store<AppState>, 
     ){}
@@ -84,15 +84,6 @@ export class RouterEffects{
         )
     );
 
-    fetchSavedStops$ = createEffect(() =>
-        this.actions$.pipe(
-            ofType(ROUTER_NAVIGATED),
-            withLatestFrom(this.store.select(getState)),
-            filter(([action, {url}]) => url.includes('sidebar:routes')),
-            map(() => api_actions.getSavedStops())
-        )
-    );
-
     clearStop$ = createEffect(() => 
         this.actions$.pipe(
             ofType(ROUTER_NAVIGATED),
@@ -146,9 +137,36 @@ export class RouterEffects{
     qrData$ = createEffect(() => 
         this.actions$.pipe(
             ofType(ROUTER_NAVIGATED), 
-            withLatestFrom(this.store.select(getAllBookings)),
-            filter(([action, bookings]) => bookings.length == 0),
+            withLatestFrom(this.store.select(getState)),
+            filter(([action, {query}]) => query!['module'] == 'qr_module'),
             map(() => api_actions.fetchBookings())
+        )
+    );
+
+    loadSavedRoutes$ = createEffect(() => 
+        this.actions$.pipe(
+            ofType(ROUTER_NAVIGATED), 
+            withLatestFrom(this.store.select(getState)),
+            filter(([action, {query}]) => query!['module'] == 'route_data'),
+            map(() => api_actions.getSavedRoutes())
+        )
+    );
+
+    loadSavedStops$ = createEffect(() => 
+        this.actions$.pipe(
+            ofType(ROUTER_NAVIGATED), 
+            withLatestFrom(this.store.select(getState)),
+            filter(([action, {query}]) => query!['module'] == 'stop_data' || query!['module'] == 'places'),
+            map(() => api_actions.getSavedStops())
+        )
+    );
+
+    loadSavedInfo$ = createEffect(() => 
+        this.actions$.pipe(
+            ofType(ROUTER_NAVIGATED), 
+            withLatestFrom(this.store.select(getState)),
+            filter(([action, {query}]) => query!['module'] == 'saved_info'),
+            map(() => api_actions.getSavedInfo())
         )
     );
 
@@ -159,6 +177,23 @@ export class RouterEffects{
             filter(([action, {query}]) => query!['module'] == 'trip_options'),
             map(action => select_actions.emptyPlan())
         )
+    );
+
+    placesMap$ = createEffect(() => 
+        this.actions$.pipe(
+            ofType(navigation.placesMap),
+            withLatestFrom(this.store.select(getState)),
+            tap(([action, {url}]) => {
+
+                const link: string[] = [ 'routes', 'places', 'start', 'map'];
+                if(url.includes('dest')){
+                    link[2] = 'dest';
+                }
+
+                this.router.navigate([{ outlets: { sidebar: link }}]);
+            }),
+            
+        ), {dispatch: false}
     );
 
     changeModule$ = createEffect(() =>
@@ -184,8 +219,19 @@ export class RouterEffects{
         this.actions$.pipe(
             ofType(navigation.arrowNavigation),
             withLatestFrom(this.store.select(getState)),
-            tap((url) => this.location.back())
+            tap(([action, {query}]) => {
+                if(query!['module'] == 'stop_data'){
+                    this.navigate(['stops', 'stops_module']);
+                    this.location.replaceState('');
+                }else{
+                    this.location.back();
+                }
+            })
         ), {dispatch: false}
     );
+
+    private navigate(link: string[]){
+        this.router.navigate([{ outlets: { sidebar: link[0] }}], {queryParams: {module: link[1]}});
+    }
 
 }

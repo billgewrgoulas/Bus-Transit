@@ -55,10 +55,10 @@ input {
     border-bottom: 3px solid #f7f8fe;
     background: transparent;
     width: 87%;
-    font-size: 14px;
+    font-size: 13px;
     padding-bottom: 6px;
     color: #2b3b4c;
-    font-weight: 500;
+    /* font-weight: 300; */
 }
 .arrow{
     color: #2d3b50;
@@ -93,10 +93,26 @@ input {
 .fa-map{
     font-size: 20px !important;
     cursor: pointer;
+    padding: 0px 15px 0px 0px;
 }
 
-@media screen and (min-width: 500px) {
-    .fa-map{
-        /* display: none; */
-    }
+::ng-deep .mat-menu-panel {
+    background: rgba(255,255,255,1) !important;
+    color: #373a50 !important;
+}
+
+.inner-button:hover{
+    background: rgb(235, 235, 235) !important;
+}
+
+button{
+    border: none !important;
+    background-color: transparent !important;
+    display: grid !important;
+    place-items: center !important;
+}
+
+.menu-text{
+    color: #373a50;
+    font-weight: bold;
 }

@@ -28,6 +28,7 @@ h1{
     font-family: "Lexend Deca",sans-serif;
     font-weight: 600;
     font-size: 18px;
+    margin-top: 15px;
 }
 
 .entity-wrapper{
@@ -155,8 +156,22 @@ h1{
     display: flex;
     flex-direction: row;
     justify-content: space-between;
+    align-items: center;
     padding-right: 10px;
     gap: 5px;
+    border: 1px solid red;
+}
+
+.fa-map{
+    font-size: 20px !important;
+    padding: 6px 6px 6px 6px !important;
+    transition-duration: .4s;
+    border-radius: 3px;
+    color: #002D62;;
+}
+
+.fa-map:hover{
+    background: #b7cbe4;
 }
 
 .book-menu{

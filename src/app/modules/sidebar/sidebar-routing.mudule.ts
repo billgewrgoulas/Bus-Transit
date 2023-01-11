@@ -9,8 +9,8 @@ const routes: Routes = [
   {path: 'stops', loadChildren: () => import('../stops/stops.module').then(m => m.StopsModule), outlet: 'sidebar', data: {animation: 'isRight'}},
   {path: 'lines', loadChildren: () => import('../lines/lines.module').then(m => m.LinesModule), outlet: 'sidebar', data: {animation: 'isRight'}},
   {path: 'routes', loadChildren: () => import('../planner/planner.module').then(m => m.PlannerModule), outlet: 'sidebar', data: {animation: 'isRight'}},
-  {path: 'routes', loadChildren: () => import('../planner/planner.module').then(m => m.PlannerModule), outlet: 'sidebar', data: {animation: 'isRight'}},
   {path: 'auth', loadChildren: () => import('../auth/auth.module').then(m => m.AuthModule), outlet: 'sidebar', data: {animation: 'isRight'}},
+  {path: 'saved', loadChildren: () => import('../saved/saved.module').then(m => m.SavedModule), outlet: 'sidebar', data: {animation: 'isRight'}},
 ];
 
 @NgModule({

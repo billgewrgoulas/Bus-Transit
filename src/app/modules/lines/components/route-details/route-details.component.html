@@ -1,14 +1,21 @@
 
-<ng-container *ngIf="route$ | async as route">
+<ng-container *ngIf="vm$ | async as vm">
+    <ng-container *ngIf="vm.route">
 
-    <input-field
-        [value]="route.desc"
-        [icon]="'route'"
-        [type]="'start'"
-        [disabled]="true"
-        [mapLink]="['lines', route.lineId, 'route', route.code, 'map']">
-    </input-field>
+        <input-field
+            (save)="onSave($event)"
+            (remove)="onRemove($event)"
+            [dots]="authenticated"
+            [value]="vm.route.desc"
+            [icon]="'route'"
+            [type]="'start'"
+            [disabled]="true"
+            [code]="vm.route.code"
+            [saved]="vm.saved"
+            [mapLink]="['lines', vm.route.lineId, 'route', vm.route.code, 'map']">
+        </input-field>
 
-    <router-outlet></router-outlet>
+        <router-outlet></router-outlet>
 
+    </ng-container>
 </ng-container>

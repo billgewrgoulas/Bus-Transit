@@ -27,7 +27,6 @@ export class LiveDataStore extends ComponentStore<LiveState> {
     public constructor(
         private dataService: DataService, 
         private store: Store<AppState>,
-        private msg: DataShareService
     ) {
         super(initialState);
     }

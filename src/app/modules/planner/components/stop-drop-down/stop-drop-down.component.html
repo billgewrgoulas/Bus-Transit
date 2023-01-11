@@ -10,27 +10,28 @@
     <app-option *ngIf="!saved" (onSelect)="onMap($event)"
         [icon]="'map'"
         [text]="'Select on map'"
-        [data]="['0', 'Custom', '39.667341104708946', '20.854922400637918']">
+        [data]="['0', 'Επιλογή', '39.667341104708946', '20.854922400637918']">
     </app-option>
 
-    <ng-container *ngIf="stops$ | async as stops else noStops">
-        <ng-container *ngIf="stops.length > 0 else noStops">
-            <app-option *ngFor="let stop of stops"
-                (onSelect)="onClick($event)"
-                (save)="onSave($event)"
-                (remove)="onRemove($event)"
-                [menu]="true"
-                [icon]="'location_on'"
-                [text]="stop.desc"
-                [desc]="stop.code"
-                [saved]="stop.saved"
-                [data]="[stop.code, stop.desc, stop.latitude, stop.longitude]">
-            </app-option>
+    <ng-container *ngIf="stops$ | async as stops; else noStops;">
+        <ng-container *ngIf="stops.length > 0; else noStops">
+            <ng-container *ngIf="{text: searchText$ | async} as obj">
+                <app-option *ngFor="let stop of (stops | filter: obj.text!) "
+                    (onSelect)="onClick($event)"
+                    (save)="onSave($event)"
+                    (remove)="onRemove($event)"
+                    [menu]="true"
+                    [icon]="'location_on'"
+                    [text]="stop.desc"
+                    [desc]="stop.code"
+                    [data]="[stop.code, stop.desc, stop.latitude, stop.longitude]">
+                </app-option>
+            </ng-container>
         </ng-container>
     </ng-container>
     
 </div>
 
 <ng-template #noStops>
-    <app-option [text]="'No saved stops'"></app-option>
+    <app-option *ngIf="saved" [text]="'Δεν υπάρχουν αποθυκευμένες στάσεις'"></app-option>
 </ng-template>

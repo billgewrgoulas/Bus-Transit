@@ -1,26 +1,38 @@
 
-<input-field 
-    [disabled]="true"
-    [value]="value"
-    [icon]="'trip_origin'"
-    [placeholder]="'search stops'"
-    [type]="'start'"
-    [mapLink]="[ 'stops', code, 'map' ]">
-</input-field>
+<ng-container *ngIf="vm$ | async as vm">
 
-<mat-tab-group mat-stretch-tabs animationDuration="300ms" [(selectedIndex)]="selectedTab">
-    <mat-tab label="Lines">
-        <div class="option-list">
-            <app-option *ngFor="let route of routes$ | async"
-                [icon]="'route'"
-                [text]="route.desc"
-                [desc]="route.name">
-            </app-option>
-        </div>
-    </mat-tab>
-    <mat-tab label="Telematics">
-        <div class="option-list" *ngIf="departures$ | async as departures">
-            <bus-entity [buses]="departures"></bus-entity>
-        </div>
-    </mat-tab>
-</mat-tab-group>
+    <input-field *ngIf="vm.stop"
+        (save)="onSave($event)"
+        (remove)="onRemove($event)"
+        [disabled]="true"
+        [value]="vm.stop.desc"
+        [icon]="'trip_origin'"
+        [placeholder]="'search stops'"
+        [type]="'start'"
+        [saved]="vm.saved"
+        [dots]="authenticated"
+        [module]="'stop'"
+        [code]="vm.stop.code"
+        [mapLink]="[ 'stops', vm.stop.code, 'map' ]">
+    </input-field>
+
+    <mat-tab-group mat-stretch-tabs animationDuration="300ms" [(selectedIndex)]="selectedTab">
+        <mat-tab label="Routes">
+            <div class="option-list" *ngIf="vm.routes">
+                <app-option *ngFor="let route of vm.routes"
+                    [icon]="'route'"
+                    [text]="route.desc"
+                    [desc]="route.name">
+                </app-option>
+            </div>
+        </mat-tab>
+        <mat-tab label="Telematics">
+            <div class="option-list" *ngIf="departures$ | async as departures">
+                <bus-entity [buses]="departures"></bus-entity>
+            </div>
+        </mat-tab>
+    </mat-tab-group>
+
+</ng-container>
+
+

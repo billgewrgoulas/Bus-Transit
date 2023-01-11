@@ -46,7 +46,7 @@
     flex-direction: column;
     justify-content: flex-start;
     align-items: flex-start;
-    gap: 7px;
+    gap: 3px;
     color: #545f6d;
     font-size: 14px;
     padding: 17px 20px 17px 20px;
@@ -101,4 +101,10 @@
 
 .unbooked{
     color: #8190a4;
+}
+
+.malakas{
+    color: #2e3e51;
+    font-weight: bold;
+    font-size: 14px;
 }

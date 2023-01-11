@@ -21,20 +21,6 @@
     font-weight: 700 !important;
 }
 
-.slider-wrapper{
-    width: 100%;
-}
-
-.main{
-    display: flex;
-    flex-direction: column;
-    justify-content: flex-start;
-    width: 100%;
-    padding: 0px 15px 0px 15px;
-    height: calc(100vh - 140px);
-    position: relative;
-}
-
 @media screen and (max-width: 800px) {
     :host{
         min-width: 330px;

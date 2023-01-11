@@ -12,7 +12,7 @@
         <dropdown-option *ngFor="let stop of stops"
             [text]="stop.desc"
             [details]="stop.code"
-            [mentos]="stop.lines.split(',')"
+            [mentos]="mentos(stop)"
             [data]="stop.code"
             (e)="onSelect($event)">
         </dropdown-option>

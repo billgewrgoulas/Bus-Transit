@@ -23,6 +23,7 @@ export interface IRoute{
     desc: string;
     name: string;
     stopCodes: string;
+    saved: boolean | undefined;
     points: IPoint[];
 }
 

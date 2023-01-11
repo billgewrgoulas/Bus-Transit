@@ -36,7 +36,7 @@
     flex-direction: column;
     justify-content: flex-start;
     align-items: flex-start;
-    gap: 7px;
+    gap: 1px;
     color: #545f6d;
     font-size: 14px;
     padding: 17px 15px 17px 20px;
@@ -70,4 +70,10 @@
 .text-content-no-incoming{
     display: flex;
     flex-direction: column;
+}
+
+.malakas{
+    color: #2e3e51;
+    font-weight: bold;
+    font-size: 14px;
 }

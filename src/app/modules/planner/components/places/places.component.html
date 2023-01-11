@@ -1,38 +1,25 @@
 
 <ng-container *ngIf="vm$ | async as vm">
 
-    <input-field *ngIf="direction=='start'"
-        [icon]="'trip_origin'"
-        [placeholder]="'search start'"
-        [type]="'start'"
-        [value]="value"
-        (onType)="keyup($event)">
-    </input-field>
+    <ng-container *ngIf="{v: initValue$ | async} as obj">
+        <input-field *ngIf="direction=='start'"
+            [icon]="'trip_origin'"
+            [placeholder]="'search start'"
+            [type]="'start'"
+            [value]="obj.v!"
+            (onType)="keyup($event)">
+        </input-field>
 
-    <input-field *ngIf="direction=='dest'"
-        [icon]="'location_on'"
-        [placeholder]="'search destination'"
-        [type]="'dest'"
-        [value]="value"
-        (onType)="keyup($event)">
-    </input-field>
+        <input-field *ngIf="direction=='dest'"
+            [icon]="'location_on'"
+            [placeholder]="'search destination'"
+            [type]="'dest'"
+            [value]="obj.v!"
+            (onType)="keyup($event)">
+        </input-field>
+    </ng-container>
 
-    <div class="main">
-
-        <spinner-component *ngIf="spinner$ | async"></spinner-component>
-        <toaster-component *ngIf="false"></toaster-component>
-
-        <div class="slider-wrapper">
-            <mat-tab-group mat-stretch-tabs animationDuration="300ms">
-                <mat-tab label="Places">
-                    <stop-dropdown (custom)="custom($event)" [value]="value" [flag]="false"></stop-dropdown>
-                </mat-tab>
-                <mat-tab label="Saved">
-                    <stop-dropdown [value]="value" [saved]="true" [flag]="false"></stop-dropdown>
-                </mat-tab>
-            </mat-tab-group>
-        </div>
-    </div>
+    <router-outlet></router-outlet>
     
 </ng-container>
 

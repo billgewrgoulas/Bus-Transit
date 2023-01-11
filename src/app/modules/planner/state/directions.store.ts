@@ -1,7 +1,7 @@
 import { Injectable } from "@angular/core";
 import { ComponentStore, tapResponse } from "@ngrx/component-store";
 import { Store } from "@ngrx/store";
-import { filter, map, Observable, throttleTime } from "rxjs";
+import { distinctUntilChanged, filter, map, Observable, throttleTime } from "rxjs";
 import * as api_actions from "../../../state/Actions/api-calls.actions";
 import { AppState } from "../../../state/Reducers/api-reducer";
 import { Router } from "@angular/router";
@@ -17,6 +17,9 @@ export interface TripState {
     date: Date;
     arriveBy: string;
     fetch: boolean;
+    startValue: string;
+    endValue: string;
+    searchText: string;
 }
 
 export const initialState: TripState = {
@@ -27,6 +30,9 @@ export const initialState: TripState = {
     date: new Date(),
     arriveBy: 'depart',
     fetch: false,
+    startValue: '',
+    endValue: '',
+    searchText: ''
 }
   
 @Injectable()
@@ -44,8 +50,18 @@ export class DirectionsStore extends ComponentStore<TripState> {
         return {...state, fetch: false};
     });
 
+    public updateSearchText = this.updater((state: TripState, text: string): TripState =>{
+        return {...state, searchText: text};
+    });
+
     public swapPoints = this.updater((state: TripState): TripState =>{
-        return {...state, direction: 'swap',  start: [...state.destination], destination: [...state.start], fetch: true};
+        return {...state, 
+            direction: 'swap',  
+            start: [...state.destination], 
+            destination: [...state.start],
+            startValue: state.endValue,
+            endValue: state.startValue
+        };
     });
 
     public changeDirection = this.updater((state: TripState, direction: string): TripState =>{
@@ -54,9 +70,9 @@ export class DirectionsStore extends ComponentStore<TripState> {
 
     public updatePoint = this.updater((state: TripState, point: string[]): TripState => {
         if(state.direction === 'start'){
-            return {...state, start: point};
+            return {...state, start: point, startValue: point[1]};
         }else if (state.direction === 'dest'){
-            return {...state, destination: point};
+            return {...state, destination: point, endValue: point[1]};
         }
 
         return initialState;
@@ -104,6 +120,18 @@ export class DirectionsStore extends ComponentStore<TripState> {
             if(state.destination.length > 0) names.end = state.destination[1];
             return names;
         });
+    }
+
+    public getStartValue(): Observable<string>{
+        return this.select(this.state$, (state) => state.startValue);
+    }
+
+    public getEndValue(): Observable<string>{
+        return this.select(this.state$, (state) => state.endValue);
+    }
+
+    public getText(): Observable<string>{
+        return this.select(this.state$, (state) => state.searchText);
     }
 
     public fetchPlan = this.effect(() => {

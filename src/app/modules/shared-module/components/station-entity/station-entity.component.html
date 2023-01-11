@@ -15,7 +15,20 @@
             </div>
             <ng-container *ngIf="arrivals.length > 0 else noBus">
                 <div class="text-content">
-                    <i class="far fa-hourglass icon"></i>
+                    <span class="malakas">Άφιξη: </span>
+                    <div class="arrival-list">
+                        <ng-container *ngFor="let arrival of arrivals let last=last">
+                            <span class="description" *ngIf="!last">
+                                <span class="bold">{{arrival.arrivalMins}}:{{arrival.arrivalSeconds}}', </span>
+                            </span>
+                            <span class="description" *ngIf="last">
+                                <span class="bold">{{arrival.arrivalMins}}:{{arrival.arrivalSeconds}}'</span>
+                            </span>
+                        </ng-container>
+                    </div>
+                </div>
+                <div class="text-content">
+                    <span class="malakas">Αναχώρηση: </span>
                     <div class="arrival-list">
                         <ng-container *ngFor="let arrival of arrivals let last=last">
                             <span class="description" *ngIf="!last">
@@ -28,7 +41,7 @@
                     </div>
                 </div>
                 <div class="text-content">
-                    <i class="fas fa-bus icon"></i>
+                    <span class="malakas">Γραμμή: </span>
                     <span class="description"><span class="bold">{{arrivals[0].lineCode}}</span></span>
                 </div>
             </ng-container>
@@ -49,7 +62,7 @@
 
 <ng-template #noBus>
     <div class="text-content-no-incoming" (click)="swapTab()">
-        <span class="option-text">No incoming bus within 30'</span>
+        <span class="option-text">No incoming bus within 20'</span>
         <span class="description">Click to see schedule</span>
     </div>
 </ng-template>

@@ -35,4 +35,13 @@ export class StopsComponent implements OnInit {
     this.stops$ = this.store.select(filterStops(value));
   }
 
+  public mentos(stop: IStop | undefined){
+
+    if(stop && stop.lines){
+      return stop.lines.split(',');
+    }
+
+    return [];
+  }
+
 }

@@ -26,6 +26,9 @@ import { BookingsComponent } from './components/bookings/bookings.component';
 import { BookingComponent } from './components/booking/booking.component';
 import { QrComponent } from './components/qr/qr.component';
 import { QRCodeModule } from 'angularx-qrcode';
+import { PlacesMapComponent } from './components/places-map/places-map.component';
+import { PlacesSliderComponent } from './components/places-slider/places-slider.component';
+import { MapModule } from '../map/map.module';
 
 @NgModule({
   declarations: [
@@ -40,6 +43,8 @@ import { QRCodeModule } from 'angularx-qrcode';
     BookingsComponent,
     BookingComponent, 
     QrComponent,
+    PlacesMapComponent,
+    PlacesSliderComponent
   ],
   imports: [
     CommonModule,
@@ -56,7 +61,8 @@ import { QRCodeModule } from 'angularx-qrcode';
     MatButtonModule,
     MatMenuModule,
     AuthModule,
-    QRCodeModule
+    QRCodeModule,
+    MapModule
   ],providers: [DirectionsStore]
 })
 export class PlannerModule { }

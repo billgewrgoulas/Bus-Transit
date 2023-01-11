@@ -28,6 +28,11 @@ export class LinesMap extends Map{
     }
 
     public carvePath(points: IPoint[]){
+
+        if(points.length == 0){
+            return;
+        }
+
         const path = points.map(point => [+point.latitude, +point.longitude]);
         const polyline = this.createPolyline(path, '#002D62');
         this.layerGroup.addLayer(polyline);

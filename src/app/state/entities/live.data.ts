@@ -8,4 +8,6 @@ export interface IArrival{
     lineCode: string;
     latitude: string;
     longitude: string;
+    arrivalMins: number;
+    arrivalSeconds: number;
 }

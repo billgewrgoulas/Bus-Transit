@@ -4,8 +4,9 @@
         <spinner-component *ngIf="vm.spinner"></spinner-component>
         <div class="header">
             <h1>Itinerary Steps</h1>
+            <i *ngIf="flag" class="fas fa-map" ></i>
         </div>
-        <div class="option-list" *ngIf="vm.itinerary">
+        <div class="option-list" *ngIf="vm.itinerary else noItineraries">
             <span><strong style="color: #2b3b4c;">Start</strong>: {{vm.itinerary.startTime}}</span>
             <ng-container *ngFor="let leg of vm.itinerary.legs let leg_index=index">
                 <div class="entity-wrapper" *ngIf="leg.mode=='WALK'">
@@ -116,14 +117,10 @@
     </ng-container>
 </div>
 
-
 <ng-template #noItineraries>
-
-    <h1>Itinerary Steps</h1>
     <div class="option-list">
         <app-option [text]="'No routes found'"></app-option>
     </div>
-    
 </ng-template>
 
 

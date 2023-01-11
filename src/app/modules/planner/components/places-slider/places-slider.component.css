@@ -1,0 +1,47 @@
+
+:host{
+    width: 25vw;
+    min-width: 342px;
+    display: flex;
+    flex-direction: column;
+    font-family: "Lexend Deca",sans-serif;
+    align-items: center;
+}
+
+.slider-wrapper{
+    width: 100%;
+}
+
+.main{
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    width: 100%;
+    padding: 0px 15px 0px 15px;
+    height: calc(100vh - 108px);
+    position: relative;
+}
+
+@media screen and (max-width: 800px) {
+    :host{
+        min-width: 330px;
+    }
+}
+
+@media screen and (max-width: 700px) {
+    :host{
+        min-width: 270px;
+    }
+}
+
+@media screen and (max-width: 600px) {
+    :host{
+        min-width: 250px;
+    }
+}
+
+@media screen and (max-width: 500px) {
+    :host{
+        width: 100vw;
+    }
+}

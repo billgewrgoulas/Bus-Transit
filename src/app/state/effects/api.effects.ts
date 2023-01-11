@@ -5,13 +5,14 @@ import { catchError, filter, map, of, switchMap, take, tap, withLatestFrom } fro
 import { DataService } from "src/app/services/data.service";
 import * as api_actions from '../Actions/api-calls.actions';
 import { AppState } from "../Reducers/api-reducer";
-import { getActiveRouteSchedules, getAllStops, selectCurrentLineRoutes, selectRoutePoints } from "../Selectors/appState.selectors";
+import { getActiveRouteSchedules, getAllBookings, getAllStops, getSavedInfo, getSavedRouteCodes, getSavedStopCodes, selectCurrentLineRoutes, selectRoutePoints } from "../Selectors/appState.selectors";
 import { ILine } from "../Entities/line.entity";
 import { IRoute, IRouteInfo } from "../Entities/route.entity";
 import { IScheduleDetails } from "../Entities/schedule.entity";
 import { IStop } from "../Entities/stop.entity";
 import { Plan } from "../Entities/itinerary";
 import { Booking } from "../Entities/booking.entity";
+import { ROUTER_NAVIGATED } from "@ngrx/router-store";
 
 @Injectable()
 export class ApiEffects{
@@ -105,6 +106,7 @@ export class ApiEffects{
     loadBookings$ = createEffect(() => 
         this.actions$.pipe(
             ofType(api_actions.fetchBookings),
+            withLatestFrom(this.store.select(getAllBookings)),
             tap(() => this.store.dispatch(api_actions.showSpinner())),
             switchMap(() => this.dataService.getBookings().pipe(
                 map((res: Booking[]) => api_actions.fetchBookingsSuccess({data: res})),
@@ -147,13 +149,63 @@ export class ApiEffects{
         )     
     );
 
-    getSavedStops$ = createEffect(()=>
+    deleteRoute$ = createEffect(()=>
         this.actions$.pipe(
-            ofType(api_actions.getSavedStops), take(1),
+            ofType(api_actions.deleteRoute),
             tap(() => this.store.dispatch(api_actions.showSpinner())),
-            switchMap((action) => this.dataService.getSavedStops().pipe(
-                map((res: any) => api_actions.getSavedStopsSuccess({codes: res})),
+            switchMap((action) => this.dataService.deleteRoute(action.code).pipe(
+                map((res) => api_actions.deleteRouteSuccess({code: action.code})),
+                catchError(err => of(api_actions.deleteRouteError({msg: err})))
+            ))      
+        )     
+    );
+
+    saveRoute$ = createEffect(()=>
+        this.actions$.pipe(
+            ofType(api_actions.saveRoute), 
+            tap(() => this.store.dispatch(api_actions.showSpinner())),
+            switchMap((action) => this.dataService.saveRoute(action.code).pipe(
+                map((res: any) => api_actions.saveRouteSuccess({code: action.code})),
+                catchError(err => of(api_actions.saveRouteError({msg: err})))
+            ))      
+        )     
+    );
+
+    loadSavedRoutes$ = createEffect(()=>
+        this.actions$.pipe(
+            ofType(api_actions.getSavedRoutes), 
+            withLatestFrom(this.store.select(getSavedRouteCodes)),
+            filter(([action, codes]) => !codes),
+            tap(() => this.store.dispatch(api_actions.showSpinner())),
+            switchMap(() => this.dataService.getSavedRoutes().pipe(
+                map((res: string[]) => api_actions.getSavedRoutesSuccess({codes: res})),
+                catchError(err => of(api_actions.getSavedRoutesError({msg: err})))
+            ))      
+        )     
+    );
+
+    loadSavedStops$ = createEffect(()=>
+        this.actions$.pipe(
+            ofType(api_actions.getSavedStops), 
+            withLatestFrom(this.store.select(getSavedStopCodes)),
+            filter(([action, codes]) => !codes),
+            tap(() => this.store.dispatch(api_actions.showSpinner())),
+            switchMap(() => this.dataService.getSavedStops().pipe(
+                map((res: string[]) => api_actions.getSavedStopsSuccess({codes: res})),
                 catchError(err => of(api_actions.getSavedStopsError({msg: err})))
+            ))      
+        )     
+    );
+
+    loadSavedInfo$ = createEffect(()=>
+        this.actions$.pipe(
+            ofType(api_actions.getSavedInfo), 
+            withLatestFrom(this.store.select(getSavedInfo)),
+            filter(([action, info]) => !info),
+            tap(() => this.store.dispatch(api_actions.showSpinner())),
+            switchMap(() => this.dataService.getSavedInfo().pipe(
+                map(res => api_actions.getSavedInfoSuccess(res)),
+                catchError(err => of(api_actions.getSavedInfoError({msg: err})))
             ))      
         )     
     );

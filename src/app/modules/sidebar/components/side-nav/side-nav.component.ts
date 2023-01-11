@@ -1,13 +1,10 @@
 import { OnDestroy } from '@angular/core';
 import { AfterViewInit, Component, HostListener, OnInit, ViewChild } from '@angular/core';
 import { Router, RouterOutlet } from '@angular/router';
-import { Store } from '@ngrx/store';
 import { Subscription } from 'rxjs/internal/Subscription';
 import { AuthService } from 'src/app/modules/auth/services/auth.service';
 import { slideAnimation } from 'src/app/route-animations';
 import { DataShareService } from 'src/app/services/data-share.service';
-import { AppState } from 'src/app/state/Reducers/api-reducer';
-import * as api_actions from 'src/app/state/Actions/api-calls.actions';
 
 
 @Component({

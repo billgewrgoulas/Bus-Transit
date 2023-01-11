@@ -22,8 +22,8 @@ export interface AppState{
     itinerary: number;
     module: string;
     spinner: boolean;
-    savedStops: string[];
-    savedLines: string[];
+    savedStops: string[] | undefined;
+    savedRoutes: string[] | undefined;
 };
 
 export const initialAppState: AppState = {
@@ -37,8 +37,8 @@ export const initialAppState: AppState = {
     itinerary: -1,
     module: '',
     spinner: false,
-    savedStops: [],
-    savedLines: [],
+    savedStops: undefined,
+    savedRoutes: undefined,
 };
 
 /* API Reducer */
@@ -66,7 +66,7 @@ export const appStateReducer = createReducer(
         return {...state, schedule: scheduleStateAdapter.setOne(action.schedules, state.schedule)};
     }),
     on(api_actions.getStopsSuccess, (state: AppState, action): AppState => {
-        return {...state, spinner: false ,stops: stopStateAdapter.addMany(action.stops, state.stops)};
+        return {...state, spinner: false ,stops: stopStateAdapter.setMany(action.stops, state.stops)};
     }),
     on(api_actions.fetchPlanSuccess, (state: AppState, action): AppState => {
         return {...state, plan: action.data, spinner: false, occupancy: action.data.occupancy};
@@ -95,19 +95,44 @@ export const appStateReducer = createReducer(
     on(api_actions.deleteBooking, (state: AppState, action): AppState => {
         return {...state, spinner: false, bookings: bookingStateAdapter.removeOne(action.trip_id, state.bookings)};
     }),
+    on(api_actions.saveStopSuccess, (state: AppState, action): AppState => {
+        return {...state, spinner: false, savedStops: [...state.savedStops!, action.code]};
+    }),
+    on(api_actions.deleteStopSuccess, (state: AppState, action): AppState => {
+        return {...state, spinner: false, savedStops: state.savedStops!.filter(code => code != action.code)};
+    }),
+    on(api_actions.getSavedRoutesSuccess, (state: AppState, action): AppState => {
+        return {...state, spinner: false, savedRoutes: action.codes};
+    }),
     on(api_actions.getSavedStopsSuccess, (state: AppState, action): AppState => {
         return {...state, spinner: false, savedStops: action.codes};
     }),
-    on(api_actions.saveStopSuccess, (state: AppState, action): AppState => {
-        return {...state, spinner: false, savedStops: [...state.savedStops, action.code]};
+    on(api_actions.saveRouteSuccess, (state: AppState, action): AppState => {
+        return {...state, spinner: false, savedRoutes: [...state.savedRoutes!, action.code]};
     }),
-    on(api_actions.deleteStopSuccess, (state: AppState, action): AppState => {
-        return {...state, spinner: false, savedStops: state.savedStops.filter(code => code != action.code)};
+    on(api_actions.deleteRouteSuccess, (state: AppState, action): AppState => {
+        return {...state, spinner: false, savedRoutes: state.savedRoutes!.filter(code => code != action.code)};
+    }),
+    on(api_actions.getSavedInfoSuccess, (state: AppState, action): AppState => {
+        return {
+            ...state, spinner: false, 
+            savedRoutes: action.routes.map(route => route.code),
+            savedStops: action.stops.map(stop => stop.code),
+            stops: stopStateAdapter.setMany(action.stops, state.stops),
+            routes: routeStateAdapter.setAll(action.routes, state.routes)
+        };
+    }),
+    on(select_actions.emptyPath, (state: AppState, action): AppState => {
+        return {...state,  routes: routeStateAdapter.updateOne({
+                    id: state.routes.activeRoute, changes: {points: []}
+                }, state.routes)
+        };
     }),
     on(api_actions.getRouteDetailsuccess, (state: AppState, action): AppState => {
-        return {...state, stops: stopStateAdapter.addMany(action.routeInfo.stops, state.stops), 
-                routes: routeStateAdapter.updateOne({id: action.routeInfo.code, changes: 
-                {points: action.routeInfo.points}}, state.routes), 
+        return {...state, stops: stopStateAdapter.setMany(action.routeInfo.stops, state.stops), 
+                routes: routeStateAdapter.updateOne({
+                    id: action.routeInfo.code, changes: {points: action.routeInfo.points}
+                }, state.routes), 
         };
     }),
     on(select_actions.updateOccupancy, (state: AppState, action): AppState => {
@@ -115,7 +140,7 @@ export const appStateReducer = createReducer(
         const occupancy: Dictionary<number> = {...state.occupancy};
         for (const key in occupancy) {
             if (action.trip_ids.includes(+key)) {
-                occupancy[key]! += action.value;
+                occupancy[key]! -= action.value;
             }
         }
 

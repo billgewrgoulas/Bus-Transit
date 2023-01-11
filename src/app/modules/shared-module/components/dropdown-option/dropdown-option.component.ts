@@ -12,25 +12,17 @@ export class DropdownOptionComponent implements OnInit {
   @Input() public details: string = '';
   @Input() public mentos: string[] = [];
   @Input() public data: any;
+  @Input() public flex: boolean = true;
 
   @Output() public e = new EventEmitter<any>();
-  @Output() public save = new EventEmitter<any>();
 
-  constructor(private auth: AuthService) { }
+  constructor() { }
 
   ngOnInit(): void {
   }
 
   public onClick($e: any){
     this.e.emit(this.data);
-  }
-
-  public get authenticated(){
-    return this.auth.isAuthenticated();
-  }
-
-  public onSave(){
-    this.save.emit(this.data);
   }
 
 }

@@ -1,18 +1,18 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { BookingsInputComponent } from './bookings-input.component';
+import { PlacesMapComponent } from './places-map.component';
 
-describe('BookingsInputComponent', () => {
-  let component: BookingsInputComponent;
-  let fixture: ComponentFixture<BookingsInputComponent>;
+describe('PlacesMapComponent', () => {
+  let component: PlacesMapComponent;
+  let fixture: ComponentFixture<PlacesMapComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ BookingsInputComponent ]
+      declarations: [ PlacesMapComponent ]
     })
     .compileComponents();
 
-    fixture = TestBed.createComponent(BookingsInputComponent);
+    fixture = TestBed.createComponent(PlacesMapComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

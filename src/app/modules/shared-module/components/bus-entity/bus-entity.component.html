@@ -4,18 +4,18 @@
         <div class="entity-container">
             <div class="entity-type">
                 <i class="fas fa-bus"></i>
-                <span class="option-text">Line {{bus.lineCode}}</span>
+                <span class="option-text">{{bus.routeName}} ({{bus.lineCode}})</span>
             </div>
-            <!-- <div class="text-content">
-                <i class="fas fa-map-marker-alt icon"></i>
-                <span class="description">Omonoia</span>
-            </div> -->
-            <div class="text-content">
-                <i class="far fa-hourglass icon"></i>
-                <span class="description"><span class="bold">{{bus.departureMins}}:{{bus.departureSeconds}}</span> Mins</span>
+            <div class="text-content" *ngIf="bus.arrivalMins > 0">
+                <span class="malakas">Άφιξη:</span>
+                <span class="description"><span class="bold">{{bus.arrivalMins}}:{{bus.arrivalSeconds}}</span> λεπτά</span>
             </div>
-            <div class="text-content">
-                <i class="far fa-user icon"></i>
+            <div class="text-content" *ngIf="bus.departureMins > 0 || bus.departureSeconds > 0">
+                <span class="malakas">Αναχώρηση:</span>
+                <span class="description"><span class="bold">{{bus.departureMins}}:{{bus.departureSeconds}}</span> λεπτά</span>
+            </div>
+            <div class="text-content"*ngIf="bus.arrivalMins > 0">
+                <span class="malakas">Επιβάτες:</span>
                 <span class="description"><span class="bold">10</span>/25</span>
             </div>
         </div>

@@ -1,0 +1,55 @@
+
+<input-field
+    [icon]="'search'"
+    [placeholder]="'search information'"
+    (onType)="filter($event)">
+</input-field>
+
+<div class="main" *ngIf="vm$ | async as vm">
+
+    <spinner-component *ngIf="vm.spinner"></spinner-component>
+    <toaster-component *ngIf="false"></toaster-component>
+
+    <div class="slider-wrapper">
+        <mat-tab-group mat-stretch-tabs animationDuration="300ms">
+            <mat-tab label="Stops">
+                <div class="option-list">
+                    <ng-container *ngIf="vm.stops && vm.stops.length > 0; else noSavedStops">
+                        <app-option *ngFor="let stop of (vm.stops | filter: value)"
+                            [text]="stop.desc"
+                            [desc]="stop.code"
+                            [data]="[stop.code]"
+                            [icon]="'location_on'"
+                            (onSelect)="onStopSelect($event)">    
+                        </app-option>
+                    </ng-container>
+                </div>
+            </mat-tab>
+            <mat-tab label="Routes">
+                <div class="option-list">
+                    <ng-container *ngIf="vm.routes && vm.routes.length > 0; else noSavedRoutes">
+                        <app-option *ngFor="let route of (vm.routes | filter: value)"
+                            [text]="route.desc"
+                            [desc]="route.code"
+                            [data]="[route.code, route.lineId]"
+                            [icon]="'route'"
+                            (onSelect)="onRouteSelect($event)">    
+                        </app-option>
+                    </ng-container>
+                </div>
+            </mat-tab>
+        </mat-tab-group>
+    </div>
+</div>
+
+<ng-template #noSavedStops>
+    <app-option
+        [text]="'Δέν υπαρχουν αποθυκευμένες στασεις'">
+    </app-option>                       
+</ng-template>
+
+<ng-template #noSavedRoutes>
+    <app-option
+        [text]="'Δέν υπαρχουν αποθυκευμένα δρομολογια'">
+    </app-option>                       
+</ng-template>

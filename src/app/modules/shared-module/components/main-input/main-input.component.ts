@@ -1,4 +1,4 @@
-import { Component, EventEmitter, HostListener, Input, OnChanges, OnInit, Output, SimpleChanges } from '@angular/core';
+import { Component, EventEmitter, HostListener, Input, OnInit, Output } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { AppState } from 'src/app/state/Reducers/api-reducer';
 import * as nav_actions from 'src/app/state/Actions/navigation.actions';
@@ -20,8 +20,14 @@ export class MainInputComponent implements OnInit {
   @Input() public type: string = '';
   @Input() public disabled: boolean = false;
   @Input() public mapLink: string[] = [];
+  @Input() public dots: boolean = false;
+  @Input() public saved: boolean = false;
+  @Input() public code: string = '';
+  @Input() public module: string = '';
 
   @Output() public onType = new EventEmitter<string>();
+  @Output() public save = new EventEmitter<string>();
+  @Output() public remove = new EventEmitter<string>();
 
   constructor(
     private store: Store<AppState>, 
@@ -48,6 +54,14 @@ export class MainInputComponent implements OnInit {
 
   public toggle(){
     this.msg.onToggle();
+  }
+
+  public onSave(){
+    this.save.emit(this.code);
+  }
+
+  public onRemove(){
+    this.remove.emit(this.code);
   }
 
   public map(){

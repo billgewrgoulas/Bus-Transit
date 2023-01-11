@@ -16,6 +16,7 @@ import {MatMenuModule} from '@angular/material/menu';
 import {MatIconModule} from '@angular/material/icon'
 import { MiniMapComponent } from './components/mini-map/mini-map.component';
 import { MapModule } from '../map/map.module';
+import { FilterPipe } from 'src/app/pipes/filterPipe';
 
 @NgModule({
   declarations: [
@@ -28,7 +29,8 @@ import { MapModule } from '../map/map.module';
     DoubleInputComponent,
     SpinnerComponent,
     ToasterComponent,
-    MiniMapComponent
+    MiniMapComponent,
+    FilterPipe
   ],
   imports: [
     CommonModule, 
@@ -49,7 +51,8 @@ import { MapModule } from '../map/map.module';
     DoubleInputComponent,
     SpinnerComponent,
     ToasterComponent,
-    MiniMapComponent
+    MiniMapComponent,
+    FilterPipe
   ],
 })
 export class SharedModule { }

@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, OnChanges, OnInit, Output } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
@@ -6,7 +6,7 @@ import { DataShareService } from 'src/app/services/data-share.service';
 import { DirectionsStore } from 'src/app/modules/planner/state/directions.store';
 import { IStop } from 'src/app/state/Entities/stop.entity';
 import { AppState } from 'src/app/state/Reducers/api-reducer';
-import { filterStops, filterSavedStops } from 'src/app/state/Selectors/appState.selectors';
+import { getAllStops, getSavedStops } from 'src/app/state/Selectors/appState.selectors';
 import * as nav_actions from '../../../../state/Actions/navigation.actions';
 import * as api_actions from '../../../../state/Actions/api-calls.actions';
 
@@ -17,16 +17,14 @@ import * as api_actions from '../../../../state/Actions/api-calls.actions';
   styleUrls: ['./stop-drop-down.component.css'],
 
 })
-export class StopDropDownComponent implements OnInit, OnChanges {
+export class StopDropDownComponent implements OnInit {
 
   public stops$!: Observable<IStop[]>;
+  public searchText$!: Observable<string>;
   
   @Input() public flag: boolean = true;
   @Input() public saved: boolean = false;
-  @Input() public value: string = '';
-
-  @Output() public custom = new EventEmitter<string>();
-
+  
   constructor(
     private store: Store<AppState>, 
     private msg: DataShareService, 
@@ -35,11 +33,16 @@ export class StopDropDownComponent implements OnInit, OnChanges {
   ) { }
 
   ngOnInit(): void {
-    this.msg.selectEndpoint(this.local.state$);
-  }
 
-  ngOnChanges(): void{
-    this.filter(this.value);
+    this.searchText$ = this.local.getText();
+    this.msg.selectEndpoint(this.local.state$);
+
+    if(this.saved){
+      this.stops$ = this.store.select(getSavedStops);
+    }else{
+      this.stops$ = this.store.select(getAllStops);
+    }
+    
   }
 
   public onSave(code: string){
@@ -67,24 +70,17 @@ export class StopDropDownComponent implements OnInit, OnChanges {
   }
 
   public onMap(data: string[]){
-    this.local.updatePoint(data);
-    this.custom.next('Custom');
-  }
-
-  private filter(value: string){
-    
-    if(this.saved){
-      this.stops$ = this.store.select(filterSavedStops(value));
-    }else{
-      this.stops$ = this.store.select(filterStops(value));
+    if(window.innerWidth <= 500){
+      this.store.dispatch(nav_actions.placesMap());
+      setTimeout(() => this.msg.selectEndpoint(this.local.state$), 0);
     }
-
+    this.local.updatePoint(data);
   }
 
   private getPosition(): Promise<any>{
     return new Promise((resolve, reject) => {
 
-      if(navigator.geolocation){
+      if(navigator && navigator.geolocation){
         navigator.geolocation.getCurrentPosition(resolve);
       }else{
         confirm("Can't access device location");

@@ -12,7 +12,6 @@
 .entity-wrapper{
     background: rgb(227,227,236);
     background: linear-gradient(90deg, rgba(227,227,236,1) 0%, rgba(255,255,255,1) 100%);
-    margin-top: 10px;
     box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
     cursor: pointer;
 }

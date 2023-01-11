@@ -9,6 +9,8 @@ import { TripPlannerOptionsComponent } from './components/trip-planner-options/t
 import { AuthGuardService } from '../auth/services/auth-guard.service';
 import { BookingsComponent } from './components/bookings/bookings.component';
 import { QrComponent } from './components/qr/qr.component';
+import { PlacesSliderComponent } from './components/places-slider/places-slider.component';
+import { PlacesMapComponent } from './components/places-map/places-map.component';
 
 const routes: Routes = [
   {path: '', component: InputComponent, children: [
@@ -16,9 +18,18 @@ const routes: Routes = [
     {path: 'trip/options', component: TripPlannerOptionsComponent, canActivate: [AuthGuardService]},
     {path: 'trips/:index', component: TripDetailsComponent, canActivate: [AuthGuardService]},
     {path: 'trips', component: TripListComponent, canActivate: [AuthGuardService]},
+    {path: 'trips/:index/map', component: PlacesMapComponent}
   ], canActivate: [AuthGuardService]}, 
-  {path: 'places/start', component: PlacesComponent, data: { type: 'start'}, canActivate: [AuthGuardService]},
-  {path: 'places/dest', component: PlacesComponent, data: { type: 'dest'}, canActivate: [AuthGuardService]},
+  {path: 'places/start', component: PlacesComponent, data: { type: 'start'}, canActivate: [AuthGuardService], children: [
+      {path: '', component: PlacesSliderComponent}, 
+      {path: 'map', component: PlacesMapComponent}
+    ]
+  },
+  {path: 'places/dest', component: PlacesComponent, data: { type: 'dest'}, canActivate: [AuthGuardService],
+    children: [
+      {path: '', component: PlacesSliderComponent}, 
+      {path: 'map', component: PlacesMapComponent}],
+  },
   {path: 'booking/qr/:id', component: QrComponent, canActivate: [AuthGuardService]},
   {path: 'bookings', component: BookingsComponent, canActivate: [AuthGuardService]},
 ];

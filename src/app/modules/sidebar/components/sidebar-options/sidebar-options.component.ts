@@ -14,7 +14,7 @@ export class SidebarOptionsComponent implements OnInit {
     {text: 'Stops', icon: 'where_to_vote', desc: 'Stop information', link: ['stops', 'stops_module']},
     {text: 'Trip planner', icon: 'directions', desc: 'Book trips', link: ['routes', 'trip_module']},
     {text: 'Bookings', icon: 'departure_board', desc: 'Booked trips', link: [[ 'routes', 'bookings'], 'trip_options']},
-    {text: 'Saved information', icon: 'file_present', desc: 'Saved lines, stops...'},
+    {text: 'Saved information', icon: 'file_present', desc: 'Saved lines, stops...', link: ['saved', 'saved_info']},
   ];
 
   constructor(private router: Router, private msg: DataShareService) { }

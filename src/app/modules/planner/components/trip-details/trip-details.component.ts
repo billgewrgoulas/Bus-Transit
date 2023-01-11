@@ -1,14 +1,10 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, HostListener, OnDestroy, OnInit } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { Observable, combineLatest, map } from 'rxjs';
-import { Itinerary } from 'src/app/state/Entities/itinerary';
 import { AppState } from 'src/app/state/Reducers/api-reducer';
 import { selectItinerary, spinner } from 'src/app/state/Selectors/appState.selectors';
 import * as select_actions from 'src/app/state/Actions/select.actions';
-import * as api_actions from 'src/app/state/Actions/api-calls.actions';
 import { DataShareService } from 'src/app/services/data-share.service';
-import { AuthService } from 'src/app/modules/auth/services/auth.service';
-import { DirectionsStore } from 'src/app/modules/planner/state/directions.store';
 
 @Component({
   selector: 'app-trip-details',
@@ -18,6 +14,7 @@ import { DirectionsStore } from 'src/app/modules/planner/state/directions.store'
 export class TripDetailsComponent implements OnInit, OnDestroy {
 
   public vm$!: Observable<any>;
+  public flag: boolean = false;
 
   public arrows: any = {
     RIGHT: 'turn_right', LEFT: 'turn_left', DEPART: 'arrow_upward',
@@ -41,17 +38,28 @@ export class TripDetailsComponent implements OnInit, OnDestroy {
   ) { }
 
   ngOnInit(): void {
+    this.showMapIcon();
     this.vm$ = combineLatest([
-      this.store.select(selectItinerary), this.store.select(spinner)
+      this.store.select(selectItinerary), 
+      this.store.select(spinner)
     ]).pipe(map(([itinerary, spinner]) => ({itinerary, spinner})));
   }
 
   ngOnDestroy(): void{
-    this.store.dispatch(select_actions.selectItinerary({index: -1}));
+    // this.store.dispatch(select_actions.selectItinerary({index: -1}));
   }
 
   public focus(x: number, y: number){
     this.msg.fly([x+'', y+'']);
+  }
+
+  @HostListener('window:resize', ['$event'])
+  private showMapIcon(){
+    if(window.innerWidth <= 500){
+      this.flag = true;
+    }else{
+      this.flag = false;
+    }
   }
 
 }

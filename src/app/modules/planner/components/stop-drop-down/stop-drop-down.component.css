@@ -1,6 +1,7 @@
 
 :host{
-    width: 100%;
+    width: 25vw;
+    min-width: 342px;
 }
 
 .option-list{
@@ -8,7 +9,7 @@
     flex-direction: column;
     width: 100%;
     overflow: auto;
-    max-height: calc(100vh - 220px);
+    max-height: calc(100vh - 185px);
     padding-right: 3px;
     margin-top: 5px;
 }
@@ -19,4 +20,28 @@ h1{
     font-family: "Lexend Deca",sans-serif;
     font-weight: 600;
     font-size: 21px;
+}
+
+@media screen and (max-width: 800px) {
+    :host{
+        min-width: 330px;
+    }
+}
+
+@media screen and (max-width: 700px) {
+    :host{
+        min-width: 270px;
+    }
+}
+
+@media screen and (max-width: 600px) {
+    :host{
+        min-width: 250px;
+    }
+}
+
+@media screen and (max-width: 500px) {
+    :host{
+        width: 100vw;
+    }
 }
