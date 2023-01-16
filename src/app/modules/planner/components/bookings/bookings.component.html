@@ -13,7 +13,7 @@
     <div class="option-list">
         <ng-container *ngIf="vm.bookings.length > 0 else noBookings">
 
-            <booking-component *ngFor="let booking of vm.bookings; let i=index"
+            <booking-component *ngFor="let booking of (vm.bookings | bookings: value); let i=index"
                 [booking]="booking"
                 [index]="i"
                 (cancel)="onCancel($event)"

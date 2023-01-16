@@ -9,7 +9,7 @@ import { DataShareService } from 'src/app/services/data-share.service';
 })
 export class PlacesMapComponent implements OnInit {
 
-  constructor(private local: DirectionsStore, private msg: DataShareService) { }
+  constructor() { }
 
   ngOnInit(): void {
   }

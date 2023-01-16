@@ -1,6 +1,6 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Store } from '@ngrx/store';
-import { Observable, combineLatest, map } from 'rxjs';
+import { Observable, combineLatest, map, tap } from 'rxjs';
 import { IRoute } from 'src/app/state/Entities/route.entity';
 import { LiveDataStore } from 'src/app/modules/lines/state/live.data.store';
 import { AppState } from 'src/app/state/Reducers/api-reducer';
@@ -8,6 +8,8 @@ import { currentLine, currentRoute, getActiveStop, isRouteSaved } from 'src/app/
 import { AuthService } from 'src/app/modules/auth/services/auth.service';
 import * as api_actions from 'src/app/state/Actions/api-calls.actions';
 import * as select_action from 'src/app/state/Actions/select.actions';
+import { IArrival } from 'src/app/state/Entities/live.data';
+import { DataShareService } from 'src/app/services/data-share.service';
 
 interface CurrentRoute{
   route: IRoute | undefined,
@@ -27,15 +29,20 @@ export class RouteDetailsComponent implements OnInit, OnDestroy {
   constructor(
     private store: Store<AppState>, 
     private localStore: LiveDataStore,
-    private auth: AuthService
+    private auth: AuthService,
+    private msg: DataShareService
   ) { }
 
   ngOnInit(): void {
     
     this.vm$ = combineLatest([
       this.store.select(isRouteSaved),
-      this.store.select(currentRoute)
-    ]).pipe(map(([saved, route]) => ({saved, route})));
+      this.store.select(currentRoute),
+      this.localStore.getBusLocations()
+    ]).pipe(
+      tap(([saved, route, buses]) => this.msg.sendBusStatus(buses)),
+      map(([saved, route, buses]) => ({saved, route, buses}))
+    );
 
     this.localStore.fetchBusLocations(this.store.select(currentLine));
     this.localStore.fetchArrivals(this.store.select(getActiveStop));

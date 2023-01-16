@@ -5,13 +5,14 @@ import { AppState } from 'src/app/state/Reducers/api-reducer';
 import { selectItinerary, spinner } from 'src/app/state/Selectors/appState.selectors';
 import * as select_actions from 'src/app/state/Actions/select.actions';
 import { DataShareService } from 'src/app/services/data-share.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-trip-details',
   templateUrl: './trip-details.component.html',
   styleUrls: ['./trip-details.component.css']
 })
-export class TripDetailsComponent implements OnInit, OnDestroy {
+export class TripDetailsComponent implements OnInit {
 
   public vm$!: Observable<any>;
   public flag: boolean = false;
@@ -34,7 +35,8 @@ export class TripDetailsComponent implements OnInit, OnDestroy {
 
   constructor(
     private store: Store<AppState>, 
-    private msg: DataShareService, 
+    private msg: DataShareService,
+    private router: Router 
   ) { }
 
   ngOnInit(): void {
@@ -45,12 +47,14 @@ export class TripDetailsComponent implements OnInit, OnDestroy {
     ]).pipe(map(([itinerary, spinner]) => ({itinerary, spinner})));
   }
 
-  ngOnDestroy(): void{
-    // this.store.dispatch(select_actions.selectItinerary({index: -1}));
-  }
-
   public focus(x: number, y: number){
     this.msg.fly([x+'', y+'']);
+  }
+
+  public miniMap(){
+    this.router.navigate([{ outlets: { sidebar: [ 'routes', 'trips', 'map'] }}], 
+      {queryParams: {module: 'trip_map'}
+    });
   }
 
   @HostListener('window:resize', ['$event'])

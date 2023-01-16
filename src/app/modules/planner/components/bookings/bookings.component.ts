@@ -20,6 +20,7 @@ export class BookingsComponent implements OnInit {
 
   public vm$!: Observable<any>;
   public state$!: Observable<BookingState>;
+  public value: string = '';
 
   constructor(
     private local: BookingsStore, 
@@ -56,7 +57,7 @@ export class BookingsComponent implements OnInit {
   }
 
   public filter(value: string){
-    //this.bookings$ = this.local.filter(value);
+    this.value = value;
   }
 
   public showQR(booking: Booking){

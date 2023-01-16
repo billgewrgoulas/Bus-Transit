@@ -29,6 +29,7 @@ import { QRCodeModule } from 'angularx-qrcode';
 import { PlacesMapComponent } from './components/places-map/places-map.component';
 import { PlacesSliderComponent } from './components/places-slider/places-slider.component';
 import { MapModule } from '../map/map.module';
+import { BookingPipe } from './pipes/bookings.pipe';
 
 @NgModule({
   declarations: [
@@ -44,7 +45,8 @@ import { MapModule } from '../map/map.module';
     BookingComponent, 
     QrComponent,
     PlacesMapComponent,
-    PlacesSliderComponent
+    PlacesSliderComponent,
+    BookingPipe
   ],
   imports: [
     CommonModule,

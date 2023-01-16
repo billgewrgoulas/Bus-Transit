@@ -41,6 +41,7 @@ export class StopsMap extends Map{
             marker.addEventListener("click", (e) => this.selectStop(stop.code));
             return marker;
         });
+        
         this.clusters.addLayers(markers);
     }
 
@@ -59,8 +60,9 @@ export class StopsMap extends Map{
             return;
         }
 
-        this.currentStop = this.createMarker(point.latitude, point.longitude, point.desc, this.pin, false);
+        this.currentStop = this.createMarker(point.latitude, point.longitude, point.desc, this.bus_stop_icon, false);
         this.currentStop.addTo(this.map);
+        this.currentStop.openPopup();
     }
 
     public override focusOnPoint(point: string[]): void {

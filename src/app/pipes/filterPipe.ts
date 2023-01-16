@@ -7,7 +7,7 @@ export class FilterPipe implements PipeTransform {
 
   public transform(data: any[], value: string) {
 
-    if(!data){
+    if(!data || value === undefined){
       return [];
     }
 

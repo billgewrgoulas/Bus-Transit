@@ -20,7 +20,7 @@ export class TripPlannerMap extends Map{
         this.start.addEventListener("dragend", (v) => {
 
             const point: string[] = [
-                '0', 'Custom',
+                '0', 'Επιλογή',
                 this.start.getLatLng().lat + '',
                 this.start.getLatLng().lng + ''
             ];
@@ -31,7 +31,7 @@ export class TripPlannerMap extends Map{
         this.end.addEventListener("dragend", (v) => {
 
             const point: string[] = [
-                '0', 'Custom',
+                '0', 'Επιλογή',
                 this.end.getLatLng().lat + '',
                 this.end.getLatLng().lng + ''
             ];

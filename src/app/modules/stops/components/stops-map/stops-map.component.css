@@ -17,6 +17,10 @@
     padding: 5px 5px 5px 5px;
 }
 
+.option-list{
+    height: calc(100vh - 120px);
+}
+
 @media screen and (max-width: 800px) {
     :host{
         min-width: 330px;

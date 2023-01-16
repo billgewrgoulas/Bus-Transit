@@ -22,6 +22,7 @@ export class MapAreaComponent implements OnInit, OnDestroy {
   private linesMap!: LinesMap;
   private tripMap!: TripPlannerMap;
   private stopsMap!: StopsMap;
+  
 
   constructor(
     private store: Store<AppState>, 

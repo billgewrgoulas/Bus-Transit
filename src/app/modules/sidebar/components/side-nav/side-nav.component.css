@@ -95,11 +95,27 @@ span{
     :host{
         min-width: 330px;
     }
+    .slider-wrapper{
+        width: 60vw;
+        left: -30vw;
+        position: absolute;
+    }
+    .bar{
+        width: 30vw;
+    }
 }
 
 @media screen and (max-width: 700px) {
     :host{
         min-width: 270px;
+    }
+    .slider-wrapper{
+        width: 60vw;
+        left: -30vw;
+        position: absolute;
+    }
+    .bar{
+        width: 30vw;
     }
 }
 
@@ -107,10 +123,26 @@ span{
     :host{
         min-width: 250px;
     }
+    .slider-wrapper{
+        width: 70vw;
+        left: -35vw;
+        position: absolute;
+    }
+    .bar{
+        width: 35vw;
+    }
 }
 
 @media screen and (max-width: 500px) {
     :host{
         width: 100vw;
+    }
+    .slider-wrapper{
+        width: 100vw;
+        left: -50vw;
+        position: absolute;
+    }
+    .bar{
+        width: 50vw;
     }
 }

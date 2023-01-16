@@ -2,6 +2,7 @@
 :host{
   max-width: 75%;
   width: 75%;
+  height: 100%;
 }
 
 .default{
@@ -16,13 +17,13 @@
 }
 
 #map{
-    height: 100%;
-    width: 100%;
-    z-index: 10;
+  height: 100%;
+  width: 100%;
+  z-index: 10;
 }
 
 @media screen and (max-width: 500px) {
   .default{
-    height: calc(100vh - 120px);
+    height: 100%;
   }
 }

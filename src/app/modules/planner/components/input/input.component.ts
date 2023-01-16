@@ -35,9 +35,11 @@ export class InputComponent implements OnInit {
 
   public checkUrl(){
     const url: string = this.router.url;
-    if(url == '/(sidebar:routes/trips)?module=trips'){
+    if(url.includes('module=trips')){
       this.disabled = true;
-    }else if(url == '/(sidebar:routes/trips/0)?module=trip_details'){
+    }else if(url.includes('module=trip_details')){
+      this.disabled = true;
+    }else if(url.includes('module=trip_map')){
       this.disabled = true;
     }else{
       this.disabled = false;

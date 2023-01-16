@@ -40,3 +40,7 @@
         width: 100vw;
     }
 }
+
+.option-list{
+    height: calc(100vh - 120px);
+}

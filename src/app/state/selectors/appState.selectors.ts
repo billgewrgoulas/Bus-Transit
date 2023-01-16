@@ -5,8 +5,7 @@ import { AppState } from "../Reducers/api-reducer";
 import { lineStateAdapter } from "../Entities/line.entity";
 import { IMapData } from "../Entities/map.data.entity";
 import { Booking, bookingStateAdapter } from "../Entities/booking.entity";
-import { stat } from "fs";
-import { create } from "domain";
+
 
 /* Main App State selector */
 export const getAppState = createFeatureSelector<AppState>('api');
@@ -172,12 +171,17 @@ export const selectCurrentLineRoutes = createSelector(
         const routes: IRoute[] = [];
         if(!line) return routes;
 
+        const count: number = line.routeCodes.split(',').length;
         line.routeCodes.split(',').forEach(code => {
             const route: IRoute | undefined = routeEntities[code];
             if(route) routes.push(route);
         });
+
+        if(count == routes.length){
+            return routes;
+        }
         
-        return routes;
+        return [];
     }
 );
 

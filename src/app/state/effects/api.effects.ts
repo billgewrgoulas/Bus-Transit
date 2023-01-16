@@ -118,8 +118,7 @@ export class ApiEffects{
     loadStops$ = createEffect(()=>
         this.actions$.pipe(
             ofType(api_actions.getStops),
-            withLatestFrom(this.store.select(getAllStops)),
-            filter(([action, stops]) => stops.length == 0),
+            take(1),
             switchMap(() => this.dataService.getAllStops().pipe(
                 map((response: IStop[]) => api_actions.getStopsSuccess({stops: response})),
                 catchError(err => of(api_actions.getStopsError({msg: err})))

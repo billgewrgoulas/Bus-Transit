@@ -60,13 +60,13 @@ export const appStateReducer = createReducer(
         return {...state, stops:{...state.stops, activeStopCode: action.code}};
     }),
     on(api_actions.getLineRoutesSuccess, api_actions.stopRoutesSuccess, (state: AppState, action): AppState => {
-        return {...state, routes: routeStateAdapter.setAll(action.routes, state.routes)};
+        return {...state, routes: routeStateAdapter.addMany(action.routes, state.routes)};
     }),
     on(api_actions.getSchedulesSuccess, (state: AppState, action): AppState => {
         return {...state, schedule: scheduleStateAdapter.setOne(action.schedules, state.schedule)};
     }),
     on(api_actions.getStopsSuccess, (state: AppState, action): AppState => {
-        return {...state, spinner: false ,stops: stopStateAdapter.setMany(action.stops, state.stops)};
+        return {...state, spinner: false ,stops: stopStateAdapter.setAll(action.stops, state.stops)};
     }),
     on(api_actions.fetchPlanSuccess, (state: AppState, action): AppState => {
         return {...state, plan: action.data, spinner: false, occupancy: action.data.occupancy};
@@ -118,20 +118,21 @@ export const appStateReducer = createReducer(
             ...state, spinner: false, 
             savedRoutes: action.routes.map(route => route.code),
             savedStops: action.stops.map(stop => stop.code),
-            stops: stopStateAdapter.setMany(action.stops, state.stops),
-            routes: routeStateAdapter.setAll(action.routes, state.routes)
+            stops: stopStateAdapter.addMany(action.stops, state.stops),
+            routes: routeStateAdapter.addMany(action.routes, state.routes)
         };
     }),
     on(select_actions.emptyPath, (state: AppState, action): AppState => {
         return {...state,  routes: routeStateAdapter.updateOne({
                     id: state.routes.activeRoute, changes: {points: []}
-                }, state.routes)
+                }, state.routes),
+                schedule: scheduleStateAdapter.removeAll(state.schedule)
         };
     }),
     on(api_actions.getRouteDetailsuccess, (state: AppState, action): AppState => {
-        return {...state, stops: stopStateAdapter.setMany(action.routeInfo.stops, state.stops), 
+        return {...state, stops: stopStateAdapter.addMany(action.routeInfo.stops, state.stops), 
                 routes: routeStateAdapter.updateOne({
-                    id: action.routeInfo.code, changes: {points: action.routeInfo.points}
+                    id: action.routeInfo.code, changes: {points: action.routeInfo.points},
                 }, state.routes), 
         };
     }),
