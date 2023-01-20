@@ -15,8 +15,8 @@
                 <span class="description"><span class="bold">{{bus.departureMins}}:{{bus.departureSeconds}}</span> λεπτά</span>
             </div>
             <div class="text-content"*ngIf="bus.arrivalMins > 0">
-                <span class="malakas">Επιβάτες:</span>
-                <span class="description"><span class="bold">10</span>/25</span>
+                <span class="malakas">Καθυστέρηση:</span>
+                <span class="description"><span class="bold">{{delay(bus.departureMins, bus.arrivalMins)}}</span> λεπτά</span>
             </div>
         </div>
     </div>

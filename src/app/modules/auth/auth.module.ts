@@ -8,8 +8,8 @@ import { MatInputModule } from '@angular/material/input';
 import { SharedModule } from '../shared-module/shared-module.module';
 import {MatButtonModule} from '@angular/material/button';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { AuthService } from './services/auth.service';
-import { AuthGuardService } from './services/auth-guard.service';
+import { AuthService } from '../../services/auth.service';
+import { AuthGuardService } from '../../services/auth-guard.service';
 
 
 @NgModule({

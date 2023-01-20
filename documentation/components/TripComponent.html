@@ -1,0 +1,973 @@
+<!doctype html>
+<html class="no-js" lang="">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="x-ua-compatible" content="ie=edge">
+        <title>city-bus documentation</title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <link rel="icon" type="image/x-icon" href="../images/favicon.ico">
+	   <link rel="stylesheet" href="../styles/style.css">
+        <link rel="stylesheet" href="../styles/dark.css">
+    </head>
+    <body>
+
+        <div class="navbar navbar-default navbar-fixed-top visible-xs">
+            <a href="../" class="navbar-brand">city-bus documentation</a>
+            <button type="button" class="btn btn-default btn-menu ion-ios-menu" id="btn-menu"></button>
+        </div>
+
+        <div class="xs-menu menu" id="mobile-menu">
+                <div id="book-search-input" role="search"><input type="text" placeholder="Type to search"></div>            <compodoc-menu></compodoc-menu>
+        </div>
+
+        <div class="container-fluid main">
+           <div class="row main">
+               <div class="hidden-xs menu">
+                   <compodoc-menu mode="normal"></compodoc-menu>
+               </div>
+               <!-- START CONTENT -->
+               <div class="content component">
+                   <div class="content-data">
+
+
+
+
+<ol class="breadcrumb">
+  <li>Components</li>
+  <li
+  >
+  TripComponent</li>
+</ol>
+
+<ul class="nav nav-tabs" role="tablist">
+        <li class="active">
+            <a href="#info" role="tab" id="info-tab" data-toggle="tab" data-link="info">Info</a>
+        </li>
+        <li >
+            <a href="#source" role="tab" id="source-tab" data-toggle="tab" data-link="source">Source</a>
+        </li>
+        <li >
+            <a href="#templateData" role="tab" id="templateData-tab" data-toggle="tab" data-link="template">Template</a>
+        </li>
+        <li >
+            <a href="#styleData" role="tab" id="styleData-tab" data-toggle="tab" data-link="style">Styles</a>
+        </li>
+        <li >
+            <a href="#tree" role="tab" id="tree-tab" data-toggle="tab" data-link="dom-tree">DOM Tree</a>
+        </li>
+</ul>
+
+<div class="tab-content">
+    <div class="tab-pane fade active in" id="c-info"><p class="comment">
+    <h3>File</h3>
+</p>
+<p class="comment">
+    <code>src/app/modules/planner/components/trip/trip.component.ts</code>
+</p>
+
+
+
+
+    <p class="comment">
+        <h3>Implements</h3>
+    </p>
+    <p class="comment">
+                    <code><a href="https://angular.io/api/core/OnInit" target="_blank" >OnInit</a></code>
+    </p>
+
+
+<section>
+    <h3>Metadata</h3>
+    <table class="table table-sm table-hover metadata">
+        <tbody>
+
+
+
+
+
+
+
+
+
+
+
+            <tr>
+                <td class="col-md-3">selector</td>
+                <td class="col-md-9"><code>trip-component</code></td>
+            </tr>
+
+            <tr>
+                <td class="col-md-3">styleUrls</td>
+                <td class="col-md-9"><code>./trip.component.css</code></td>
+            </tr>
+
+
+
+            <tr>
+                <td class="col-md-3">templateUrl</td>
+                <td class="col-md-9"><code>./trip.component.html</code></td>
+            </tr>
+
+
+
+
+
+
+
+
+        </tbody>
+    </table>
+</section>
+
+    <section>
+    <h3 id="index">Index</h3>
+    <table class="table table-sm table-bordered index-table">
+        <tbody>
+
+                <tr>
+                    <td class="col-md-4">
+                        <h6><b>Methods</b></h6>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <ul class="index-list">
+                            <li>
+                                <a href="#ngOnInit" >ngOnInit</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Public</span>
+                                <a href="#onBook" >onBook</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Public</span>
+                                <a href="#onSelect" >onSelect</a>
+                            </li>
+                        </ul>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td class="col-md-4">
+                        <h6><b>Inputs</b></h6>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <ul class="index-list">
+                            <li>
+                                <a href="#data" >data</a>
+                            </li>
+                            <li>
+                                <a href="#date" >date</a>
+                            </li>
+                            <li>
+                                <a href="#itinerary" >itinerary</a>
+                            </li>
+                            <li>
+                                <a href="#occupancy" >occupancy</a>
+                            </li>
+                        </ul>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td class="col-md-4">
+                        <h6><b>Outputs</b></h6>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <ul class="index-list">
+                            <li>
+                                <a href="#book" >book</a>
+                            </li>
+                            <li>
+                                <a href="#msg" >msg</a>
+                            </li>
+                        </ul>
+                    </td>
+                </tr>
+
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <h6><b>Accessors</b></h6>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="col-md-4">
+                            <ul class="index-list">
+                                <li>
+                                    <a href="#getDate" >getDate</a>
+                                </li>
+                            </ul>
+                        </td>
+                    </tr>
+        </tbody>
+    </table>
+</section>
+
+    <section>
+    <h3 id="constructor">Constructor</h3>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+<code>constructor()</code>
+                    </td>
+                </tr>
+                        <tr>
+                            <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="18" class="link-to-prism">src/app/modules/planner/components/trip/trip.component.ts:18</a></div>
+                            </td>
+                        </tr>
+
+            </tbody>
+        </table>
+</section>
+
+    <section>
+    <h3 id="inputs">Inputs</h3>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <a name="data"></a>
+                        <b>data</b>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/number" target="_blank" >number</a></code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>0</code>
+                    </td>
+                </tr>
+                        <tr>
+                            <td class="col-md-2" colspan="2">
+                                    <div class="io-line">Defined in <a href="" data-line="12" class="link-to-prism">src/app/modules/planner/components/trip/trip.component.ts:12</a></div>
+                            </td>
+                        </tr>
+            </tbody>
+        </table>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <a name="date"></a>
+                        <b>date</b>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>&#x27;&#x27;</code>
+                    </td>
+                </tr>
+                        <tr>
+                            <td class="col-md-2" colspan="2">
+                                    <div class="io-line">Defined in <a href="" data-line="14" class="link-to-prism">src/app/modules/planner/components/trip/trip.component.ts:14</a></div>
+                            </td>
+                        </tr>
+            </tbody>
+        </table>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <a name="itinerary"></a>
+                        <b>itinerary</b>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>    <code>Itinerary | null</code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>null</code>
+                    </td>
+                </tr>
+                        <tr>
+                            <td class="col-md-2" colspan="2">
+                                    <div class="io-line">Defined in <a href="" data-line="13" class="link-to-prism">src/app/modules/planner/components/trip/trip.component.ts:13</a></div>
+                            </td>
+                        </tr>
+            </tbody>
+        </table>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <a name="occupancy"></a>
+                        <b>occupancy</b>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>    <code>Dictionary&lt;number&gt;</code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>{}</code>
+                    </td>
+                </tr>
+                        <tr>
+                            <td class="col-md-2" colspan="2">
+                                    <div class="io-line">Defined in <a href="" data-line="15" class="link-to-prism">src/app/modules/planner/components/trip/trip.component.ts:15</a></div>
+                            </td>
+                        </tr>
+            </tbody>
+        </table>
+</section>
+    <section>
+    <h3 id="outputs">Outputs</h3>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <a name="book"></a>
+                        <b>book</b>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="https://angular.io/api/core/EventEmitter" target="_blank" >EventEmitter</a></code>
+
+                    </td>
+                </tr>
+                        <tr>
+                            <td class="col-md-2" colspan="2">
+                                    <div class="io-line">Defined in <a href="" data-line="18" class="link-to-prism">src/app/modules/planner/components/trip/trip.component.ts:18</a></div>
+                            </td>
+                        </tr>
+            </tbody>
+        </table>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <a name="msg"></a>
+                        <b>msg</b>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="https://angular.io/api/core/EventEmitter" target="_blank" >EventEmitter</a></code>
+
+                    </td>
+                </tr>
+                        <tr>
+                            <td class="col-md-2" colspan="2">
+                                    <div class="io-line">Defined in <a href="" data-line="17" class="link-to-prism">src/app/modules/planner/components/trip/trip.component.ts:17</a></div>
+                            </td>
+                        </tr>
+            </tbody>
+        </table>
+</section>
+
+
+    <section>
+    
+    <h3 id="methods">
+        Methods
+    </h3>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="ngOnInit"></a>
+                    <span class="name">
+                        <span ><b>ngOnInit</b></span>
+                        <a href="#ngOnInit"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>ngOnInit()</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="22"
+                            class="link-to-prism">src/app/modules/planner/components/trip/trip.component.ts:22</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="onBook"></a>
+                    <span class="name">
+                        <span class="modifier">Public</span>
+                        <span ><b>onBook</b></span>
+                        <a href="#onBook"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                    <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>onBook()</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="32"
+                            class="link-to-prism">src/app/modules/planner/components/trip/trip.component.ts:32</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="onSelect"></a>
+                    <span class="name">
+                        <span class="modifier">Public</span>
+                        <span ><b>onSelect</b></span>
+                        <a href="#onSelect"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                    <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>onSelect()</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="24"
+                            class="link-to-prism">src/app/modules/planner/components/trip/trip.component.ts:24</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</section>
+
+    <section>
+    <h3 id="accessors">
+        Accessors
+    </h3>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <a name="getDate"></a>
+                        <span class="name"><b>getDate</b><a href="#getDate"><span class="icon ion-ios-link"></span></a></span>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td class="col-md-4">
+                        <span class="accessor"><b>get</b><code>getDate()</code></span>
+                    </td>
+                </tr>
+                            <tr>
+                                <td class="col-md-4">
+                                    <div class="io-line">Defined in <a href="" data-line="28" class="link-to-prism">src/app/modules/planner/components/trip/trip.component.ts:28</a></div>
+                                </td>
+                            </tr>
+
+            </tbody>
+        </table>
+</section>
+</div>
+
+
+    <div class="tab-pane fade  tab-source-code" id="c-source">
+        <pre class="line-numbers compodoc-sourcecode"><code class="language-typescript">import { Component, EventEmitter, Input, OnInit, Output } from &#x27;@angular/core&#x27;;
+import { Dictionary } from &#x27;@ngrx/entity&#x27;;
+import { Itinerary } from &#x27;src/app/state/Entities/itinerary&#x27;;
+
+@Component({
+  selector: &#x27;trip-component&#x27;,
+  templateUrl: &#x27;./trip.component.html&#x27;,
+  styleUrls: [&#x27;./trip.component.css&#x27;]
+})
+export class TripComponent implements OnInit {
+
+  @Input() public data: number &#x3D; 0;
+  @Input() public itinerary: Itinerary | null &#x3D; null;
+  @Input() public date: string &#x3D; &#x27;&#x27;;
+  @Input() public occupancy: Dictionary&lt;number&gt; &#x3D; {};
+
+  @Output() public msg &#x3D; new EventEmitter&lt;number&gt;();
+  @Output() public book &#x3D; new EventEmitter&lt;number&gt;();
+
+  constructor() { }
+
+  ngOnInit(): void {}
+
+  public onSelect(){
+    this.msg.emit(this.data);
+  }
+
+  public get getDate(){
+    return this.date.split(&#x27;,&#x27;)[0];
+  }
+
+  public onBook(){
+    this.book.next(this.data);
+  }
+
+}
+</code></pre>
+    </div>
+
+    <div class="tab-pane fade " id="c-templateData">
+        <pre class="line-numbers"><code class="language-html">
+&lt;ng-container *ngIf&#x3D;&quot;itinerary as it&quot;&gt;
+    &lt;div class&#x3D;&quot;entity-wrapper&quot;&gt;
+        &lt;div class&#x3D;&quot;entity-container&quot;&gt;
+            &lt;mat-accordion&gt;
+                &lt;mat-expansion-panel hideToggle&gt;
+                    &lt;mat-expansion-panel-header&gt;
+                        &lt;i class&#x3D;&quot;fas fa-sort-down&quot;&gt;&lt;/i&gt;
+                        &lt;div class&#x3D;&quot;context&quot;&gt;
+                            &lt;div class&#x3D;&quot;line&quot;&gt;&lt;/div&gt;
+                            &lt;div class&#x3D;&quot;time&quot;&gt;{{it.startTime}}&lt;/div&gt;
+                            &lt;ng-container *ngFor&#x3D;&quot;let leg of it.legs&quot;&gt;
+                                &lt;div class&#x3D;&quot;walk-mode trail&quot; [style.flex]&#x3D;&quot;leg.flex&quot; *ngIf&#x3D;&quot;leg.mode &#x3D;&#x3D; &#x27;WALK&#x27;&quot;&gt;
+                                    &lt;i class&#x3D;&quot;fa fa-walking&quot;&gt;&lt;/i&gt;
+                                &lt;/div&gt;
+                                &lt;div class&#x3D;&quot;bus-mode trail&quot; [style.flex]&#x3D;&quot;leg.flex&quot; *ngIf&#x3D;&quot;leg.mode &#x3D;&#x3D; &#x27;TRAM&#x27;&quot;&gt;
+                                    &lt;i class&#x3D;&quot;fa fa-bus&quot;&gt;&lt;/i&gt;
+                                    &lt;div class&#x3D;&quot;code&quot;&gt;{{leg.routeId}}&lt;/div&gt;
+                                &lt;/div&gt;
+                            &lt;/ng-container&gt;
+                            &lt;div class&#x3D;&quot;time&quot;&gt;
+                                &lt;span class&#x3D;&quot;&quot;&gt;{{it.endTime}}&lt;/span&gt;
+                            &lt;/div&gt;
+                        &lt;/div&gt;   
+                    &lt;/mat-expansion-panel-header&gt;
+                    &lt;div class&#x3D;&quot;sumary-section&quot;&gt;
+                        &lt;div class&#x3D;&quot;header&quot;&gt;
+                            &lt;span class&#x3D;&quot;malakas&quot;&gt;Summary&lt;/span&gt;
+                            &lt;div class&#x3D;&quot;inner-malakas&quot;&gt;
+                                &lt;i class&#x3D;&quot;fas fa-map&quot; (click)&#x3D;&quot;onSelect()&quot;&gt;&lt;/i&gt;
+                                &lt;section&gt;
+                                    &lt;div class&#x3D;&quot;example-button-row&quot;&gt;
+                                        &lt;button class&#x3D;&quot;custom-btn&quot; mat-raised-button (click)&#x3D;&quot;onBook()&quot; color&#x3D;&quot;primary&quot;&gt;Κράτηση&lt;/button&gt;
+                                    &lt;/div&gt;
+                                &lt;/section&gt;
+                            &lt;/div&gt;
+                        &lt;/div&gt;
+                        &lt;ng-container *ngFor&#x3D;&quot;let leg of it.legs&quot;&gt;
+                            &lt;div class&#x3D;&quot;field&quot; *ngIf&#x3D;&quot;leg.mode &#x3D;&#x3D; &#x27;TRAM&#x27;&quot;&gt;
+                                &lt;div class&#x3D;&quot;title&quot;&gt;
+                                   Route
+                                &lt;/div&gt;
+                                &lt;div class&#x3D;&quot;value&quot;&gt;
+                                    {{leg.routeId}}
+                                &lt;/div&gt;
+                            &lt;/div&gt;
+                            &lt;div class&#x3D;&quot;field&quot; *ngIf&#x3D;&quot;leg.mode &#x3D;&#x3D; &#x27;TRAM&#x27;&quot;&gt;
+                                &lt;div class&#x3D;&quot;title&quot;&gt;
+                                    From
+                                &lt;/div&gt;
+                                &lt;div class&#x3D;&quot;value&quot;&gt;
+                                    {{leg.from.name}}({{leg.from.stopCode}}), {{leg.startTime}}
+                                &lt;/div&gt;
+                            &lt;/div&gt;
+                            &lt;div class&#x3D;&quot;field&quot; *ngIf&#x3D;&quot;leg.mode &#x3D;&#x3D; &#x27;TRAM&#x27;&quot;&gt;
+                                &lt;div class&#x3D;&quot;title&quot;&gt;
+                                    To
+                                &lt;/div&gt;
+                                &lt;div class&#x3D;&quot;value&quot;&gt;
+                                    {{leg.to.name}}({{leg.to.stopCode}}), {{leg.endTime}}
+                                &lt;/div&gt;
+                            &lt;/div&gt;
+                            &lt;div class&#x3D;&quot;field&quot; *ngIf&#x3D;&quot;leg.mode &#x3D;&#x3D; &#x27;TRAM&#x27;&quot;&gt;
+                                &lt;div class&#x3D;&quot;title&quot;&gt;
+                                    Seats
+                                &lt;/div&gt;
+                                &lt;div class&#x3D;&quot;value&quot;&gt;
+                                    {{occupancy[leg.tripId]}}
+                                &lt;/div&gt;
+                            &lt;/div&gt;
+                        &lt;/ng-container&gt;
+                    &lt;/div&gt;
+                &lt;/mat-expansion-panel&gt;
+            &lt;/mat-accordion&gt;
+        &lt;/div&gt;
+    &lt;/div&gt;
+&lt;/ng-container&gt;
+</code></pre>
+    </div>
+
+    <div class="tab-pane fade " id="c-styleData">
+                <p class="comment">
+                    <code>./trip.component.css</code>
+                </p>
+                <pre class="line-numbers"><code class="language-scss">
+:host{
+    width: 100%;
+}
+
+:host:hover{
+    cursor: pointer;
+    transform: translateX(3px);
+    transition-duration: .5s;
+}
+
+.entity-wrapper{
+    background: rgb(227,227,236);
+    background: linear-gradient(90deg, rgba(227,227,236,1) 0%, rgba(255,255,255,1) 100%);
+    box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
+    cursor: pointer;
+}
+
+.entity-container{
+    color: #545f6d;
+    font-size: 14px;
+    padding: 10px 10px 10px 10px;
+}
+
+.context{
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+    gap: 3px;
+    position: relative;
+    font-size: 13px;
+}
+
+.bus-mode{
+    flex: 1 1;
+    background: #002D62;
+}
+
+.walk-mode{
+    flex: 1 1;
+    background: rgb(187, 187, 187);
+}
+
+.trail{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    z-index: 3;
+    padding-right: 5px;
+    padding-left: 5px;
+}
+
+.code{
+    margin-left: 4px;
+    margin-top: 1px;
+}
+
+.time{
+    background-color: black;
+    color: white;
+    font-size: 11px;
+    font-weight: bold;
+    align-self: center;
+    height: 14px;
+    line-height: 15px;
+    padding-left: 2px;
+    padding-right: 2px;
+    z-index: 3;
+}
+
+.line{
+    position: absolute;
+    top: 9px;
+    right: 0px;
+    z-index: 1;
+    width: 100%;
+    border-bottom: 2px solid rgb(20, 20, 20);
+}
+
+.sumary-section{
+    display: flex;
+    flex-direction: column;
+    padding: 10px 5px 0px 5px;
+}
+
+.header{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    margin-bottom: 5px;
+    margin-top: 3px;
+    align-items: center;
+}
+
+.malakas{
+    color: #2e3e51;
+    font-weight: bold;
+    font-size: 16px;
+}
+
+.field{
+    display: flex;
+    flex-direction: row;
+    gap: 10px;
+    font-weight: bold;
+    width: 100%;
+}
+
+.title{
+    color: #2e3e51;
+    font-size: 14px;
+    font-weight: bold;
+    white-space: nowrap;
+}
+
+.value{
+    color: #545f6d;
+    font-size: 13px;
+}
+
+::ng-deep .mat-expansion-panel-header {
+    padding: 0 !important;
+}
+
+::ng-deep .mat-expansion-panel-header{
+    height: 21px;
+}
+
+::ng-deep .mat-expansion-panel {
+    background: transparent !important;
+}
+
+::ng-deep .mat-expansion-panel:not([class*&#x3D;mat-elevation-z]) {
+    box-shadow: none !important;
+}
+
+::ng-deep .mat-expansion-panel-header.mat-expanded {
+    height: unset;
+}
+
+::ng-deep .mat-expansion-panel-body {
+    padding: 0px !important;
+}
+
+::ng-deep .mat-flat-button.mat-primary, .mat-raised-button.mat-primary, .mat-fab.mat-primary, .mat-mini-fab.mat-primary {
+    background-color: #002D62;
+}
+
+.mat-raised-button {
+    min-width: unset !important;
+    line-height: unset !important;
+    padding: 4px 7px 3px 7px !important;
+    font-size: 18px !important;
+}
+
+.fa-sort-down{
+    color: #2e3e51;
+    margin-right: 5px;
+}
+
+.inner-malakas{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 8px;
+}
+
+.inner-malakas&gt;i{
+    color: #002D62;
+    font-size: 14px;
+}
+
+.book-btn{
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    margin-top: 8px;
+}
+
+.book-btn&gt;button{
+    padding: 4px 18px 4px 18px !important;
+    font-size: 18px !important;
+}
+
+.custom&gt;button{
+    padding-left: 5px !important;
+    padding-right: 5px !important;
+}
+
+.fa-map{
+    font-size: 20px !important;
+    padding: 6px 6px 6px 6px !important;
+    transition-duration: .4s;
+    border-radius: 3px;
+}
+
+.fa-map:hover{
+    background: #b7cbe4;
+}</code></pre>
+    </div>
+
+    <div class="tab-pane fade " id="c-tree">
+        <div id="tree-container"></div>
+        <div class="tree-legend">
+            <div class="title">
+                <b>Legend</b>
+            </div>
+            <div>
+                <div class="color htmlelement"></div><span>Html element</span>
+            </div>
+            <div>
+                <div class="color component"></div><span>Component</span>
+            </div>
+            <div>
+                <div class="color directive"></div><span>Html element with directive</span>
+            </div>
+        </div>
+    </div>
+
+    
+</div>
+
+<script src="../js/libs/vis.min.js"></script>
+<script src="../js/libs/htmlparser.js"></script>
+<script src="../js/libs/deep-iterator.js"></script>
+<script>
+        var COMPONENT_TEMPLATE = '<div><ng-container *ngIf="itinerary as it">    <div class="entity-wrapper">        <div class="entity-container">            <mat-accordion>                <mat-expansion-panel hideToggle>                    <mat-expansion-panel-header>                        <i class="fas fa-sort-down"></i>                        <div class="context">                            <div class="line"></div>                            <div class="time">{{it.startTime}}</div>                            <ng-container *ngFor="let leg of it.legs">                                <div class="walk-mode trail" [style.flex]="leg.flex" *ngIf="leg.mode == \'WALK\'">                                    <i class="fa fa-walking"></i>                                </div>                                <div class="bus-mode trail" [style.flex]="leg.flex" *ngIf="leg.mode == \'TRAM\'">                                    <i class="fa fa-bus"></i>                                    <div class="code">{{leg.routeId}}</div>                                </div>                            </ng-container>                            <div class="time">                                <span class="">{{it.endTime}}</span>                            </div>                        </div>                       </mat-expansion-panel-header>                    <div class="sumary-section">                        <div class="header">                            <span class="malakas">Summary</span>                            <div class="inner-malakas">                                <i class="fas fa-map" (click)="onSelect()"></i>                                <section>                                    <div class="example-button-row">                                        <button class="custom-btn" mat-raised-button (click)="onBook()" color="primary">Κράτηση</button>                                    </div>                                </section>                            </div>                        </div>                        <ng-container *ngFor="let leg of it.legs">                            <div class="field" *ngIf="leg.mode == \'TRAM\'">                                <div class="title">                                   Route                                </div>                                <div class="value">                                    {{leg.routeId}}                                </div>                            </div>                            <div class="field" *ngIf="leg.mode == \'TRAM\'">                                <div class="title">                                    From                                </div>                                <div class="value">                                    {{leg.from.name}}({{leg.from.stopCode}}), {{leg.startTime}}                                </div>                            </div>                            <div class="field" *ngIf="leg.mode == \'TRAM\'">                                <div class="title">                                    To                                </div>                                <div class="value">                                    {{leg.to.name}}({{leg.to.stopCode}}), {{leg.endTime}}                                </div>                            </div>                            <div class="field" *ngIf="leg.mode == \'TRAM\'">                                <div class="title">                                    Seats                                </div>                                <div class="value">                                    {{occupancy[leg.tripId]}}                                </div>                            </div>                        </ng-container>                    </div>                </mat-expansion-panel>            </mat-accordion>        </div>    </div></ng-container></div>'
+    var COMPONENTS = [{'name': 'AppComponent', 'selector': 'app-root'},{'name': 'BookingComponent', 'selector': 'booking-component'},{'name': 'BookingsComponent', 'selector': 'bookings-component'},{'name': 'BookOptionsComponent', 'selector': 'book-options'},{'name': 'BusEntityComponent', 'selector': 'bus-entity'},{'name': 'DoubleInputComponent', 'selector': 'double-input'},{'name': 'DropdownOptionComponent', 'selector': 'dropdown-option'},{'name': 'InputComponent', 'selector': 'app-input'},{'name': 'LinesDropdownComponent', 'selector': 'lines-dropdown'},{'name': 'LinesMapComponent', 'selector': 'lines-map'},{'name': 'ListItemComponent', 'selector': 'list-item'},{'name': 'LoginComponent', 'selector': 'app-login'},{'name': 'MainInputComponent', 'selector': 'input-field'},{'name': 'MapAreaComponent', 'selector': 'map-area'},{'name': 'MiniMapComponent', 'selector': 'mini-map'},{'name': 'MultipleDropdownComponent', 'selector': 'multiple-dropdown'},{'name': 'OptionComponent', 'selector': 'app-option'},{'name': 'PlacesComponent', 'selector': 'places-component'},{'name': 'PlacesMapComponent', 'selector': 'places-map'},{'name': 'PlacesSliderComponent', 'selector': 'places-slider'},{'name': 'QrComponent', 'selector': 'qr-component'},{'name': 'RegisterComponent', 'selector': 'register-component'},{'name': 'RouteDetailsComponent', 'selector': 'route-details'},{'name': 'RouteListComponent', 'selector': 'route-list'},{'name': 'SavedSliderComponent', 'selector': 'saved-slider'},{'name': 'SelectComponent', 'selector': 'select-component'},{'name': 'SidebarOptionsComponent', 'selector': 'sidebar-options'},{'name': 'SideNavComponent', 'selector': 'side-nav'},{'name': 'SliderComponent', 'selector': 'slider-component'},{'name': 'SpinnerComponent', 'selector': 'spinner-component'},{'name': 'StationEntityComponent', 'selector': 'station-entity'},{'name': 'StationListComponent', 'selector': 'station-list-component'},{'name': 'StopDropDownComponent', 'selector': 'stop-dropdown'},{'name': 'StopsComponent', 'selector': 'stops-component'},{'name': 'StopSliderComponent', 'selector': 'stop-slider'},{'name': 'StopsMapComponent', 'selector': 'stops-map'},{'name': 'ToasterComponent', 'selector': 'toaster-component'},{'name': 'TripComponent', 'selector': 'trip-component'},{'name': 'TripDetailsComponent', 'selector': 'app-trip-details'},{'name': 'TripListComponent', 'selector': 'trip-list'},{'name': 'TripPlannerOptionsComponent', 'selector': 'trip-planner-options'}];
+    var DIRECTIVES = [];
+    var ACTUAL_COMPONENT = {'name': 'TripComponent'};
+</script>
+<script src="../js/tree.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                   </div><div class="search-results">
+    <div class="has-results">
+        <h1 class="search-results-title"><span class='search-results-count'></span> results matching "<span class='search-query'></span>"</h1>
+        <ul class="search-results-list"></ul>
+    </div>
+    <div class="no-results">
+        <h1 class="search-results-title">No results matching "<span class='search-query'></span>"</h1>
+    </div>
+</div>
+</div>
+               <!-- END CONTENT -->
+           </div>
+       </div>
+
+          <label class="dark-mode-switch">
+               <input type="checkbox">
+               <span class="slider">
+                    <svg class="slider-icon" viewBox="0 0 24 24" fill="none" height="20" stroke="#000" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" width="20" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z"></path>
+                    </svg>
+               </span>
+          </label>
+
+       <script>
+            var COMPODOC_CURRENT_PAGE_DEPTH = 1;
+            var COMPODOC_CURRENT_PAGE_CONTEXT = 'component';
+            var COMPODOC_CURRENT_PAGE_URL = 'TripComponent.html';
+            var MAX_SEARCH_RESULTS = 15;
+       </script>
+
+       <script src="../js/libs/custom-elements.min.js"></script>
+       <script src="../js/libs/lit-html.js"></script>
+
+       <script src="../js/menu-wc.js" defer></script>
+       <script nomodule src="../js/menu-wc_es5.js" defer></script>
+
+       <script src="../js/libs/bootstrap-native.js"></script>
+
+       <script src="../js/libs/es6-shim.min.js"></script>
+       <script src="../js/libs/EventDispatcher.js"></script>
+       <script src="../js/libs/promise.min.js"></script>
+       <script src="../js/libs/zepto.min.js"></script>
+
+       <script src="../js/compodoc.js"></script>
+
+       <script src="../js/tabs.js"></script>
+       <script src="../js/menu.js"></script>
+       <script src="../js/libs/clipboard.min.js"></script>
+       <script src="../js/libs/prism.js"></script>
+       <script src="../js/sourceCode.js"></script>
+          <script src="../js/search/search.js"></script>
+          <script src="../js/search/lunr.min.js"></script>
+          <script src="../js/search/search-lunr.js"></script>
+          <script src="../js/search/search_index.js"></script>
+       <script src="../js/lazy-load-graphs.js"></script>
+
+
+    </body>
+</html>

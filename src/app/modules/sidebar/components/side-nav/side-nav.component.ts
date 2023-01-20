@@ -2,7 +2,7 @@ import { OnDestroy } from '@angular/core';
 import { AfterViewInit, Component, HostListener, OnInit, ViewChild } from '@angular/core';
 import { Router, RouterOutlet } from '@angular/router';
 import { Subscription } from 'rxjs/internal/Subscription';
-import { AuthService } from 'src/app/modules/auth/services/auth.service';
+import { AuthService } from 'src/app/services/auth.service';
 import { slideAnimation } from 'src/app/route-animations';
 import { DataShareService } from 'src/app/services/data-share.service';
 

@@ -5,6 +5,7 @@ import { SavedSliderComponent } from './components/saved-slider/saved-slider.com
 import { DataService } from 'src/app/services/data.service';
 import { SharedModule } from '../shared-module/shared-module.module';
 import { MatTabsModule } from '@angular/material/tabs';
+import { AuthModule } from '../auth/auth.module';
 
 
 @NgModule({
@@ -14,6 +15,7 @@ import { MatTabsModule } from '@angular/material/tabs';
     SavedRoutingModule,
     SharedModule,
     MatTabsModule,
+    AuthModule
   ], 
   providers: [DataService]
 })

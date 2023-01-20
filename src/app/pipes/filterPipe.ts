@@ -12,10 +12,13 @@ export class FilterPipe implements PipeTransform {
     }
 
     const upper: string = value.toUpperCase();
-    return data.filter((piece: IRoute | IStop) => 
-        piece.desc.toUpperCase().includes(upper) || 
-        piece.code.includes(value)
-    ).slice(0, 20);
+    return data.filter((piece: IRoute | IStop) => {
+      if(!piece){
+        return false;
+      }else{
+        return piece.desc.toUpperCase().includes(upper) || piece.code.includes(value);
+      }
+    }).slice(0, 20);
   }
 
 }

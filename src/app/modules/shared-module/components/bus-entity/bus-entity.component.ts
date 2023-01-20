@@ -23,4 +23,13 @@ export class BusEntityComponent implements OnInit {
     this.dataShare.fly([bus.latitude, bus.longitude]);
   }
 
+  public delay(ar: number, dep: number){
+    const del: number = ar - dep;
+    if(del > 2){
+      return del - 1;
+    }else{
+      return del;
+    }
+  }
+
 }

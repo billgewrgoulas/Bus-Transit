@@ -6,7 +6,6 @@ import { lineStateAdapter } from "../Entities/line.entity";
 import { IMapData } from "../Entities/map.data.entity";
 import { Booking, bookingStateAdapter } from "../Entities/booking.entity";
 
-
 /* Main App State selector */
 export const getAppState = createFeatureSelector<AppState>('api');
 

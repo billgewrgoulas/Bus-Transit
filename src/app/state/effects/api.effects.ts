@@ -37,7 +37,6 @@ export class ApiEffects{
         this.actions$.pipe(
             ofType(api_actions.getLineRoutes),
             withLatestFrom(this.store.select(selectCurrentLineRoutes)),
-            filter(([action, routes]) => routes.length == 0),
             switchMap(([action, line]) => this.dataService.getLineRoutes(action.id).pipe(
                 map((response: IRoute[]) => api_actions.getLineRoutesSuccess({routes: response})),
                 catchError(err => of(api_actions.getLineRoutesError({msg: err.error})))

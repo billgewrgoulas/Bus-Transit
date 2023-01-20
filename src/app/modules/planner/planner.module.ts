@@ -30,6 +30,7 @@ import { PlacesMapComponent } from './components/places-map/places-map.component
 import { PlacesSliderComponent } from './components/places-slider/places-slider.component';
 import { MapModule } from '../map/map.module';
 import { BookingPipe } from './pipes/bookings.pipe';
+import { AuthService } from 'src/app/services/auth.service';
 
 @NgModule({
   declarations: [
@@ -65,6 +66,6 @@ import { BookingPipe } from './pipes/bookings.pipe';
     AuthModule,
     QRCodeModule,
     MapModule
-  ],providers: [DirectionsStore]
+  ],providers: [DirectionsStore, AuthService]
 })
 export class PlannerModule { }

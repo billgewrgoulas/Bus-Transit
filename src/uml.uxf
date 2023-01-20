@@ -1,0 +1,7 @@
+<diagram program="umletino" version="15.0.0"><zoom_level>14</zoom_level><help_text>Space for diagram notesasd</help_text><element><id>UMLInterface</id><coordinates><x>1302</x><y>84</y><w>126</w><h>140</h></coordinates><panel_attributes>Interface
+--
+Operation1
+Operation2</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLInterface</id><coordinates><x>518</x><y>84</y><w>98</w><h>140</h></coordinates><panel_attributes>Interface
+--
+AppState
+</panel_attributes><additional_attributes></additional_attributes></element></diagram>

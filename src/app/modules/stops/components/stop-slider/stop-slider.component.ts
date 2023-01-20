@@ -9,8 +9,9 @@ import { IStop } from 'src/app/state/Entities/stop.entity';
 import { StopsStore } from 'src/app/modules/stops/state/stop.store';
 import { AppState } from 'src/app/state/Reducers/api-reducer';
 import { getActiveStop, getRouteList, getStopLines, isStopSaved, spinner } from 'src/app/state/Selectors/appState.selectors';
-import { AuthService } from 'src/app/modules/auth/services/auth.service';
+import { AuthService } from 'src/app/services/auth.service';
 import * as api_actions from 'src/app/state/Actions/api-calls.actions';
+import { Router } from '@angular/router';
 
 interface StopInfo{
   stop: IStop | undefined;
@@ -34,7 +35,8 @@ export class StopSliderComponent implements OnInit {
     private store: Store<AppState>, 
     private local: StopsStore, 
     private msg: DataShareService,
-    private auth: AuthService
+    private auth: AuthService,
+    private router: Router
   ) { }
 
   ngOnInit(): void {
@@ -59,6 +61,10 @@ export class StopSliderComponent implements OnInit {
 
   public onRemove(code: string){
     this.store.dispatch(api_actions.deleteStop({code: code}));
+  }
+
+  public onNavigate(route: string[]){
+    this.router.navigate([{ outlets: { sidebar: route }}], {queryParams: {module: 'route_data'}});
   }
 
   public get authenticated(){

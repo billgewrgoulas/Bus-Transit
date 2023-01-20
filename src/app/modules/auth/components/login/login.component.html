@@ -20,7 +20,7 @@
 
   <mat-form-field appearance="fill">
     <mat-label>Password</mat-label>
-    <input matInput formControlName="password">
+    <input type="password" matInput formControlName="password">
     <mat-error *ngIf="errors('password', 'required')">password is required</mat-error>
     <mat-error *ngIf="errors('password', 'minlength')">at least 3 characters</mat-error>
   </mat-form-field>

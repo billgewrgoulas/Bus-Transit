@@ -12,7 +12,7 @@ export class SidebarOptionsComponent implements OnInit {
   public options: any[] = [
     {text: 'Lines', icon: 'route', desc: 'Line information', link: ['lines', 'lines_load']},
     {text: 'Stops', icon: 'where_to_vote', desc: 'Stop information', link: ['stops', 'stops_module']},
-    {text: 'Trip planner', icon: 'directions', desc: 'Book trips', link: ['routes', 'trip_module']},
+    {text: 'Book a seat', icon: 'directions', desc: 'Find and book seats', link: ['routes', 'trip_module']},
     {text: 'Bookings', icon: 'departure_board', desc: 'Booked trips', link: [[ 'routes', 'bookings'], 'trip_options']},
     {text: 'Saved information', icon: 'file_present', desc: 'Saved lines, stops...', link: ['saved', 'saved_info']},
   ];

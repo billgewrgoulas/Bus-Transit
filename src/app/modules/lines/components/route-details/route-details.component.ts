@@ -5,7 +5,7 @@ import { IRoute } from 'src/app/state/Entities/route.entity';
 import { LiveDataStore } from 'src/app/modules/lines/state/live.data.store';
 import { AppState } from 'src/app/state/Reducers/api-reducer';
 import { currentLine, currentRoute, getActiveStop, isRouteSaved } from 'src/app/state/Selectors/appState.selectors';
-import { AuthService } from 'src/app/modules/auth/services/auth.service';
+import { AuthService } from 'src/app/services/auth.service';
 import * as api_actions from 'src/app/state/Actions/api-calls.actions';
 import * as select_action from 'src/app/state/Actions/select.actions';
 import { IArrival } from 'src/app/state/Entities/live.data';

@@ -60,7 +60,7 @@ export const appStateReducer = createReducer(
         return {...state, stops:{...state.stops, activeStopCode: action.code}};
     }),
     on(api_actions.getLineRoutesSuccess, api_actions.stopRoutesSuccess, (state: AppState, action): AppState => {
-        return {...state, routes: routeStateAdapter.addMany(action.routes, state.routes)};
+        return {...state, routes: routeStateAdapter.setAll(action.routes, state.routes)};
     }),
     on(api_actions.getSchedulesSuccess, (state: AppState, action): AppState => {
         return {...state, schedule: scheduleStateAdapter.setOne(action.schedules, state.schedule)};
@@ -119,7 +119,7 @@ export const appStateReducer = createReducer(
             savedRoutes: action.routes.map(route => route.code),
             savedStops: action.stops.map(stop => stop.code),
             stops: stopStateAdapter.addMany(action.stops, state.stops),
-            routes: routeStateAdapter.addMany(action.routes, state.routes)
+            routes: routeStateAdapter.setAll(action.routes, state.routes)
         };
     }),
     on(select_actions.emptyPath, (state: AppState, action): AppState => {

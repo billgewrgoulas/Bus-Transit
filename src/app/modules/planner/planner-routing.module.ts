@@ -6,7 +6,7 @@ import { PlacesComponent } from './components/places/places.component';
 import { TripDetailsComponent } from './components/trip-details/trip-details.component';
 import { TripListComponent } from './components/trip-list/trip-list.component';
 import { TripPlannerOptionsComponent } from './components/trip-planner-options/trip-planner-options.component';
-import { AuthGuardService } from '../auth/services/auth-guard.service';
+import { AuthGuardService } from '../../services/auth-guard.service';
 import { BookingsComponent } from './components/bookings/bookings.component';
 import { QrComponent } from './components/qr/qr.component';
 import { PlacesSliderComponent } from './components/places-slider/places-slider.component';

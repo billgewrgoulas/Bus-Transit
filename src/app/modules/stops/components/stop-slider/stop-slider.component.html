@@ -20,9 +20,11 @@
         <mat-tab label="Routes">
             <div class="option-list" *ngIf="vm.routes">
                 <app-option *ngFor="let route of vm.routes"
+                    (onSelect)="onNavigate($event)"
                     [icon]="'route'"
                     [text]="route.desc"
-                    [desc]="route.name">
+                    [desc]="route.name"
+                    [data]="['lines', route.lineId, 'route', route.code]">
                 </app-option>
             </div>
         </mat-tab>

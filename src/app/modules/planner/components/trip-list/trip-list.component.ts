@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { Observable, combineLatest, map, tap } from 'rxjs';
-import { AuthService } from 'src/app/modules/auth/services/auth.service';
+import { AuthService } from 'src/app/services/auth.service';
 import { Plan } from 'src/app/state/Entities/itinerary';
 import { AppState } from 'src/app/state/Reducers/api-reducer';
 import { getOccupancy, getPlanState, spinner } from 'src/app/state/Selectors/appState.selectors';

@@ -5,7 +5,7 @@ import { DataShareService } from 'src/app/services/data-share.service';
 import { AppState } from 'src/app/state/Reducers/api-reducer';
 import * as nav_actions from 'src/app/state/Actions/navigation.actions';
 import * as api_actions from 'src/app/state/Actions/api-calls.actions';
-import { AuthService } from '../../services/auth.service';
+import { AuthService } from '../../../../services/auth.service';
 import { Observable } from 'rxjs';
 import { clearState, getMsg, getNotificationState } from '../../state/message.reducer';
 
