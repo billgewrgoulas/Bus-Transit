@@ -1,6 +1,8 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { MapAreaComponent } from './map-area.component';
+import { RouterTestingModule } from '@angular/router/testing';
+import { StoreModule } from '@ngrx/store';
 
 describe('MapAreaComponent', () => {
   let component: MapAreaComponent;
@@ -8,6 +10,10 @@ describe('MapAreaComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
+      imports:[
+        RouterTestingModule,
+        StoreModule.forRoot({})
+      ],
       declarations: [ MapAreaComponent ]
     })
     .compileComponents();

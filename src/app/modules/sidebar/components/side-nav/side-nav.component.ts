@@ -37,7 +37,7 @@ export class SideNavComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   ngOnDestroy(): void{
-    this.sub.unsubscribe();
+    if(this.sub) this.sub.unsubscribe();
   }
 
   public prepareOutlet(outlet: RouterOutlet){

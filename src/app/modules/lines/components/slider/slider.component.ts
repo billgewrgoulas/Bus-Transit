@@ -1,11 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { LiveDataStore, LiveState } from '../../state/live.data.store';
 import { Observable, combineLatest, map, tap } from 'rxjs';
-import { ILine } from 'src/app/state/Entities/line.entity';
-import { AppState } from 'src/app/state/Reducers/api-reducer';
-import { Store } from '@ngrx/store';
-import { currentLine, getActiveStop } from 'src/app/state/Selectors/appState.selectors';
-import { IStop } from 'src/app/state/Entities/stop.entity';
 import { DataShareService } from 'src/app/services/data-share.service';
 
 @Component({

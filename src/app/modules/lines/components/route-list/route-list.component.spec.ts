@@ -1,6 +1,8 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { RouteListComponent } from './route-list.component';
+import { RouterTestingModule } from '@angular/router/testing';
+import { StoreModule } from '@ngrx/store';
 
 describe('RouteListComponent', () => {
   let component: RouteListComponent;
@@ -8,6 +10,10 @@ describe('RouteListComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
+      imports:[
+        RouterTestingModule,
+        StoreModule.forRoot({})
+      ],
       declarations: [ RouteListComponent ]
     })
     .compileComponents();

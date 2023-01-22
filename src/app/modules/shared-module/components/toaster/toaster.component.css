@@ -10,7 +10,7 @@
     right: 0;
     bottom: 0;
     background-color: rgba(0,0,0,0.23);
-    z-index: 5;
+    z-index: 20;
     cursor: pointer;
 }
 /* The snackbar - position it at the bottom and in the middle of the screen */
@@ -27,8 +27,8 @@
 
 #snackbar.show {
   visibility: visible; /* Show the snackbar */
-  -webkit-animation: fadeout .5s;
-  animation: fadein 0.5s, fadeout 0.5s 2.5s;
+  -webkit-animation: fadeout .3s;
+  animation: fadein 0.3s, fadeout 0.3s 1s;
 }
 
 @-webkit-keyframes fadein {

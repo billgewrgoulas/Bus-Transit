@@ -1,6 +1,8 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { DoubleInputComponent } from './double-input.component';
+import { RouterTestingModule } from '@angular/router/testing';
+import { StoreModule } from '@ngrx/store';
 
 describe('DoubleInputComponent', () => {
   let component: DoubleInputComponent;
@@ -8,6 +10,9 @@ describe('DoubleInputComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
+      imports:[
+        StoreModule.forRoot({})
+      ],
       declarations: [ DoubleInputComponent ]
     })
     .compileComponents();

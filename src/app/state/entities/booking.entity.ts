@@ -5,11 +5,12 @@ export interface Booking{
     user_id: string;
     startStop: string;
     endStop: string;
-    stopCodes: string[];
     start: string;
     end: string;
     route: string;
     travel: string;
+    arrive: string;
+    date: string;
     slug: string;
 }
 

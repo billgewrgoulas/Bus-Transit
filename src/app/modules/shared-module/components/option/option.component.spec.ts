@@ -1,6 +1,8 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { OptionComponent } from './option.component';
+import { RouterTestingModule } from '@angular/router/testing';
+import { StoreModule } from '@ngrx/store';
 
 describe('OptionComponent', () => {
   let component: OptionComponent;
@@ -8,6 +10,9 @@ describe('OptionComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
+      imports:[
+        StoreModule.forRoot({})
+      ],
       declarations: [ OptionComponent ]
     })
     .compileComponents();

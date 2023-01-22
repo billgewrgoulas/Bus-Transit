@@ -80,11 +80,11 @@ export const deleteBooking = createAction('[Local] Delete booking', props<{trip_
 
 /* Saved stops actions */
 export const saveStop = createAction('[API] Save stop', props<{code: string}>());
-export const saveStopSuccess = createAction('[API] Save stop success', props<{code: string}>());
+export const saveStopSuccess = createAction('[API] Save stop success', props<{code: string, msg: string}>());
 export const saveStopError = createAction('[API] Save stop error', props<{msg: string}>());
 
 export const deleteStop = createAction('[API] Delete stop', props<{code: string}>());
-export const deleteStopSuccess = createAction('[API] Delete stop success', props<{code: string}>());
+export const deleteStopSuccess = createAction('[API] Delete stop success', props<{code: string, msg: string}>());
 export const deleteStopError = createAction('[API] Delete stop error', props<{msg: string}>());
 
 export const getSavedStops = createAction('[API] Get saved stops');
@@ -93,11 +93,11 @@ export const getSavedStopsError = createAction('[API] Get saved stops error', pr
 
 /* Saved route actions */
 export const saveRoute = createAction('[API] Save route', props<{code: string}>());
-export const saveRouteSuccess = createAction('[API] Save route success', props<{code: string}>());
+export const saveRouteSuccess = createAction('[API] Save route success', props<{code: string, msg: string}>());
 export const saveRouteError = createAction('[API] Save route error', props<{msg: string}>());
 
 export const deleteRoute = createAction('[API] Delete route', props<{code: string}>());
-export const deleteRouteSuccess = createAction('[API] Delete route success', props<{code: string}>());
+export const deleteRouteSuccess = createAction('[API] Delete route success', props<{code: string, msg: string}>());
 export const deleteRouteError = createAction('[API] Delete route error', props<{msg: string}>());
 
 export const getSavedRoutes = createAction('[API] Get saved routes');

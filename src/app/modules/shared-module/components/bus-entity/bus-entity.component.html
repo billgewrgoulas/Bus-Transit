@@ -1,26 +1,28 @@
 
-<ng-container *ngIf="buses.length > 0 else noIncoming">
-    <div class="entity-wrapper" *ngFor="let bus of buses" (click)="selectBus(bus)">
-        <div class="entity-container">
-            <div class="entity-type">
-                <i class="fas fa-bus"></i>
-                <span class="option-text">{{bus.routeName}} ({{bus.lineCode}})</span>
-            </div>
-            <div class="text-content" *ngIf="bus.arrivalMins > 0">
-                <span class="malakas">Άφιξη:</span>
-                <span class="description"><span class="bold">{{bus.arrivalMins}}:{{bus.arrivalSeconds}}</span> λεπτά</span>
-            </div>
-            <div class="text-content" *ngIf="bus.departureMins > 0 || bus.departureSeconds > 0">
-                <span class="malakas">Αναχώρηση:</span>
-                <span class="description"><span class="bold">{{bus.departureMins}}:{{bus.departureSeconds}}</span> λεπτά</span>
-            </div>
-            <div class="text-content"*ngIf="bus.arrivalMins > 0">
-                <span class="malakas">Καθυστέρηση:</span>
-                <span class="description"><span class="bold">{{delay(bus.departureMins, bus.arrivalMins)}}</span> λεπτά</span>
+<div class="option-list">
+    <ng-container *ngIf="buses.length > 0 else noIncoming">
+        <div class="entity-wrapper" *ngFor="let bus of buses" (click)="selectBus(bus)">
+            <div class="entity-container">
+                <div class="entity-type">
+                    <i class="fas fa-bus"></i>
+                    <span class="option-text">{{bus.routeName}} ({{bus.lineCode}})</span>
+                </div>
+                <div class="text-content" *ngIf="bus.arrivalMins > 0 || bus.arrivalMins > 0">
+                    <span class="malakas">Άφιξη:</span>
+                    <span class="description"><span class="bold">{{bus.arrivalMins}}:{{bus.arrivalSeconds}}</span> λεπτά</span>
+                </div>
+                <div class="text-content" *ngIf="bus.departureMins > 0 || bus.departureSeconds > 0">
+                    <span class="malakas">Αναχώρηση:</span>
+                    <span class="description"><span class="bold">{{bus.departureMins}}:{{bus.departureSeconds}}</span> λεπτά</span>
+                </div>
+                <div class="text-content"*ngIf="bus.arrivalMins > 0 || bus.arrivalSeconds > 0">
+                    <span class="malakas">Καθυστέρηση:</span>
+                    <span class="description"><span class="bold">{{delay(bus.departureMins, bus.arrivalMins)}}</span> λεπτά</span>
+                </div>
             </div>
         </div>
-    </div>
-</ng-container>
+    </ng-container>
+</div>
 
 <ng-template #noIncoming>
     <div class="entity-wrapper">

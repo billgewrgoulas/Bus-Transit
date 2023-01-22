@@ -1,6 +1,9 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { InputComponent } from './input.component';
+import { RouterTestingModule } from '@angular/router/testing';
+import { StoreModule } from '@ngrx/store';
+import { DirectionsStore } from '../../state/directions.store';
 
 describe('InputComponent', () => {
   let component: InputComponent;
@@ -8,6 +11,11 @@ describe('InputComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
+      providers: [DirectionsStore],
+      imports:[
+        RouterTestingModule,
+        StoreModule.forRoot({})
+      ],
       declarations: [ InputComponent ]
     })
     .compileComponents();

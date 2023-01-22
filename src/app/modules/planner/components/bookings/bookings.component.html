@@ -1,7 +1,8 @@
 
 <input-field (onType)="filter($event)"
     [icon]="'search'"
-    [placeholder]="'search bookings'">
+    [placeholder]="'search bookings'"
+    [title]="'Bookings'">
 </input-field>
 
 <div class="main" *ngIf="vm$ | async as vm">

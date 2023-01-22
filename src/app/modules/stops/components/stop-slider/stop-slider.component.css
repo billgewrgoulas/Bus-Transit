@@ -31,9 +31,18 @@ mat-tab-group{
     flex-direction: column;
     width: 100%;
     overflow: auto;
-    max-height: calc(100vh - 220px);
+    max-height: calc(100vh - 190px);
     padding-right: 3px;
     margin-top: 5px;
+}
+
+.main{
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    width: 100%;
+    height: calc(100vh - 109px);
+    position: relative;
 }
 
 @media screen and (max-width: 800px) {

@@ -23,7 +23,7 @@
     display: flex;
     flex-direction: column;
     align-items: flex-start;
-    height: calc(100vh - 270px);
+    height: calc(100vh - 230px);
     overflow: auto;
 }
 
@@ -55,7 +55,7 @@ i{
 }
 
 .outer-container{
-    margin-left: -11px !important;
+    margin-left: -15px !important;
 }
 
 .last-station{

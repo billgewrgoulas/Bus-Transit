@@ -1,6 +1,8 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { LinesDropdownComponent } from './lines-dropdown.component';
+import { RouterTestingModule } from '@angular/router/testing';
+import { StoreModule } from '@ngrx/store';
 
 describe('LinesDropdownComponent', () => {
   let component: LinesDropdownComponent;
@@ -8,6 +10,10 @@ describe('LinesDropdownComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
+      imports:[
+        RouterTestingModule,
+        StoreModule.forRoot({})
+      ],
       declarations: [ LinesDropdownComponent ]
     })
     .compileComponents();

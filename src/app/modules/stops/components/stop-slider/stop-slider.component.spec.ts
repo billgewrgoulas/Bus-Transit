@@ -1,6 +1,9 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { StopSliderComponent } from './stop-slider.component';
+import { RouterTestingModule } from '@angular/router/testing';
+import { StoreModule } from '@ngrx/store';
+import { HttpClient, HttpClientModule } from '@angular/common/http';
 
 describe('StopSliderComponent', () => {
   let component: StopSliderComponent;
@@ -8,6 +11,11 @@ describe('StopSliderComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
+      imports:[
+        HttpClientModule,
+        RouterTestingModule,
+        StoreModule.forRoot({})
+      ],
       declarations: [ StopSliderComponent ]
     })
     .compileComponents();

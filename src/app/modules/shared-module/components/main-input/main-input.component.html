@@ -9,21 +9,24 @@
 </div>
 <div class="right-wrapper">
     <div class="icons">
-        <section *ngIf="dots">
-            <button mat-icon-button [matMenuTriggerFor]="menu" aria-label="Example icon-button with a menu">
-                <mat-icon>more_vert</mat-icon>
-            </button>
-            <mat-menu #menu="matMenu">
-                <button (click)="onSave()" *ngIf="!saved" class="inner-button" mat-menu-item>
-                    <span class="menu-text">Save {{module}}</span>
+        <span class="title">{{title}}</span>
+        <div class="menu-btn">
+            <section *ngIf="dots">
+                <button mat-icon-button [matMenuTriggerFor]="menu" aria-label="Example icon-button with a menu">
+                    <mat-icon>more_vert</mat-icon>
                 </button>
-                <button (click)="onRemove()" *ngIf="saved" class="inner-button" mat-menu-item>
-                    <span class="menu-text">Unsave {{module}}</span>
-                </button>
-            </mat-menu>
-        </section>
-        <i *ngIf="mapBtn && mapLink.length > 0" class="fas fa-map" (click)="map()"></i>
-        <i class="bars fas fa-bars" (click)="toggle()"></i>
+                <mat-menu #menu="matMenu">
+                    <button (click)="onSave()" *ngIf="!saved" class="inner-button" mat-menu-item>
+                        <span class="menu-text">Save {{module}}</span>
+                    </button>
+                    <button (click)="onRemove()" *ngIf="saved" class="inner-button" mat-menu-item>
+                        <span class="menu-text">Unsave {{module}}</span>
+                    </button>
+                </mat-menu>
+            </section>
+            <i *ngIf="mapBtn && mapLink.length > 0" class="fas fa-map" (click)="map()"></i>
+            <i class="bars fas fa-bars" (click)="toggle()"></i>
+        </div>
     </div>
     <div class="input-list">
         <input [value]="value" 

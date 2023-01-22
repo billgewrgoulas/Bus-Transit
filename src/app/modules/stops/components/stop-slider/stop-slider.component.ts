@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Store } from '@ngrx/store';
-import { Observable, combineLatest, map, tap } from 'rxjs';
+import { Observable, Subject, combineLatest, map, tap } from 'rxjs';
 import { DataShareService } from 'src/app/services/data-share.service';
 import { ILine } from 'src/app/state/Entities/line.entity';
 import { IArrival } from 'src/app/state/Entities/live.data';
@@ -17,6 +17,7 @@ interface StopInfo{
   stop: IStop | undefined;
   routes: IRoute[];
   saved: boolean;
+  spinner: boolean;
 }
 
 @Component({
@@ -44,8 +45,9 @@ export class StopSliderComponent implements OnInit {
     this.vm$ = combineLatest([
       this.store.select(isStopSaved),
       this.store.select(getActiveStop),
-      this.store.select(getRouteList)
-    ]).pipe(map(([saved, stop, routes]) => ({saved, stop, routes})));
+      this.store.select(getRouteList),
+      this.store.select(spinner)
+    ]).pipe(map(([saved, stop, routes, spinner]) => ({saved, stop, routes, spinner})));
 
     this.departures$ = this.local.getArrivalState().pipe(
       tap(buses => this.msg.sendBusStatus(buses))
@@ -65,6 +67,10 @@ export class StopSliderComponent implements OnInit {
 
   public onNavigate(route: string[]){
     this.router.navigate([{ outlets: { sidebar: route }}], {queryParams: {module: 'route_data'}});
+  }
+
+  public get apiMsg(): Subject<string>{
+    return this.msg.apiMsg;
   }
 
   public get authenticated(){

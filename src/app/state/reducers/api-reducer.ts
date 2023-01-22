@@ -10,6 +10,7 @@ import { BookingState, bookingStateAdapter, initialBookingState } from "../Entit
 import { Dictionary } from "@ngrx/entity";
 import { Actions } from "@ngrx/effects";
 import { Subject } from "rxjs";
+import { stat } from "fs";
 
 export interface AppState{
     stops: StopState;
@@ -48,22 +49,22 @@ export const appStateReducer = createReducer(
         return {...state};
     }),
     on(api_actions.getFilteredStopsSuccess, (state: AppState, action): AppState=>{
-        return {...state, stops: stopStateAdapter.setAll(action.stops, state.stops)};
+        return {...state, stops: stopStateAdapter.setAll(action.stops, state.stops), spinner: false};
     }),
     on(api_actions.getLinesSuccess, (state: AppState, action): AppState=>{
-        return {...state, lines: lineStateAdapter.addMany(action.lines, state.lines)};
+        return {...state, lines: lineStateAdapter.addMany(action.lines, state.lines), spinner: false};
     }),
     on(select_actions.selectRoute, (state: AppState, action): AppState => {
-        return {...state, routes: {...state.routes, activeRoute: action.code}};
+        return {...state, routes: {...state.routes, activeRoute: action.code}, spinner: false};
     }),
     on(select_actions.selectStop, (state: AppState, action): AppState => {
-        return {...state, stops:{...state.stops, activeStopCode: action.code}};
+        return {...state, stops:{...state.stops, activeStopCode: action.code}, spinner: false};
     }),
     on(api_actions.getLineRoutesSuccess, api_actions.stopRoutesSuccess, (state: AppState, action): AppState => {
-        return {...state, routes: routeStateAdapter.setAll(action.routes, state.routes)};
+        return {...state, routes: routeStateAdapter.setAll(action.routes, state.routes), spinner: false};
     }),
     on(api_actions.getSchedulesSuccess, (state: AppState, action): AppState => {
-        return {...state, schedule: scheduleStateAdapter.setOne(action.schedules, state.schedule)};
+        return {...state, schedule: scheduleStateAdapter.setOne(action.schedules, state.schedule), spinner: false};
     }),
     on(api_actions.getStopsSuccess, (state: AppState, action): AppState => {
         return {...state, spinner: false ,stops: stopStateAdapter.setAll(action.stops, state.stops)};
@@ -102,7 +103,7 @@ export const appStateReducer = createReducer(
         return {...state, spinner: false, savedStops: state.savedStops!.filter(code => code != action.code)};
     }),
     on(api_actions.getSavedRoutesSuccess, (state: AppState, action): AppState => {
-        return {...state, spinner: false, savedRoutes: action.codes};
+        return {...state, spinner: false, savedRoutes: action.codes,};
     }),
     on(api_actions.getSavedStopsSuccess, (state: AppState, action): AppState => {
         return {...state, spinner: false, savedStops: action.codes};
@@ -130,7 +131,7 @@ export const appStateReducer = createReducer(
         };
     }),
     on(api_actions.getRouteDetailsuccess, (state: AppState, action): AppState => {
-        return {...state, stops: stopStateAdapter.addMany(action.routeInfo.stops, state.stops), 
+        return {...state, spinner: false, stops: stopStateAdapter.addMany(action.routeInfo.stops, state.stops), 
                 routes: routeStateAdapter.updateOne({
                     id: action.routeInfo.code, changes: {points: action.routeInfo.points},
                 }, state.routes), 

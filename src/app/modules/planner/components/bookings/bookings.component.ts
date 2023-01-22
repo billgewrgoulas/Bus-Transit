@@ -7,7 +7,7 @@ import { DataShareService } from 'src/app/services/data-share.service';
 import { Router } from '@angular/router';
 import { AppState } from 'src/app/state/Reducers/api-reducer';
 import { Store } from '@ngrx/store';
-import { filterBookings, spinner } from 'src/app/state/Selectors/appState.selectors';
+import { getAllBookings, spinner } from 'src/app/state/Selectors/appState.selectors';
 import { getItinerary } from 'src/app/state/Actions/api-calls.actions';
 
 @Component({
@@ -33,7 +33,7 @@ export class BookingsComponent implements OnInit {
   ngOnInit(): void {
 
     this.vm$ = combineLatest([
-      this.store.select(filterBookings('')), 
+      this.store.select(getAllBookings), 
       this.store.select(spinner),
       this.local.state$
     ]).pipe(map(([bookings, spinner, state]) => ({bookings, spinner, state})));

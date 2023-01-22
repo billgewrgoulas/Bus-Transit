@@ -8,7 +8,7 @@
     flex-direction: column;
     width: 100%;
     overflow: auto;
-    max-height: calc(100vh - 270px);
+    max-height: calc(100vh - 220px);
     padding-right: 3px;
     gap: 10px;
 }

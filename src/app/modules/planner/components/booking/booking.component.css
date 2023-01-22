@@ -111,6 +111,7 @@
 ::ng-deep .mat-stroked-button {
     padding: 0 8px !important;
     line-height: 32px !important;
+    border: none !important;
 }
 
 ::ng-deep .mat-expansion-panel-header-title, .mat-expansion-panel-header-description {

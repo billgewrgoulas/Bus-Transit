@@ -44,10 +44,8 @@ export const getAllBookings = createSelector(getBookingState, getBookings);
 export const getSavedRouteCodes = createSelector(getAppState, (state) => state.savedRoutes);
 export const getSavedStopCodes = createSelector(getAppState, (state) => state.savedStops);
 
-/* get spinner state */
-export const spinner = createSelector(
-    getAppState, (state) => state.spinner
-);
+/* get spinner, msg state */
+export const spinner = createSelector(getAppState, (state) => state.spinner);
 
 /* Select all stops while the stops module is active */
 export const getStopsModule = createSelector(
@@ -170,13 +168,13 @@ export const selectCurrentLineRoutes = createSelector(
         const routes: IRoute[] = [];
         if(!line) return routes;
 
-        const count: number = line.routeCodes.split(',').length;
-        line.routeCodes.split(',').forEach(code => {
+        const codes: string[] = line.routeCodes.split(',');
+        codes.forEach(code => {
             const route: IRoute | undefined = routeEntities[code];
             if(route) routes.push(route);
         });
 
-        if(count == routes.length){
+        if(codes.length == routes.length){
             return routes;
         }
         
@@ -269,18 +267,6 @@ export const filterStops = (value: string) => {
     });
 }
 
-/* filter bookings */
-export const filterBookings = (value: string) => {
-    return createSelector(getAllBookings, (bookings) => {
-        return bookings.filter(booking => 
-            booking.route.includes(value) || 
-            booking.travel.includes(value) || 
-            booking.start.includes(value) || 
-            booking.end.includes(value)
-        );
-    });
-}
-
 /* Create a booking */
 export const newBooking = (email: string, it: number) => 
     createSelector(getPlanState, (plan) => {
@@ -292,10 +278,6 @@ export const newBooking = (email: string, it: number) =>
 
                 if(leg.mode == 'TRAM'){
 
-                    let stops: any[] = [];
-                    stops.push(leg.from.stopCode); 
-                    stops = stops.concat(leg.intermediateStops.map(v => v.stopCode));
-
                     const booking: Booking = {
                         trip_id: +leg.tripId,
                         user_id: email,
@@ -305,8 +287,9 @@ export const newBooking = (email: string, it: number) =>
                         end: leg.to.name,
                         route: leg.routeId,
                         slug: plan.slug,
-                        travel: leg.startTime + ', ' + leg.serviceDate,
-                        stopCodes: stops
+                        travel: leg.startTime,
+                        arrive: leg.endTime,
+                        date: leg.serviceDate,
                     };
                     
                     bookings.push(booking);

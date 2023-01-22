@@ -131,14 +131,14 @@ export class DataService {
     );
   }
 
-  public saveStop(code: string): Observable<any>{
+  public saveStop(code: string): Observable<{msg: string}>{
     return this.http.get(this.url + '/saved/saveStop/' + code, {withCredentials: false, headers:{
       Authorization: 'Bearer ' + this.token()}}).pipe(
         map((res: any) => <any>res), 
     );
   }
 
-  public deleteStop(code: string): Observable<any>{
+  public deleteStop(code: string): Observable<{msg: string}>{
     return this.http.get(this.url + '/saved/deleteStop/' + code, {withCredentials: false, headers:{
       Authorization: 'Bearer ' + this.token()}}).pipe(
         map((res: any) => <any>res), 
@@ -159,14 +159,14 @@ export class DataService {
     );
   }
 
-  public saveRoute(code: string): Observable<any>{
+  public saveRoute(code: string): Observable<{msg: string}>{
     return this.http.get(this.url + '/saved/saveRoute/' + code, {withCredentials: false, headers:{
       Authorization: 'Bearer ' + this.token()}}).pipe(
         map((res: any) => <any>res), 
     );
   }
 
-  public deleteRoute(code: string): Observable<any>{
+  public deleteRoute(code: string): Observable<{msg: string}>{
     return this.http.get(this.url + '/saved/deleteRoute/' + code, {withCredentials: false, headers:{
       Authorization: 'Bearer ' + this.token()}}).pipe(
         map((res: any) => <any>res), 

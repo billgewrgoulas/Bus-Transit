@@ -12,10 +12,18 @@
             [disabled]="true"
             [code]="vm.route.code"
             [saved]="vm.saved"
+            [title]="'Route details'"
             [mapLink]="['lines', vm.route.lineId, 'route', vm.route.code, 'map']">
         </input-field>
 
-        <router-outlet></router-outlet>
+        <div class="main">
 
+            <spinner-component *ngIf="vm.spinner"></spinner-component>
+            <toaster-component [msg$]="msgSubject()"></toaster-component>
+
+            <router-outlet></router-outlet>
+
+        </div>
+        
     </ng-container>
 </ng-container>

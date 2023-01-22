@@ -71,6 +71,15 @@ input{
     font-weight: 700;
 }
 
+.main{
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    width: 100%;
+    height: calc(100vh - 109px);
+    position: relative;
+}
+
 @media screen and (max-width: 800px) {
     :host{
         min-width: 330px;

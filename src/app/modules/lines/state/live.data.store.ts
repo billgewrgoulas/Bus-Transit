@@ -2,14 +2,13 @@ import { HttpErrorResponse } from "@angular/common/http";
 import { Injectable } from "@angular/core";
 import { ComponentStore, tapResponse } from "@ngrx/component-store";
 import { Store } from "@ngrx/store";
-import { filter, map, Observable, switchMap, takeUntil, tap, timer } from "rxjs";
+import { filter, Observable, Subject, switchMap, timer } from "rxjs";
 import { DataService } from "src/app/services/data.service";
 import { IArrival } from "src/app/state/Entities/live.data";
 import { ILine } from "../../../state/Entities/line.entity";
 import { IStop } from "../../../state/Entities/stop.entity";
 import { AppState } from "../../../state/Reducers/api-reducer";
-import { currentRoute, getActiveStop } from "../../../state/Selectors/appState.selectors";
-import { DataShareService } from "src/app/services/data-share.service";
+import { currentRoute } from "../../../state/Selectors/appState.selectors";
 
 export interface LiveState {
     arrivals: IArrival[];
@@ -18,7 +17,7 @@ export interface LiveState {
 
 export const initialState: LiveState = {
     arrivals: [],
-    buses: []
+    buses: [],
 }
   
 @Injectable()

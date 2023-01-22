@@ -21,6 +21,7 @@ export class DataShareService {
   private readonly clearMap = new Subject<number>;
   private readonly toggle = new Subject<void>();
   private readonly removeDrag = new Subject<void>();
+  public readonly apiMsg = new Subject<string>();
 
   public readonly tabObserver = this.tab.asObservable();
   public readonly busObserver = this.bus.asObservable();

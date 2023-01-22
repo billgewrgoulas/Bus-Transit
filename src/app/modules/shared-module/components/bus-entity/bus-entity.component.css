@@ -6,6 +6,10 @@
     gap: 10px;
 }
 
+.option-list{
+    max-height: calc(100vh - 200px);
+}
+
 .entity-wrapper{
     background: rgb(227,227,236);
     background: linear-gradient(90deg, rgba(227,227,236,1) 0%, rgba(255,255,255,1) 100%);

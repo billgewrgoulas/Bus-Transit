@@ -54,6 +54,7 @@ export class RouterEffects{
         this.actions$.pipe(
             ofType(navigation.linesModule),
             filter(({params}) => params!['routeCode']),
+            tap(()=> console.log('ok')),
             switchMap(({params}) => [
                 api_actions.getRouteDetails({code: params!['routeCode']}),
                 select_actions.selectRoute({code: params!['routeCode']}),

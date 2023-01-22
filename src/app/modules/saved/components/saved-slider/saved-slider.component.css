@@ -41,7 +41,7 @@
     justify-content: flex-start;
     width: 100%;
     overflow: auto;
-    max-height: calc(100vh - 190px);
+    max-height: calc(100vh - 180px);
     padding-right: 3px;
     margin-top: 5px;
 }

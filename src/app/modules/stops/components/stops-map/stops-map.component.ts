@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { StopsStore } from '../../state/stop.store';
 import { AppState } from 'src/app/state/Reducers/api-reducer';
 import { Store } from '@ngrx/store';
-import { Observable, tap } from 'rxjs';
+import { Observable, Subject, tap } from 'rxjs';
 import { getActiveStop } from 'src/app/state/Selectors/appState.selectors';
 import { IArrival } from 'src/app/state/Entities/live.data';
 import { DataShareService } from 'src/app/services/data-share.service';

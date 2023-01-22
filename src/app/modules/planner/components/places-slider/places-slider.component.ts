@@ -15,14 +15,10 @@ export class PlacesSliderComponent implements OnInit {
   public spinner$!: Observable<boolean>;
   public value: string = '';
 
-  constructor(private localStore: DirectionsStore, private store: Store<AppState>) { }
+  constructor(private store: Store<AppState>) { }
 
   ngOnInit(): void {
     this.spinner$ = this.store.select(spinner);
-  }
-
-  public custom(value: string){
-    
   }
 
 }

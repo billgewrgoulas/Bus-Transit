@@ -24,6 +24,7 @@ export class MainInputComponent implements OnInit {
   @Input() public saved: boolean = false;
   @Input() public code: string = '';
   @Input() public module: string = '';
+  @Input() public title: string = '';
 
   @Output() public onType = new EventEmitter<string>();
   @Output() public save = new EventEmitter<string>();

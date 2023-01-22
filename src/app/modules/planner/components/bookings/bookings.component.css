@@ -33,7 +33,7 @@ h1{
     justify-content: flex-start;
     width: 100%;
     overflow: auto;
-    max-height: calc(100vh - 225px);
+    max-height: calc(100vh - 180px);
     padding-right: 3px;
     gap: 10px;
 }

@@ -8,7 +8,6 @@ import { StopDropDownComponent } from './components/stop-drop-down/stop-drop-dow
 import { MatSelectModule } from '@angular/material/select';
 import { MatTabsModule } from '@angular/material/tabs';
 import {MatDatepickerModule} from '@angular/material/datepicker';
-import {MatNativeDateModule} from '@angular/material/core';
 import { MatInputModule } from '@angular/material/input';
 import { ReactiveFormsModule } from '@angular/forms';
 import { TripPlannerOptionsComponent } from './components/trip-planner-options/trip-planner-options.component';
@@ -31,6 +30,8 @@ import { PlacesSliderComponent } from './components/places-slider/places-slider.
 import { MapModule } from '../map/map.module';
 import { BookingPipe } from './pipes/bookings.pipe';
 import { AuthService } from 'src/app/services/auth.service';
+import { MatNativeDateModule } from '@angular/material/core';
+
 
 @NgModule({
   declarations: [
@@ -57,10 +58,10 @@ import { AuthService } from 'src/app/services/auth.service';
     MatTabsModule,
     MatSelectModule,
     MatDatepickerModule,
-    MatNativeDateModule,
     MatInputModule,
     ReactiveFormsModule,
     MatExpansionModule,
+    MatNativeDateModule,
     MatButtonModule,
     MatMenuModule,
     AuthModule,

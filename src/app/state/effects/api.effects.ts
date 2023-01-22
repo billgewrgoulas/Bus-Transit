@@ -5,14 +5,14 @@ import { catchError, filter, map, of, switchMap, take, tap, withLatestFrom } fro
 import { DataService } from "src/app/services/data.service";
 import * as api_actions from '../Actions/api-calls.actions';
 import { AppState } from "../Reducers/api-reducer";
-import { getActiveRouteSchedules, getAllBookings, getAllStops, getSavedInfo, getSavedRouteCodes, getSavedStopCodes, selectCurrentLineRoutes, selectRoutePoints } from "../Selectors/appState.selectors";
+import { getActiveRouteSchedules, getAllBookings, getSavedInfo, getSavedRouteCodes, getSavedStopCodes, selectCurrentLineRoutes, selectRoutePoints } from "../Selectors/appState.selectors";
 import { ILine } from "../Entities/line.entity";
 import { IRoute, IRouteInfo } from "../Entities/route.entity";
 import { IScheduleDetails } from "../Entities/schedule.entity";
 import { IStop } from "../Entities/stop.entity";
 import { Plan } from "../Entities/itinerary";
 import { Booking } from "../Entities/booking.entity";
-import { ROUTER_NAVIGATED } from "@ngrx/router-store";
+import { DataShareService } from "src/app/services/data-share.service";
 
 @Injectable()
 export class ApiEffects{
@@ -21,6 +21,7 @@ export class ApiEffects{
         private dataService: DataService, 
         private actions$: Actions, 
         private store: Store<AppState>,
+        private msg: DataShareService
     ){}
 
     loadLines$ = createEffect(()=>
@@ -48,7 +49,7 @@ export class ApiEffects{
         this.actions$.pipe(
             ofType(api_actions.getRouteDetails),
             concatLatestFrom((action) => this.store.select(selectRoutePoints(action.code))),
-            filter(([action, points]) => !points || points.length === 0),
+            tap(() => this.store.dispatch(api_actions.showSpinner())),
             switchMap(([action, points]) => this.dataService.getRouteDetails(action.code).pipe(
                 map((response: IRouteInfo) => api_actions.getRouteDetailsuccess({routeInfo: response})),
                 catchError(err => of(api_actions.getRouteDetailsError({msg: err.error})))
@@ -130,7 +131,7 @@ export class ApiEffects{
             ofType(api_actions.saveStop),
             tap(() => this.store.dispatch(api_actions.showSpinner())),
             switchMap((action) => this.dataService.saveStop(action.code).pipe(
-                map((res: any) => api_actions.saveStopSuccess({code: action.code})),
+                map((res) => api_actions.saveStopSuccess({code: action.code, msg: res.msg})),
                 catchError(err => of(api_actions.saveStopError({msg: err})))
             ))      
         )     
@@ -141,7 +142,7 @@ export class ApiEffects{
             ofType(api_actions.deleteStop),
             tap(() => this.store.dispatch(api_actions.showSpinner())),
             switchMap((action) => this.dataService.deleteStop(action.code).pipe(
-                map((res: any) => api_actions.deleteStopSuccess({code: action.code})),
+                map((res) => api_actions.deleteStopSuccess({code: action.code, msg: res.msg})),
                 catchError(err => of(api_actions.deleteStopError({msg: err})))
             ))      
         )     
@@ -152,7 +153,7 @@ export class ApiEffects{
             ofType(api_actions.deleteRoute),
             tap(() => this.store.dispatch(api_actions.showSpinner())),
             switchMap((action) => this.dataService.deleteRoute(action.code).pipe(
-                map((res) => api_actions.deleteRouteSuccess({code: action.code})),
+                map((res) => api_actions.deleteRouteSuccess({code: action.code, msg: res.msg})),
                 catchError(err => of(api_actions.deleteRouteError({msg: err})))
             ))      
         )     
@@ -163,7 +164,7 @@ export class ApiEffects{
             ofType(api_actions.saveRoute), 
             tap(() => this.store.dispatch(api_actions.showSpinner())),
             switchMap((action) => this.dataService.saveRoute(action.code).pipe(
-                map((res: any) => api_actions.saveRouteSuccess({code: action.code})),
+                map((res) => api_actions.saveRouteSuccess({code: action.code, msg: res.msg})),
                 catchError(err => of(api_actions.saveRouteError({msg: err})))
             ))      
         )     
@@ -226,6 +227,18 @@ export class ApiEffects{
                 catchError((err) => of(api_actions.registerError({msg: err}))),
             )),
         )
+    );
+
+    sendMessage$ = createEffect(()=>
+        this.actions$.pipe(
+            ofType(
+                api_actions.saveStopSuccess,
+                api_actions.deleteStopSuccess,
+                api_actions.deleteRouteSuccess,
+                api_actions.saveRouteSuccess
+            ), 
+            tap((action) => this.msg.apiMsg.next(action.msg))
+        ), {dispatch: false}  
     );
 
 }

@@ -16,11 +16,16 @@ export class TripPlannerOptionsComponent implements OnInit {
   public state$!: Observable<TripState>;
   public date!: FormControl<Date | null>;
   public time!: FormControl<string | null>;
+  public minDate: Date;
+  public maxDate: Date;
 
   constructor(
     private local: DirectionsStore, 
     private router: Router
-  ) { }
+  ) { 
+    this.minDate = new Date();
+    this.maxDate = new Date(2023, 3, 20);
+  }
 
   ngOnInit(): void {
 
