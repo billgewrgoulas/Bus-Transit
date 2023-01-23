@@ -7,7 +7,10 @@
 }
 
 .option-list{
-    max-height: calc(100vh - 200px);
+    height: calc(100vh - 185px);
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
 }
 
 .entity-wrapper{
@@ -15,7 +18,6 @@
     background: linear-gradient(90deg, rgba(227,227,236,1) 0%, rgba(255,255,255,1) 100%);
     box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
     cursor: pointer;
-    margin-top: 3px;
 }
 
 .text-content{
