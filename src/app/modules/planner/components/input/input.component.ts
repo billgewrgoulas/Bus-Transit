@@ -40,7 +40,7 @@ export class InputComponent implements OnInit {
     }else if(url.includes('module=trip_details')){
       this.disabled = true;
     }else if(url.includes('module=trip_map')){
-      this.disabled = true;
+      this.disabled = true;      
     }else{
       this.disabled = false;
     }

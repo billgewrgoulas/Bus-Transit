@@ -8,7 +8,7 @@ import { IRoute } from 'src/app/state/Entities/route.entity';
 import { IStop } from 'src/app/state/Entities/stop.entity';
 import { StopsStore } from 'src/app/modules/stops/state/stop.store';
 import { AppState } from 'src/app/state/Reducers/api-reducer';
-import { getActiveStop, getRouteList, getStopLines, isStopSaved, spinner } from 'src/app/state/Selectors/appState.selectors';
+import { getActiveStop, getRouteList, getStopLines, getStopRoutes, isStopSaved, spinner } from 'src/app/state/Selectors/appState.selectors';
 import { AuthService } from 'src/app/services/auth.service';
 import * as api_actions from 'src/app/state/Actions/api-calls.actions';
 import { Router } from '@angular/router';
@@ -45,7 +45,7 @@ export class StopSliderComponent implements OnInit {
     this.vm$ = combineLatest([
       this.store.select(isStopSaved),
       this.store.select(getActiveStop),
-      this.store.select(getRouteList),
+      this.store.select(getStopRoutes),
       this.store.select(spinner)
     ]).pipe(map(([saved, stop, routes, spinner]) => ({saved, stop, routes, spinner})));
 

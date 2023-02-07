@@ -7,7 +7,7 @@
             <i *ngIf="flag" class="fas fa-map" (click)="miniMap()"></i>
         </div>
         <div class="option-list" *ngIf="vm.itinerary else noItineraries">
-            <span><strong style="color: #2b3b4c;">Start</strong>: {{vm.itinerary.startTime}}</span>
+            <span><strong style="color: #2b3b4c;">Start</strong>: {{vm.itinerary.startTime}}, {{vm.itinerary.serviceDate}}</span>
             <ng-container *ngFor="let leg of vm.itinerary.legs let leg_index=index">
                 <div class="entity-wrapper" *ngIf="leg.mode=='WALK'">
                     <div class="entity-container">
@@ -73,13 +73,13 @@
                                     </div>
                                     <div class="step">
                                         <i class="far fa-hourglass"></i>
-                                        <span class="step-desc">Departure delay</span>
-                                        <div class="step-dist">{{leg.departureDelay}} min</div>
+                                        <span class="step-desc">Waiting time</span>
+                                        <div class="step-dist">{{vm.itinerary.waitingTime}} min</div>
                                     </div>
                                     <div class="step">
                                         <i class="far fa-hourglass"></i>
-                                        <span class="step-desc">Arrival delay</span>
-                                        <div class="step-dist">{{leg.arrivalDelay}} min</div>
+                                        <span class="step-desc">Duration</span>
+                                        <div class="step-dist">{{leg.duration}} min</div>
                                     </div>
                                     <mat-accordion>
                                         <mat-expansion-panel hideToggle>
@@ -112,7 +112,7 @@
                     </div>
                 </div> 
             </ng-container>
-            <span><strong style="color: #2b3b4c;">End</strong>: {{vm.itinerary.endTime}}</span>
+            <span><strong style="color: #2b3b4c;">End</strong>: {{vm.itinerary.endTime}}, {{vm.itinerary.serviceDate}}</span>
         </div>
     </ng-container>
 </div>

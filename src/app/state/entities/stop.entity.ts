@@ -8,6 +8,7 @@ export interface IStop{
     desc: string;
     desc_eng: string;
     lines: string;
+    routes: string[] | undefined;
     saved: boolean | undefined;
 }
 

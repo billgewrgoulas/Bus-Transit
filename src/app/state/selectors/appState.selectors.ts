@@ -64,6 +64,18 @@ export const getActiveStop = createSelector(
     (stopState, stops, state) => stops[stopState.activeStopCode]
 );
 
+/* Select all stops while the stops module is active */
+export const getStopRoutes = createSelector(
+    selectAllRoutes, getActiveStop, (routes, stop) =>{
+        
+        if(!stop || !stop.routes){
+            return [];
+        }
+
+        return stop.routes.map(code => routes[code]!);
+    }
+);
+
 /* - Select the current line - */
 export const currentLine = createSelector(
     selectAllLines, getLineState,
@@ -108,8 +120,18 @@ export const getSavedInfo = createSelector(
             return undefined;
         }
 
-        const saved_stops: IStop[] = state.savedStops.map(code => stops[code]!);
-        const saved_routes: IRoute[] = state.savedRoutes.map(code => routes[code]!);
+        const saved_stops: IStop[] = [];
+        const saved_routes: IRoute[] = [];
+
+        for(let i = 0; i < state.savedRoutes.length; i++){
+            const route: IRoute | undefined = routes[state.savedRoutes[i]];
+            if(route) saved_routes.push(route);
+        }
+
+        for(let i = 0; i < state.savedStops.length; i++){
+            const stop: IStop | undefined = stops[state.savedStops[i]];
+            if(stop) saved_stops.push(stop);
+        }
 
         return {stops: saved_stops, routes: saved_routes};
     }
@@ -141,6 +163,17 @@ export const selectItinerary = createSelector(
             return plan.itineraries[state.itinerary];
         }else{
             return undefined;
+        }
+    }
+);
+
+/* Select itinerary and points */
+export const selectItineraryAndPoints = createSelector(
+    getPlanState, selectItinerary, (plan, it) => {
+        if(it){
+            return {it: it, from: plan?.from, to: plan?.to};
+        }else{
+            return {it: undefined, from: undefined, to: undefined};
         }
     }
 );
@@ -268,7 +301,7 @@ export const filterStops = (value: string) => {
 }
 
 /* Create a booking */
-export const newBooking = (email: string, it: number) => 
+export const newBooking = (user_id: string, it: number) => 
     createSelector(getPlanState, (plan) => {
 
         const bookings: Booking[] = [];
@@ -280,7 +313,7 @@ export const newBooking = (email: string, it: number) =>
 
                     const booking: Booking = {
                         trip_id: +leg.tripId,
-                        user_id: email,
+                        user_id: user_id,
                         startStop: leg.from.stopCode!,
                         endStop: leg.to.stopCode!,
                         start: leg.from.name,

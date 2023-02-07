@@ -8,7 +8,7 @@
         <span class="station-name">{{stop.desc}}({{stop.code}})</span>
         <ng-container *ngIf="schedules$ | async as schedules else noIncoming">
             <ng-container *ngIf="schedules.length > 0 else noIncoming">
-                <span class="arrive-time">Arrivals: 
+                <span class="arrive-time">Departures: 
                     <ng-container *ngFor="let schedule of schedules let last=last">
                         <span *ngIf="!last">{{schedule.tripTime}}', </span>
                         <span *ngIf="last">{{schedule.tripTime}}'</span>

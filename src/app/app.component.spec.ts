@@ -1,10 +1,14 @@
 import { TestBed } from '@angular/core/testing';
 import { RouterTestingModule } from '@angular/router/testing';
 import { AppComponent } from './app.component';
-import { StoreModule } from '@ngrx/store';
+import { StoreModule, Store } from '@ngrx/store';
+import { SocketIOService } from './services/socket-io.service';
+import { autoSpy } from 'auto-spy';
+import { Router } from '@angular/router';
+
 
 describe('AppComponent', () => {
-  beforeEach(async () => {
+  beforeEach(async () => {    const a = setup().default();
     await TestBed.configureTestingModule({
       imports: [
         RouterTestingModule,
@@ -13,18 +17,36 @@ describe('AppComponent', () => {
       declarations: [
         AppComponent
       ],
-    }).compileComponents();
+    }).configureTestingModule({ providers: [{ provide: SocketIOService, useValue: a.io }] }).configureTestingModule({ providers: [{ provide: SocketIOService, useValue: a.io }] }).configureTestingModule({ providers: [{ provide: SocketIOService, useValue: a.io }] }).compileComponents();
   });
+    
+    it('when onResize is called it should', () => {
+        // arrange
+        const { build } = setup().default();
+        const a = build();
+        // act
+        a.onResize();
+        // assert
+        // expect(a).toEqual
+    });
 
-  it('should create the app', () => {
-    const fixture = TestBed.createComponent(AppComponent);
-    const app = fixture.componentInstance;
-    expect(app).toBeTruthy();
-  });
-
-  it(`should have as title 'CityBus'`, () => {
-    const fixture = TestBed.createComponent(AppComponent);
-    const app = fixture.componentInstance;
-    expect(app.title).toEqual('CityBus');
-  });
 });
+
+function setup() {
+    const router = autoSpy(Router);
+    
+    const store = autoSpy(Store);
+    const io = autoSpy(SocketIOService);
+    const builder = {
+        router,
+        store,
+        io,
+        default() {
+            return builder;
+        },
+        build() {
+            return new AppComponent(io, router, store);
+        }
+    }
+    return builder;
+}

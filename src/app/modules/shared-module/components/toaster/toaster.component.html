@@ -1,4 +1,4 @@
 
-<div class="main" *ngIf="flag">
+<div class="main" (click)="close()" *ngIf="flag">
     <div id="snackbar" [class.show]="flag">{{text}}</div>
 </div>

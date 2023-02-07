@@ -8,7 +8,7 @@ describe('BookingComponent', () => {
   let component: BookingComponent;
   let fixture: ComponentFixture<BookingComponent>;
 
-  beforeEach(async () => {
+  beforeEach(async () => {    const a = setup().default();
     await TestBed.configureTestingModule({
       imports:[
         RouterTestingModule,
@@ -26,4 +26,17 @@ describe('BookingComponent', () => {
   it('should create', () => {
     expect(component).toBeTruthy();
   });
+  
 });
+
+function setup() {
+    const builder = {
+        default() {
+            return builder;
+        },
+        build() {
+            return new BookingComponent();
+        }
+    }
+    return builder;
+}

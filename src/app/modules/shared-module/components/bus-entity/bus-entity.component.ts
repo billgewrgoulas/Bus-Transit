@@ -20,15 +20,20 @@ export class BusEntityComponent implements OnInit {
   ngOnInit(): void {}
 
   public selectBus(bus: IArrival){
+
+    if(+bus.latitude == 0){
+      return;
+    }
+
     this.dataShare.fly([bus.latitude, bus.longitude]);
   }
 
   public delay(ar: number, dep: number){
     const del: number = ar - dep;
-    if(del > 2){
-      return del - 1;
-    }else{
+    if(del >= 2){
       return del;
+    }else{
+      return 0;
     }
   }
 

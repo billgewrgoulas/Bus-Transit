@@ -1,9 +1,9 @@
 import { Component, OnInit, OnDestroy} from '@angular/core';
-import { filter, Subscription, switchMap, take, tap } from 'rxjs';
+import { filter, Subscription, switchMap, tap } from 'rxjs';
 import { Store } from '@ngrx/store';
 import { AppState} from 'src/app/state/Reducers/api-reducer';
 import * as L from "leaflet";
-import { getActiveStop, getAllStops, getRoutePathAndStops, getStopsModule, selectItinerary } from 'src/app/state/Selectors/appState.selectors';
+import { getActiveStop, getRoutePathAndStops, getStopsModule, selectItineraryAndPoints } from 'src/app/state/Selectors/appState.selectors';
 import { DataShareService } from 'src/app/services/data-share.service';
 import { LinesMap } from '../../mapControllers/linesMapControllers';
 import { TripPlannerMap } from '../../mapControllers/tripPlannerMapControllers';
@@ -23,7 +23,6 @@ export class MapAreaComponent implements OnInit, OnDestroy {
   private tripMap!: TripPlannerMap;
   private stopsMap!: StopsMap;
   
-
   constructor(
     private store: Store<AppState>, 
     private msg: DataShareService,
@@ -60,7 +59,7 @@ export class MapAreaComponent implements OnInit, OnDestroy {
         filter(v => !v.fetch),
       ).subscribe(data => this.tripMap.addMarker(data)),
 
-      this.store.select(selectItinerary).subscribe(it => this.tripMap.displayItinerary(it)),
+      this.store.select(selectItineraryAndPoints).subscribe(it => this.tripMap.displayItinerary(it)),
       this.msg.clearMapObserver.subscribe(v => this.clearMap()),
       this.msg.removeDragObserver.subscribe(v => this.tripMap.dragOff()),
       this.store.select(getStopsModule).subscribe(stops => this.stopsMap.addClustersToMap(stops))
@@ -77,6 +76,7 @@ export class MapAreaComponent implements OnInit, OnDestroy {
     this.linesMap.displayRouteInfo(undefined);
     this.tripMap.clearPoints();
     this.tripMap.clearLayerGroup();
+    this.stopsMap.clearLayerGroup();
   }
 
   private initMap(map: L.Map){

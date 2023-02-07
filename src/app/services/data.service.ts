@@ -33,9 +33,9 @@ export class DataService {
     );
   }
 
-  public getAllStops(): Observable<IStop[]>{
-    return this.http.get(this.url + '/transitAPI/stops', this.options).pipe(
-      map((res: any) => <IStop[]>res),
+  public getRoutesAndStops(): Observable<{routes: IRoute[], stops: IStop[]}>{
+    return this.http.get(this.url + '/transitAPI/routeAndStops', this.options).pipe(
+      map((res: any) => <{routes: IRoute[], stops: IStop[]}>res),
       catchError((err) => throwError(()=>new Error(err)))
     );
   }
@@ -82,9 +82,9 @@ export class DataService {
     );
   }
 
-  public getRoutesByStop(code: string): Observable<IRoute[]>{
+  public getRoutesByStop(code: string): Observable<string[]>{
     return this.http.get(this.url + '/transitAPI/stopRoutes/' + code, this.options).pipe(
-      map((res: any) => <IRoute[]>res),
+      map((res: any) => <string[]>res),
       catchError((err) => throwError(()=>new Error(err)))
     );
   }
@@ -97,11 +97,11 @@ export class DataService {
   }
 
   public login(credentials: any): Observable<any>{
-    return this.http.post(this.url + '/login', credentials, this.options);
+    return this.http.post(this.url + '/user/login', credentials, this.options);
   }
 
   public register(credentials: any): Observable<any>{
-    return this.http.post(this.url + '/register', credentials, this.options);
+    return this.http.post(this.url + '/user/register', credentials, this.options);
   }
 
   public book(data: Booking[]): Observable<any>{
@@ -173,10 +173,10 @@ export class DataService {
     );
   }
 
-  public getSavedInfo(): Observable<{stops: IStop[], routes: IRoute[]}>{
+  public getSavedInfo(): Observable<{stops: string[], routes: string[]}>{
     return this.http.get(this.url + '/saved/getSavedInfo/', {withCredentials: false, headers:{
       Authorization: 'Bearer ' + this.token()}}).pipe(
-        map((res: any) => <{stops: IStop[], routes: IRoute[]}>res), 
+        map((res: any) => <{stops: string[], routes: string[]}>res), 
     );
   }
 

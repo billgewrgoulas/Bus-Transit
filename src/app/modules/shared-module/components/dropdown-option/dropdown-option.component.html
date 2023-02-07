@@ -1,7 +1,7 @@
 
 
-<div class="option-wrapper" >
-    <div class="text-section" (click)="onClick($event)">
+<div class="option-wrapper" (click)="onClick($event)">
+    <div class="text-section">
         <div class="name" [ngClass]="{'flex-row': flex, 'flex-column': !flex}">
             <span>{{text}}</span>
             <span class="code"> ({{details}})</span>

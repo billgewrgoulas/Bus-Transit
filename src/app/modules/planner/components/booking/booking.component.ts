@@ -15,6 +15,7 @@ export class BookingComponent implements OnInit {
   @Output() public cancel = new EventEmitter<number>();
   @Output() public map = new EventEmitter<Booking>();
   @Output() public qr = new EventEmitter<Booking>();
+  @Output() public stop = new EventEmitter<Booking>();
 
   constructor() { }
 
@@ -26,6 +27,10 @@ export class BookingComponent implements OnInit {
 
   public onCancel(){
     this.cancel.emit(this.booking.trip_id);
+  }
+
+  public onStop(){
+    this.stop.next(this.booking);
   }
 
   public onQR(){

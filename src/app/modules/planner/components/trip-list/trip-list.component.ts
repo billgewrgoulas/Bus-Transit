@@ -43,8 +43,8 @@ export class TripListComponent implements OnInit {
   }
 
   public onBook(itinerary: number){
-    const user: string = this.auth.getUserInfo().email;
-    this.local.initBooking({user: user, it: itinerary});
+    const user_id: string = this.auth.getUserInfo().user_id;
+    this.local.initBooking({user: user_id, it: itinerary});
   }
 
 }

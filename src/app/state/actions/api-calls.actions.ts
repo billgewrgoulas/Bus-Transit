@@ -13,10 +13,10 @@ export const getLines = createAction('[API] GET Lines');
 export const getLinesSuccess = createAction('[API] Lines loaded success', props<{lines: ILine[]}>());
 export const getLinesError = createAction('[API] Lines error', props<{msg: string}>());
 
-/* Fetch all stops */
-export const getStops = createAction('[API] GET Stops');
-export const getStopsSuccess = createAction('[API] Stops loaded success', props<{stops: IStop[], saved?: string[]}>());
-export const getStopsError = createAction('[API] Stops error', props<{msg: string}>());
+/* Fetch all routes and stops... */
+export const getStopAndRoutes = createAction('[API] GET SR');
+export const getStopAndRoutesSuccess = createAction('[API] SR loaded success', props<{routes: IRoute[], stops: IStop[]}>());
+export const getStopAndRoutesError = createAction('[API] SR error', props<{msg: string}>());
 
 /*Get all the stops of the routes that pass through a stop */
 export const getFilteredStops = createAction('[API] Filter Stops', props<{stopCode: string}>());
@@ -61,7 +61,7 @@ export const registerError = createAction('[API], Register failed', props<{msg: 
 
 /* Get the stop routes */
 export const stopRoutes = createAction('[API] Get stop routes', props<{stopCode: string}>());
-export const stopRoutesSuccess = createAction('[API] Get stop routes success', props<{routes: IRoute[]}>());
+export const stopRoutesSuccess = createAction('[API] Get stop routes success', props<{routes: string[], stop: string}>());
 export const stopRoutesError = createAction('[API] Stop routes error', props<{msg: string}>());
 
 /* Get a plan with a single itinerary */
@@ -77,6 +77,7 @@ export const fetchBookings = createAction('[API] Fetch Bookings');
 export const fetchBookingsSuccess = createAction('[API] Fetch Bookings success', props<{data: Booking[]}>());
 export const fetchBookingsError = createAction('[API] Fetch bookings error', props<{msg: string}>());
 export const deleteBooking = createAction('[Local] Delete booking', props<{trip_id: number}>());
+export const addBooking = createAction('[Local] Add booking', props<{bookings: Booking[]}>());
 
 /* Saved stops actions */
 export const saveStop = createAction('[API] Save stop', props<{code: string}>());
@@ -87,10 +88,6 @@ export const deleteStop = createAction('[API] Delete stop', props<{code: string}
 export const deleteStopSuccess = createAction('[API] Delete stop success', props<{code: string, msg: string}>());
 export const deleteStopError = createAction('[API] Delete stop error', props<{msg: string}>());
 
-export const getSavedStops = createAction('[API] Get saved stops');
-export const getSavedStopsSuccess = createAction('[API] Get saved stops success', props<{codes: string[]}>());
-export const getSavedStopsError = createAction('[API] Get saved stops error', props<{msg: string}>());
-
 /* Saved route actions */
 export const saveRoute = createAction('[API] Save route', props<{code: string}>());
 export const saveRouteSuccess = createAction('[API] Save route success', props<{code: string, msg: string}>());
@@ -100,11 +97,9 @@ export const deleteRoute = createAction('[API] Delete route', props<{code: strin
 export const deleteRouteSuccess = createAction('[API] Delete route success', props<{code: string, msg: string}>());
 export const deleteRouteError = createAction('[API] Delete route error', props<{msg: string}>());
 
-export const getSavedRoutes = createAction('[API] Get saved routes');
-export const getSavedRoutesSuccess = createAction('[API] Get saved routes success', props<{codes: string[]}>());
-export const getSavedRoutesError = createAction('[API] Get saved routes error', props<{msg: string}>());
-
 /* Get saved info */
 export const getSavedInfo = createAction('[API] Get saved info');
-export const getSavedInfoSuccess = createAction('[API] Get saved info success', props<{stops: IStop[], routes: IRoute[]}>());
+export const getSavedInfoSuccess = createAction('[API] Get saved info success', props<{stops: string[], routes: string[]}>());
 export const getSavedInfoError = createAction('[API] Get saved info error', props<{msg: string}>());
+
+export const apiError = createAction('[API] Server error', props<{msg?: string}>());

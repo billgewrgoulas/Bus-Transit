@@ -15,7 +15,7 @@ export class AuthEffects{
             ofType(api_actions.loginSuccess, api_actions.registerSuccess),
             tap((action) => {
                 localStorage.setItem('token', JSON.stringify(action.data.access_token));
-                this.router.navigate(['']);
+                this.router.navigate(['']).then(() => window.location.reload());
             })
         ), {dispatch: false}
     );
@@ -25,7 +25,7 @@ export class AuthEffects{
             ofType(api_actions.logOut),
             tap(() => {
                 localStorage.clear();
-                this.router.navigate(['']);
+                this.router.navigate(['']).then(() => location.reload());
             })
         ), {dispatch: false}
     );

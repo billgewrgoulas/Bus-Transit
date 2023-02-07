@@ -35,10 +35,14 @@ export class ToasterComponent implements OnInit, OnDestroy, OnChanges {
     }
   }
 
+  public close(){
+    this.flag = false;
+  }
+
   public start(msg: string): void {
     this.text = msg;
     this.flag = true;
-    setTimeout(() => this.flag = false, 1000);
+    setTimeout(() => this.flag = false, 3000);
   }
 
 }

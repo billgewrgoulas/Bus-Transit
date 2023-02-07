@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { Observable, combineLatest, map } from 'rxjs';
+import { DataShareService } from 'src/app/services/data-share.service';
 import { IRoute } from 'src/app/state/Entities/route.entity';
 import { IStop } from 'src/app/state/Entities/stop.entity';
 import { AppState } from 'src/app/state/Reducers/api-reducer';
@@ -23,9 +24,14 @@ export class SavedSliderComponent implements OnInit {
   public vm$!: Observable<Saved>;
   public value: string = '';
 
-  constructor(private store: Store<AppState>, private router: Router) { }
+  constructor(
+    private store: Store<AppState>, 
+    private router: Router,
+    private msg: DataShareService
+  ) { }
 
   ngOnInit(): void {
+    this.msg.clearLayers();
     this.vm$ = combineLatest([
       this.store.select(spinner),
       this.store.select(getSavedInfo)

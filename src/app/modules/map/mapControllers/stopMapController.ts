@@ -9,6 +9,8 @@ import { Router } from "@angular/router";
 
 export class StopsMap extends Map{
 
+    private flag: boolean = false;
+
     private clusters = L.markerClusterGroup({
         chunkedLoading: true,
         maxClusterRadius: (mapZoom) => {
@@ -36,18 +38,24 @@ export class StopsMap extends Map{
             return;
         }
 
+        if(this.flag){
+            return;
+        }
+
         const markers: L.Marker[] = stops.map((stop) => {
             const marker = this.createMarker(stop.latitude, stop.longitude, stop.desc, this.bus_stop_icon, false);
             marker.addEventListener("click", (e) => this.selectStop(stop.code));
             return marker;
         });
         
+        this.flag = true;
         this.clusters.addLayers(markers);
     }
 
     public clearLayerGroup(): void {
         this.clusters.clearLayers();
         this.setCurrentStop(undefined);
+        this.flag = false;
     }
 
     public setCurrentStop(point: IStop | undefined){

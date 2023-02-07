@@ -24,7 +24,7 @@ export class StopsComponent implements OnInit {
 
   ngOnInit(): void {
     this.stops$ = this.store.select(filterStops(''));
-    this.msg.clearLayers();
+    //this.msg.clearLayers();
   }
 
   public onSelect(stopCode: string){

@@ -8,7 +8,7 @@ describe('PlacesMapComponent', () => {
   let component: PlacesMapComponent;
   let fixture: ComponentFixture<PlacesMapComponent>;
 
-  beforeEach(async () => {
+  beforeEach(async () => {    const a = setup().default();
     await TestBed.configureTestingModule({
       declarations: [ PlacesMapComponent ],
       imports:[
@@ -26,4 +26,17 @@ describe('PlacesMapComponent', () => {
   it('should create', () => {
     expect(component).toBeTruthy();
   });
+    
 });
+
+function setup() {
+    const builder = {
+        default() {
+            return builder;
+        },
+        build() {
+            return new PlacesMapComponent();
+        }
+    }
+    return builder;
+}

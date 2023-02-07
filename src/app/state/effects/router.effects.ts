@@ -1,14 +1,14 @@
 import { Injectable } from "@angular/core";
 import { Store } from "@ngrx/store";
 import { Actions, createEffect, ofType } from "@ngrx/effects";
-import { filter, map, switchMap, tap, withLatestFrom } from "rxjs";
+import { filter, map, switchMap, take, tap, withLatestFrom } from "rxjs";
 import * as navigation from'../Actions/navigation.actions';
 import * as api_actions from "../Actions/api-calls.actions";
 import * as select_actions from "../Actions/select.actions";
 import { AppState } from "../Reducers/api-reducer";
 import { ROUTER_NAVIGATED } from "@ngrx/router-store";
 import { getState } from "../Selectors/router.selectors";
-import { Location } from '@angular/common'
+import { Location } from '@angular/common';
 import { Router } from "@angular/router";
 
 @Injectable()
@@ -30,6 +30,13 @@ export class RouterEffects{
         )
     );
 
+    fetchRoutesAndStops$ = createEffect(()=>
+        this.actions$.pipe(
+            ofType(ROUTER_NAVIGATED),
+            map(() => api_actions.getStopAndRoutes())
+        )
+    );
+
     fetchLines$ = createEffect(()=>
         this.actions$.pipe(
             ofType(navigation.linesModule),
@@ -43,7 +50,6 @@ export class RouterEffects{
             filter(({params}) => params!['lineCode']),
             switchMap(({params}) => [
                 select_actions.selectLine({id: params!['lineCode']}),
-                api_actions.getLineRoutes({id: params!['lineCode']}),
                 select_actions.selectRoute({code: ''}),
                 select_actions.selectStop({code: ''}),
             ]), 
@@ -54,7 +60,6 @@ export class RouterEffects{
         this.actions$.pipe(
             ofType(navigation.linesModule),
             filter(({params}) => params!['routeCode']),
-            tap(()=> console.log('ok')),
             switchMap(({params}) => [
                 api_actions.getRouteDetails({code: params!['routeCode']}),
                 select_actions.selectRoute({code: params!['routeCode']}),
@@ -71,17 +76,7 @@ export class RouterEffects{
                 select_actions.selectLine({id: ''}),
                 select_actions.selectRoute({code: ''}),
                 select_actions.selectStop({code: ''}),
-                //select_actions.emptyRoutes()
             ])
-        )
-    );
-
-    fetchStops$ = createEffect(() =>
-        this.actions$.pipe(
-            ofType(ROUTER_NAVIGATED),
-            withLatestFrom(this.store.select(getState)),
-            filter(([action, {query}]) => query!['module'] == 'places' || query!['module'] == 'stops_module'),
-            map(() => api_actions.getStops())
         )
     );
 
@@ -100,9 +95,8 @@ export class RouterEffects{
             withLatestFrom(this.store.select(getState)),
             filter(([action, {url, params}]) => url.startsWith('/(sidebar:stops') && params!['stopCode']),
             switchMap(([action, {params}]) => [
-                api_actions.stopRoutes({stopCode: params!['stopCode']}),
-                api_actions.getStops(),
-                select_actions.selectStop({code: params!['stopCode']})
+                select_actions.selectStop({code: params!['stopCode']}),
+                api_actions.stopRoutes({stopCode: params!['stopCode']})
             ])  
         )
     );
@@ -144,29 +138,9 @@ export class RouterEffects{
         )
     );
 
-    loadSavedRoutes$ = createEffect(() => 
-        this.actions$.pipe(
-            ofType(ROUTER_NAVIGATED), 
-            withLatestFrom(this.store.select(getState)),
-            filter(([action, {query}]) => query!['module'] == 'route_data'),
-            map(() => api_actions.getSavedRoutes())
-        )
-    );
-
-    loadSavedStops$ = createEffect(() => 
-        this.actions$.pipe(
-            ofType(ROUTER_NAVIGATED), 
-            withLatestFrom(this.store.select(getState)),
-            filter(([action, {query}]) => query!['module'] == 'stop_data' || query!['module'] == 'places'),
-            map(() => api_actions.getSavedStops())
-        )
-    );
-
     loadSavedInfo$ = createEffect(() => 
         this.actions$.pipe(
             ofType(ROUTER_NAVIGATED), 
-            withLatestFrom(this.store.select(getState)),
-            filter(([action, {query}]) => query!['module'] == 'saved_info'),
             map(() => api_actions.getSavedInfo())
         )
     );

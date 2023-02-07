@@ -17,11 +17,11 @@ export class LinesMap extends Map{
 
     public displayRouteInfo(data: IMapData | undefined){
 
-        this.clearLayerGroup();
         this.clearBuses();
+        this.clearLayerGroup();
         this.centerMap();
 
-        if(!data) return;
+        if(!data || data.points.length == 0) return;
         
         this.carvePath(data.points);
         this.displayStops(data.stops);

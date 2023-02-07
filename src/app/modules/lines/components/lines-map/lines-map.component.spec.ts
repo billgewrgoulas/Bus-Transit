@@ -8,7 +8,7 @@ describe('LinesMapComponent', () => {
   let component: LinesMapComponent;
   let fixture: ComponentFixture<LinesMapComponent>;
 
-  beforeEach(async () => {
+  beforeEach(async () => {    const a = setup().default();
     await TestBed.configureTestingModule({
       imports:[
         RouterTestingModule,
@@ -26,4 +26,17 @@ describe('LinesMapComponent', () => {
   it('should create', () => {
     expect(component).toBeTruthy();
   });
+    
 });
+
+function setup() {
+    const builder = {
+        default() {
+            return builder;
+        },
+        build() {
+            return new LinesMapComponent();
+        }
+    }
+    return builder;
+}

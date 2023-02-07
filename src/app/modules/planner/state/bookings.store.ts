@@ -57,13 +57,16 @@ export class BookingsStore extends ComponentStore<BookingState> {
     public dispatchBooking = this.effect(() => {
         return this.state$.pipe(
             filter(state => state.book && !!state.info),
-            switchMap(({info}) => this.store.select(newBooking(info!.user, info!.it)).pipe(
-                switchMap((bookings) => this.data.book(bookings)),
+            switchMap(state => this.store.select(newBooking(state.info!.user, state.info!.it))),
+            switchMap((bookings) => this.data.book(bookings).pipe(
                 tapResponse(
-                    (res: any) => this.bookingCompleted('booking success'), 
+                    (res: any) => {
+                        this.bookingCompleted('Επιτυχία κράτησης');
+                        this.store.dispatch(api_actions.addBooking({bookings: bookings}));
+                    } ,
                     (error: HttpErrorResponse) => this.bookingCompleted(error.error.error)
-                )
-            ))
+                ),
+            )),
         );
     });
 
@@ -75,7 +78,7 @@ export class BookingsStore extends ComponentStore<BookingState> {
             switchMap((booking) => this.data.deleteBooking(booking!).pipe(
                 tapResponse(
                     (res: any) => {
-                        this.deleteComplete('booking canceled');
+                        this.deleteComplete('Η κράτηση ακυρώθηκε');
                         this.store.dispatch(api_actions.deleteBooking({trip_id: booking!.trip_id}))
                     }, 
                     (error: HttpErrorResponse) => {

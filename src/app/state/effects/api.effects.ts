@@ -5,7 +5,7 @@ import { catchError, filter, map, of, switchMap, take, tap, withLatestFrom } fro
 import { DataService } from "src/app/services/data.service";
 import * as api_actions from '../Actions/api-calls.actions';
 import { AppState } from "../Reducers/api-reducer";
-import { getActiveRouteSchedules, getAllBookings, getSavedInfo, getSavedRouteCodes, getSavedStopCodes, selectCurrentLineRoutes, selectRoutePoints } from "../Selectors/appState.selectors";
+import { getActiveRouteSchedules, getAllBookings, getSavedInfo, getSavedRouteCodes, getSavedStopCodes, getStopRoutes, selectCurrentLineRoutes, selectRoutePoints } from "../Selectors/appState.selectors";
 import { ILine } from "../Entities/line.entity";
 import { IRoute, IRouteInfo } from "../Entities/route.entity";
 import { IScheduleDetails } from "../Entities/schedule.entity";
@@ -29,22 +29,21 @@ export class ApiEffects{
             ofType(api_actions.getLines), take(1),
             switchMap(() => this.dataService.getAllLines().pipe(
                 map((response: ILine[]) => api_actions.getLinesSuccess({lines: response})),
-                catchError((err) => of(api_actions.getLinesError({msg: err.error})))
+                catchError((err) => of(api_actions.apiError({msg: err.error})))
             )),
         )     
     );
 
-    loadLineRoutes$ = createEffect(()=>
+    loadRoutesAndStop$ = createEffect(()=>
         this.actions$.pipe(
-            ofType(api_actions.getLineRoutes),
-            withLatestFrom(this.store.select(selectCurrentLineRoutes)),
-            switchMap(([action, line]) => this.dataService.getLineRoutes(action.id).pipe(
-                map((response: IRoute[]) => api_actions.getLineRoutesSuccess({routes: response})),
-                catchError(err => of(api_actions.getLineRoutesError({msg: err.error})))
+            ofType(api_actions.getStopAndRoutes), take(1),
+            switchMap(() => this.dataService.getRoutesAndStops().pipe(
+                map((response) => api_actions.getStopAndRoutesSuccess(response)),
+                catchError((err) => of(api_actions.apiError({msg: err.error})))
             )),
-        )
+        )     
     );
-
+    
     loadRouteInfo$ = createEffect(()=>
         this.actions$.pipe(
             ofType(api_actions.getRouteDetails),
@@ -52,7 +51,20 @@ export class ApiEffects{
             tap(() => this.store.dispatch(api_actions.showSpinner())),
             switchMap(([action, points]) => this.dataService.getRouteDetails(action.code).pipe(
                 map((response: IRouteInfo) => api_actions.getRouteDetailsuccess({routeInfo: response})),
-                catchError(err => of(api_actions.getRouteDetailsError({msg: err.error})))
+                catchError(err => of(api_actions.apiError({msg: err.error})))
+            )),
+        )
+    );
+
+    loadstopRoutes$ = createEffect(()=>
+        this.actions$.pipe(
+            ofType(api_actions.stopRoutes),
+            withLatestFrom(this.store.select(getStopRoutes)),
+            filter(([action, routes]) => routes.length == 0),
+            tap(() => this.store.dispatch(api_actions.showSpinner())),
+            switchMap(([action, routes]) => this.dataService.getRoutesByStop(action.stopCode).pipe(
+                map((response: string[]) => api_actions.stopRoutesSuccess({routes: response, stop: action.stopCode})),
+                catchError(err => of(api_actions.apiError({msg: err.error})))
             )),
         )
     );
@@ -60,22 +72,10 @@ export class ApiEffects{
     loadRouteSchedules$ = createEffect(() => 
         this.actions$.pipe(
             ofType(api_actions.getSchedules),
-            withLatestFrom(this.store.select(getActiveRouteSchedules)),
-            filter(([action, schedules]) => !schedules),
-            switchMap(([action]) => this.dataService.getRouteSchedules(action.code).pipe(
+            switchMap((action) => this.dataService.getRouteSchedules(action.code).pipe(
                 map((response: IScheduleDetails) => api_actions.getSchedulesSuccess({schedules: response})),
-                catchError(err => of(api_actions.getSchedulesError({msg: err.error})))
+                catchError(err => of(api_actions.apiError({msg: err.error})))
             )),
-        )
-    );
-
-    loadStopRoutes$ = createEffect(() => 
-        this.actions$.pipe(
-            ofType(api_actions.stopRoutes),
-            switchMap((action) => this.dataService.getRoutesByStop(action.stopCode).pipe(
-                map((response: IRoute[]) => api_actions.stopRoutesSuccess({routes: response})),
-                catchError(err => of(api_actions.stopRoutesError({msg: err.error})))
-            ))
         )
     );
 
@@ -86,7 +86,7 @@ export class ApiEffects{
             tap(() => this.store.dispatch(api_actions.showSpinner())),
             switchMap(({data}) => this.dataService.getPlan(data).pipe(
                 map((response: Plan) => api_actions.fetchPlanSuccess({data: response})),
-                catchError(err => of(api_actions.fetchPlanError({msg: err})))
+                catchError(err => of(api_actions.apiError({msg: err})))
             ))
         )
     );
@@ -98,7 +98,7 @@ export class ApiEffects{
             tap(() => this.store.dispatch(api_actions.showSpinner())),
             switchMap(({data}) => this.dataService.getBookingPlan(data).pipe(
                 map((response: Plan) => api_actions.fetchPlanSuccess({data: response})),
-                catchError(err => of(api_actions.fetchPlanError({msg: err})))
+                catchError(err => of(api_actions.apiError({msg: err})))
             )),
         )
     );
@@ -106,24 +106,13 @@ export class ApiEffects{
     loadBookings$ = createEffect(() => 
         this.actions$.pipe(
             ofType(api_actions.fetchBookings),
-            withLatestFrom(this.store.select(getAllBookings)),
+            take(1),
             tap(() => this.store.dispatch(api_actions.showSpinner())),
             switchMap(() => this.dataService.getBookings().pipe(
                 map((res: Booking[]) => api_actions.fetchBookingsSuccess({data: res})),
-                catchError(err => of(api_actions.fetchBookingsError({msg: err.error.error})))
+                catchError(err => of(api_actions.apiError({msg: err.error.error})))
             )),
         )
-    );
-
-    loadStops$ = createEffect(()=>
-        this.actions$.pipe(
-            ofType(api_actions.getStops),
-            take(1),
-            switchMap(() => this.dataService.getAllStops().pipe(
-                map((response: IStop[]) => api_actions.getStopsSuccess({stops: response})),
-                catchError(err => of(api_actions.getStopsError({msg: err})))
-            ))      
-        )     
     );
 
     saveStop$ = createEffect(()=>
@@ -132,7 +121,7 @@ export class ApiEffects{
             tap(() => this.store.dispatch(api_actions.showSpinner())),
             switchMap((action) => this.dataService.saveStop(action.code).pipe(
                 map((res) => api_actions.saveStopSuccess({code: action.code, msg: res.msg})),
-                catchError(err => of(api_actions.saveStopError({msg: err})))
+                catchError(err => of(api_actions.apiError({msg: err})))
             ))      
         )     
     );
@@ -143,7 +132,7 @@ export class ApiEffects{
             tap(() => this.store.dispatch(api_actions.showSpinner())),
             switchMap((action) => this.dataService.deleteStop(action.code).pipe(
                 map((res) => api_actions.deleteStopSuccess({code: action.code, msg: res.msg})),
-                catchError(err => of(api_actions.deleteStopError({msg: err})))
+                catchError(err => of(api_actions.apiError({msg: err})))
             ))      
         )     
     );
@@ -154,7 +143,7 @@ export class ApiEffects{
             tap(() => this.store.dispatch(api_actions.showSpinner())),
             switchMap((action) => this.dataService.deleteRoute(action.code).pipe(
                 map((res) => api_actions.deleteRouteSuccess({code: action.code, msg: res.msg})),
-                catchError(err => of(api_actions.deleteRouteError({msg: err})))
+                catchError(err => of(api_actions.apiError({msg: err})))
             ))      
         )     
     );
@@ -165,33 +154,7 @@ export class ApiEffects{
             tap(() => this.store.dispatch(api_actions.showSpinner())),
             switchMap((action) => this.dataService.saveRoute(action.code).pipe(
                 map((res) => api_actions.saveRouteSuccess({code: action.code, msg: res.msg})),
-                catchError(err => of(api_actions.saveRouteError({msg: err})))
-            ))      
-        )     
-    );
-
-    loadSavedRoutes$ = createEffect(()=>
-        this.actions$.pipe(
-            ofType(api_actions.getSavedRoutes), 
-            withLatestFrom(this.store.select(getSavedRouteCodes)),
-            filter(([action, codes]) => !codes),
-            tap(() => this.store.dispatch(api_actions.showSpinner())),
-            switchMap(() => this.dataService.getSavedRoutes().pipe(
-                map((res: string[]) => api_actions.getSavedRoutesSuccess({codes: res})),
-                catchError(err => of(api_actions.getSavedRoutesError({msg: err})))
-            ))      
-        )     
-    );
-
-    loadSavedStops$ = createEffect(()=>
-        this.actions$.pipe(
-            ofType(api_actions.getSavedStops), 
-            withLatestFrom(this.store.select(getSavedStopCodes)),
-            filter(([action, codes]) => !codes),
-            tap(() => this.store.dispatch(api_actions.showSpinner())),
-            switchMap(() => this.dataService.getSavedStops().pipe(
-                map((res: string[]) => api_actions.getSavedStopsSuccess({codes: res})),
-                catchError(err => of(api_actions.getSavedStopsError({msg: err})))
+                catchError(err => of(api_actions.apiError({msg: err})))
             ))      
         )     
     );
@@ -199,8 +162,7 @@ export class ApiEffects{
     loadSavedInfo$ = createEffect(()=>
         this.actions$.pipe(
             ofType(api_actions.getSavedInfo), 
-            withLatestFrom(this.store.select(getSavedInfo)),
-            filter(([action, info]) => !info),
+            take(1),
             tap(() => this.store.dispatch(api_actions.showSpinner())),
             switchMap(() => this.dataService.getSavedInfo().pipe(
                 map(res => api_actions.getSavedInfoSuccess(res)),
@@ -214,7 +176,7 @@ export class ApiEffects{
             ofType(api_actions.login),
             switchMap((action) => this.dataService.login(action.data).pipe(
                 map(res => api_actions.loginSuccess({data: res})),
-                catchError((err) => of(api_actions.loginError({msg: err})))
+                catchError((err) => of(api_actions.apiError({msg: err})))
             )),
         )
     );
@@ -224,7 +186,7 @@ export class ApiEffects{
             ofType(api_actions.register),
             switchMap((action) => this.dataService.register(action.credentials).pipe(
                 map(res => api_actions.registerSuccess({data: res})),
-                catchError((err) => of(api_actions.registerError({msg: err}))),
+                catchError((err) => of(api_actions.apiError({msg: err}))),
             )),
         )
     );
@@ -240,5 +202,6 @@ export class ApiEffects{
             tap((action) => this.msg.apiMsg.next(action.msg))
         ), {dispatch: false}  
     );
+
 
 }

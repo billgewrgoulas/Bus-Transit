@@ -68,6 +68,10 @@ export class BookingsComponent implements OnInit {
     this.navigate(['routes', 'trip', 'options'], 'trip_options');
   }
 
+  public showStop(booking: Booking){
+    this.navigate([ 'stops', booking.startStop ], 'booking_origin');
+  }
+
   private navigate(link: any[], module: string){
     this.router.navigate([{ outlets: 
       { sidebar:  link}}], 

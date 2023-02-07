@@ -7,7 +7,7 @@
 }
 
 .option-list{
-    height: calc(100vh - 185px);
+    max-height: calc(100vh - 185px);
     display: flex;
     flex-direction: column;
     gap: 10px;

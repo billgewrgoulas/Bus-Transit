@@ -23,12 +23,12 @@
   padding: 10px 25px 10px 25px; /* Padding */
   position: fixed; /* Sit on top of the screen */
   z-index: 5; /* Add a z-index if needed */
+  margin: 0px 15px 0px 15px;
 }
 
 #snackbar.show {
   visibility: visible; /* Show the snackbar */
-  -webkit-animation: fadeout .3s;
-  animation: fadein 0.3s, fadeout 0.3s 1s;
+  animation: fadein 0.5s, fadeout 0.5s 2.5s;
 }
 
 @-webkit-keyframes fadein {

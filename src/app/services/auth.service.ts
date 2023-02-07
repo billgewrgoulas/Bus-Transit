@@ -26,7 +26,7 @@ export class AuthService {
   public getUserInfo() {
     let token = <string>localStorage.getItem('token');
     let dec: any = jwt_decode(token);
-    return {name: dec.name, email: dec.email};
+    return {name: dec.name, email: dec.email, user_id: dec.user_id};
   }
 
   public removeUserInfo() {

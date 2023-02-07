@@ -51,7 +51,8 @@ export class SideNavComponent implements OnInit, AfterViewInit, OnDestroy {
 
   public logout(){
     this.auth.removeUserInfo();
-    this.home();
+    this.toggle();
+    this.router.navigate(['']).then(() => location.reload());
   }
 
   public home(){

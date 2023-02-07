@@ -1,7 +1,7 @@
 import { Map } from "./map";
 import * as L from 'leaflet';
 import { TripState } from "src/app/modules/planner/state/directions.store";
-import { Itinerary } from "src/app/state/Entities/itinerary";
+import { Itinerary, Vertex } from "src/app/state/Entities/itinerary";
 import { DataService } from "src/app/services/data.service";
 import { DataShareService } from "src/app/services/data-share.service";
 
@@ -20,7 +20,7 @@ export class TripPlannerMap extends Map{
         this.start.addEventListener("dragend", (v) => {
 
             const point: string[] = [
-                '0', 'Επιλογή',
+                '0', 'Έναρξη',
                 this.start.getLatLng().lat + '',
                 this.start.getLatLng().lng + ''
             ];
@@ -31,7 +31,7 @@ export class TripPlannerMap extends Map{
         this.end.addEventListener("dragend", (v) => {
 
             const point: string[] = [
-                '0', 'Επιλογή',
+                '0', 'Τερματισμός',
                 this.end.getLatLng().lat + '',
                 this.end.getLatLng().lng + ''
             ];
@@ -56,17 +56,29 @@ export class TripPlannerMap extends Map{
         this.end.dragging?.disable();
     }
 
-    public addMarker(data: TripState){
+    public initMarkers(data: TripState){
 
-        if(data.direction == 'start' && data.start.length > 0){
+        if(data.start.length > 0){
             this.start.setLatLng([+data.start[2], +data.start[3]]);
             this.start.setPopupContent(`<b>${data.start[1]}</b>`);
             this.start.addTo(this.map);
-            this.map.flyTo(this.start.getLatLng(), 15);
-        }else if(data.direction == 'dest' && data.destination.length > 0){
+        }
+
+        if(data.destination.length > 0){
             this.end.setLatLng([+data.destination[2], +data.destination[3]]);
             this.end.setPopupContent(`<b>${data.destination[1]}</b>`);
             this.end.addTo(this.map);
+        }
+
+    }
+
+    public addMarker(data: TripState){
+
+        if(data.direction == 'start' && data.start.length > 0){
+            this.initMarkers(data);
+            this.map.flyTo(this.start.getLatLng(), 15);
+        }else if(data.direction == 'dest' && data.destination.length > 0){
+            this.initMarkers(data);
             this.map.flyTo(this.end.getLatLng(), 15);
         }else if(data.direction == 'swap'){
             let temp = this.start.getLatLng();
@@ -74,22 +86,28 @@ export class TripPlannerMap extends Map{
             this.end.setLatLng(temp);
             this.start.setPopupContent(`<b>${data.start[1]}</b>`);
             this.end.setPopupContent(`<b>${data.destination[1]}</b>`);
-        }else{
+        }else {
             this.clearPoint(data.direction);
         }
 
         this.enableDrag(data);
     }
 
-    public displayItinerary(it: Itinerary | undefined){
+    public displayItinerary(data: {it: Itinerary | undefined, from: Vertex | undefined, to: Vertex | undefined}){
         
         this.clearLayerGroup();
 
-        if(!it) return;
+        if(!data || !data.it || !data.from || !data.to) return;
+
+        const start = this.createMarker(data.from.lat, data.from.lon, data.from?.name, this.marker);
+        this.layerGroup.addLayer(start);
+
+        const end = this.createMarker(data.to.lat, data.to.lon, data.to.name, this.dest_marker);
+        this.layerGroup.addLayer(end);
 
         let shape: number[][] = [];
 
-        it.legs.forEach(leg =>{
+        data.it.legs.forEach(leg =>{
     
             const path: number[][] = leg.points.map(point => [+point[0], +point[1]]); 
 

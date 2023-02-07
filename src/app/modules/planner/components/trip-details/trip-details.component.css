@@ -186,6 +186,10 @@ h1{
     background: rgb(0 0 0 / 10%) !important;
 }
 
+::ng-deep .mat-content.mat-content-hide-toggle {
+    margin-right: 0px !important;
+}
+
 button{
     font-size: 14px !important;
     font-weight: bold;

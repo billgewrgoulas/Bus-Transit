@@ -20,8 +20,9 @@ export abstract class Map{
 
     protected createMarker(x: string, y: string, text: string, icon: L.Icon, draggable: boolean = false){
         const coords = <LatLngExpression>[+x, +y];
+        const popup = L.popup({"autoClose": false, content: `<b>${text}</b>`});
         const marker = new L.Marker(coords, {icon: icon, interactive: true, draggable: draggable, autoPan: true});
-        marker.bindPopup(`<b>${text}</b>`);
+        marker.bindPopup(popup);
         return marker;
     }
 
