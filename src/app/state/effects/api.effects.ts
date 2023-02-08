@@ -176,7 +176,7 @@ export class ApiEffects{
             ofType(api_actions.login),
             switchMap((action) => this.dataService.login(action.data).pipe(
                 map(res => api_actions.loginSuccess({data: res})),
-                catchError((err) => of(api_actions.apiError({msg: err})))
+                catchError((err) => of(api_actions.loginError({msg: err})))
             )),
         )
     );
@@ -186,7 +186,7 @@ export class ApiEffects{
             ofType(api_actions.register),
             switchMap((action) => this.dataService.register(action.credentials).pipe(
                 map(res => api_actions.registerSuccess({data: res})),
-                catchError((err) => of(api_actions.apiError({msg: err}))),
+                catchError((err) => of(api_actions.registerError({msg: err}))),
             )),
         )
     );
