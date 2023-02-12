@@ -7,8 +7,12 @@ export class FilterPipe implements PipeTransform {
 
   public transform(data: any[], value: string) {
 
-    if(!data || value === undefined){
+    if(!data){
       return [];
+    }
+
+    if(value === undefined || value === null){
+      return data;
     }
 
     const upper: string = value.toUpperCase();

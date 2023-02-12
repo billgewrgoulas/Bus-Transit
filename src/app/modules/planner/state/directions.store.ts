@@ -7,7 +7,7 @@ import { AppState } from "../../../state/Reducers/api-reducer";
 import { Router } from "@angular/router";
 import { HttpErrorResponse } from "@angular/common/http";
 
-const now = () => new Date().getHours() + ':' + new Date().getMinutes() + 30;
+const now = () => new Date().getHours() + ':' + new Date().getMinutes();
 
 export interface TripState {
     start: string[];
