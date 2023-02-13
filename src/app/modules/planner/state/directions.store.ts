@@ -108,7 +108,7 @@ export class DirectionsStore extends ComponentStore<TripState> {
         if(state.start.length == 0 || state.destination.length == 0){
             return state;
         }else{
-            return {...state, fetch: true};
+            return {...state, fetch: true, direction: ''};
         }
     });
 
