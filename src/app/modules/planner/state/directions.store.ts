@@ -38,7 +38,7 @@ export const initialState: TripState = {
 @Injectable()
 export class DirectionsStore extends ComponentStore<TripState> {
     
-    public constructor(private router: Router, private store: Store<AppState>) {
+    public constructor(private store: Store<AppState>) {
         super(initialState);
     }
 

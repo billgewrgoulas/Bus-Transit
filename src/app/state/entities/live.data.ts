@@ -10,4 +10,5 @@ export interface IArrival{
     longitude: string;
     arrivalMins: number;
     arrivalSeconds: number;
+    delayMins: number;
 }
