@@ -116,7 +116,10 @@ export class RouterEffects{
             ofType(ROUTER_NAVIGATED),
             withLatestFrom(this.store.select(getState)),
             filter(([action, {url}]) => url.startsWith('/(sidebar:routes/bookings)')),
-            map(() => api_actions.fetchBookings())
+            switchMap(() => [
+                select_actions.selectStop({code: ''}),
+                api_actions.fetchBookings()
+            ])
         )
     );
 

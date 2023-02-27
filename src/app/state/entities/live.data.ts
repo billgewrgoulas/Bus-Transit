@@ -11,4 +11,6 @@ export interface IArrival{
     arrivalMins: number;
     arrivalSeconds: number;
     delayMins: number;
+    stop: string;
+    nextStop: string;
 }
