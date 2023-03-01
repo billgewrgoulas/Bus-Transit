@@ -13,7 +13,6 @@ import { SidebarModule } from "./modules/sidebar/sidebar.module";
 import { SocketIOService } from "./services/socket-io.service";
 import { ApiEffects } from "./state/Effects/api.effects";
 import { RouterEffects } from "./state/Effects/router.effects";
-import { appStateReducer } from "./state/Reducers/api-reducer";
 import { CustomSerializer } from "./state/Selectors/custom-route-serializer";
 import { MatTabsModule } from "@angular/material/tabs";
 import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
@@ -21,6 +20,7 @@ import { RouterModule } from "@angular/router";
 import { EffectsModule } from "@ngrx/effects";
 import { routerReducer, StoreRouterConnectingModule } from "@ngrx/router-store";
 import { StoreModule } from "@ngrx/store";
+import { Reducer } from "./state/Reducers/api-reducer";
 import { StoreDevtoolsModule } from "@ngrx/store-devtools";
 
 
@@ -40,7 +40,7 @@ import { StoreDevtoolsModule } from "@ngrx/store-devtools";
     SidebarModule,
     MapModule,
     HttpClientModule,
-    StoreModule.forRoot({api: appStateReducer, router: routerReducer, auth: authReducer}),
+    StoreModule.forRoot({api: Reducer.getReducer, router: routerReducer, auth: authReducer}),
     EffectsModule.forRoot([ApiEffects, RouterEffects, AuthEffects]),
     StoreDevtoolsModule.instrument({ maxAge: 25, logOnly: environment.production }),
     StoreRouterConnectingModule.forRoot({serializer: CustomSerializer, stateKey: 'router'})
