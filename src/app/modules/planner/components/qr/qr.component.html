@@ -14,7 +14,7 @@
             <div class="option-list">
                 <booking-component [flag]="false" [booking]="vm.booking"></booking-component>
             </div>
-            <qrcode [qrdata]="data(vm.booking.user_id, vm.booking.trip_id)" [width]="170" [errorCorrectionLevel]="'M'"></qrcode>
+            <qrcode [qrdata]="data(vm.booking)" [width]="170" [errorCorrectionLevel]="'M'"></qrcode>
         </div>
 
     </ng-container>

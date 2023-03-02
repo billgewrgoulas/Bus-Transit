@@ -28,8 +28,8 @@ export class QrComponent implements OnInit {
     ]).pipe(map(([spinner, booking]) => ({spinner, booking})));
   }
 
-  public data(user: string, trip: number){
-    return `${user}_${trip}`;
+  public data(booking: Booking){
+    return `${booking.user_id}_${booking.trip_id}_${booking.date}`;
   }
 
 }

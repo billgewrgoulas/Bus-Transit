@@ -132,6 +132,15 @@ export class RouterEffects{
         )
     );
 
+    savedInfo$ = createEffect(()=>
+        this.actions$.pipe(
+            ofType(ROUTER_NAVIGATED),
+            withLatestFrom(this.store.select(getState)),
+            filter(([action, {query}]) => query!['module'] == 'saved_info'),
+            map(() => select_actions.selectStop({code: ''})),   
+        )
+    );
+
     qrData$ = createEffect(() => 
         this.actions$.pipe(
             ofType(ROUTER_NAVIGATED), 
