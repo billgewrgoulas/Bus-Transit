@@ -1,0 +1,14 @@
+
+{
+    "otpFeatures" : {
+        "SandboxAPITravelTime" : true
+    },
+	
+	"otpFeatures": {
+		"ReportApi": true
+	},
+	
+	"otpFeatures": {
+		"SandboxAPIGeocoder": true
+	}
+}
