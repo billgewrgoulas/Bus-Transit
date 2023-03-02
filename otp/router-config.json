@@ -1,0 +1,24 @@
+{
+    "routingDefaults": {
+        "walkSpeed": 2.0
+    },
+	
+	"updaters": [
+    //{
+      //"type" : "stop-time-updater",
+      //"url" : "http://localhost:3000/live/positions",
+      //"feedId" : "1",
+      //"frequencySec" : 60
+    //}, 
+	
+		//{
+			//"type" : "stop-time-updater",
+			//"frequencySec" : 20,
+			//"backwardsDelayPropagationType" : "REQUIRED_NO_DATA",
+			//"url" : "http://localhost:3000/live/protobuf",
+			//"feedId" : "1"
+		//}
+
+  ]
+	
+}
