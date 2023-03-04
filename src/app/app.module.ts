@@ -49,11 +49,3 @@ import { StoreDevtoolsModule } from "@ngrx/store-devtools";
   bootstrap: [AppComponent]
 })
 export class AppModule { }
-
-export interface test{
-  x: number;
-}
-
-export class t{
-  private x: test = {x: 1};
-}

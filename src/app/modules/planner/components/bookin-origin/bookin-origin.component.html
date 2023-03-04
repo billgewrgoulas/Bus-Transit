@@ -1,0 +1,23 @@
+
+<ng-container *ngIf="vm$ | async as vm">
+    <ng-container *ngIf="vm.stop">
+
+        <input-field
+            [value]="vm.stop.desc"
+            [disabled]="true"
+            [icon]="'trip_origin'"
+            [type]="'start'"
+            [title]="'Origin'">
+        </input-field>
+
+        <div class="main">
+            <h1>Telematics</h1>
+            <bus-entity [buses]="vm.arrivals"></bus-entity>
+        </div>
+
+    </ng-container>
+</ng-container>
+
+
+
+

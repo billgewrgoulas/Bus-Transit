@@ -13,6 +13,8 @@ import { PlacesSliderComponent } from './components/places-slider/places-slider.
 import { PlacesMapComponent } from './components/places-map/places-map.component';
 import { MiniMapComponent } from '../shared-module/components/mini-map/mini-map.component';
 import { MiniMapService } from 'src/app/services/mini-map.service';
+import { BusEntityComponent } from '../shared-module/components/bus-entity/bus-entity.component';
+import { BookinOriginComponent } from './components/bookin-origin/bookin-origin.component';
 
 const routes: Routes = [
   {path: '', component: InputComponent, children: [
@@ -34,6 +36,8 @@ const routes: Routes = [
     ],
   },
   {path: 'booking/qr/:id', component: QrComponent, canActivate: [AuthGuardService]},
+  {path: 'booking/:id/stop/:code', component: BookinOriginComponent, canActivate: [AuthGuardService]},
+  {path: 'booking/:code/map', component: MiniMapComponent, canActivate: [MiniMapService]},
   {path: 'bookings', component: BookingsComponent, canActivate: [AuthGuardService]},
 ];
 

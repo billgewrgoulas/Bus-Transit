@@ -62,7 +62,8 @@ export class MapAreaComponent implements OnInit, OnDestroy {
       this.store.select(selectItineraryAndPoints).subscribe(it => this.tripMap.displayItinerary(it)),
       this.msg.clearMapObserver.subscribe(v => this.clearMap()),
       this.msg.removeDragObserver.subscribe(v => this.tripMap.dragOff()),
-      this.store.select(getStopsModule).subscribe(stops => this.stopsMap.addClustersToMap(stops))
+      this.store.select(getStopsModule).subscribe(stops => this.stopsMap.addClustersToMap(stops)),
+      this.msg.bookingOrigin.subscribe(s => this.tripMap.stop(s))
       
     ];
 

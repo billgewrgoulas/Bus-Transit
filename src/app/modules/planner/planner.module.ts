@@ -31,6 +31,7 @@ import { MapModule } from '../map/map.module';
 import { BookingPipe } from './pipes/bookings.pipe';
 import { AuthService } from 'src/app/services/auth.service';
 import { MatNativeDateModule } from '@angular/material/core';
+import { BookinOriginComponent } from './components/bookin-origin/bookin-origin.component';
 
 
 @NgModule({
@@ -48,7 +49,8 @@ import { MatNativeDateModule } from '@angular/material/core';
     QrComponent,
     PlacesMapComponent,
     PlacesSliderComponent,
-    BookingPipe
+    BookingPipe,
+    BookinOriginComponent
   ],
   imports: [
     CommonModule,

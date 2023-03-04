@@ -117,18 +117,30 @@ export class RouterEffects{
             withLatestFrom(this.store.select(getState)),
             filter(([action, {url}]) => url.startsWith('/(sidebar:routes/bookings)')),
             switchMap(() => [
-                select_actions.selectStop({code: ''}),
-                api_actions.fetchBookings()
+                api_actions.fetchBookings(),
+                select_actions.selectStop({code: ''})
             ])
         )
     );
 
-    qrCode$ = createEffect(()=>
+    bookingData$ = createEffect(()=>
         this.actions$.pipe(
             ofType(ROUTER_NAVIGATED),
             withLatestFrom(this.store.select(getState)),
-            filter(([action, {query}]) => query!['module'] == 'qr_module'),
-            map(([action, {params}]) => select_actions.selectBooking({trip_id: params!['id']})),   
+            filter(([action, {query}]) => query!['module'] == 'qr_module' || query!['module'] == 'booking_origin'),
+            switchMap(([action, {params}]) => [
+                select_actions.selectBooking({trip_id: params!['id']}),
+                api_actions.fetchBookings()
+            ]),   
+        )
+    );
+
+    bookingOrigin$ = createEffect(() => 
+        this.actions$.pipe(
+            ofType(ROUTER_NAVIGATED), 
+            withLatestFrom(this.store.select(getState)),
+            filter(([action, {query}]) => query!['module'] == 'booking_origin'),
+            map(([action, {params}]) => select_actions.selectStop({code: params!['code']}))
         )
     );
 
@@ -138,15 +150,6 @@ export class RouterEffects{
             withLatestFrom(this.store.select(getState)),
             filter(([action, {query}]) => query!['module'] == 'saved_info'),
             map(() => select_actions.selectStop({code: ''})),   
-        )
-    );
-
-    qrData$ = createEffect(() => 
-        this.actions$.pipe(
-            ofType(ROUTER_NAVIGATED), 
-            withLatestFrom(this.store.select(getState)),
-            filter(([action, {query}]) => query!['module'] == 'qr_module'),
-            map(() => api_actions.fetchBookings())
         )
     );
 

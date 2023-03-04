@@ -21,6 +21,7 @@ export class DataShareService {
   private readonly clearMap = new Subject<number>;
   private readonly toggle = new Subject<void>();
   private readonly removeDrag = new Subject<void>();
+  public readonly origin = new Subject<IStop>();
   public readonly apiMsg = new Subject<string>();
 
   public readonly tabObserver = this.tab.asObservable();
@@ -35,6 +36,7 @@ export class DataShareService {
   public readonly clearMapObserver = this.clearMap.asObservable();
   public readonly toggleObserver = this.toggle.asObservable();
   public readonly removeDragObserver = this.removeDrag.asObservable();
+  public readonly bookingOrigin = this.origin.asObservable();
   
   constructor() { }
 
@@ -84,6 +86,10 @@ export class DataShareService {
 
   public dragOff(){
     this.removeDrag.next();
+  }
+
+  public sendOrigin(stop: IStop){
+    this.origin.next(stop);
   }
 
 }

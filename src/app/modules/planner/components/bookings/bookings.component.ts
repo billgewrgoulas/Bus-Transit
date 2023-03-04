@@ -69,7 +69,7 @@ export class BookingsComponent implements OnInit {
   }
 
   public showStop(booking: Booking){
-    this.navigate([ 'stops', booking.startStop ], 'booking_origin');
+    this.navigate([ 'routes', 'booking', booking.trip_id, 'stop', booking.startStop ], 'booking_origin');
   }
 
   private navigate(link: any[], module: string){

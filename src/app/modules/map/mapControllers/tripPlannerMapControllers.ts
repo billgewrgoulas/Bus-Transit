@@ -4,6 +4,7 @@ import { TripState } from "src/app/modules/planner/state/directions.store";
 import { Itinerary, Vertex } from "src/app/state/Entities/itinerary";
 import { DataService } from "src/app/services/data.service";
 import { DataShareService } from "src/app/services/data-share.service";
+import { IStop } from "src/app/state/Entities/stop.entity";
 
 export class TripPlannerMap extends Map{
 
@@ -159,6 +160,12 @@ export class TripPlannerMap extends Map{
     public clearPoints(){
         this.map.removeLayer(this.start);
         this.map.removeLayer(this.end);
+    }
+
+    public stop(stop: IStop){
+        this.start.setLatLng([+stop.latitude, +stop.longitude]);
+        this.start.setPopupContent(`<b>${stop.desc}</b>`);
+        this.start.addTo(this.map);
     }
 
     public clearLayerGroup(): void {
