@@ -32,6 +32,7 @@ import { BookingPipe } from './pipes/bookings.pipe';
 import { AuthService } from 'src/app/services/auth.service';
 import { MatNativeDateModule } from '@angular/material/core';
 import { BookinOriginComponent } from './components/bookin-origin/bookin-origin.component';
+import { GeocoderService } from 'src/app/services/geocode.service';
 
 
 @NgModule({
