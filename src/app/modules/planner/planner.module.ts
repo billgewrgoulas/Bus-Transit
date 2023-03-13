@@ -70,6 +70,6 @@ import { GeocoderService } from 'src/app/services/geocode.service';
     AuthModule,
     QRCodeModule,
     MapModule
-  ],providers: [DirectionsStore, AuthService]
+  ],providers: [DirectionsStore, AuthService, GeocoderService]
 })
 export class PlannerModule { }

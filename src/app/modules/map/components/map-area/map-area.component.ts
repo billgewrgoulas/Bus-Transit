@@ -9,6 +9,7 @@ import { LinesMap } from '../../mapControllers/linesMapControllers';
 import { TripPlannerMap } from '../../mapControllers/tripPlannerMapControllers';
 import { StopsMap } from '../../mapControllers/stopMapController';
 import { Router } from '@angular/router';
+import { GeocoderService } from 'src/app/services/geocode.service';
 
 
 @Component({
@@ -26,6 +27,7 @@ export class MapAreaComponent implements OnInit, OnDestroy {
   constructor(
     private store: Store<AppState>, 
     private msg: DataShareService,
+    private geocode: GeocoderService,
     private router: Router
   ) { }
 
@@ -35,7 +37,7 @@ export class MapAreaComponent implements OnInit, OnDestroy {
     this.initMap(map);
     
     this.linesMap = new LinesMap(map);
-    this.tripMap = new TripPlannerMap(map, this.msg);
+    this.tripMap = new TripPlannerMap(map, this.msg, this.geocode);
     this.stopsMap = new StopsMap(map, this.router);
     
     this.subscribers = [

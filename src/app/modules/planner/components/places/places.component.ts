@@ -68,9 +68,13 @@ export class PlacesComponent implements OnInit, OnDestroy {
 
     if(direction == 'start' && state.start.length > 0){
       this.value = state.start[1];
-      this.initValue$ = this.local.getStartValue();
     }else if(this.direction == 'dest' && state.destination.length > 0){
       this.value = state.destination[1];
+    }
+
+    if(direction == 'start'){
+      this.initValue$ = this.local.getStartValue();
+    }else if(direction == 'dest'){
       this.initValue$ = this.local.getEndValue();
     }
     

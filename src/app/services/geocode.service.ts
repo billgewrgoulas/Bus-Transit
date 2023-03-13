@@ -1,6 +1,5 @@
 import { Injectable } from '@angular/core';
-import OpenStreetMapProvider from 'leaflet-geosearch/lib/providers/openStreetMapProvider';
-
+import OpenStreetMapProvider, { RawResult } from 'leaflet-geosearch/lib/providers/openStreetMapProvider';
 
 @Injectable({
   providedIn: 'root',
@@ -11,11 +10,15 @@ export class GeocoderService {
 
     constructor(){}
 
-    public async geocoder(x: number, y: number): Promise<any>{
-        const results = await this.provider.search({ query: `${x},${y}` });
-        console.log(results);
-    }
+    public async geocoder(coords: L.LatLng): Promise<string>{
+        const results = await this.provider.search({ query: `${coords.lat},${coords.lng}` }).catch(e => console.error('Can not geocode!'));
 
- 
+        if(!results){
+          return 'Επιλογή';
+        }
+
+        const label: string[] = results[0].label.split(',');
+        return label[0] + label[1];
+    }
 
 }

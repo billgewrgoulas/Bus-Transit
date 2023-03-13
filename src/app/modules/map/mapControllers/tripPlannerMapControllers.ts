@@ -5,6 +5,7 @@ import { Itinerary, Vertex } from "src/app/state/Entities/itinerary";
 import { DataService } from "src/app/services/data.service";
 import { DataShareService } from "src/app/services/data-share.service";
 import { IStop } from "src/app/state/Entities/stop.entity";
+import { GeocoderService } from "src/app/services/geocode.service";
 
 export class TripPlannerMap extends Map{
 
@@ -12,34 +13,16 @@ export class TripPlannerMap extends Map{
     private start: L.Marker = this.createMarker('0', '0', '', this.marker, false);
     private end: L.Marker = this.createMarker('0', '0', '', this.dest_marker, false);
     private msg: DataShareService;
+    private geocode: GeocoderService
 
-    public constructor(map: L.Map, msg: DataShareService){
+    public constructor(map: L.Map, msg: DataShareService, geocode: GeocoderService){
         super(map);
         this.layerGroup.addTo(this.map);
         this.msg = msg;
+        this.geocode = geocode;
 
-        this.start.addEventListener("dragend", (v) => {
-
-            const point: string[] = [
-                '0', 'Έναρξη',
-                this.start.getLatLng().lat + '',
-                this.start.getLatLng().lng + ''
-            ];
-
-            this.msg.onDragStart(point);
-        });
-
-        this.end.addEventListener("dragend", (v) => {
-
-            const point: string[] = [
-                '0', 'Τερματισμός',
-                this.end.getLatLng().lat + '',
-                this.end.getLatLng().lng + ''
-            ];
-
-            this.msg.onDragEnd(point);
-        });
-
+        this.start.addEventListener("dragend", (v) => this.onDragStart());
+        this.end.addEventListener("dragend", (v) => this.onDragEnd());
     }
 
     public enableDrag(data: TripState){
@@ -170,6 +153,28 @@ export class TripPlannerMap extends Map{
 
     public clearLayerGroup(): void {
         this.layerGroup.clearLayers();
+    }
+
+    private async onDragStart(): Promise<void>{
+        const label: string = await this.geocode.geocoder(this.start.getLatLng());
+        const point: string[] = [
+            '0', label,
+            this.start.getLatLng().lat + '',
+            this.start.getLatLng().lng + ''
+        ];
+
+        this.msg.onDragStart(point);
+    }
+
+    private async onDragEnd(): Promise<void>{
+        const label: string = await this.geocode.geocoder(this.end.getLatLng());
+        const point: string[] = [
+            '0', label,
+            this.end.getLatLng().lat + '',
+            this.end.getLatLng().lng + ''
+        ];
+
+        this.msg.onDragEnd(point);
     }
 
 }

@@ -12,7 +12,7 @@ export class FilterPipe implements PipeTransform {
     }
 
     if(value === undefined || value === null){
-      return data;
+      return data.slice(0, 20);
     }
 
     const upper: string = value.toUpperCase();
