@@ -17,7 +17,7 @@ In order to satisfy some advanced functionalities the application will utilize t
 
 ## Architecture
 
-At a glance the application follows the 3-tier architecture. For the presentation tier we use Angular, for the logic tier we use Nest.js and for the data tier we use postreSQL. The architecture is shown below. OTP belongs to the logic tier.
+At a glance the application follows the 3-tier architecture. For the presentation tier we use Angular, for the logic tier we use Nest.js and for the data tier we use postgreSQL. The architecture is shown below. OTP belongs to the logic tier.
 
 <p align="center">
   <img width="430px" height="280px" src="https://github.com/billgewrgoulas/Bus-Transit/blob/master/pictures/architecture.png" />
