@@ -70,16 +70,5 @@ At a glance the application follows the 3-tier architecture. For the presentatio
 
 ## Reproduce locally
 
-Run npm install to download all dependencies required. For a dev server run ng serve. Navigate to `http://localhost:4200/`. The application will automatically reload if you change any of the source files. To run OTP you will need Java v.14+ and the file otp-2.2.0-shaded.jar that you can download from here: https://repo1.maven.org/maven2/org/opentripplanner/otp/2.2.0/. Open a terminal inside the otp folder and run 'java -Xmx2G -jar otp-2.2.0-shaded.jar --load .' All file are ready. The back end is in the repo Go-Bus-Back-End.
-
-
-
-
-
-
-
-
-
-
-
+Run npm install to download all dependencies required. For a dev server run ng serve. Navigate to `http://localhost:4200/`. The application will automatically reload if you change any of the source files. To run OTP you will need Java v.14+ and the file otp-2.2.0-shaded.jar that you can download from here: https://repo1.maven.org/maven2/org/opentripplanner/otp/2.2.0/. Open a terminal inside the otp folder and run 'java -Xmx2G -jar otp-2.2.0-shaded.jar --load .' All files are ready. The back end is in the repo Go-Bus-Back-End.
 
