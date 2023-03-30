@@ -13,7 +13,7 @@ Nowadays the transit bus has become one of the most popular ways for people to t
   
  ### [Open Trip Planner](https://github.com/opentripplanner/OpenTripPlanner)
  
-In order to satisfy some advanced functionalities the application will utilize the open source software Open Trip Planner which is used to calculate optimal itineraries using data from a public transportation agency and data from Open Street Map. It exposes a rest API that we can use to make the relevant queries.
+In order to satisfy some advanced functionalities the application will utilize the open source software Open Trip Planner which is used to calculate optimal itineraries using data from a public transportation agency and data from Open Street Map. OTP can receive both static files that describe the daily schedule and the routes and real time indormation as protocol buffers. It exposes a rest API that we can use to make the relevant queries.
 
 ## Architecture
 
