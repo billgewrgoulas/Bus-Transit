@@ -24,7 +24,7 @@ export class TripPlannerOptionsComponent implements OnInit {
     private router: Router
   ) { 
     this.minDate = new Date();
-    this.maxDate = new Date(2023, 3, 20);
+    this.maxDate = new Date(2024, 3, 20);
   }
 
   ngOnInit(): void {

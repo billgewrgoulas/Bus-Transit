@@ -16,8 +16,7 @@ export const initialNotification: Notification = {
 export const clearState = createAction('[Auth] Clear');
 
 /* Auth Reducer */
-export const authReducer = createReducer(
-    initialNotification, 
+export const authReducer = createReducer(initialNotification, 
     on(api_actions.loginError, api_actions.registerError, (state: Notification, action): Notification => {
         return {msg: action.msg.error.error, spinner: false, type: 'login'};
     }),
