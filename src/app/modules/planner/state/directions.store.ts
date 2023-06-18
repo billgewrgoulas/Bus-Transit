@@ -34,10 +34,10 @@ export const initialState: TripState = {
     endValue: '',
     searchText: ''
 }
-  
+
 @Injectable()
 export class DirectionsStore extends ComponentStore<TripState> {
-    
+
     public constructor(private store: Store<AppState>) {
         super(initialState);
     }
@@ -46,91 +46,92 @@ export class DirectionsStore extends ComponentStore<TripState> {
         return initialState;
     });
 
-    public fetchComplete = this.updater((state: TripState): TripState =>{
-        return {...state, fetch: false};
+    public fetchComplete = this.updater((state: TripState): TripState => {
+        return { ...state, fetch: false };
     });
 
-    public updateSearchText = this.updater((state: TripState, text: string): TripState =>{
-        return {...state, searchText: text};
+    public updateSearchText = this.updater((state: TripState, text: string): TripState => {
+        return { ...state, searchText: text };
     });
 
-    public swapPoints = this.updater((state: TripState): TripState =>{
-        return {...state, 
-            direction: 'swap',  
-            start: [...state.destination], 
+    public swapPoints = this.updater((state: TripState): TripState => {
+        return {
+            ...state,
+            direction: 'swap',
+            start: [...state.destination],
             destination: [...state.start],
             startValue: state.endValue,
             endValue: state.startValue
         };
     });
 
-    public changeDirection = this.updater((state: TripState, direction: string): TripState =>{
-        return {...state, direction: direction};
+    public changeDirection = this.updater((state: TripState, direction: string): TripState => {
+        return { ...state, direction: direction };
     });
 
     public updatePoint = this.updater((state: TripState, point: string[]): TripState => {
-        if(state.direction === 'start'){
-            return {...state, start: point, startValue: point[1]};
-        }else if (state.direction === 'dest'){
-            return {...state, destination: point, endValue: point[1]};
+        if (state.direction === 'start') {
+            return { ...state, start: point, startValue: point[1] };
+        } else if (state.direction === 'dest') {
+            return { ...state, destination: point, endValue: point[1] };
         }
 
         return initialState;
     });
 
     public updateStart = this.updater((state: TripState, point: string[]): TripState => {
-        return {...state, start: point};
+        return { ...state, start: point };
     });
 
     public updateEnd = this.updater((state: TripState, point: string[]): TripState => {
-        return {...state, destination: point};
+        return { ...state, destination: point };
     });
 
     public updateTime = this.updater((state: TripState, time: string): TripState => {
-       return {...state, time: time};
+        return { ...state, time: time };
     });
 
     public updateArriveBy = this.updater((state: TripState, arriveBy: string): TripState => {
-        return {...state, arriveBy: arriveBy};
+        return { ...state, arriveBy: arriveBy };
     });
 
     public updateDate = this.updater((state: TripState, date: Date | undefined): TripState => {
 
-        if(date){
-            return {...state, date: date};
-        }else{
+        if (date) {
+            return { ...state, date: date };
+        } else {
             return state;
         }
-        
+
     });
 
-    public initFetch = this.updater((state: TripState): TripState =>{
-        if(state.start.length == 0 || state.destination.length == 0){
+    public initFetch = this.updater((state: TripState): TripState => {
+        if (state.start.length == 0 || state.destination.length == 0) {
             return state;
-        }else{
-            return {...state, fetch: true, direction: ''};
+        } else {
+            return { ...state, fetch: true, direction: '' };
         }
     });
 
     /* STATE SELECTORS */
-    public getNames(): Observable<any>{
+    public getNames(): Observable<any> {
         return this.select(state => {
-            const names = {start: '', end: ''};
-            if(state.start.length > 0) names.start = state.start[1];
-            if(state.destination.length > 0) names.end = state.destination[1];
+            const names = { start: '', end: '' };
+            if (state.start.length > 0) names.start = state.start[1];
+            if (state.destination.length > 0) names.end = state.destination[1];
             return names;
         });
     }
 
-    public getStartValue(): Observable<string>{
+    public getStartValue(): Observable<string> {
         return this.select(this.state$, (state) => state.startValue);
     }
 
-    public getEndValue(): Observable<string>{
+    public getEndValue(): Observable<string> {
         return this.select(this.state$, (state) => state.endValue);
     }
 
-    public getText(): Observable<string>{
+    public getText(): Observable<string> {
         return this.select(this.state$, (state) => state.searchText);
     }
 
@@ -138,12 +139,12 @@ export class DirectionsStore extends ComponentStore<TripState> {
         return this.state$.pipe(
             filter(state => state.fetch && state.start.length > 0 && state.destination.length > 0),
             throttleTime(500),
-            map((data: TripState) => this.store.dispatch(api_actions.fetchPlan({data: data}))),
+            map((data: TripState) => this.store.dispatch(api_actions.fetchPlan({ data: data }))),
             tapResponse(
                 (action) => {
                     this.fetchComplete();
                     this.changeDirection('');
-                }, 
+                },
                 (error: HttpErrorResponse) => {
                     console.log(error);
                     this.changeDirection('');
